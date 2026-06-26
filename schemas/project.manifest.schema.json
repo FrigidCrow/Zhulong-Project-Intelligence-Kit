@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project Intelligence Manifest",
+  "type": "object",
+  "required": ["project", "knowledge", "workflow", "privacy"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["name", "type", "root"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "root": { "type": "string" },
+        "generated_at": { "type": "string" }
+      }
+    },
+    "execution_runtime": {
+      "type": "object",
+      "properties": {
+        "supported": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "primary": { "type": "string" },
+        "command_packs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string" },
+              "skills_path": { "type": "string" },
+              "prompts_path": { "type": "string" },
+              "install_command": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "command_facade": {
+      "type": "object",
+      "properties": {
+        "public_prefix": { "type": "string" },
+        "backend": {
+          "type": "object",
+          "properties": {
+            "provider": { "type": "string" },
+            "prefix": { "type": "string" },
+            "replaceable": { "type": "boolean" }
+          }
+        },
+        "command_map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "public": { "type": "string" },
+              "backend": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "spec_context": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "provider": { "type": "string" },
+        "source_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rag_sources_path": { "type": "string" },
+        "status_path": { "type": "string" },
+        "glossary_path": { "type": "string" },
+        "requirement_trace_path": { "type": "string" },
+        "index_handoff_path": { "type": "string" },
+        "index_result_path": { "type": "string" },
+        "query_result_path": { "type": "string" },
+        "index_command": { "type": "string" },
+        "query_command": { "type": "string" },
+        "scan_extensions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "require_citations": { "type": "boolean" }
+      }
+    },
+    "code_map": {
+      "type": "object",
+      "properties": {
+        "provider": { "type": "string" },
+        "enabled": { "type": "boolean" },
+        "graph_path": { "type": "string" },
+        "report_path": { "type": "string" },
+        "baseline_path": { "type": "string" },
+        "build_result_path": { "type": "string" },
+        "diff_result_path": { "type": "string" },
+        "update_command": { "type": "string" }
+      }
+    },
+    "evidence_loop": {
+      "type": "object",
+      "properties": {
+        "require_source_citation": { "type": "boolean" },
+        "require_test_record": { "type": "boolean" },
+        "writeback_enabled": { "type": "boolean" },
+        "records_path": { "type": "string" },
+        "writeback_targets": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "properties": {
+        "graphify": { "type": "object" },
+        "graphrag": { "type": "object" }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "properties": {
+        "mode": { "type": "string" },
+        "require_graph_before_edit": { "type": "boolean" },
+        "require_rag_before_business_claim": { "type": "boolean" },
+        "require_source_verification": { "type": "boolean" },
+        "auto_advance": { "type": "boolean" }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "properties": {
+        "local_only": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "subsystems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path"],
+        "properties": {
+          "name": { "type": "string" },
+          "path": { "type": "string" },
+          "stack": { "type": "string" },
+          "role": { "type": "string" }
+        }
+      }
+    },
+    "commands": {
+      "type": "object"
+    }
+  }
+}

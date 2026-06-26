@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI-PIKit Code Review"
+  short_description: "Review code with AI-PIKit evidence"
+  default_prompt: "$pik-code-review"

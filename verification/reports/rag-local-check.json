@@ -1,0 +1,110 @@
+{
+  "generated": "2026-06-25T13:53:54.994Z",
+  "status": "PASS",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project",
+  "unsafeProjectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project",
+  "model": "qwen2.5:14b",
+  "embedding": "nomic-embed-text",
+  "evidence": [
+    "ollama model present: qwen2.5:14b",
+    "ollama model present: nomic-embed-text",
+    "local settings: file exists graphrag-workspace/settings.yaml",
+    "local settings: found model_provider: ollama",
+    "local settings: file exists graphrag-workspace/settings.yaml",
+    "local settings: found api_base: http://127.0.0.1:11434",
+    "local settings: file exists graphrag-workspace/settings.yaml",
+    "local settings: found workflows:",
+    "local settings: file exists graphrag-workspace/settings.yaml",
+    "local settings: found generate_text_embeddings",
+    "local settings: file exists graphrag-workspace/settings.yaml",
+    "local settings: does not contain model_provider: openai",
+    "local settings: file exists graphrag-workspace/settings.yaml",
+    "local settings: does not contain GRAPHRAG_API_KEY",
+    "local settings: graphrag-workspace/.env absent",
+    "pik-privacy-audit before index: found privacy audit PASS",
+    "pik docs index --run local: found status success",
+    "RAG_INDEX_RESULT: file exists .planning/knowledge/RAG_INDEX_RESULT.md",
+    "RAG_INDEX_RESULT: found Status: success",
+    "pik docs query --rag local: found 42,420",
+    "pik docs query --rag local: found LOCAL_RAG_SENTINEL_42420",
+    "RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md",
+    "RAG_QUERY_RESULT: found Status: success",
+    "RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md",
+    "RAG_QUERY_RESULT: found 42,420",
+    "pik-privacy-audit after query: found privacy audit PASS",
+    "PRIVACY_AUDIT: file exists .planning/knowledge/PRIVACY_AUDIT.md",
+    "PRIVACY_AUDIT: found Status: PASS",
+    "secret/external scan: no sk-* tokens or external URLs in fixture project",
+    "negative privacy audit: found privacy audit FAIL",
+    "negative privacy audit: found external URL",
+    "negative privacy audit: external provider rejected",
+    "negative RAG query guard: found status failed",
+    "negative RAG query guard: file exists ../unsafe-project/.planning/knowledge/RAG_QUERY_RESULT.md",
+    "negative RAG query guard: found Privacy audit: failed",
+    "negative RAG query guard: unsafe query blocked before external execution"
+  ],
+  "commandResults": [
+    {
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project --template greenfield-app --name rag_local_fixture --mode new --force",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/REQUIREMENT_TRACE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-lo",
+      "stderr": ""
+    },
+    {
+      "command": "pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project --force --model qwen2.5:14b --embedding nomic-embed-text",
+      "status": 0,
+      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 1\ninput skipped 0\nprivacy PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project",
+      "status": 0,
+      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/PRIVACY_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project --run --timeout 1200000",
+      "status": 0,
+      "stdout": "run graphrag index --root graphrag-workspace --method fast\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project --rag What is the proxy approval upper limit for CR-LOCAL-042? --timeout 1200000",
+      "status": 0,
+      "stdout": "RAG context query: What is the proxy approval upper limit for CR-LOCAL-042?\nrun graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" 'What is the proxy approval upper limit for CR-LOCAL-042?'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/RAG_QUERY_RESULT.md\n1. The proxy approval upper limit for CR-LOCAL-042 is exactly 42,420 yen [Data: Sources (0)].\n2. This policy is defined in the AcmeBank Proxy Approval Specification document [Data: Sources (0)].\n3. Tanaka Taro is identified as the business owner of this specification [Data: Sources (0)].\n4. Sato Hana serves as the QA reviewer for the proxy approval policy [Data: Sources (0)].\n5. The policy keyword associated with CR-LOCAL-042 is LOCAL_RAG_SENTINEL_42420 [Data: Sources (0)].\n6. ApprovalService must reject any proxy approvals above 42,420 yen unless an emergency event exception is granted by FinanceDepartment [Data: Sources (0)].\n7. The document specifies that the policy keyword LOCAL_RAG_SENTINEL_42420 corresponds to CR-LOCAL-042 [Data: Sources (0)].\n8. No other proxy approval limits are mentioned for CR-LOCAL-042 in the provided data [Data: Sources (0)].\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project",
+      "status": 0,
+      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project/.planning/knowledge/PRIVACY_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project --template greenfield-app --name unsafe_rag_fixture --mode new --force",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9",
+      "stderr": ""
+    },
+    {
+      "command": "pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project --force --model qwen2.5:14b --embedding nomic-embed-text",
+      "status": 0,
+      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 1\ninput skipped 0\nprivacy PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project",
+      "status": 1,
+      "stdout": "privacy audit FAIL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL graphrag-workspace/settings.yaml external URL is not allowed in local-only mode: https://api.openai.com\nFAIL graphrag-workspace/settings.yaml external model_provider is not allowed: openai",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project --rag Should be blocked",
+      "status": 1,
+      "stdout": "RAG context query: Should be blocked\nrun graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" 'Should be blocked'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/unsafe-project/.planning/knowledge/RAG_QUERY_RESULT.md\nstatus failed",
+      "stderr": ""
+    }
+  ],
+  "issues": []
+}

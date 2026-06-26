@@ -1,0 +1,424 @@
+# AI-PIKit Full Validation Report
+
+Generated: 2026-06-25T13:54:50.988Z
+
+## Summary
+
+- PASS: 132
+- FAIL: 0
+- WARN: 1
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3` (removed after run)
+- Live GraphRAG: not requested
+
+## Verdict
+
+AI-PIKit validation passed for the checked scope. AI-PIKit is the active command/workflow surface; Graphify and configured RAG/GraphRAG are exercised as AI-PIKit enhancement gates.
+
+## Checks
+
+- [PASS] AI-PIKit init records new project mode
+  - Evidence: `.planning/INIT_PROFILE.md`
+  - Detail: Found: Mode: new
+- [PASS] AI-PIKit codebase status works for new project mode
+  - Evidence: `pik codebase status`
+  - Detail: Found: ok .planning/codebase/CODEBASE_STATUS.md
+- [PASS] AI-PIKit init records existing project mode
+  - Evidence: `.planning/INIT_PROFILE.md`
+  - Detail: Found: Mode: existing
+- [PASS] AI-PIKit codebase scan inventories existing project sources
+  - Evidence: `.planning/codebase/CODEBASE_STATUS.md`
+  - Detail: 7 source files
+- [PASS] Fixture starts with failing CR-017 acceptance test
+  - Evidence: `npm run test:task`
+- [PASS] AI-PIKit local document query finds QA evidence
+  - Evidence: `pik docs query`
+  - Detail: Found: QA-042
+- [PASS] AI-PIKit configured RAG query returns 30,000 evidence
+  - Evidence: `pik docs query --rag`
+  - Detail: Found: 30,000
+- [PASS] AI-PIKit Graphify adapter query finds PROXY_APPROVAL_LIMIT
+  - Evidence: `pik graph query`
+  - Detail: Found: PROXY_APPROVAL_LIMIT
+- [PASS] AI-PIKit graph diff captures implementation change
+  - Evidence: `pik graph diff --details`
+  - Detail: Found: 30000
+- [PASS] AI-PIKit evidence writeback reaches issue record
+  - Evidence: `.planning/issues/CR-017_proxy_approval_limit.md`
+  - Detail: Found: AI-PIKit Evidence Writeback
+- [PASS] All core AI-PIKit workflows create handoffs
+  - Evidence: `.planning/context/handoffs`
+  - Detail: 10 handoff files
+- [PASS] AI-PIKit native handoff marker: code-review-cr-017-code-review-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: code-review-cr-017-code-review-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: code-review-cr-017-code-review-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: code-review-cr-017-code-review-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: complete-milestone-cr-017-complete-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: complete-milestone-cr-017-complete-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: debug-cr-017-debug-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: debug-cr-017-debug-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: debug-cr-017-debug-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: debug-cr-017-debug-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: discuss-phase-cr-017-discuss-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: discuss-phase-cr-017-discuss-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: execute-phase-cr-017-execute-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: execute-phase-cr-017-execute-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: execute-phase-cr-017-execute-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: execute-phase-cr-017-execute-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: new-milestone-cr-017-new-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: new-milestone-cr-017-new-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: new-milestone-cr-017-new-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: new-milestone-cr-017-new-milestone-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: plan-phase-cr-017-plan-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: plan-phase-cr-017-plan-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: plan-phase-cr-017-plan-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: plan-phase-cr-017-plan-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: spec-phase-cr-017-spec-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: spec-phase-cr-017-spec-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: spec-phase-cr-017-spec-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: spec-phase-cr-017-spec-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: ui-phase-cr-017-ui-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: ui-phase-cr-017-ui-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: ui-phase-cr-017-ui-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: ui-phase-cr-017-ui-phase-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] AI-PIKit native handoff marker: verify-work-cr-017-verify-work-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Detail: Found: Workflow kernel: AI-PIKit native
+- [PASS] Workflow doc marker: verify-work-cr-017-verify-work-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Detail: Found: Workflow doc:
+- [PASS] No active GSD backend wording: verify-work-cr-017-verify-work-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Detail: Absent: Current backend
+- [PASS] No internal backend invocation title: verify-work-cr-017-verify-work-HANDOFF.md
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Detail: Absent: Internal Backend Invocation
+- [PASS] Context packet includes document RAG status
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
+  - Detail: Found: Document RAG Status
+- [PASS] Context packet includes code map status
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
+  - Detail: Found: Code Map Status
+- [PASS] Context packet includes Graphify output
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
+  - Detail: Found: Graph Report
+- [PASS] AI-PIKit workflow-run alias starts guarded state
+  - Evidence: `pik-workflow-run`
+  - Detail: Found: workflow guard FAIL
+- [PASS] AI-PIKit workflow-run alias fails docs gate before document scan
+  - Evidence: `pik-workflow-run`
+  - Detail: Found: FAIL docs
+- [PASS] AI-PIKit workflow-run alias fails codebase gate before codebase scan
+  - Evidence: `pik-workflow-run`
+  - Detail: Found: FAIL codebase
+- [PASS] AI-PIKit workflow-run alias fails graph gate before graph build
+  - Evidence: `pik-workflow-run`
+  - Detail: Found: FAIL graph
+- [PASS] AI-PIKit completion-check alias blocks incomplete workflow
+  - Evidence: `pik-completion-check`
+  - Detail: Non-zero exit before required gates.
+- [PASS] AI-PIKit completion-check alias reports blocked completion
+  - Evidence: `pik-completion-check`
+  - Detail: Found: completion blocked
+- [PASS] AI-PIKit gate-check alias passes complete workflow
+  - Evidence: `pik-gate-check`
+  - Detail: Found: workflow guard PASS
+- [PASS] AI-PIKit completion-check alias allows complete workflow
+  - Evidence: `pik-completion-check`
+  - Detail: Found: completion allowed
+- [PASS] AI-PIKit workflow guard passes context gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS context
+- [PASS] AI-PIKit workflow guard passes codebase gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS codebase
+- [PASS] AI-PIKit workflow guard passes docs gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS docs
+- [PASS] AI-PIKit workflow guard passes graph gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS graph
+- [PASS] AI-PIKit workflow guard passes plan gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS plan
+- [PASS] AI-PIKit workflow guard passes implementation gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS implementation
+- [PASS] AI-PIKit workflow guard passes verification gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS verification
+- [PASS] AI-PIKit workflow guard passes evidence gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS evidence
+- [PASS] AI-PIKit workflow guard passes writeback gate
+  - Evidence: `pik-completion-check`
+  - Detail: Found: PASS writeback
+- [PASS] AI-PIKit workflow-status alias reports guard pass
+  - Evidence: `pik-workflow-status`
+  - Detail: Found: workflow guard PASS
+- [PASS] AI-PIKit workflow guard writes durable state
+  - Evidence: `.planning/workflows/<id>/WORKFLOW_STATE.json`
+  - Detail: debug-cr-017-guard
+- [PASS] Public pik-debug alias enters workflow guard
+  - Evidence: `pik-debug`
+  - Detail: Found: workflow guard FAIL
+- [PASS] Public pik-debug alias creates workflow state
+  - Evidence: `pik-debug`
+  - Detail: Found: WORKFLOW_STATE.json
+- [PASS] Real Graphify graph has nodes and edges/links
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/real-graphify/.planning/graphs/graph.json`
+  - Detail: 269 nodes, 220 edges/links
+- [PASS] AI-PIKit graph status reads real Graphify graph
+  - Evidence: `pik graph status`
+  - Detail: Found: edges
+- [PASS] AI-PIKit graph query reads real Graphify report/nodes
+  - Evidence: `pik graph query approvalPolicy`
+  - Detail: Found: approvalPolicy
+- [PASS] Runtime codex renders pik-new-milestone
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-new-milestone rendered
+- [PASS] Runtime codex renders pik-spec-phase
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-spec-phase rendered
+- [PASS] Runtime codex renders pik-discuss-phase
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-discuss-phase rendered
+- [PASS] Runtime codex renders pik-ui-phase
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-ui-phase rendered
+- [PASS] Runtime codex renders pik-debug
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-debug rendered
+- [PASS] Runtime codex renders pik-plan-phase
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-plan-phase rendered
+- [PASS] Runtime codex renders pik-execute-phase
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-execute-phase rendered
+- [PASS] Runtime codex renders pik-code-review
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-code-review rendered
+- [PASS] Runtime codex renders pik-verify-work
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-verify-work rendered
+- [PASS] Runtime codex renders pik-complete-milestone
+  - Evidence: `pik-runtime-status codex`
+  - Detail: Found: ok pik-complete-milestone rendered
+- [PASS] Runtime codex routes workflows through guard runner
+  - Evidence: `runtime/codex`
+  - Detail: Found: workflow run
+- [PASS] Runtime claude-code renders pik-new-milestone
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-new-milestone rendered
+- [PASS] Runtime claude-code renders pik-spec-phase
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-spec-phase rendered
+- [PASS] Runtime claude-code renders pik-discuss-phase
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-discuss-phase rendered
+- [PASS] Runtime claude-code renders pik-ui-phase
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-ui-phase rendered
+- [PASS] Runtime claude-code renders pik-debug
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-debug rendered
+- [PASS] Runtime claude-code renders pik-plan-phase
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-plan-phase rendered
+- [PASS] Runtime claude-code renders pik-execute-phase
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-execute-phase rendered
+- [PASS] Runtime claude-code renders pik-code-review
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-code-review rendered
+- [PASS] Runtime claude-code renders pik-verify-work
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-verify-work rendered
+- [PASS] Runtime claude-code renders pik-complete-milestone
+  - Evidence: `pik-runtime-status claude-code`
+  - Detail: Found: ok pik-complete-milestone rendered
+- [PASS] Runtime claude-code routes workflows through guard runner
+  - Evidence: `runtime/claude-code`
+  - Detail: Found: workflow run
+- [PASS] Runtime github-copilot renders pik-new-milestone
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-new-milestone rendered
+- [PASS] Runtime github-copilot renders pik-spec-phase
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-spec-phase rendered
+- [PASS] Runtime github-copilot renders pik-discuss-phase
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-discuss-phase rendered
+- [PASS] Runtime github-copilot renders pik-ui-phase
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-ui-phase rendered
+- [PASS] Runtime github-copilot renders pik-debug
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-debug rendered
+- [PASS] Runtime github-copilot renders pik-plan-phase
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-plan-phase rendered
+- [PASS] Runtime github-copilot renders pik-execute-phase
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-execute-phase rendered
+- [PASS] Runtime github-copilot renders pik-code-review
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-code-review rendered
+- [PASS] Runtime github-copilot renders pik-verify-work
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-verify-work rendered
+- [PASS] Runtime github-copilot renders pik-complete-milestone
+  - Evidence: `pik-runtime-status github-copilot`
+  - Detail: Found: ok pik-complete-milestone rendered
+- [PASS] Runtime github-copilot routes workflows through guard runner
+  - Evidence: `runtime/github-copilot`
+  - Detail: Found: workflow run
+- [PASS] No public GSD binaries are exposed
+  - Evidence: `package.json bin`
+- [PASS] Runtime packs do not actively route to GSD
+  - Evidence: `runtime/*`
+- [PASS] AI-PIKit workflow exists for new-milestone
+  - Evidence: `core/workflows/new-milestone.md`
+- [PASS] AI-PIKit workflow exists for spec-phase
+  - Evidence: `core/workflows/spec-phase.md`
+- [PASS] AI-PIKit workflow exists for discuss-phase
+  - Evidence: `core/workflows/discuss-phase.md`
+- [PASS] AI-PIKit workflow exists for ui-phase
+  - Evidence: `core/workflows/ui-phase.md`
+- [PASS] AI-PIKit workflow exists for debug
+  - Evidence: `core/workflows/debug.md`
+- [PASS] AI-PIKit workflow exists for plan-phase
+  - Evidence: `core/workflows/plan-phase.md`
+- [PASS] AI-PIKit workflow exists for execute-phase
+  - Evidence: `core/workflows/execute-phase.md`
+- [PASS] AI-PIKit workflow exists for code-review
+  - Evidence: `core/workflows/code-review.md`
+- [PASS] AI-PIKit workflow exists for verify-work
+  - Evidence: `core/workflows/verify-work.md`
+- [PASS] AI-PIKit workflow exists for complete-milestone
+  - Evidence: `core/workflows/complete-milestone.md`
+- [PASS] AI-PIKit adds docs/graph gates for new-milestone
+  - Evidence: `core/workflows/new-milestone.md`
+  - Detail: new-milestone: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for spec-phase
+  - Evidence: `core/workflows/spec-phase.md`
+  - Detail: spec-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for discuss-phase
+  - Evidence: `core/workflows/discuss-phase.md`
+  - Detail: discuss-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for ui-phase
+  - Evidence: `core/workflows/ui-phase.md`
+  - Detail: ui-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for debug
+  - Evidence: `core/workflows/debug.md`
+  - Detail: debug: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for plan-phase
+  - Evidence: `core/workflows/plan-phase.md`
+  - Detail: plan-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for execute-phase
+  - Evidence: `core/workflows/execute-phase.md`
+  - Detail: execute-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for verify-work
+  - Evidence: `core/workflows/verify-work.md`
+  - Detail: verify-work: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [PASS] AI-PIKit adds docs/graph gates for complete-milestone
+  - Evidence: `core/workflows/complete-milestone.md`
+  - Detail: complete-milestone: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false
+- [WARN] Live GraphRAG validation skipped
+  - Evidence: `--live-graphrag`
+  - Detail: Run with GRAPHRAG_API_KEY and --live-graphrag to validate real GraphRAG through AI-PIKit.
+
+## AI-PIKit vs GSD Assessment
+
+| Area | GSD Reference | AI-PIKit Current Evidence | Assessment |
+| --- | --- | --- | --- |
+| Public command surface | `gsd-*` skills | package bin exposes `pik-*`; runtime packs render `pik-*` | AI-PIKit replaces GSD for user invocation |
+| Workflow contract | GSD skill/workflow text | `core/workflows/*.md`, `.planning/workflows/<id>/WORKFLOW_STATE.json`, guard checks | AI-PIKit has native contracts and a CLI guard state machine |
+| Document evidence | Not uniformly native to every GSD flow | `pik-docs-*`, RAG result files, workflow docs gate spec evidence | AI-PIKit improves document-heavy development |
+| Code impact | GSD may rely on separate Graphify skill/use | `pik-graph-*`, Graphify artifact sync, graph status/query/diff | AI-PIKit makes Graphify an explicit workflow gate |
+| Evidence writeback | GSD records workflow outputs | `pik-evidence-record --writeback` verified | AI-PIKit provides reusable evidence loop |
+| Hard enforcement | Mostly agent instruction based | `pik-workflow-run`, `pik-gate-check`, `pik-completion-check` verified with block/pass behavior | AI-PIKit adds artifact-level enforcement beyond prompt guidance |
+
+## Artifact Roots
+
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/init-new-project`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/init-existing-project`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/fixture-pik-native`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/workflow-guard`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/workflow-alias`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-WvP6b3/real-graphify`

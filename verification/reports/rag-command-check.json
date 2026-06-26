@@ -1,0 +1,157 @@
+{
+  "generated": "2026-06-25T13:52:51.119Z",
+  "status": "PASS",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+  "commandsCovered": [
+    "pik docs scan",
+    "pik docs status",
+    "pik docs normalize",
+    "pik docs index",
+    "pik docs index --run",
+    "pik docs query",
+    "pik docs query --rag",
+    "pik docs query --backend graphrag",
+    "pik-docs-scan",
+    "pik-docs-status",
+    "pik-docs-normalize",
+    "pik-docs-index",
+    "pik-docs-index --run",
+    "pik-docs-query",
+    "pik-docs-query --rag"
+  ],
+  "evidence": [
+    "pik docs scan: found documents 3",
+    "pik docs scan: found QA-101.md",
+    "pik docs scan: found minutes.txt",
+    "pik docs scan: found approval.csv",
+    "pik-docs-scan: found documents 3",
+    "pik docs status: found Total source documents: 3",
+    "pik-docs-status: found Total source documents: 3",
+    "pik docs normalize: found normalized 3",
+    "pik docs normalize: found QA-101.md",
+    "pik-docs-normalize: found normalized 3",
+    "pik docs query: found RAG_COMMAND_SENTINEL",
+    "pik docs query: found QA-101.md",
+    "pik-docs-query: found RAG_MINUTES_SENTINEL",
+    "pik-docs-query: found minutes.txt",
+    "pik docs index: found backend document RAG handoff",
+    "pik docs index: found pik-docs-index --target <repo> --run",
+    "pik-docs-index: found backend document RAG handoff",
+    "pik docs index --run: found status success",
+    "pik docs index --run: found FAKE_RAG_INDEX_OK",
+    "pik docs index --run: found Status: success",
+    "pik-docs-index --run: found status success",
+    "pik docs query --rag: found RAG_ANSWER_SENTINEL_42420",
+    "pik docs query --rag: found Status: success",
+    "pik docs query --backend graphrag: found RAG_ANSWER_SENTINEL_42420",
+    "pik-docs-query --rag: found RAG_ANSWER_SENTINEL_42420",
+    "pik-docs-status after RAG: found RAG backend: graphrag",
+    "pik-docs-status after RAG: found Index status: Indexed by configured RAG command"
+  ],
+  "commandResults": [
+    {
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project --template greenfield-app --name rag_command_fixture --mode new --force",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/evidence/README.m",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "Document context status\nLast scan: 2026-06-25T13:52:49.622Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "Document context status\nLast scan: 2026-06-25T13:52:49.622Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project RAG_COMMAND_SENTINEL",
+      "status": 0,
+      "stdout": "Document context query: RAG_COMMAND_SENTINEL\n- docs/qa/QA-101.md:3 - RAG_COMMAND_SENTINEL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project RAG_MINUTES_SENTINEL",
+      "status": 0,
+      "stdout": "Document context query: RAG_MINUTES_SENTINEL\n- documents/minutes.txt:2 RAG_MINUTES_SENTINEL",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project --run",
+      "status": 0,
+      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project --run",
+      "status": 0,
+      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project --rag 代理承認の上限金額",
+      "status": 0,
+      "stdout": "RAG context query: 代理承認の上限金額\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認の上限金額'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認の上限金額\nRAG_ANSWER_SENTINEL_42420\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project --backend graphrag 代理承認",
+      "status": 0,
+      "stdout": "RAG context query: 代理承認\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認\nRAG_ANSWER_SENTINEL_42420\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project --rag 代理承認",
+      "status": 0,
+      "stdout": "RAG context query: 代理承認\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認\nRAG_ANSWER_SENTINEL_42420\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project",
+      "status": 0,
+      "stdout": "Document context status\nLast scan: 2026-06-25T13:52:50.521Z\nTotal source documents: 3\nNormalized documents: 3\nRAG backend: graphrag\nIndex status: Indexed by configured RAG command\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-GXEotN/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stderr": ""
+    }
+  ],
+  "issues": []
+}

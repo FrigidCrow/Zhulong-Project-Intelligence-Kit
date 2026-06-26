@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI-PIKit Verify Work"
+  short_description: "Verify work with AI-PIKit evidence"
+  default_prompt: "$pik-verify-work"

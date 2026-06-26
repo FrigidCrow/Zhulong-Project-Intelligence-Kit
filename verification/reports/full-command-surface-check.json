@@ -1,0 +1,801 @@
+{
+  "generated": "2026-06-25T13:44:33.996Z",
+  "status": "PASS",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+  "commandsRequired": [
+    "pik",
+    "pik-citation-audit",
+    "pik-code-review",
+    "pik-codebase",
+    "pik-codebase-scan",
+    "pik-codebase-status",
+    "pik-complete-milestone",
+    "pik-completion-check",
+    "pik-context-debug",
+    "pik-context-execute",
+    "pik-debug",
+    "pik-discuss-phase",
+    "pik-docs-citations",
+    "pik-docs-diff",
+    "pik-docs-extract",
+    "pik-docs-index",
+    "pik-docs-normalize",
+    "pik-docs-query",
+    "pik-docs-scan",
+    "pik-docs-status",
+    "pik-evidence-record",
+    "pik-evidence-status",
+    "pik-execute-phase",
+    "pik-gate-check",
+    "pik-graph-build",
+    "pik-graph-diff",
+    "pik-graph-freshness",
+    "pik-graph-impact",
+    "pik-graph-query",
+    "pik-graph-risk",
+    "pik-graph-status",
+    "pik-help-skills",
+    "pik-init",
+    "pik-license-audit",
+    "pik-map",
+    "pik-mode-set",
+    "pik-mode-status",
+    "pik-new-milestone",
+    "pik-offline-lock",
+    "pik-outbound-audit",
+    "pik-plan-phase",
+    "pik-policy-check",
+    "pik-policy-diff",
+    "pik-policy-explain",
+    "pik-policy-list",
+    "pik-policy-lock",
+    "pik-policy-verify",
+    "pik-preflight",
+    "pik-privacy-audit",
+    "pik-rag-eval",
+    "pik-rag-golden-add",
+    "pik-rag-golden-run",
+    "pik-rag-init-local",
+    "pik-refresh-plan",
+    "pik-refresh-run",
+    "pik-runtime-install",
+    "pik-runtime-status",
+    "pik-spec-phase",
+    "pik-trace-audit",
+    "pik-trace-build",
+    "pik-trace-query",
+    "pik-ui-phase",
+    "pik-verify",
+    "pik-verify-work",
+    "pik-workflow-audit",
+    "pik-workflow-continue",
+    "pik-workflow-run",
+    "pik-workflow-status"
+  ],
+  "commandsCovered": [
+    "pik",
+    "pik-citation-audit",
+    "pik-code-review",
+    "pik-codebase",
+    "pik-codebase-scan",
+    "pik-codebase-status",
+    "pik-complete-milestone",
+    "pik-completion-check",
+    "pik-context-debug",
+    "pik-context-execute",
+    "pik-debug",
+    "pik-discuss-phase",
+    "pik-docs-citations",
+    "pik-docs-diff",
+    "pik-docs-extract",
+    "pik-docs-index",
+    "pik-docs-normalize",
+    "pik-docs-query",
+    "pik-docs-scan",
+    "pik-docs-status",
+    "pik-evidence-record",
+    "pik-evidence-status",
+    "pik-execute-phase",
+    "pik-gate-check",
+    "pik-graph-build",
+    "pik-graph-diff",
+    "pik-graph-freshness",
+    "pik-graph-impact",
+    "pik-graph-query",
+    "pik-graph-risk",
+    "pik-graph-status",
+    "pik-help-skills",
+    "pik-init",
+    "pik-license-audit",
+    "pik-map",
+    "pik-mode-set",
+    "pik-mode-status",
+    "pik-new-milestone",
+    "pik-offline-lock",
+    "pik-outbound-audit",
+    "pik-plan-phase",
+    "pik-policy-check",
+    "pik-policy-diff",
+    "pik-policy-explain",
+    "pik-policy-list",
+    "pik-policy-lock",
+    "pik-policy-verify",
+    "pik-preflight",
+    "pik-privacy-audit",
+    "pik-rag-eval",
+    "pik-rag-golden-add",
+    "pik-rag-golden-run",
+    "pik-rag-init-local",
+    "pik-refresh-plan",
+    "pik-refresh-run",
+    "pik-runtime-install",
+    "pik-runtime-status",
+    "pik-spec-phase",
+    "pik-trace-audit",
+    "pik-trace-build",
+    "pik-trace-query",
+    "pik-ui-phase",
+    "pik-verify",
+    "pik-verify-work",
+    "pik-workflow-audit",
+    "pik-workflow-continue",
+    "pik-workflow-run",
+    "pik-workflow-status"
+  ],
+  "evidence": [
+    "pik: exit 0",
+    "pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --template greenfield-app --name full_command_surface --mode new --force: exit 0",
+    "pik-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-map --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-codebase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-codebase-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-codebase-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --force --skip-model-check: exit 0",
+    "pik-rag-init-local: found Local GraphRAG default mode initialized",
+    "pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE_SENTINEL_7719: exit 0",
+    "pik-docs-citations: found FULL_SURFACE_SENTINEL_7719",
+    "pik-citation-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --run: exit 0",
+    "pik-docs-index --run: found status success",
+    "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE_SENTINEL_7719: exit 0",
+    "pik-docs-query: found FULL_SURFACE_SENTINEL_7719",
+    "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --rag FULL_SURFACE_SENTINEL_7719: exit 0",
+    "pik-docs-query --rag: found FULL_SURFACE_SENTINEL_7719",
+    "pik-rag-golden-add --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0",
+    "pik-rag-golden-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-rag-eval --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --run: exit 0",
+    "pik-graph-build --run: found status success",
+    "pik-graph-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-graph-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project approvalLimit: exit 0",
+    "pik-graph-query: found approval",
+    "pik-graph-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-graph-impact --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --files src/approval.js: exit 0",
+    "pik-graph-risk --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-graph-freshness --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --strict: exit 0",
+    "pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-preflight: found heavy refresh executed: no",
+    "pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --rag --force: exit 0",
+    "pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --graph --force: exit 0",
+    "pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project graph-lite: exit 0",
+    "pik-mode-set: found mode graph-lite",
+    "pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project default-local-rag: exit 0",
+    "pik-evidence-record --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0",
+    "pik-evidence-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-trace-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-trace-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE: exit 0",
+    "pik-trace-query: found Trace query",
+    "pik-trace-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-offline-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --strict: exit 0",
+    "pik-outbound-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-license-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-policy-list --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-policy-explain --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project trace.matrix: exit 0",
+    "pik-policy-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --strict: exit 0",
+    "pik-policy-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-policy-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-policy-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-help-skills --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project 文档更新后想确认影响面和完成前检查: exit 0",
+    "pik-runtime-install --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex --force: exit 0",
+    "pik-runtime-status --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex: exit 0",
+    "pik-runtime-install --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code --force: exit 0",
+    "pik-runtime-status --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code: exit 0",
+    "pik-runtime-install --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot --force: exit 0",
+    "pik-runtime-status --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot: exit 0",
+    "pik-context-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE debug context: exit 0",
+    "pik-context-execute --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE execute context: exit 0",
+    "pik-workflow-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project debug FULL_SURFACE workflow: exit 0",
+    "pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --gate plan --evidence PLAN.md reviewed: exit 0",
+    "pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --gate implementation --evidence src/approval.js verified: exit 0",
+    "pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --gate verification --evidence npm run verify:full-command-surface: exit 0",
+    "pik-workflow-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-workflow-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-gate-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-completion-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project: exit 0",
+    "pik-new-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-new-milestone: exit 0",
+    "pik-spec-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-spec-phase: exit 0",
+    "pik-discuss-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-discuss-phase: exit 0",
+    "pik-ui-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-ui-phase: exit 0",
+    "pik-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-debug: exit 0",
+    "pik-plan-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-plan-phase: exit 0",
+    "pik-execute-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-execute-phase: exit 0",
+    "pik-code-review --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-code-review: exit 0",
+    "pik-verify-work --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-verify-work: exit 0",
+    "pik-complete-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-complete-milestone: exit 0",
+    "policy check report: found Status: PASS",
+    "policy lock report: found Snapshot hash",
+    "policy verify report: found Status: PASS",
+    "policy diff report: found Status: CLEAN",
+    "trace audit report: found Status: PASS",
+    "help skills report: found Recommendations",
+    "refresh state: found \"graph\"",
+    "preflight report: found Heavy refresh executed: no"
+  ],
+  "commandResults": [
+    {
+      "command": "pik",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "AI Project Intelligence Kit\n\nUsage:\n  pik-init --target <repo> --template <name> --name <project_name>\n  pik-init --target <repo> --template <name> --name <project_name> --force\n  pik-init --target <repo> --template greenfield-app --name <project_name> --mode new\n  pik-init --target <repo> --template brownfield-monorepo --name <project_name> --mode existing\n  pik-codebase --target <repo>\n  pik-codebase-scan --target <repo>\n  pik-codebase-status --target <repo>\n  pik-docs-scan --target <repo>\n  pik-docs-status --target <repo>\n  pik-docs-normalize --target <repo>\n  pik-docs-extract --target <repo>\n  pik-docs-diff --target <repo>\n  pik-docs-citations --target <repo> \"<question or keywords>\"\n  pik-docs-index --target <repo>\n  pik-docs-index --target <repo> --run\n  pik-docs-query --target <repo> \"<question or keywords>\"\n  pik-docs-query --target <repo> --rag \"<question>\"\n  pik-rag-init-local --target <repo>\n  pik-rag-init-local --target <repo> --force\n  pik-rag-golden-add --target <repo> --question \"<q>\" --expect \"<term>\" --citation \"<path:line>\"\n  pik-rag-golden-run --target <repo>\n  pik-rag-eval --target <repo>\n  pik-preflight --target <repo>\n  pik-preflight --target <repo> --strict\n  pik-refresh-plan --target <repo>\n  pik-refresh-run --target <repo> --rag\n  pik-refresh-run --target <repo> --graph\n  pik-refresh-run --target <repo> --all\n  pik-mode-status --target <repo>\n  pik-mode-set --target <repo> default-local-rag|graph-lite|full-strict\n  pik-citation-audit --target <repo>\n  pik-trace-build --target <repo>\n  pik-trace-query --target <repo> \"<keyword>\"\n  pik-trace-audit --target <repo>\n  pik-policy-list --target <repo>\n  pik-policy-check --target <repo>\n  pik-policy-explain --target <repo> privacy.local_only\n  pik-policy-lock --target <repo>\n  pik-policy-verify --target <repo>\n  pik-policy-diff --target <repo>\n  pik-help-skills --target <repo> \"现在是文档更新情况，有没有适合我的命令\"\n  pik-privacy-audit --target <repo>\n  pik-privacy-audit --target <repo> --strict\n  pik-offline-lock --target <repo>\n  pik-outbound-audit --target <repo>\n  pik-license-audit --target <repo>\n  pik-graph-build --target <repo>\n  pik-graph-build --target <repo> --run\n  pik-graph-status --target <repo>\n  pik-graph-query --target <repo> \"<entity or keywords>\"\n  pik-graph-diff --target <repo>\n  pik-graph-diff --target <repo> --save-baseline\n  pik-graph-impact --target <repo> --files \"src/a.js,src/b.js\"\n  ",
+      "stderr": ""
+    },
+    {
+      "command": "pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --template greenfield-app --name full_command_surface --mode new --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/README.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "ok AGENTS.md\nok project.manifest.yml\nok .planning/PROJECT.md\nok .planning/STATE.md\nok .planning/config.json\nok .planning/issues/ISSUE_TEMPLATE.md\nok .planning/knowledge/\nok .planning/context/\nok .planning/codebase/\nok .planning/debug/\nok .planning/evidence/\nok .planning/graphs/\nok .planning/issues/\nok .planning/phases/\nok .planning/refresh/\nok .planning/workflows/\n\nContent checks:\nok AGENTS.md placeholders\nok project.manifest.yml placeholders\nok .planning/PROJECT.md placeholders\nok .planning/STATE.md placeholders\nok .planning/config.json placeholders\nok .planning/issues/ISSUE_TEMPLATE.md placeholders\nok .planning/config.json json",
+      "stderr": ""
+    },
+    {
+      "command": "pik-map --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STRUCTURE.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-codebase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/CODEBASE_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/ARCHITECTURE.md\nsource files 2\ntest files 1",
+      "stderr": ""
+    },
+    {
+      "command": "pik-codebase-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/CODEBASE_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/codebase/ARCHITECTURE.md\nsource files 2\ntest files 1",
+      "stderr": ""
+    },
+    {
+      "command": "pik-codebase-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "ok .planning/codebase/CODEBASE_STATUS.md\nok .planning/codebase/STRUCTURE.md\nok .planning/codebase/TESTING.md\n\nGraph status:\n- `.planning/graphs/graph.json`: missing\n- `.planning/graphs/GRAPH_REPORT.md`: missing\n- `graphify-out/graph.json`: missing\n- `graphify-out/GRAPH_REPORT.md`: missing\n- Freshness: missing. No graph data found.",
+      "stderr": ""
+    },
+    {
+      "command": "pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --force --skip-model-check",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 3\ninput skipped 0\nprivacy PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Document context status\nLast scan: 2026-06-25T13:44:22.166Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOCUMENT_INDEX.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOCUMENT_EXTRACT_REPORT.md\nextracted 3\ndocuments 3",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOCUMENT_DIFF.md\nadded 0\nmodified 0\nremoved 0",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE_SENTINEL_7719",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Document citations: FULL_SURFACE_SENTINEL_7719\n- docs/specs/approval.md:3 - FULL_SURFACE_SENTINEL_7719\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/CITATIONS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-citation-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "citation audit PASS\ncitations 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/CITATION_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --run",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE_SENTINEL_7719",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Document context query: FULL_SURFACE_SENTINEL_7719\n- docs/specs/approval.md:3 - FULL_SURFACE_SENTINEL_7719",
+      "stderr": ""
+    },
+    {
+      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --rag FULL_SURFACE_SENTINEL_7719",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "RAG context query: FULL_SURFACE_SENTINEL_7719\nrun node .planning/fixtures/fake-rag-query.mjs 'FULL_SURFACE_SENTINEL_7719'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFULL_SURFACE_RAG_QUERY_OK query=FULL_SURFACE_SENTINEL_7719\nFULL_SURFACE_SENTINEL_7719 answer=local-only\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-rag-golden-add --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/quality/rag-goldens.json\ngolden golden-full-surface-sentinel-7719",
+      "stderr": ""
+    },
+    {
+      "command": "pik-rag-golden-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "rag golden run PASS\ncases 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/quality/RAG_GOLDEN_RUN.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-rag-eval --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "rag eval PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/quality/RAG_EVAL.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_BUILD_HANDOFF.md\nbackend Graphify handoff\nnext pik-graph-status --target <repo>\nrun directly with: pik-graph-build --target <repo> --run",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --run",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "run node .planning/fixtures/fake-graphify.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_BUILD_RESULT.md\ncopied graph yes\ncopied report yes\nstatus success",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Code map status\n- `.planning/graphs/graph.json`: 2 nodes, 1 edges, 0 hyperedges; modified 2026-06-25T13:44:28.467Z\n- `.planning/graphs/GRAPH_REPORT.md`: present; modified 2026-06-25T13:44:28.468Z\n- `graphify-out/graph.json`: 2 nodes, 1 edges, 0 hyperedges; modified 2026-06-25T13:44:23.436Z\n- `graphify-out/GRAPH_REPORT.md`: present; modified 2026-06-25T13:44:23.436Z\n- Freshness: fresh. .planning/graphs/graph.json is newer than scanned source files.",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project approvalLimit",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Code map query: approvalLimit\n- .planning/graphs/GRAPH_REPORT.md:3 FULL_SURFACE_GRAPH_NODE approvalLimit\n- graphify-out/GRAPH_REPORT.md:3 FULL_SURFACE_GRAPH_NODE approvalLimit",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Code map diff\n- Nodes: +0 / -0\n- Edges: +0 / -0\n- Hyperedges: +0 / -0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_DIFF.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-impact --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --files src/approval.js",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Graph impact: src/approval.js\nmatched 1\nimpacted nodes 2\nimpacted edges 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_IMPACT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-risk --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Graph risk\nnodes 2\nedges 1\nhigh coupling 2\nentry-like 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_RISK.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-graph-freshness --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --strict",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Freshness: fresh. .planning/graphs/graph.json is newer than scanned source files.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_FRESHNESS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "preflight PASS\nprofile default-local-rag\nOK rag mtime-only\n  commits behind: unknown\n  relevant changes: 0\n  unrelated committed changes: 0\n  action: skip\n  rag has artifacts, but target is not a git worktree. Use artifact freshness and explicit refresh for high-risk work.\nOK graph mtime-only\n  commits behind: unknown\n  relevant changes: 0\n  unrelated committed changes: 0\n  action: skip\n  graph has artifacts, but target is not a git worktree. Use artifact freshness and explicit refresh for high-risk work.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/PREFLIGHT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "refresh plan PASS\nrag skip mtime-only skip\ngraph skip mtime-only skip\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/REFRESH_PLAN.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --rag --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "rag refresh PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOCUMENT_DIFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/DOCUMENT_INDEX.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/RAG_INDEX_RESULT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/REFRESH_RUN.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --graph --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "graph refresh PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/graphs/GRAPH_BUILD_RESULT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/REFRESH_RUN.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Profile: default-local-rag\nLabel: Default Local RAG\nRAG required: yes\nGraph required: yes\nStrict: no\nDescription: 默认模式：使用本地 GraphRAG 和 Graphify，但只提醒 stale，不自动重建。\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/MODE.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project graph-lite",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "mode graph-lite\nProfile: graph-lite\nLabel: Graph Lite\nRAG required: no\nGraph required: yes\nStrict: no\nDescription: 轻量模式：AI-PIKit + Graphify/codebase 优先，文档/RAG 可缺省并标记风险。\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/MODE.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project default-local-rag",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "mode default-local-rag\nProfile: default-local-rag\nLabel: Default Local RAG\nRAG required: yes\nGraph required: yes\nStrict: no\nDescription: 默认模式：使用本地 GraphRAG 和 Graphify，但只提醒 stale，不自动重建。\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/refresh/MODE.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-evidence-record --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/evidence/20260625T134424Z-full-command-surface-evidence.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/evidence/INDEX.md\nwriteback /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/issues/full-command-surface.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-evidence-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Evidence status\nrecords 1\n- 20260625T134424Z-full-command-surface-evidence.md Full command surface evidence",
+      "stderr": ""
+    },
+    {
+      "command": "pik-trace-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/trace/TRACE_MATRIX.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/trace/TRACE_MATRIX.md\ntrace rows 7",
+      "stderr": ""
+    },
+    {
+      "command": "pik-trace-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Trace query: FULL_SURFACE\nNo trace matches.",
+      "stderr": ""
+    },
+    {
+      "command": "pik-trace-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "trace audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/trace/TRACE_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-offline-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/privacy/OFFLINE_LOCK.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/privacy/OFFLINE_LOCK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/config.json\nprivacy audit PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --strict",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-outbound-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "outbound audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/privacy/OUTBOUND_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-license-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "license audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/privacy/license-audit.md\nitems 3\nnon-mit-or-unknown 2\nrestricted 0",
+      "stderr": ""
+    },
+    {
+      "command": "pik-policy-list --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "privacy.local_only: 默认本地和离线锁\nevidence.citations: 规格回答必须有 citation\nevidence.rag_goldens: RAG golden case 必须可复跑\ntrace.matrix: 规格到代码到证据必须可追踪\ngraph.freshness: stale graph 不能作为完成证据\nfreshness.preflight: 重刷新必须显式触发\nlicense.no_restricted: 禁止商用风险必须显式记录\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/policies/POLICY_LIST.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-policy-explain --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project trace.matrix",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "trace.matrix\n规格到代码到证据必须可追踪\n需要能从文档、代码图、测试、evidence 形成 trace matrix。\ncommand: pik-trace-build --target <repo> && pik-trace-audit --target <repo>",
+      "stderr": ""
+    },
+    {
+      "command": "pik-policy-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --strict",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "policy check PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/policies/POLICY_CHECK.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik-policy-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "policy lock PASS\nhash 94357108e8f8aa199f5b3eb65c927ba014267da3365d6972fb6587f10eec0041\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/policies/POLICY_LOCK.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik-policy-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "policy verify PASS\nlock clean\ndiff CLEAN\nPASS privacy.local_only local-only privacy audit passed\nPASS freshness.preflight preflight PASS; heavy refresh executed: no\nPASS evidence.citations citation audit passed\nPASS graph.freshness .planning/graphs/graph.json is newer than scanned source files.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/policies/POLICY_VERIFY.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik-policy-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "policy diff CLEAN\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/policies/POLICY_DIFF.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik-help-skills --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project 文档更新后想确认影响面和完成前检查",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "完成前检查: 完成前必须过 workflow gate、policy、evidence 和 completion check。\n  pik-preflight --target <repo> --strict\n  pik-workflow-audit --target <repo>\n  pik-policy-check --target <repo>\n  pik-evidence-status --target <repo>\n  pik-completion-check --target <repo>\n文档更新: 先抽取和 diff，再用 citation/golden 确认规格依据。\n  pik-preflight --target <repo>\n  pik-refresh-plan --target <repo>\n  pik-docs-extract --target <repo>\n  pik-docs-diff --target <repo>\n  pik-docs-citations --target <repo> \"<query>\"\n  pik-rag-golden-run --target <repo>\n改修影响面: 先确认 graph 新鲜，再查影响面和风险节点。\n  pik-preflight --target <repo>\n  pik-refresh-plan --target <repo>\n  pik-graph-freshness --target <repo> --strict\n  pik-graph-impact --target <repo> --files \"<files>\"\n  pik-graph-risk --target <repo>\n  pik-trace-query --target <repo> \"<keyword>\"\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/help/HELP_SKILLS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-runtime-install --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "runtime codex\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-code-review/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-debug/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-execute-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-plan-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-verify-work/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex/pik-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
+      "stderr": ""
+    },
+    {
+      "command": "pik-runtime-status --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "runtime codex\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/codex\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "stderr": ""
+    },
+    {
+      "command": "pik-runtime-install --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "runtime claude-code\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code/pik-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
+      "stderr": ""
+    },
+    {
+      "command": "pik-runtime-status --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "runtime claude-code\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/claude-code\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "stderr": ""
+    },
+    {
+      "command": "pik-runtime-install --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-code-review.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-complete-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-debug.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-discuss-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-execute-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-new-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-plan-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-spec-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-ui-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot/pik-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
+      "stderr": ""
+    },
+    {
+      "command": "pik-runtime-status --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/runtime/github-copilot\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "stderr": ""
+    },
+    {
+      "command": "pik-context-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE debug context",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/debug-full-surface-debug-context.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-context-execute --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE execute context",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/execute-full-surface-execute-context.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-workflow-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project debug FULL_SURFACE workflow",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow debug-full-surface-workflow\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/debug-full-surface-workflow.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/debug-full-surface-workflow-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/debug-full-surface-workflow/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/debug-full-surface-workflow/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --gate plan --evidence PLAN.md reviewed",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "mark plan\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --gate implementation --evidence src/approval.js verified",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "mark implementation\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nPASS implementation src/approval.js verified\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project --gate verification --evidence npm run verify:full-command-surface",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "mark verification\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nPASS implementation src/approval.js verified\nPASS verification npm run verify:full-command-surface\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-workflow-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow debug-full-surface-workflow\nstatus running\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nPASS implementation src/approval.js verified\nPASS verification npm run verify:full-command-surface\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-workflow-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow debug-full-surface-workflow\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nPASS implementation src/approval.js verified\nPASS verification npm run verify:full-command-surface\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/debug-full-surface-workflow/WORKFLOW_AUDIT.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik-gate-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "PASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nPASS implementation src/approval.js verified\nPASS verification npm run verify:full-command-surface\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard PASS",
+      "stderr": ""
+    },
+    {
+      "command": "pik-completion-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "PASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nPASS plan PLAN.md reviewed\nPASS implementation src/approval.js verified\nPASS verification npm run verify:full-command-surface\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard PASS\ncompletion allowed",
+      "stderr": ""
+    },
+    {
+      "command": "pik-new-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-new-milestone",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow new-milestone-full-surface-pik-new-milestone\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/milestone-full-surface-pik-new-milestone.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/new-milestone-full-surface-pik-new-milestone-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/new-milestone-full-surface-pik-new-milestone/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/new-milestone-full-surface-pik-new-milestone/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-spec-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-spec-phase",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow spec-phase-full-surface-pik-spec-phase\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/spec-full-surface-pik-spec-phase.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/spec-phase-full-surface-pik-spec-phase-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/spec-phase-full-surface-pik-spec-phase/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/spec-phase-full-surface-pik-spec-phase/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-discuss-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-discuss-phase",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow discuss-phase-full-surface-pik-discuss-phase\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/discuss-full-surface-pik-discuss-phase.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/discuss-phase-full-surface-pik-discuss-phase-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/discuss-phase-full-surface-pik-discuss-phase/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/discuss-phase-full-surface-pik-discuss-phase/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-ui-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-ui-phase",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow ui-phase-full-surface-pik-ui-phase\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/ui-full-surface-pik-ui-phase.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/ui-phase-full-surface-pik-ui-phase-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/ui-phase-full-surface-pik-ui-phase/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/ui-phase-full-surface-pik-ui-phase/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-debug",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow debug-full-surface-pik-debug\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/debug-full-surface-pik-debug.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/debug-full-surface-pik-debug-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/debug-full-surface-pik-debug/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/debug-full-surface-pik-debug/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-plan-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-plan-phase",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow plan-phase-full-surface-pik-plan-phase\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/plan-full-surface-pik-plan-phase.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/plan-phase-full-surface-pik-plan-phase-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/plan-phase-full-surface-pik-plan-phase/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/plan-phase-full-surface-pik-plan-phase/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-execute-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-execute-phase",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow execute-phase-full-surface-pik-execute-phase\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/execute-full-surface-pik-execute-phase.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/execute-phase-full-surface-pik-execute-phase-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/execute-phase-full-surface-pik-execute-phase/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/execute-phase-full-surface-pik-execute-phase/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-code-review --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-code-review",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow code-review-full-surface-pik-code-review\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/review-full-surface-pik-code-review.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/code-review-full-surface-pik-code-review-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/code-review-full-surface-pik-code-review/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/code-review-full-surface-pik-code-review/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-verify-work --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-verify-work",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow verify-work-full-surface-pik-verify-work\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/verify-full-surface-pik-verify-work.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/verify-work-full-surface-pik-verify-work-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/verify-work-full-surface-pik-verify-work/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/verify-work-full-surface-pik-verify-work/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik-complete-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project FULL_SURFACE pik-complete-milestone",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow complete-milestone-full-surface-pik-complete-milestone\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/complete-full-surface-pik-complete-milestone.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/context/handoffs/complete-milestone-full-surface-pik-complete-milestone-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/complete-milestone-full-surface-pik-complete-milestone/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/workflows/complete-milestone-full-surface-pik-complete-milestone/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-iFgT98/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nPASS evidence .planning/evidence\nPASS writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    }
+  ],
+  "issues": []
+}

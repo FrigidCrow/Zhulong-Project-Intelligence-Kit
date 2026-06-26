@@ -1,0 +1,144 @@
+{
+  "generated": "2026-06-25T13:54:40.365Z",
+  "status": "PASS",
+  "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "results": [
+    {
+      "page": "docs/product.html",
+      "viewport": "desktop",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/product-desktop.png",
+      "bytes": 1295495,
+      "metrics": {
+        "h1": "基于你项目的 AI 编程。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 7,
+        "unequalStageRows": 0,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    },
+    {
+      "page": "docs/commands.html",
+      "viewport": "desktop",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/commands-desktop.png",
+      "bytes": 3760957,
+      "metrics": {
+        "h1": "AI-PIKit 命令控制台。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 0,
+        "unequalStageRows": 0,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    },
+    {
+      "page": "docs/technical-guide.html",
+      "viewport": "desktop",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/technical-guide-desktop.png",
+      "bytes": 2643681,
+      "metrics": {
+        "h1": "了解 AI-PIKit 架构。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 0,
+        "unequalStageRows": 0,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    },
+    {
+      "page": "docs/quality-dashboard.html",
+      "viewport": "desktop",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/quality-dashboard-desktop.png",
+      "bytes": 832758,
+      "metrics": {
+        "h1": "AI-PIKit QA Dashboard。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 0,
+        "unequalStageRows": 0,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    },
+    {
+      "page": "docs/product.html",
+      "viewport": "mobile",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/product-mobile.png",
+      "bytes": 1060326,
+      "metrics": {
+        "h1": "基于你项目的 AI 编程。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 7,
+        "unequalStageRows": 0,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "page": "docs/commands.html",
+      "viewport": "mobile",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/commands-mobile.png",
+      "bytes": 3108536,
+      "metrics": {
+        "h1": "AI-PIKit 命令控制台。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 0,
+        "unequalStageRows": 0,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "page": "docs/technical-guide.html",
+      "viewport": "mobile",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/technical-guide-mobile.png",
+      "bytes": 2128252,
+      "metrics": {
+        "h1": "了解 AI-PIKit 架构。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 0,
+        "unequalStageRows": 0,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "page": "docs/quality-dashboard.html",
+      "viewport": "mobile",
+      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/quality-dashboard-mobile.png",
+      "bytes": 517655,
+      "metrics": {
+        "h1": "AI-PIKit QA Dashboard。",
+        "brand": "AI Project Intelligence Kit",
+        "overflow": 0,
+        "emptyCards": 0,
+        "badTextBoxes": 0,
+        "networkNodes": 0,
+        "unequalStageRows": 0,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    }
+  ],
+  "issues": []
+}

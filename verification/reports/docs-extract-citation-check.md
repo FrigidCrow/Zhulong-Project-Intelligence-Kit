@@ -1,0 +1,34 @@
+# AI-PIKit Document Extraction and Citation Verification
+
+生成时间: 2026-06-25T13:53:56.197Z
+
+## 摘要
+
+- 状态: PASS
+- 问题数: 0
+
+## Evidence
+
+- pik docs extract: found extracted 6
+- DOCUMENT_EXTRACT_REPORT: found docx-zip-xml
+- DOCUMENT_EXTRACT_REPORT: found xlsx-zip-xml
+- DOCUMENT_INDEX: found word.docx
+- pik docs citations MD_SENTINEL_2101: found MD_SENTINEL_2101
+- pik docs citations TXT_SENTINEL_2102: found TXT_SENTINEL_2102
+- pik docs citations CSV_SENTINEL_2103: found CSV_SENTINEL_2103
+- pik docs citations PDF_SENTINEL_2104: found PDF_SENTINEL_2104
+- pik docs citations DOCX_SENTINEL_2105: found DOCX_SENTINEL_2105
+- pik docs citations XLSX_SENTINEL_2106: found XLSX_SENTINEL_2106
+- CITATIONS: found XLSX_SENTINEL_2106
+- pik docs diff: found modified 1
+- DOCUMENT_DIFF: found md.md
+
+## Fixture Paths
+
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-V9hSDx`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-V9hSDx/project`
+- Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-docs-extract-citation.mjs'`
+
+## Issues
+
+No docs extraction/citation issues found.

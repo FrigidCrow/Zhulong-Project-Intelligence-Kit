@@ -1,0 +1,433 @@
+{
+  "generated": "2026-06-25T13:55:22.904Z",
+  "status": "PASS",
+  "checkedFiles": [
+    "README.md",
+    "docs/architecture.md",
+    "docs/changelog.md",
+    "docs/commands.html",
+    "docs/extraction-map.md",
+    "docs/field-notes/README.md",
+    "docs/field-notes/graphrag-local-operations-guide.md",
+    "docs/field-notes/gsd-graphify-graphrag-sop.md",
+    "docs/full-test-plan.md",
+    "docs/mvp1-e2e-validation.md",
+    "docs/mvp1-plan.md",
+    "docs/product.html",
+    "docs/quality-dashboard.html",
+    "docs/quality-plan.md",
+    "docs/runtime-command-packs.md",
+    "docs/technical-guide.html",
+    "docs/wishlist-loop-plan.md",
+    "docs/wishlist.md",
+    "verification/README.md"
+  ],
+  "checkedLinks": [
+    {
+      "file": "README.md",
+      "link": "docs/product.html",
+      "target": "docs/product.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/technical-guide.html",
+      "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/quality-plan.md",
+      "target": "docs/quality-plan.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/quality-dashboard.html",
+      "target": "docs/quality-dashboard.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/architecture.md",
+      "target": "docs/architecture.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/runtime-command-packs.md",
+      "target": "docs/runtime-command-packs.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/wishlist.md",
+      "target": "docs/wishlist.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/full-test-plan.md",
+      "target": "docs/full-test-plan.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/changelog.md",
+      "target": "docs/changelog.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/quality-enhancement-report.md",
+      "target": "verification/reports/quality-enhancement-report.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/workflow-policy-enhancement-report.md",
+      "target": "verification/reports/workflow-policy-enhancement-report.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/OUTBOUND_AUDIT.md",
+      "target": "verification/reports/OUTBOUND_AUDIT.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/full-test-plan.md",
+      "target": "docs/full-test-plan.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/full-command-surface-check.md",
+      "target": "verification/reports/full-command-surface-check.md"
+    },
+    {
+      "file": "docs/architecture.md",
+      "link": "full-test-plan.md",
+      "target": "docs/full-test-plan.md"
+    },
+    {
+      "file": "docs/architecture.md",
+      "link": "changelog.md",
+      "target": "docs/changelog.md"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "assets/pik-site.css",
+      "target": "docs/assets/pik-site.css"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "../README.md",
+      "target": "README.md"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "product.html",
+      "target": "docs/product.html"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "technical-guide.html",
+      "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "quality-dashboard.html",
+      "target": "docs/quality-dashboard.html"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "../verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "assets/pik-site.css",
+      "target": "docs/assets/pik-site.css"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "../README.md",
+      "target": "README.md"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "product.html",
+      "target": "docs/product.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "technical-guide.html",
+      "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "quality-dashboard.html",
+      "target": "docs/quality-dashboard.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "../verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "technical-guide.html",
+      "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "assets/pik-site.js",
+      "target": "docs/assets/pik-site.js"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "assets/pik-site.css",
+      "target": "docs/assets/pik-site.css"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../README.md",
+      "target": "README.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "product.html",
+      "target": "docs/product.html"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "technical-guide.html",
+      "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "quality-dashboard.html",
+      "target": "docs/quality-dashboard.html"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-check.md",
+      "target": "verification/reports/docs-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-update-fixture.md",
+      "target": "verification/reports/docs-update-fixture.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/rag-command-check.md",
+      "target": "verification/reports/rag-command-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/rag-local-check.md",
+      "target": "verification/reports/rag-local-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/schema-check.md",
+      "target": "verification/reports/schema-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/naming-check.md",
+      "target": "verification/reports/naming-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/runtime-pack-status.md",
+      "target": "verification/reports/runtime-pack-status.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/visual-check.md",
+      "target": "verification/reports/visual-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/mvp3-evidence-policy-check.md",
+      "target": "verification/reports/mvp3-evidence-policy-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/mvp35-refresh-control-check.md",
+      "target": "verification/reports/mvp35-refresh-control-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/workflow-facade-check.md",
+      "target": "verification/reports/workflow-facade-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/policy-hardening-check.md",
+      "target": "verification/reports/policy-hardening-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/full-command-surface-check.md",
+      "target": "verification/reports/full-command-surface-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/full-test-round-1.md",
+      "target": "verification/reports/full-test-round-1.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/full-test-round-2.md",
+      "target": "verification/reports/full-test-round-2.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "full-test-plan.md",
+      "target": "docs/full-test-plan.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-check.md",
+      "target": "verification/reports/docs-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/rag-local-check.md",
+      "target": "verification/reports/rag-local-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/mvp3-evidence-policy-check.md",
+      "target": "verification/reports/mvp3-evidence-policy-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/mvp35-refresh-control-check.md",
+      "target": "verification/reports/mvp35-refresh-control-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/workflow-facade-check.md",
+      "target": "verification/reports/workflow-facade-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/policy-hardening-check.md",
+      "target": "verification/reports/policy-hardening-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/full-command-surface-check.md",
+      "target": "verification/reports/full-command-surface-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/product-desktop.png",
+      "target": "verification/reports/product-desktop.png"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/product-desktop.png",
+      "target": "verification/reports/product-desktop.png"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/commands-desktop.png",
+      "target": "verification/reports/commands-desktop.png"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/commands-desktop.png",
+      "target": "verification/reports/commands-desktop.png"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/technical-guide-desktop.png",
+      "target": "verification/reports/technical-guide-desktop.png"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/technical-guide-desktop.png",
+      "target": "verification/reports/technical-guide-desktop.png"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "assets/pik-site.css",
+      "target": "docs/assets/pik-site.css"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "../README.md",
+      "target": "README.md"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "product.html",
+      "target": "docs/product.html"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "technical-guide.html",
+      "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "quality-dashboard.html",
+      "target": "docs/quality-dashboard.html"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "../verification/reports/latest.md",
+      "target": "verification/reports/latest.md"
+    }
+  ],
+  "issues": []
+}

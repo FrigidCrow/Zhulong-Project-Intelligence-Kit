@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Project Intelligence Kit - 命令使用手册</title>
+  <meta name="description" content="AI Project Intelligence Kit 命令用法、示例和项目接入步骤。">
+  <link rel="stylesheet" href="assets/pik-site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="topbar">
+    <a class="brand-mark" href="../README.md">AI Project Intelligence Kit</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="product.html">产品</a>
+      <a href="commands.html" aria-current="page">命令</a>
+      <a href="technical-guide.html">技术教程</a>
+      <a href="quality-dashboard.html">QA</a>
+      <a href="../verification/reports/latest.md">验证报告</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-title">
+      <p class="eyebrow">Command Manual</p>
+      <h1>AI-PIKit 命令控制台。</h1>
+      <p>这里明确每个命令的用途、典型用法、产出文件，以及接手新项目和既存项目时的 step-by-step 操作。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>先用命令地图建立方向感。</h2>
+        <p>AI-PIKit 命令很多，但日常使用可以按阶段理解：接入、建基线、查文档、查代码图、进入 workflow、写证据、完成前检查。</p>
+      </div>
+      <div class="console-mock" aria-label="AI-PIKit 执行管道路径">
+        <div class="window-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span>command-palette / execution pipeline</span>
+          <span class="status-pill" style="margin-left:auto">核心 API</span>
+        </div>
+        <div class="stage-flow command-flow">
+          <code class="active">pik-init</code>
+          <code>pik-codebase-scan</code>
+          <code>pik-docs-scan</code>
+          <code>pik-preflight</code>
+          <code>pik-refresh-plan</code>
+          <code>pik-graph-build</code>
+          <code>pik-debug</code>
+          <code>pik-evidence-record</code>
+          <code>pik-completion-check</code>
+        </div>
+      </div>
+      <div class="control-bento command-bento">
+        <article class="control-card">
+          <div class="pane-label">init</div>
+          <h3>初始化</h3>
+          <p><code>pik-init</code> / <code>pik-verify</code> / <code>pik-map</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">baseline</div>
+          <h3>代码基线</h3>
+          <p><code>pik-codebase-scan</code> / <code>pik-codebase-status</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">knowledge</div>
+          <h3>文档/RAG</h3>
+          <p><code>pik-docs-scan</code> / <code>pik-docs-query</code> / <code>pik-docs-index</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">impact</div>
+          <h3>Graphify</h3>
+          <p><code>pik-graph-build</code> / <code>pik-graph-query</code> / <code>pik-graph-diff</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">budget</div>
+          <h3>刷新预算</h3>
+          <p><code>pik-preflight</code> / <code>pik-refresh-plan</code> / <code>pik-refresh-run</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">workflow</div>
+          <h3>Public workflow</h3>
+          <p><code>pik-debug</code> / <code>pik-plan-phase</code> / <code>pik-execute-phase</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">proof</div>
+          <h3>Evidence</h3>
+          <p><code>pik-evidence-record</code> / <code>pik-completion-check</code></p>
+        </article>
+        <article class="control-card">
+          <div class="pane-label">policy</div>
+          <h3>策略合同</h3>
+          <p><code>pik-policy-lock</code> / <code>pik-policy-verify</code> / <code>pik-policy-diff</code></p>
+        </article>
+      </div>
+    </section>
+
+    <div class="doc-layout">
+      <aside class="toc" aria-label="目录">
+        <a href="#rules">通用规则</a>
+        <a href="#new-project">新项目接入</a>
+        <a href="#existing-project">既存项目接入</a>
+        <a href="#init">初始化</a>
+        <a href="#codebase">Codebase</a>
+        <a href="#docs">文档/RAG</a>
+        <a href="#graph">Graphify</a>
+        <a href="#refresh">刷新预算</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#quality">MVP3 证据质量</a>
+        <a href="#runtime">Runtime</a>
+        <a href="#workflow">Workflow guard</a>
+        <a href="#public-workflow">Public workflow</a>
+        <a href="#context">Context</a>
+        <a href="#all-commands">全命令详解</a>
+      </aside>
+
+      <div>
+        <section id="rules" class="page-section">
+          <h2>通用规则</h2>
+          <p>安装 bin 后推荐直接使用 `pik-*`。未安装 bin 时，可以在 AI-PIKit 仓库里使用 `node bin/pik.mjs <subcommand>`。</p>
+          <pre class="code-block"><code>pik-docs-scan --target /path/to/repo
+node bin/pik.mjs docs scan --target /path/to/repo</code></pre>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>参数</th><th>用途</th><th>注意</th></tr></thead>
+              <tbody>
+                <tr><td><code>--target &lt;repo&gt;</code></td><td>指定目标项目目录。</td><td>大多数命令都需要。</td></tr>
+                <tr><td><code>--template</code></td><td>选择初始化模板。</td><td>常用 `greenfield-app`、`brownfield-monorepo`。</td></tr>
+                <tr><td><code>--mode new|existing</code></td><td>写入项目接入模式。</td><td>既存项目建议显式写 `--mode existing`。</td></tr>
+                <tr><td><code>--run</code></td><td>执行配置中的外部命令。</td><td>可能触发 GraphRAG/Graphify 的联网行为，取决于配置。</td></tr>
+                <tr><td><code>--rag</code></td><td>执行配置的 RAG query command。</td><td>结果写入 `RAG_QUERY_RESULT.md`。</td></tr>
+                <tr><td><code>--writeback</code></td><td>把 evidence 摘要追加到目标记录。</td><td>目标路径必须在项目内。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="new-project" class="page-section">
+          <h2>新项目 step-by-step</h2>
+          <p>新项目可以从第一天开始积累 `.planning/`，先建立 workspace，再逐步补文档、代码地图和 evidence。</p>
+          <pre class="code-block"><code>cd /path/to/new-project
+
+pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+pik-codebase-scan --target "$PWD"
+pik-docs-scan --target "$PWD"
+pik-verify --target "$PWD"
+
+pik-new-milestone --target "$PWD" "MVP1 walking skeleton"
+pik-plan-phase --target "$PWD" "phase 1"
+pik-execute-phase --target "$PWD" "implement first vertical slice"
+pik-verify-work --target "$PWD" "verify phase 1"</code></pre>
+        </section>
+
+        <section id="existing-project" class="page-section">
+          <h2>既存项目 step-by-step</h2>
+          <p>既存项目不要大改原结构。AI-PIKit 作为本地 intelligence layer 叠加进去。初始化后必须先跑 codebase scan。</p>
+          <pre class="code-block"><code>cd /path/to/existing-project
+
+pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+pik-codebase-scan --target "$PWD"
+pik-codebase-status --target "$PWD"
+
+pik-docs-scan --target "$PWD"
+pik-docs-normalize --target "$PWD"
+pik-docs-query --target "$PWD" "障害 承認 QA"
+
+pik-graph-build --target "$PWD" --run
+pik-graph-status --target "$PWD"
+
+pik-debug --target "$PWD" "生产审批金额异常"</code></pre>
+          <div class="callout">既存项目的 `codebase` gate 要求 `.planning/codebase/CODEBASE_STATUS.md` 存在，并且源码数量大于 0。</div>
+        </section>
+
+        <section id="init" class="page-section">
+          <h2>初始化命令</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-init</code></td><td>初始化 AI-PIKit workspace。</td><td><code>pik-init --target "$PWD" --template brownfield-monorepo --name app --mode existing</code></td><td><code>AGENTS.md</code>, <code>project.manifest.yml</code>, <code>.planning/</code>, <code>INIT_PROFILE.md</code></td></tr>
+                <tr><td><code>pik-verify</code></td><td>检查 workspace 必要文件。</td><td><code>pik-verify --target "$PWD"</code></td><td>stdout ok/missing。</td></tr>
+                <tr><td><code>pik-map</code></td><td>轻量生成代码结构说明。</td><td><code>pik-map --target "$PWD"</code></td><td><code>.planning/codebase/STRUCTURE.md</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="codebase" class="page-section">
+          <h2>Codebase 命令</h2>
+          <p>Codebase 命令是 AI-PIKit 理解项目现状的第一步，也是 workflow guard 的硬 gate。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-codebase</code></td><td><code>pik-codebase-scan</code> 的别名。</td><td><code>pik-codebase --target "$PWD"</code></td><td><code>.planning/codebase/</code></td></tr>
+                <tr><td><code>pik-codebase-scan</code></td><td>扫描源码、测试、配置、入口线索。</td><td><code>pik-codebase-scan --target "$PWD"</code></td><td><code>CODEBASE_STATUS.md</code>, <code>STRUCTURE.md</code>, <code>STACK.md</code>, <code>TESTING.md</code>, <code>ARCHITECTURE.md</code></td></tr>
+                <tr><td><code>pik-codebase-status</code></td><td>查看 codebase inventory 和 graph 状态。</td><td><code>pik-codebase-status --target "$PWD"</code></td><td>stdout 状态。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="docs" class="page-section">
+          <h2>文档 / RAG 命令</h2>
+          <p>默认扫描 `.planning/config.json` 中的 `spec_context.source_paths`，并补充 `docs`、`documents`、`仕様書`。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-docs-scan</code></td><td>扫描文档来源。</td><td><code>pik-docs-scan --target "$PWD"</code></td><td><code>RAG_SOURCES.md</code>, <code>DOC_RAG_STATUS.md</code></td></tr>
+                <tr><td><code>pik-docs-status</code></td><td>查看文档状态。</td><td><code>pik-docs-status --target "$PWD"</code></td><td>stdout 状态。</td></tr>
+                <tr><td><code>pik-docs-normalize</code></td><td>归一化 Markdown/text/csv。</td><td><code>pik-docs-normalize --target "$PWD"</code></td><td><code>.planning/knowledge/normalized/</code></td></tr>
+                <tr><td><code>pik-docs-extract</code></td><td>本地抽取 md/txt/csv/pdf/docx/xlsx 文本。</td><td><code>pik-docs-extract --target "$PWD"</code></td><td><code>DOCUMENT_INDEX.json</code>, <code>DOCUMENT_EXTRACT_REPORT.md</code>, <code>extracted/</code></td></tr>
+                <tr><td><code>pik-docs-diff</code></td><td>根据文档 hash 检查新增、删除、变更。</td><td><code>pik-docs-diff --target "$PWD"</code></td><td><code>DOCUMENT_DIFF.md</code></td></tr>
+                <tr><td><code>pik-docs-citations</code></td><td>查询本地抽取文本并生成 source citation。</td><td><code>pik-docs-citations --target "$PWD" "承認条件"</code></td><td><code>CITATIONS.md</code></td></tr>
+                <tr><td><code>pik-citation-audit</code></td><td>检查 citation 是否指向存在的源文件，避免把不存在的文档当成仕様依据。</td><td><code>pik-citation-audit --target "$PWD"</code></td><td><code>CITATION_AUDIT.md</code></td></tr>
+                <tr><td><code>pik-docs-query</code></td><td>本地关键词查询。</td><td><code>pik-docs-query --target "$PWD" "承認条件"</code></td><td>源文档路径和行。</td></tr>
+                <tr><td><code>pik-rag-init-local</code></td><td>初始化默认本地 GraphRAG。</td><td><code>pik-rag-init-local --target "$PWD"</code></td><td><code>LOCAL_RAG_STATUS.md</code>, <code>settings.yaml</code></td></tr>
+                <tr><td><code>pik-rag-golden-add</code></td><td>登记一个 RAG golden case，记录问题、期望命中词和 citation。</td><td><code>pik-rag-golden-add --target "$PWD" --question "承認上限" --expect "30,000" --citation "docs/qa.md:3"</code></td><td><code>rag-goldens.json</code></td></tr>
+                <tr><td><code>pik-rag-golden-run</code></td><td>运行所有 golden case，确认本地文档/RAG 查询仍能命中关键依据。</td><td><code>pik-rag-golden-run --target "$PWD"</code></td><td><code>RAG_GOLDEN_RESULTS.md</code></td></tr>
+                <tr><td><code>pik-rag-eval</code></td><td>汇总 golden/citation 状态，形成 RAG 可信度报告。</td><td><code>pik-rag-eval --target "$PWD"</code></td><td><code>RAG_EVAL.md</code></td></tr>
+                <tr><td><code>pik-privacy-audit</code></td><td>审计 RAG 配置是否仍是 local-only。</td><td><code>pik-privacy-audit --target "$PWD"</code></td><td><code>PRIVACY_AUDIT.md</code></td></tr>
+                <tr><td><code>pik-offline-lock</code></td><td>启用 local-only/offline 配置锁。</td><td><code>pik-offline-lock --target "$PWD"</code></td><td><code>OFFLINE_LOCK.md</code>, <code>OFFLINE_LOCK.json</code></td></tr>
+                <tr><td><code>pik-outbound-audit</code></td><td>检查默认执行面是否存在外发 URL/key/network command。</td><td><code>pik-outbound-audit --target "$PWD"</code></td><td><code>OUTBOUND_AUDIT.md</code></td></tr>
+                <tr><td><code>pik-license-audit</code></td><td>审计当前工具和依赖 license。</td><td><code>pik-license-audit --target "$PWD"</code></td><td><code>license-audit.md</code></td></tr>
+                <tr><td><code>pik-docs-index</code></td><td>生成 RAG index handoff。</td><td><code>pik-docs-index --target "$PWD"</code></td><td><code>RAG_INDEX_HANDOFF.md</code></td></tr>
+                <tr><td><code>pik-docs-index --run</code></td><td>执行配置的 RAG index command。</td><td><code>pik-docs-index --target "$PWD" --run</code></td><td><code>RAG_INDEX_RESULT.md</code></td></tr>
+                <tr><td><code>pik-docs-query --rag</code></td><td>执行配置的 RAG query command。</td><td><code>pik-docs-query --target "$PWD" --rag "仕様根拠は？"</code></td><td><code>RAG_QUERY_RESULT.md</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="graph" class="page-section">
+          <h2>Graphify / 代码地图命令</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-graph-build</code></td><td>生成 Graphify build handoff。</td><td><code>pik-graph-build --target "$PWD"</code></td><td><code>GRAPH_BUILD_HANDOFF.md</code></td></tr>
+                <tr><td><code>pik-graph-build --run</code></td><td>执行 Graphify update command 并同步结果。</td><td><code>pik-graph-build --target "$PWD" --run</code></td><td><code>graph.json</code>, <code>GRAPH_REPORT.md</code>, <code>GRAPH_BUILD_RESULT.md</code></td></tr>
+                <tr><td><code>pik-graph-status</code></td><td>查看 graph 和 freshness。</td><td><code>pik-graph-status --target "$PWD"</code></td><td>stdout 状态。</td></tr>
+                <tr><td><code>pik-graph-query</code></td><td>查询 graph/report artifact。</td><td><code>pik-graph-query --target "$PWD" "PaymentService"</code></td><td>命中节点或报告行。</td></tr>
+                <tr><td><code>pik-graph-diff</code></td><td>比较 baseline 和当前 graph。</td><td><code>pik-graph-diff --target "$PWD" --details</code></td><td><code>GRAPH_DIFF.md</code></td></tr>
+                <tr><td><code>pik-graph-diff --save-baseline</code></td><td>保存当前 graph baseline。</td><td><code>pik-graph-diff --target "$PWD" --save-baseline</code></td><td><code>graph.baseline.json</code></td></tr>
+                <tr><td><code>pik-graph-impact</code></td><td>按变更文件查询一跳影响面。</td><td><code>pik-graph-impact --target "$PWD" --files "src/a.js"</code></td><td><code>GRAPH_IMPACT.md</code></td></tr>
+                <tr><td><code>pik-graph-risk</code></td><td>输出高耦合节点、入口样节点和测试面。</td><td><code>pik-graph-risk --target "$PWD"</code></td><td><code>GRAPH_RISK.md</code></td></tr>
+                <tr><td><code>pik-graph-freshness</code></td><td>检查源码是否比 graph 新。</td><td><code>pik-graph-freshness --target "$PWD" --strict</code></td><td><code>GRAPH_FRESHNESS.md</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="refresh" class="page-section">
+          <h2>Refresh / Mode 命令</h2>
+          <p>这些命令用于控制执行成本和上下文新鲜度。它们默认只做轻量检查和提醒；真正刷新 GraphRAG / Graphify 必须显式调用 `pik-refresh-run`，或使用已有显式命令 `pik-docs-index --run`、`pik-graph-build --run`。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-preflight</code></td><td>检查 RAG/Graphify 距离当前 commit 落后多少，以及是否有相关变更。</td><td><code>pik-preflight --target "$PWD"</code></td><td><code>PREFLIGHT.md</code>, <code>PREFLIGHT.json</code></td></tr>
+                <tr><td><code>pik-refresh-plan</code></td><td>生成差分刷新建议；无关 commit 会建议跳过。</td><td><code>pik-refresh-plan --target "$PWD"</code></td><td><code>REFRESH_PLAN.md</code>, <code>REFRESH_PLAN.json</code></td></tr>
+                <tr><td><code>pik-refresh-run</code></td><td>显式执行 RAG、Graphify 或两者的刷新。</td><td><code>pik-refresh-run --target "$PWD" --graph</code></td><td><code>REFRESH_RUN.md</code>, <code>REFRESH_STATE.json</code></td></tr>
+                <tr><td><code>pik-mode-status</code></td><td>查看当前执行预算模式。</td><td><code>pik-mode-status --target "$PWD"</code></td><td><code>MODE.md</code></td></tr>
+                <tr><td><code>pik-mode-set</code></td><td>切换 `default-local-rag`、`graph-lite`、`full-strict`。</td><td><code>pik-mode-set --target "$PWD" graph-lite</code></td><td><code>.planning/config.json</code>, <code>MODE.md</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">`pik-preflight` / `pik-refresh-plan` 一定不会执行重刷新。看到 `behind-unrelated` 时，说明落后的 commit 没改到文档源或代码地图相关文件，可以先跳过。</div>
+        </section>
+
+        <section id="evidence" class="page-section">
+          <h2>Evidence 命令</h2>
+          <pre class="code-block"><code>pik-evidence-record --target "$PWD" \
+  "代理承認上限修正を検証済み" \
+  --command "npm test && npm run test:task" \
+  --result "passed" \
+  --source "docs/qa/QA-042_代理承認上限.md,.planning/graphs/GRAPH_REPORT.md" \
+  --writeback .planning/issues/CR-017_proxy_approval_limit.md</code></pre>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-evidence-record</code></td><td>写一条验证证据。</td><td><code>.planning/evidence/&lt;record&gt;.md</code>, <code>INDEX.md</code></td></tr>
+                <tr><td><code>pik-evidence-record --writeback</code></td><td>追加证据摘要到 issue/debug/phase。</td><td>目标记录中出现 <code>AI-PIKit Evidence Writeback</code></td></tr>
+                <tr><td><code>pik-evidence-status</code></td><td>查看 evidence 数量和最新记录。</td><td>stdout 状态。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="quality" class="page-section">
+          <h2>MVP3 证据质量 / Trace / Policy 命令</h2>
+          <p>MVP3 的重点是把 RAG 结果、citation、代码影响面、测试和 evidence 串成可审计链路。日常完成前建议至少跑一次 `pik-policy-check --strict`。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-trace-build</code></td><td>把文档索引、Graphify graph、测试文件和 evidence 记录汇总成 trace matrix。</td><td><code>pik-trace-build --target "$PWD"</code></td><td><code>TRACE_MATRIX.json</code>, <code>TRACE_MATRIX.md</code></td></tr>
+                <tr><td><code>pik-trace-query</code></td><td>按关键词查询 trace matrix，快速确认某条仕様关联了哪些代码、测试和证据。</td><td><code>pik-trace-query --target "$PWD" "代理承認"</code></td><td>stdout 查询结果。</td></tr>
+                <tr><td><code>pik-trace-audit</code></td><td>检查 trace matrix 是否具备文档、代码和 evidence 维度。</td><td><code>pik-trace-audit --target "$PWD"</code></td><td><code>TRACE_AUDIT.md</code></td></tr>
+                <tr><td><code>pik-policy-list</code></td><td>列出当前内置 policy：local-only、citation、golden、trace、graph freshness、license。</td><td><code>pik-policy-list --target "$PWD"</code></td><td><code>POLICY_LIST.md</code></td></tr>
+                <tr><td><code>pik-policy-explain</code></td><td>解释单条 policy 的目的和建议命令。</td><td><code>pik-policy-explain --target "$PWD" trace.matrix</code></td><td>stdout 解释。</td></tr>
+                <tr><td><code>pik-policy-check</code></td><td>执行所有 policy，并把四态结果写成报告。</td><td><code>pik-policy-check --target "$PWD" --strict</code></td><td><code>POLICY_CHECK.md</code>, <code>POLICY_CHECK.json</code></td></tr>
+                <tr><td><code>pik-policy-lock</code></td><td>在 offline lock 后生成稳定 policy snapshot 和 SHA-256 hash。</td><td><code>pik-policy-lock --target "$PWD"</code></td><td><code>POLICY_LOCK.md</code>, <code>POLICY_LOCK.json</code></td></tr>
+                <tr><td><code>pik-policy-verify</code></td><td>对比当前配置和 lock，同时执行轻量 privacy/preflight/citation/graph freshness checks。</td><td><code>pik-policy-verify --target "$PWD"</code></td><td><code>POLICY_VERIFY.md</code>, <code>POLICY_VERIFY.json</code></td></tr>
+                <tr><td><code>pik-policy-diff</code></td><td>输出 lock snapshot 与当前 snapshot 的字段级差异。</td><td><code>pik-policy-diff --target "$PWD"</code></td><td><code>POLICY_DIFF.md</code>, <code>POLICY_DIFF.json</code></td></tr>
+                <tr><td><code>pik-help-skills</code></td><td>根据“我现在是什么情况”推荐适合的 `pik-*` 命令组。</td><td><code>pik-help-skills --target "$PWD" "文档更新后想确认影响面"</code></td><td><code>HELP_SKILLS.md</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre class="code-block"><code>pik-rag-golden-run --target "$PWD"
+pik-citation-audit --target "$PWD"
+pik-trace-build --target "$PWD"
+pik-trace-audit --target "$PWD"
+pik-policy-check --target "$PWD" --strict
+pik-policy-lock --target "$PWD"
+pik-policy-verify --target "$PWD"
+pik-policy-diff --target "$PWD"</code></pre>
+        </section>
+
+        <section id="runtime" class="page-section">
+          <h2>Runtime 命令</h2>
+          <p>Runtime command pack 让 Codex、Claude Code、GitHub Copilot 可以直接调用 AI-PIKit workflow。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Runtime</th><th>安装</th><th>检查</th><th>调用方式</th></tr></thead>
+              <tbody>
+                <tr><td>Codex</td><td><code>pik-runtime-install --runtime codex --dest ~/.codex/skills</code></td><td><code>pik-runtime-status --runtime codex --dest ~/.codex/skills</code></td><td><code>$pik-debug</code></td></tr>
+                <tr><td>Claude Code</td><td><code>pik-runtime-install --runtime claude-code --dest ~/.claude/skills</code></td><td><code>pik-runtime-status --runtime claude-code --dest ~/.claude/skills</code></td><td><code>/pik-debug</code></td></tr>
+                <tr><td>GitHub Copilot</td><td><code>pik-runtime-install --runtime github-copilot --dest .github/prompts</code></td><td><code>pik-runtime-status --runtime github-copilot --dest .github/prompts</code></td><td><code>/pik-debug</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="workflow" class="page-section">
+          <h2>Workflow guard 命令</h2>
+          <p>Workflow guard 会检查 context、codebase、docs、graph、plan、implementation、verification、evidence、writeback。证据不齐时，completion check 返回非 0。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>示例</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-workflow-run</code></td><td>启动任意 guard workflow。</td><td><code>pik-workflow-run --target "$PWD" debug "bug"</code></td></tr>
+                <tr><td><code>pik-workflow-status</code></td><td>查看 active workflow gate 状态。</td><td><code>pik-workflow-status --target "$PWD"</code></td></tr>
+                <tr><td><code>pik-workflow-continue</code></td><td>标记人工 gate。</td><td><code>pik-workflow-continue --target "$PWD" --gate plan --evidence "PLAN.md reviewed"</code></td></tr>
+                <tr><td><code>pik-workflow-audit</code></td><td>输出失败 gate 原因和下一条建议命令。</td><td><code>pik-workflow-audit --target "$PWD"</code></td></tr>
+                <tr><td><code>pik-gate-check</code></td><td>检查所有 gate。</td><td><code>pik-gate-check --target "$PWD"</code></td></tr>
+                <tr><td><code>pik-completion-check</code></td><td>最终完成前检查。</td><td><code>pik-completion-check --target "$PWD"</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="public-workflow" class="page-section">
+          <h2>Public workflow 命令</h2>
+          <p>日常开发优先用这一组命令。它们会自动写 workflow facade，汇总 preflight、policy、docs、graph、evidence 和下一步建议，但不会自动触发 GraphRAG index、Graphify build 或 refresh-run。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>场景</th><th>内部路由</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-new-milestone</code></td><td>开启新 milestone。</td><td><code>workflow run new-milestone</code></td></tr>
+                <tr><td><code>pik-spec-phase</code></td><td>梳理需求和仕様依据。</td><td><code>workflow run spec-phase</code></td></tr>
+                <tr><td><code>pik-discuss-phase</code></td><td>讨论决策和未决点。</td><td><code>workflow run discuss-phase</code></td></tr>
+                <tr><td><code>pik-ui-phase</code></td><td>梳理 UI 范围和验证。</td><td><code>workflow run ui-phase</code></td></tr>
+                <tr><td><code>pik-debug</code></td><td>缺陷调查、根因分析和验证。</td><td><code>workflow run debug</code></td></tr>
+                <tr><td><code>pik-plan-phase</code></td><td>制定阶段计划。</td><td><code>workflow run plan-phase</code></td></tr>
+                <tr><td><code>pik-execute-phase</code></td><td>执行改修或新规开发。</td><td><code>workflow run execute-phase</code></td></tr>
+                <tr><td><code>pik-code-review</code></td><td>代码审查和影响面确认。</td><td><code>workflow run code-review</code></td></tr>
+                <tr><td><code>pik-verify-work</code></td><td>验证实现是否满足需求。</td><td><code>workflow run verify-work</code></td></tr>
+                <tr><td><code>pik-complete-milestone</code></td><td>完成 milestone 并整理证据。</td><td><code>workflow run complete-milestone</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="context" class="page-section">
+          <h2>Context 命令</h2>
+          <p>这两个命令只生成 context packet，不启动完整 guard。日常开发优先使用 public workflow 命令。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>命令</th><th>用途</th><th>产出</th></tr></thead>
+              <tbody>
+                <tr><td><code>pik-context-debug</code></td><td>生成 debug context packet。</td><td><code>.planning/context/debug-*.md</code></td></tr>
+                <tr><td><code>pik-context-execute</code></td><td>生成 execute context packet。</td><td><code>.planning/context/execute-*.md</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="all-commands" class="page-section">
+          <h2>全命令详解</h2>
+          <p>这一节按命令为单位展开。判断一个命令是否真的生效，不看聊天里说了什么，而看它是否产生了对应本地 artifact，或是否让 guard 状态发生变化。</p>
+
+          <div class="command-catalog">
+            <article class="command-card">
+              <header><h3><code>pik</code></h3><span class="tag">总入口</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>AI-PIKit CLI 的统一入口。安装 bin 后通常直接用具体命令；调试时可用 `node bin/pik.mjs`。</dd></div>
+                  <div><dt>何时用</dt><dd>查看 help、验证命令路由、在未安装全局 bin 时从仓库内运行。</dd></div>
+                  <div><dt>判断标准</dt><dd>`pik --help` 能列出全部命令；`node bin/pik.mjs --help` 输出一致。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik --help
+node bin/pik.mjs --help</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-init</code></h3><span class="tag">初始化</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把 AI-PIKit intelligence layer 叠加到目标项目，不移动原源码。</dd></div>
+                  <div><dt>何时用</dt><dd>新项目第一步、既存项目接入第一步。既存项目后面必须立刻跑 `pik-codebase-scan`。</dd></div>
+                  <div><dt>产出</dt><dd>`AGENTS.md`、`project.manifest.yml`、`.planning/`、`.planning/INIT_PROFILE.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+cat .planning/INIT_PROFILE.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-verify</code></h3><span class="tag">初始化检查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>检查目标项目是否具备 AI-PIKit 必要文件和目录。</dd></div>
+                  <div><dt>何时用</dt><dd>init 后、复制项目后、怀疑 `.planning/` 缺失时。</dd></div>
+                  <div><dt>判断标准</dt><dd>stdout 中关键项为 `ok`；缺失项会显示 `missing`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-verify --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-map</code></h3><span class="tag">轻量地图</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>生成一个轻量项目结构说明，适合快速看目录和入口。</dd></div>
+                  <div><dt>何时用</dt><dd>临时理解项目结构，或在完整 codebase scan 前快速建初始结构。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/codebase/STRUCTURE.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-map --target "$PWD"
+sed -n '1,80p' .planning/codebase/STRUCTURE.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-codebase</code> / <code>pik-codebase-scan</code></h3><span class="tag">代码基线</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>扫描源码、测试、配置、入口线索，建立 codebase baseline。</dd></div>
+                  <div><dt>何时用</dt><dd>既存项目 init 后必须先跑；每次大范围代码变更、目录调整、框架迁移后重跑。</dd></div>
+                  <div><dt>产出</dt><dd>`CODEBASE_STATUS.md`、`STRUCTURE.md`、`STACK.md`、`TESTING.md`、`ARCHITECTURE.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-codebase-scan --target "$PWD"
+pik-codebase-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-codebase-status</code></h3><span class="tag">代码基线检查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>查看 codebase scan 是否存在，以及 Graphify graph 的同步状态。</dd></div>
+                  <div><dt>何时用</dt><dd>开始 `pik-debug`、`pik-plan-phase` 前确认既存项目不是裸接入。</dd></div>
+                  <div><dt>判断标准</dt><dd>应看到 `.planning/codebase/CODEBASE_STATUS.md` 等文件为 ok。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-codebase-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-docs-scan</code></h3><span class="tag">文档发现</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>扫描 `docs`、`documents`、`仕様書` 以及配置的文档目录，生成文档来源清单。</dd></div>
+                  <div><dt>何时用</dt><dd>第一次导入文档后、文档新增/删除/移动后、开始需求分析前。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/knowledge/RAG_SOURCES.md`、`DOC_RAG_STATUS.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-docs-scan --target "$PWD"
+pik-docs-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-docs-normalize</code></h3><span class="tag">文档归一化</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把可读文本类文档复制/转写成稳定的 normalized markdown 入口。</dd></div>
+                  <div><dt>何时用</dt><dd>第一次扫描文档后、文档内容更新后、本地关键词查询前。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/knowledge/normalized/` 下的规范化文件。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-docs-normalize --target "$PWD"
+ls .planning/knowledge/normalized</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-docs-query</code></h3><span class="tag">本地文档查询</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>对 normalized 文档做本地关键词查询，不依赖外部 RAG provider。</dd></div>
+                  <div><dt>何时用</dt><dd>想快速查仕様、QA、議事録里的关键词；保密项目优先用这个模式。</dd></div>
+                  <div><dt>判断标准</dt><dd>输出应包含命中文档路径、行号或片段；没有命中则说明本地文档中未发现。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-docs-query --target "$PWD" "代理承認 上限"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-rag-init-local</code></h3><span class="tag">默认本地 GraphRAG</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>创建 `graphrag-workspace/`、同步文档到 `input/`、生成 Ollama + LanceDB 的本地 `settings.yaml`。</dd></div>
+                  <div><dt>何时用</dt><dd>第一次接入项目、文档来源变化后、需要重建本地 GraphRAG 前。</dd></div>
+                  <div><dt>前置</dt><dd>本机可执行 `graphrag`、`ollama`，并已拉取 `qwen2.5:14b` 和 `nomic-embed-text`。</dd></div>
+                  <div><dt>保密</dt><dd>默认不需要 `GRAPHRAG_API_KEY`，不生成 `.env`，只允许 `http://127.0.0.1:11434` / `localhost`。</dd></div>
+                  <div><dt>产出</dt><dd>`graphrag-workspace/settings.yaml`、`graphrag-workspace/input/`、`LOCAL_RAG_STATUS.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-rag-init-local --target "$PWD"
+sed -n '1,120p' .planning/knowledge/LOCAL_RAG_STATUS.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-privacy-audit</code></h3><span class="tag">本地保密审计</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>检查 `.planning/config.json`、`project.manifest.yml`、`graphrag-workspace/settings.yaml` 和 RAG 结果中是否出现外部 endpoint、外部 provider 或 key。</dd></div>
+                  <div><dt>何时用</dt><dd>每次改 RAG 配置后、执行 `pik-docs-index --run` 或 `pik-docs-query --rag` 前。</dd></div>
+                  <div><dt>阻断</dt><dd>local-only 模式下发现外部 URL、`openai/deepseek/azure` provider、`GRAPHRAG_API_KEY` 等会失败。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-privacy-audit --target "$PWD"
+sed -n '1,120p' .planning/knowledge/PRIVACY_AUDIT.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-docs-index</code> / <code>pik-docs-index --run</code></h3><span class="tag">RAG 索引</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>不带 `--run` 时生成 handoff；带 `--run` 时执行 `.planning/config.json` 的 `index_command`。</dd></div>
+                  <div><dt>何时用</dt><dd>运行 `pik-rag-init-local` 后，第一次建索引或文档大更新后。</dd></div>
+                  <div><dt>保密</dt><dd>local-only 模式会先跑隐私审计；外部 provider 配置会被阻断。</dd></div>
+                  <div><dt>产出</dt><dd>`RAG_INDEX_HANDOFF.md`，执行后还有 `RAG_INDEX_RESULT.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-docs-index --target "$PWD"
+pik-docs-index --target "$PWD" --run</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-docs-query --rag</code></h3><span class="tag">RAG 查询</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>执行配置的 `query_command`，默认走本地 GraphRAG basic search，并把结果写回项目。</dd></div>
+                  <div><dt>何时用</dt><dd>关键词查询不够，需要 GraphRAG / LanceDB / 本地 LLM 回答“依据是什么”。</dd></div>
+                  <div><dt>保密</dt><dd>local-only 模式会先跑隐私审计；不要把 `model_provider` 或 `api_base` 改成外部服务。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-docs-query --target "$PWD" --rag "代理承認の仕様根拠は？"
+sed -n '1,120p' .planning/knowledge/RAG_QUERY_RESULT.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-docs-status</code></h3><span class="tag">文档状态</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>快速确认文档扫描状态、来源数量和 RAG 状态。</dd></div>
+                  <div><dt>何时用</dt><dd>文档更新后、workflow guard 的 docs gate 失败时。</dd></div>
+                  <div><dt>判断标准</dt><dd>`DOC_RAG_STATUS.md` 存在且来源数量符合预期。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-docs-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-graph-build</code> / <code>pik-graph-build --run</code></h3><span class="tag">Graphify 构建</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>生成 Graphify handoff；带 `--run` 时执行配置的 `code_map.update_command`。</dd></div>
+                  <div><dt>何时用</dt><dd>第一次接入代码地图、代码结构明显变化后、改修前需要确认影响面时。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/graphs/GRAPH_BUILD_HANDOFF.md`、`graph.json`、`GRAPH_REPORT.md`、`GRAPH_BUILD_RESULT.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-graph-build --target "$PWD"
+pik-graph-build --target "$PWD" --run</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-graph-query</code></h3><span class="tag">影响面查询</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>在 `.planning/graphs/` 的 graph/report 中查实体、模块、函数或关键词。</dd></div>
+                  <div><dt>何时用</dt><dd>改修前定位调用链，code review 前确认变更触及范围。</dd></div>
+                  <div><dt>判断标准</dt><dd>输出能指向 graph 节点或 `GRAPH_REPORT.md` 行；没有命中则需要重建 graph 或换关键词。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-graph-query --target "$PWD" "PaymentService"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-graph-status</code></h3><span class="tag">代码地图状态</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>检查 AI-PIKit graph、Graphify 原始输出和 freshness。</dd></div>
+                  <div><dt>何时用</dt><dd>graph gate 失败时、代码改动很多后、准备做影响面判断前。</dd></div>
+                  <div><dt>判断标准</dt><dd>`.planning/graphs/graph.json` 和 `GRAPH_REPORT.md` 存在，且未明显 stale。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-graph-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-graph-diff</code></h3><span class="tag">Graph diff</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>比较当前 graph 和 baseline，观察新增/删除节点。</dd></div>
+                  <div><dt>何时用</dt><dd>大改修前保存 baseline，改修后查看影响面是否超出预期。</dd></div>
+                  <div><dt>产出</dt><dd>`GRAPH_DIFF.md`；`--save-baseline` 会写 `graph.baseline.json`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-graph-diff --target "$PWD" --save-baseline
+pik-graph-build --target "$PWD" --run
+pik-graph-diff --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-preflight</code></h3><span class="tag">轻量前置检查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>读取 `REFRESH_STATE.json` 和 git diff，提醒 GraphRAG / Graphify 距离 HEAD 落后几个 commit。</dd></div>
+                  <div><dt>何时用</dt><dd>进入 `pik-debug`、`pik-plan-phase`、`pik-execute-phase` 前，确认上下文是否 stale。</dd></div>
+                  <div><dt>判断标准</dt><dd>它只写 `PREFLIGHT.md`，输出 `heavy refresh executed: no`，不会重建 RAG 或代码图。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-preflight --target "$PWD"
+pik-preflight --target "$PWD" --strict</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-refresh-plan</code></h3><span class="tag">刷新计划</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>判断落后 commit 是否改到文档源或代码地图相关路径，并给出差分刷新建议。</dd></div>
+                  <div><dt>何时用</dt><dd>preflight 出现 WARN，或者接手别人 commit 后不确定要不要刷新时。</dd></div>
+                  <div><dt>判断标准</dt><dd>相关变更会建议 `pik-refresh-run --rag` 或 `--graph`；无关变更显示 `behind-unrelated` 并建议跳过。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-refresh-plan --target "$PWD"
+sed -n '1,160p' .planning/refresh/REFRESH_PLAN.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-refresh-run</code></h3><span class="tag">显式刷新</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>显式执行 RAG、Graphify 或两者刷新，并更新 `REFRESH_STATE.json`。</dd></div>
+                  <div><dt>何时用</dt><dd>`pik-refresh-plan` 判断文档或源码相关变更需要差分刷新时。</dd></div>
+                  <div><dt>保密</dt><dd>RAG 和 Graphify 的 `--run` 仍会走 local-only privacy guard，外部 provider 或危险网络命令会被阻断。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-refresh-run --target "$PWD" --rag
+pik-refresh-run --target "$PWD" --graph
+pik-refresh-run --target "$PWD" --all</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-mode-status</code></h3><span class="tag">模式状态</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>查看当前是 `default-local-rag`、`graph-lite` 还是 `full-strict`。</dd></div>
+                  <div><dt>何时用</dt><dd>不确定 RAG 是否必需、preflight 是否会严格失败、项目是否处于轻量接入阶段时。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/refresh/MODE.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-mode-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-mode-set</code></h3><span class="tag">模式切换</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>切换执行预算模式，控制 RAG 是否必需和 stale 是否 strict failure。</dd></div>
+                  <div><dt>何时用</dt><dd>先轻量接入只用 Graphify 时用 `graph-lite`；交付前或保密项目强审计时用 `full-strict`。</dd></div>
+                  <div><dt>判断标准</dt><dd>`.planning/config.json` 的 `execution_budget.profile` 被更新。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-mode-set --target "$PWD" graph-lite
+pik-mode-set --target "$PWD" default-local-rag
+pik-mode-set --target "$PWD" full-strict</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-policy-lock</code> / <code>pik-policy-verify</code> / <code>pik-policy-diff</code></h3><span class="tag">策略合同</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把 local-only、profile、RAG/Graphify 配置和内置 policy id 固化为可锁定、可验证、可 diff 的本地合同。</dd></div>
+                  <div><dt>何时用</dt><dd>保密项目启用 offline lock 后、交付前、或担心 `.planning/config.json` 被改成外部 provider 时。</dd></div>
+                  <div><dt>判断标准</dt><dd>verify PASS 表示当前配置未偏离 lock；diff CHANGED 会列出字段级差异；三条命令都必须输出 `heavy refresh executed: no`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-offline-lock --target "$PWD"
+pik-policy-lock --target "$PWD"
+pik-policy-verify --target "$PWD"
+pik-policy-diff --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-evidence-record</code></h3><span class="tag">证据记录</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把验证结论、命令、结果、来源写成正式 evidence。</dd></div>
+                  <div><dt>何时用</dt><dd>测试通过、人工验证完成、仕様依据确认、bug 根因确认后。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/evidence/*.md` 和 `.planning/evidence/INDEX.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-evidence-record --target "$PWD" \
+  "代理承認上限修正を検証済み" \
+  --command "npm test" \
+  --result "passed" \
+  --source "docs/qa/QA-042.md,.planning/graphs/GRAPH_REPORT.md"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-evidence-record --writeback</code></h3><span class="tag">证据回写</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把 evidence 摘要追加到 issue、debug、phase 等工作记录。</dd></div>
+                  <div><dt>何时用</dt><dd>completion 前必须有 writeback，否则 `writeback` gate 会失败。</dd></div>
+                  <div><dt>判断标准</dt><dd>目标文件中出现 `AI-PIKit Evidence Writeback` 小节。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-evidence-record --target "$PWD" "検証済み" \
+  --command "npm test" \
+  --result "passed" \
+  --writeback .planning/issues/CR-017.md</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-evidence-status</code></h3><span class="tag">证据状态</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>查看 evidence 数量、索引和最新记录。</dd></div>
+                  <div><dt>何时用</dt><dd>verify-work、complete-milestone、completion-check 前。</dd></div>
+                  <div><dt>判断标准</dt><dd>数量应大于 0，最新记录应对应当前任务。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-evidence-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-runtime-install</code></h3><span class="tag">AI runtime 接入</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把 AI-PIKit command pack 安装到 Codex、Claude Code 或 GitHub Copilot 的可识别目录。</dd></div>
+                  <div><dt>何时用</dt><dd>希望在 runtime 中用 `$pik-debug` 或 `/pik-debug` 触发 AI-PIKit workflow。</dd></div>
+                  <div><dt>产出</dt><dd>Codex/Claude 是 skill 文件；Copilot 是 prompt 文件。核心仍调用本地 `pik-*`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-runtime-install --runtime codex --dest ~/.codex/skills
+pik-runtime-install --runtime claude-code --dest ~/.claude/skills
+pik-runtime-install --runtime github-copilot --dest .github/prompts</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-runtime-status</code></h3><span class="tag">runtime 检查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>检查对应 runtime pack 是否安装完整。</dd></div>
+                  <div><dt>何时用</dt><dd>安装后、换机器后、runtime 中找不到 AI-PIKit 命令时。</dd></div>
+                  <div><dt>判断标准</dt><dd>对应 pack item 显示存在；缺失则重跑 install。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-runtime-status --runtime codex --dest ~/.codex/skills</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-context-debug</code> / <code>pik-context-execute</code></h3><span class="tag">上下文包</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>只生成 context packet，不启动完整 guarded workflow。</dd></div>
+                  <div><dt>何时用</dt><dd>需要给 AI 一个紧凑上下文，但暂时不进入完整 gate 流程时。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/context/debug-*.md` 或 `.planning/context/execute-*.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-context-debug --target "$PWD" "ログインできない"
+pik-context-execute --target "$PWD" "承認上限を変更"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-workflow-run</code></h3><span class="tag">workflow 通用入口</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>启动任意 AI-PIKit native workflow，写 context、handoff、workflow state，并立即评估 gates。</dd></div>
+                  <div><dt>何时用</dt><dd>做自定义流程或调试 workflow；日常优先用 public workflow 命令。</dd></div>
+                  <div><dt>产出</dt><dd>`.planning/workflows/&lt;id&gt;/WORKFLOW_STATE.json` 和 `.md`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-workflow-run --target "$PWD" debug "生产审批金额异常"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-workflow-status</code></h3><span class="tag">workflow 状态</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>查看当前 active workflow 的 gate 状态和人工 gate 记录。</dd></div>
+                  <div><dt>何时用</dt><dd>不知道现在卡在哪个 gate；接手别人未完成任务。</dd></div>
+                  <div><dt>判断标准</dt><dd>能看到 context/codebase/docs/graph/evidence 等 PASS/FAIL。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-workflow-status --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-workflow-continue</code></h3><span class="tag">人工 gate</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>标记 `plan`、`implementation`、`verification` 三个需要人工证据的 gate。</dd></div>
+                  <div><dt>何时用</dt><dd>计划已确认、实现已完成、测试已跑完之后。</dd></div>
+                  <div><dt>判断标准</dt><dd>`WORKFLOW_STATE.md` 的 manual gates 中出现对应 evidence。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-workflow-continue --target "$PWD" --gate plan --evidence "PLAN.md reviewed"
+pik-workflow-continue --target "$PWD" --gate implementation --evidence "src/approvalPolicy.js updated"
+pik-workflow-continue --target "$PWD" --gate verification --evidence "npm test passed"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-gate-check</code> / <code>pik-completion-check</code></h3><span class="tag">完成前检查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>检查所有 workflow gates；completion-check 会明确输出 allowed/blocked。</dd></div>
+                  <div><dt>何时用</dt><dd>提交前、complete milestone 前、AI 声称完成时。</dd></div>
+                  <div><dt>判断标准</dt><dd>所有 gate PASS 才能收口；FAIL 时按提示补 codebase/docs/graph/evidence/writeback。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-gate-check --target "$PWD"
+pik-completion-check --target "$PWD"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-new-milestone</code></h3><span class="tag">里程碑</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>开启一个带 guard 的里程碑工作流。</dd></div>
+                  <div><dt>何时用</dt><dd>MVP、迭代、需求包或阶段性交付开始时。</dd></div>
+                  <div><dt>后续</dt><dd>继续用 spec/discuss/ui/plan/execute/verify/complete 串成完整闭环。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-new-milestone --target "$PWD" "MVP1 注文管理"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-spec-phase</code></h3><span class="tag">仕様整理</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>进入需求/仕様依据整理流程。</dd></div>
+                  <div><dt>何时用</dt><dd>需求不清、日文文档很多、QA 和議事録需要汇总时。</dd></div>
+                  <div><dt>建议</dt><dd>先跑 `pik-docs-scan` 和 `pik-docs-query`，再进入计划。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-spec-phase --target "$PWD" "代理承認仕様の確認"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-discuss-phase</code></h3><span class="tag">决策讨论</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>记录讨论主题、选择、未决点和需要回写的判断依据。</dd></div>
+                  <div><dt>何时用</dt><dd>方案存在分歧、需要和客户/PM/团队对齐时。</dd></div>
+                  <div><dt>产出</dt><dd>workflow context 和 handoff，后续通过 evidence/writeback 固化结论。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-discuss-phase --target "$PWD" "承認ルールを設定化するか"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-ui-phase</code></h3><span class="tag">UI 范围</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>把画面范围、交互要求、验证点纳入 workflow。</dd></div>
+                  <div><dt>何时用</dt><dd>画面改修、新规页面、UI 验收项较多时。</dd></div>
+                  <div><dt>建议</dt><dd>结合 docs query 找设计文档，结合 evidence 记录截图/测试结果。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-ui-phase --target "$PWD" "注文一覧の検索条件追加"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-debug</code></h3><span class="tag">缺陷调查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>从 bug 描述启动调查流程，要求查 codebase、docs、graph、验证和证据。</dd></div>
+                  <div><dt>何时用</dt><dd>线上障害、测试缺陷、仕様和实现不一致时。</dd></div>
+                  <div><dt>完成</dt><dd>不能只说“修好了”；需要 verification gate、evidence、writeback 通过。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-debug --target "$PWD" "代理承認上限が仕様と違う"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-plan-phase</code></h3><span class="tag">计划</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>生成阶段计划前的 guarded workflow，要求计划基于文档和代码影响面。</dd></div>
+                  <div><dt>何时用</dt><dd>开始实现前、MVP 切分、改修方案拆解。</dd></div>
+                  <div><dt>建议</dt><dd>计划确认后用 `pik-workflow-continue --gate plan` 标记。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-plan-phase --target "$PWD" "MVP1 注文管理 phase 1"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-execute-phase</code></h3><span class="tag">实施</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>进入实现阶段，让 AI 在已有计划、文档依据、代码地图下改代码。</dd></div>
+                  <div><dt>何时用</dt><dd>计划 gate 已确认，准备实际改修/新规开发时。</dd></div>
+                  <div><dt>建议</dt><dd>实现完成后标记 implementation gate，再跑 verify-work。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-execute-phase --target "$PWD" "承認上限チェックを実装"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-code-review</code></h3><span class="tag">审查</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>以代码审查视角检查实现、影响面、测试和文档依据。</dd></div>
+                  <div><dt>何时用</dt><dd>提交前、PR 前、AI 改动较多时。</dd></div>
+                  <div><dt>建议</dt><dd>先 `pik-graph-diff`，再结合测试和 evidence 判断是否可收口。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-code-review --target "$PWD" "CR-017 の変更レビュー"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-verify-work</code></h3><span class="tag">验证</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>进入验证阶段，确认实现满足仕様、测试通过、证据可追踪。</dd></div>
+                  <div><dt>何时用</dt><dd>实现后、修 bug 后、准备完成 milestone 前。</dd></div>
+                  <div><dt>建议</dt><dd>把真实测试命令写入 `pik-evidence-record --command`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-verify-work --target "$PWD" "代理承認上限の検証"</code></pre>
+              </div>
+            </article>
+
+            <article class="command-card">
+              <header><h3><code>pik-complete-milestone</code></h3><span class="tag">收口</span></header>
+              <div class="command-body">
+                <dl class="detail-list">
+                  <div><dt>用途</dt><dd>整理里程碑完成状态，要求 completion gates 全部通过。</dd></div>
+                  <div><dt>何时用</dt><dd>阶段交付、MVP 收口、准备交付报告前。</dd></div>
+                  <div><dt>判断标准</dt><dd>`pik-completion-check` 输出 `completion allowed`。</dd></div>
+                </dl>
+                <pre class="code-block"><code>pik-complete-milestone --target "$PWD" "MVP1 注文管理"
+pik-completion-check --target "$PWD"</code></pre>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>命令覆盖以 `package.json` 的 `bin` 和 `node bin/pik.mjs --help` 为准。</p>
+  </footer>
+</body>
+</html>

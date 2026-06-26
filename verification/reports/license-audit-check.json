@@ -1,0 +1,14 @@
+{
+  "generated": "2026-06-25T13:54:02.787Z",
+  "status": "PASS",
+  "commandStatus": 0,
+  "evidence": [
+    "pik license audit: found license audit",
+    "pik license audit: found write",
+    "license report: found Restricted / commercial-review licenses",
+    "license report: found Non-MIT or unknown items",
+    "license report: found ollama",
+    "license report: found graphify"
+  ],
+  "issues": []
+}
