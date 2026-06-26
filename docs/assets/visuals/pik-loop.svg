@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">AI-PIKit AI 开发闭环</title>
+  <desc id="desc">AI-PIKit 从任务状态开始，依次查询文档、代码地图、生成计划、实施、验证、写证据，最后由 completion gate 判断。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071018"/>
+      <stop offset="1" stop-color="#121922"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#87f7b5"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="620" fill="url(#bg)"/>
+  <text x="70" y="74" fill="#eef4ff" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="850">AI-PIKit Loop</text>
+  <text x="70" y="110" fill="#a9b7c8" font-family="Inter, Arial, sans-serif" font-size="19">prompt 不是起点，项目证据才是起点；“改完了”不是终点，completion gate 才是终点。</text>
+
+  <g fill="none" stroke="#87f7b5" stroke-width="4" marker-end="url(#arrow)">
+    <path d="M255 208 C335 108 490 108 570 208"/>
+    <path d="M670 208 C750 108 905 108 985 208"/>
+    <path d="M1020 296 C1044 388 956 472 850 474"/>
+    <path d="M748 474 C650 546 494 546 394 474"/>
+    <path d="M294 474 C186 468 116 382 154 296"/>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <g>
+      <rect x="104" y="178" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
+      <text x="132" y="218" fill="#eef4ff" font-size="22" font-weight="800">1. GSD 状态</text>
+      <text x="132" y="250" fill="#a9b7c8" font-size="15">milestone / phase / bug</text>
+    </g>
+    <g>
+      <rect x="500" y="178" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
+      <text x="528" y="218" fill="#eef4ff" font-size="22" font-weight="800">2. 查文档</text>
+      <text x="528" y="250" fill="#a9b7c8" font-size="15">仕様 / QA / 議事録</text>
+    </g>
+    <g>
+      <rect x="886" y="178" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
+      <text x="914" y="218" fill="#eef4ff" font-size="22" font-weight="800">3. 查代码图</text>
+      <text x="914" y="250" fill="#a9b7c8" font-size="15">Graphify impact</text>
+    </g>
+    <g>
+      <rect x="886" y="380" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
+      <text x="914" y="420" fill="#eef4ff" font-size="22" font-weight="800">4. 生成计划</text>
+      <text x="914" y="452" fill="#a9b7c8" font-size="15">risk / scope / gates</text>
+    </g>
+    <g>
+      <rect x="500" y="380" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
+      <text x="528" y="420" fill="#eef4ff" font-size="22" font-weight="800">5. 实施验证</text>
+      <text x="528" y="452" fill="#a9b7c8" font-size="15">implementation / test</text>
+    </g>
+    <g>
+      <rect x="104" y="380" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
+      <text x="132" y="420" fill="#eef4ff" font-size="22" font-weight="800">6. 写回证据</text>
+      <text x="132" y="452" fill="#a9b7c8" font-size="15">evidence / writeback</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="418" y="262" width="364" height="88" rx="12" fill="#071018" stroke="#66e8ff" stroke-width="3"/>
+    <text x="478" y="300" fill="#eef4ff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="850">completion-check</text>
+    <text x="462" y="330" fill="#a9b7c8" font-family="Inter, Arial, sans-serif" font-size="16">9 个 gate 全 PASS 才允许完成</text>
+  </g>
+</svg>

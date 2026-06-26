@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Project Intelligence Kit - AI 工程上下文框架</title>
+  <meta name="description" content="AI Project Intelligence Kit 是面向文档密集型软件开发的本地 AI 工程上下文框架。">
+  <link rel="stylesheet" href="assets/pik-site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand-mark" href="../README.md">AI Project Intelligence Kit</a>
+      <nav class="nav" aria-label="主导航">
+        <a href="product.html" aria-current="page">产品</a>
+        <a href="commands.html">命令</a>
+        <a href="technical-guide.html">技术教程</a>
+        <a href="quality-dashboard.html">QA</a>
+        <a href="../verification/reports/latest.md">验证报告</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-label="AI-PIKit 产品介绍">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-content">
+          <p class="eyebrow">AI Engineering Control Plane</p>
+          <h1>基于你项目的 AI 编程。</h1>
+          <p>
+            在 AI 代理接触代码之前，AI-PIKit 会把项目上下文、仕様证据、Graphify 代码影响图、
+            workflow gates 和 evidence writeback 交给它。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="commands.html">查看命令手册</a>
+            <a class="button" href="technical-guide.html">阅读技术教程</a>
+          </div>
+          <div class="console-mock product-hero-mock" aria-label="AI-PIKit 工程控制台示意">
+            <div class="window-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span>pik-console ~ root/core</span>
+              <span class="status-pill" style="margin-left:auto">MVP6 / 68 命令已验证</span>
+            </div>
+            <div class="console-grid">
+              <div class="console-pane">
+                <div class="pane-label">代理请求</div>
+                <div class="prompt-box">
+                  &gt; "代理承認上限が仕様と違う。旧代码影响面也不确定。"<br><br>
+                  <span style="color: var(--subtle)">正在收集项目状态、仕様依据和代码影响面...</span>
+                </div>
+              </div>
+              <div class="console-pane center">
+                <div>
+                  <div class="command-chip active">&gt; pik-preflight</div>
+                  <div class="flow-line"></div>
+                  <div class="command-chip">&gt; pik-refresh-plan</div>
+                  <div class="flow-line"></div>
+                  <div class="command-chip">&gt; pik-plan-phase</div>
+                  <div class="flow-line"></div>
+                  <div class="command-chip">&gt; pik-completion-check</div>
+                </div>
+              </div>
+              <div class="console-pane">
+                <div class="pane-label" style="display:flex;justify-content:space-between">
+                  <span>影响图</span><span style="color: var(--green)">已验证</span>
+                </div>
+                <div class="mini-graph">
+                  <svg class="network-svg" viewBox="0 0 320 190" aria-hidden="true">
+                    <g class="network-lines">
+                      <path d="M54 98 L112 54 L184 74 L254 46" />
+                      <path d="M112 54 L150 126 L224 138" />
+                      <path d="M54 98 L150 126 L254 46" />
+                      <path d="M184 74 L224 138 L276 104" />
+                      <path d="M112 54 L224 138" />
+                    </g>
+                    <g class="network-nodes">
+                      <circle class="network-node cyan" cx="54" cy="98" r="6" />
+                      <circle class="network-node" cx="112" cy="54" r="5" />
+                      <circle class="network-node" cx="150" cy="126" r="5" />
+                      <circle class="network-node" cx="184" cy="74" r="5" />
+                      <circle class="network-node" cx="224" cy="138" r="5" />
+                      <circle class="network-node" cx="254" cy="46" r="5" />
+                      <circle class="network-node amber" cx="276" cy="104" r="5" />
+                    </g>
+                  </svg>
+                  <span class="tag" style="position:absolute;right:10px;bottom:10px">Graphify</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="metric-strip" aria-label="AI-PIKit 核心能力">
+            <div class="metric"><strong>4</strong><span>上下文层：workflow、docs、graph、evidence</span></div>
+            <div class="metric"><strong>9</strong><span>completion gates 阻断虚假完成</span></div>
+            <div class="metric"><strong>3</strong><span>Codex / Claude Code / Copilot runtime</span></div>
+            <div class="metric"><strong>68</strong><span>`pik-*` 命令面已执行验证</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>本地工程控制面，而不是另一个聊天入口。</h2>
+          <p>三个 runtime 入口都落到同一套 `pik-*` 命令和 `.planning/` 本地制品，页面视觉也统一成控制台式信息模块。</p>
+        </div>
+        <div class="control-bento">
+          <article class="control-card wide">
+            <div class="pane-label">control plane</div>
+            <div class="stage-flow product-flow">
+              <code>Codex</code>
+              <code>Claude Code</code>
+              <code>GitHub Copilot</code>
+              <code class="active">AI-PIKit CLI</code>
+              <code>.planning/</code>
+              <code>Completion Gates</code>
+            </div>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">knowledge</div>
+            <h3>仕様 / QA / 議事録</h3>
+            <p>文档来源、RAG 查询和引用结果统一落到 `.planning/knowledge/`。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">impact</div>
+            <h3>Graphify 网络</h3>
+            <p>代码影响面以节点和关系表达，不再用装饰线假装图谱。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">proof</div>
+            <h3>Evidence writeback</h3>
+            <p>测试、验证、风险和结论写回项目记录，completion check 才能通过。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">policy</div>
+            <h3>MVP6 policy contract</h3>
+            <p>`pik-policy-lock`、`pik-policy-verify`、`pik-policy-diff` 把 local-only、profile 和四态 gate 固化为本地合同。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">freshness</div>
+            <h3>MVP3.5 refresh control</h3>
+            <p>`pik-preflight` 和 `pik-refresh-plan` 只提醒；`pik-refresh-run` 才显式刷新 GraphRAG / Graphify。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-header">
+          <h2>不是更会写代码，而是更知道为什么改。</h2>
+          <p>
+            普通 AI coding 只看到 prompt 和当前文件。AI-PIKit 让 AI 先读项目状态、仕様依据、QA、議事録、
+            代码影响面和验证要求，再进入实现。
+          </p>
+        </div>
+        <div class="comparison" aria-label="普通 AI coding 和 AI-PIKit 对比">
+          <div class="comparison-row">
+            <div>维度</div>
+            <div>普通 AI Coding</div>
+            <div>AI Project Intelligence Kit</div>
+          </div>
+          <div class="comparison-row">
+            <div>输入</div>
+            <div>一段 prompt、当前打开文件、聊天上下文。</div>
+            <div>项目状态、仕様/QA/議事録、代码地图、测试策略、历史 evidence。</div>
+          </div>
+          <div class="comparison-row">
+            <div>改修前</div>
+            <div>靠模型猜测影响面，容易漏掉旧系统边界。</div>
+            <div>先跑 `pik-codebase-scan` 和 Graphify，把入口、依赖、风险模块显式化。</div>
+          </div>
+          <div class="comparison-row">
+            <div>文档依据</div>
+            <div>需要人工复制粘贴，文档一多就断层。</div>
+            <div>`pik-docs-scan`、`pik-docs-query`、可选 GraphRAG，把依据写回 `.planning/knowledge/`。</div>
+          </div>
+          <div class="comparison-row">
+            <div>完成定义</div>
+            <div>“改完了”往往停留在对话里。</div>
+            <div>completion gate 检查 context、codebase、docs、graph、plan、implementation、verification、evidence、writeback。</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>四个层次，组成一个工程控制面。</h2>
+          <p>AI-PIKit 的价值不是把几个工具绑在一起，而是把它们变成 AI 开发时必须经过的上下文路径。</p>
+        </div>
+        <div class="grid four">
+          <article class="panel panel-pad">
+            <h3>Workflow guard</h3>
+            <p>用 AI-PIKit native workflow 复刻 GSD 的严格流程思路。`pik-debug`、`pik-plan-phase`、`pik-execute-phase` 都会进入 gate 检查。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>Document intelligence</h3>
+            <p>面向对日文档密集型项目，把 仕様書、QA、議事録、设计文档变成可扫描、可查询、可引用的本地知识层。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>Code map</h3>
+            <p>Graphify 提供代码地图和影响面。AI-PIKit 负责把图谱产物同步进 `.planning/graphs/`，供 workflow 使用。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>Evidence loop</h3>
+            <p>测试命令、验证结果、风险判断、仕様引用都写回 evidence。最后由 `pik-completion-check` 判断能不能收口。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-header">
+          <h2>面向对日开发现场的真实摩擦。</h2>
+          <p>AI-PIKit 优先解决“文档很多、旧代码复杂、交付要讲依据”的场景，而不是做一个空泛的聊天外壳。</p>
+        </div>
+        <div class="split-feature">
+          <div class="story-stack">
+            <div class="story-row">
+              <strong>仕様变更</strong>
+              <p>先把变更点进入 `pik-spec-phase`，查询文档依据，记录未决点，再生成计划。</p>
+            </div>
+            <div class="story-row">
+              <strong>缺陷调查</strong>
+              <p>`pik-debug` 会写 context packet，把 QA、議事録、Graphify 影响面和验证 gate 串起来。</p>
+            </div>
+            <div class="story-row">
+              <strong>既存改修</strong>
+              <p>既有项目初始化后必须跑 `pik-codebase-scan`。没有 codebase baseline，guard 不允许轻易完成。</p>
+            </div>
+            <div class="story-row">
+              <strong>文档更新</strong>
+              <p>文档新增或变更后先跑 `pik-preflight` 和 `pik-refresh-plan`。确实相关时再跑 `pik-refresh-run --rag` 或 `pik-docs-index --run`。</p>
+            </div>
+            <div class="story-row">
+              <strong>代码更新</strong>
+              <p>别人提交和你当前任务无关时可以跳过重刷新；相关源码或测试变更才推荐 `pik-refresh-run --graph`。</p>
+            </div>
+          </div>
+          <div class="panel panel-pad">
+            <h3>开发者每天真正会用到的入口</h3>
+            <pre class="code-block"><code>pik-debug --target "$PWD" "障害内容"
+pik-preflight --target "$PWD"
+pik-refresh-plan --target "$PWD"
+pik-docs-query --target "$PWD" "仕様根拠"
+pik-graph-query --target "$PWD" "変更対象"
+pik-plan-phase --target "$PWD" "MVP1"
+pik-execute-phase --target "$PWD" "実装"
+pik-verify-work --target "$PWD" "検証"
+pik-completion-check --target "$PWD"</code></pre>
+            <p>Codex、Claude Code、Copilot 只是不同入口。真正稳定的能力边界是本地 `pik-*` 命令和 `.planning/` artifact。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>AI-PIKit 的工作方式</h2>
+          <p>它不搬动你的项目，也不替代 IDE。它在目标项目根目录叠加一个本地工程控制面。</p>
+        </div>
+        <div class="grid two">
+          <div class="panel panel-pad diagram">
+            <div class="node"><strong>1. pik-debug / pik-plan-phase</strong><br>启动 AI-PIKit workflow guard。</div>
+            <div class="node"><strong>2. .planning/context</strong><br>生成 context packet 和 handoff。</div>
+            <div class="node"><strong>3. docs + graph</strong><br>查询文档依据和代码影响面。</div>
+            <div class="node"><strong>4. evidence</strong><br>把验证记录写入 `.planning/evidence/` 并回写 issue。</div>
+            <div class="node"><strong>5. completion-check</strong><br>所有 gate PASS 才允许完成。</div>
+          </div>
+          <div class="panel panel-pad">
+            <h3>本地 intelligence layer</h3>
+            <pre class="code-block"><code>target-project/
+  src/
+  docs/
+  AGENTS.md
+  project.manifest.yml
+  .planning/
+    codebase/
+    knowledge/
+    graphs/
+    refresh/
+    workflows/
+    evidence/</code></pre>
+            <p>AI-PIKit 的产物默认留在目标项目本地。外部流通只会来自你配置的 runtime、RAG provider 或 Graphify command。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-header">
+          <h2>每一步都有落点，不只停在聊天里。</h2>
+          <p>AI-PIKit 会把 AI 开发过程拆成可检查的本地文件。你可以打开这些文件，确认它到底有没有接入文档、Graphify 和 workflow。</p>
+        </div>
+        <div class="signal-board">
+          <div class="signal"><strong>.planning/codebase/</strong><span>代码清单、结构、技术栈、测试策略、既有项目 baseline。</span></div>
+          <div class="signal"><strong>.planning/knowledge/</strong><span>文档来源、归一化结果、RAG handoff、RAG query result。</span></div>
+          <div class="signal"><strong>.planning/graphs/</strong><span>Graphify graph、报告、diff、staleness 检查。</span></div>
+          <div class="signal"><strong>.planning/workflows/</strong><span>workflow state、gate PASS/FAIL、人工继续记录。</span></div>
+          <div class="signal"><strong>.planning/evidence/</strong><span>验证证据、命令输出摘要、source 引用、evidence index。</span></div>
+          <div class="signal"><strong>.planning/quality/</strong><span>RAG golden、citation audit、RAG eval，用来证明文档问答结果可信。</span></div>
+          <div class="signal"><strong>.planning/trace/</strong><span>文档、代码、测试、evidence 的追踪矩阵。</span></div>
+          <div class="signal"><strong>.planning/policies/</strong><span>完成前 policy check，保密和证据质量统一给出 PASS/FAIL。</span></div>
+          <div class="signal"><strong>.planning/refresh/</strong><span>记录 GraphRAG / Graphify 上次刷新 commit、preflight、refresh plan 和显式刷新结果。</span></div>
+          <div class="signal"><strong>AGENTS.md</strong><span>把 AI-PIKit 调用规则写进目标项目，让 runtime 更容易遵守流程。</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>成本可控，不把每个任务都变成全量重建。</h2>
+          <p>MVP3.5 增加执行预算层。AI-PIKit 会告诉你 GraphRAG / Graphify 距离最新 commit 落后多少，以及这些 commit 是否真的改到了相关文档或代码。</p>
+        </div>
+        <div class="grid three">
+          <article class="panel panel-pad">
+            <h3>轻量提醒</h3>
+            <pre class="code-block"><code>pik-preflight --target "$PWD"
+sed -n '1,120p' .planning/refresh/PREFLIGHT.md</code></pre>
+            <p>只读 git diff 和刷新账本，输出 `heavy refresh executed: no`。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>差分计划</h3>
+            <pre class="code-block"><code>pik-refresh-plan --target "$PWD"
+sed -n '1,160p' .planning/refresh/REFRESH_PLAN.md</code></pre>
+            <p>无关 commit 显示 `behind-unrelated`；相关文档/源码才推荐刷新。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>显式刷新</h3>
+            <pre class="code-block"><code>pik-refresh-run --target "$PWD" --rag
+pik-refresh-run --target "$PWD" --graph
+pik-mode-set --target "$PWD" full-strict</code></pre>
+            <p>真正刷新必须由命令触发，结果写回 `REFRESH_STATE.json`。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-header">
+          <h2>适合的项目</h2>
+          <p>AI-PIKit 的目标用户不是纯玩具项目，而是代码、文档、变更依据和交付责任同时存在的开发现场。</p>
+        </div>
+        <div class="grid">
+          <article class="panel panel-pad">
+            <h3>对日开发</h3>
+            <p>仕様書、QA、議事録、画面设计、测试规格书都能成为 AI 开发依据。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>既有系统改修</h3>
+            <p>先建立 codebase baseline，再用 Graphify 看影响面，避免凭感觉改旧系统。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>长周期交付</h3>
+            <p>用 evidence 和 writeback 记录每次判断、验证、风险和后续事项。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>可信度来自可复跑验证。</h2>
+          <p>AI-PIKit 不要求你相信文案。它要求每个接入点都有命令、有产物、有验证报告。</p>
+        </div>
+        <div class="grid">
+          <article class="panel panel-pad">
+            <h3>接入验证</h3>
+            <p>`pik-verify --target "$PWD"` 检查目标项目是否真的有 `AGENTS.md`、`project.manifest.yml`、`.planning/`。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>能力验证</h3>
+            <p>`npm run verify:integration` 覆盖 init、docs、Graphify、runtime pack、workflow guard 和 evidence；`npm run verify:mvp3` 覆盖 golden、citation、trace、policy、help skills；`npm run verify:mvp35` 覆盖 refresh/preflight/mode 控制；`npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 覆盖无感编排层和策略合同。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>命令面验证</h3>
+            <p>`npm run verify:full-command-surface` 会逐个执行 `package.json` 中全部 `pik-*` / `pik` bin 命令，避免“文档写了但实际不能用”。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>完成验证</h3>
+            <p>`pik-completion-check` 会在 evidence 或 writeback 缺失时阻断，避免“看起来完成了”的假收口。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>从第一条命令开始</h2>
+          <p>新项目和既存项目都可以接入。区别是既存项目必须先扫描现有代码库，给 guard 建立 codebase baseline。</p>
+        </div>
+        <div class="grid two">
+          <div class="panel panel-pad">
+            <h3>新项目</h3>
+            <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+pik-codebase-scan --target "$PWD"
+pik-preflight --target "$PWD"
+pik-verify --target "$PWD"</code></pre>
+          </div>
+          <div class="panel panel-pad">
+            <h3>既存项目</h3>
+            <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+pik-codebase-scan --target "$PWD"
+pik-docs-scan --target "$PWD"
+pik-rag-init-local --target "$PWD"
+pik-offline-lock --target "$PWD"
+pik-graph-build --target "$PWD" --run</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>AI Project Intelligence Kit：让 AI 在项目上下文、仕様依据、代码影响面和验证闭环里工作。</p>
+    </footer>
+  </div>
+  <script src="assets/pik-site.js"></script>
+</body>
+</html>

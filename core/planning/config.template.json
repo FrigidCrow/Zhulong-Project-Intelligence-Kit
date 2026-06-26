@@ -1,0 +1,163 @@
+{
+  "mode": "interactive",
+  "granularity": "standard",
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true,
+    "auto_advance": false,
+    "context_coverage_gate": true,
+    "security_enforcement": true
+  },
+  "planning": {
+    "commit_docs": false,
+    "search_gitignored": true,
+    "sub_repos": []
+  },
+  "execution_budget": {
+    "profile": "default-local-rag",
+    "heavy_refresh": "explicit_or_policy",
+    "auto_refresh": false,
+    "refresh_state_path": ".planning/refresh/REFRESH_STATE.json",
+    "warn_on_unrelated_commit_distance": true,
+    "profiles": {
+      "default-local-rag": {
+        "rag_required": true,
+        "graph_required": true,
+        "strict": false
+      },
+      "graph-lite": {
+        "rag_required": false,
+        "graph_required": true,
+        "strict": false
+      },
+      "full-strict": {
+        "rag_required": true,
+        "graph_required": true,
+        "strict": true
+      }
+    }
+  },
+  "command_facade": {
+    "public_prefix": "pik",
+    "workflow_kernel": {
+      "provider": "pik-native",
+      "prefix": "pik",
+      "reference_design": "gsd"
+    },
+    "command_map": {
+      "new_milestone": {
+        "public": "$pik-new-milestone",
+        "workflow_doc": "core/workflows/new-milestone.md",
+        "reference": "$gsd-new-milestone"
+      },
+      "spec_phase": {
+        "public": "$pik-spec-phase",
+        "workflow_doc": "core/workflows/spec-phase.md",
+        "reference": "$gsd-spec-phase"
+      },
+      "discuss_phase": {
+        "public": "$pik-discuss-phase",
+        "workflow_doc": "core/workflows/discuss-phase.md",
+        "reference": "$gsd-discuss-phase"
+      },
+      "ui_phase": {
+        "public": "$pik-ui-phase",
+        "workflow_doc": "core/workflows/ui-phase.md",
+        "reference": "$gsd-ui-phase"
+      },
+      "debug": {
+        "public": "$pik-debug",
+        "workflow_doc": "core/workflows/debug.md",
+        "reference": "$gsd-debug"
+      },
+      "plan_phase": {
+        "public": "$pik-plan-phase",
+        "workflow_doc": "core/workflows/plan-phase.md",
+        "reference": "$gsd-plan-phase"
+      },
+      "execute_phase": {
+        "public": "$pik-execute-phase",
+        "workflow_doc": "core/workflows/execute-phase.md",
+        "reference": "$gsd-execute-phase"
+      },
+      "code_review": {
+        "public": "$pik-code-review",
+        "workflow_doc": "core/workflows/code-review.md",
+        "reference": "$gsd-code-review"
+      },
+      "verify_work": {
+        "public": "$pik-verify-work",
+        "workflow_doc": "core/workflows/verify-work.md",
+        "reference": "$gsd-verify-work"
+      },
+      "complete_milestone": {
+        "public": "$pik-complete-milestone",
+        "workflow_doc": "core/workflows/complete-milestone.md",
+        "reference": "$gsd-complete-milestone"
+      }
+    }
+  },
+  "spec_context": {
+    "enabled": true,
+    "provider": "graphrag-local",
+    "source_paths": ["docs", "documents", "仕様書"],
+    "scan_extensions": [".md", ".txt", ".csv", ".pdf", ".docx", ".xlsx"],
+    "require_citations": true,
+    "index_handoff_path": ".planning/knowledge/RAG_INDEX_HANDOFF.md",
+    "index_result_path": ".planning/knowledge/RAG_INDEX_RESULT.md",
+    "query_result_path": ".planning/knowledge/RAG_QUERY_RESULT.md",
+    "index_command": "graphrag index --root graphrag-workspace --method fast",
+    "query_command": "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
+  },
+  "privacy": {
+    "network_policy": "local_only",
+    "allow_external_rag": false,
+    "allowed_hosts": ["127.0.0.1", "localhost"],
+    "forbidden_env_keys": [
+      "GRAPHRAG_API_KEY",
+      "OPENAI_API_KEY",
+      "AZURE_OPENAI_API_KEY",
+      "DEEPSEEK_API_KEY",
+      "ANTHROPIC_API_KEY",
+      "GEMINI_API_KEY"
+    ]
+  },
+  "code_map": {
+    "provider": "graphify",
+    "enabled": false,
+    "graph_path": ".planning/graphs/graph.json",
+    "report_path": ".planning/graphs/GRAPH_REPORT.md",
+    "baseline_path": ".planning/graphs/graph.baseline.json",
+    "build_result_path": ".planning/graphs/GRAPH_BUILD_RESULT.md",
+    "diff_result_path": ".planning/graphs/GRAPH_DIFF.md",
+    "update_command": "graphify update ."
+  },
+  "evidence_loop": {
+    "require_source_citation": true,
+    "require_test_record": true,
+    "writeback_enabled": true,
+    "records_path": ".planning/evidence/",
+    "writeback_targets": [".planning/issues/", ".planning/debug/", ".planning/phases/"]
+  },
+  "graphify": {
+    "enabled": false,
+    "build_timeout": 600
+  },
+  "graphrag": {
+    "enabled": true,
+    "mode": "local",
+    "profile": "local_basic",
+    "requires_api_key": false,
+    "root": "graphrag-workspace",
+    "llm_provider": "ollama",
+    "llm_model": "qwen2.5:14b",
+    "embedding_provider": "ollama",
+    "embedding_model": "nomic-embed-text",
+    "api_base": "http://127.0.0.1:11434",
+    "vector_store": "lancedb",
+    "index_command": "graphrag index --root graphrag-workspace --method fast",
+    "local_query_command": "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
+  },
+  "project_code": "{{PROJECT_NAME}}"
+}

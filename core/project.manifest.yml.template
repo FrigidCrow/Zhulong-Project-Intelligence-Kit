@@ -1,0 +1,173 @@
+project:
+  name: "{{PROJECT_NAME}}"
+  type: "{{PROJECT_TYPE}}"
+  root: "{{PROJECT_ROOT}}"
+  generated_at: "{{GENERATED_AT}}"
+
+execution_runtime:
+  supported:
+    - "claude-code"
+    - "github-copilot"
+    - "codex"
+  primary: ""
+  command_packs:
+    codex:
+      status: "implemented"
+      skills_path: "runtime/codex/skills"
+      install_command: "pik-runtime-install --runtime codex"
+    claude-code:
+      status: "implemented"
+      skills_path: "runtime/claude-code/skills"
+      install_command: "pik-runtime-install --runtime claude-code"
+    github-copilot:
+      status: "implemented"
+      prompts_path: "runtime/github-copilot/prompts"
+      install_command: "pik-runtime-install --runtime github-copilot"
+
+command_facade:
+  public_prefix: "pik"
+  workflow_kernel:
+    provider: "pik-native"
+    prefix: "pik"
+    reference_design: "gsd"
+  command_map:
+    new_milestone:
+      public: "$pik-new-milestone"
+      workflow_doc: "core/workflows/new-milestone.md"
+      reference: "$gsd-new-milestone"
+    spec_phase:
+      public: "$pik-spec-phase"
+      workflow_doc: "core/workflows/spec-phase.md"
+      reference: "$gsd-spec-phase"
+    discuss_phase:
+      public: "$pik-discuss-phase"
+      workflow_doc: "core/workflows/discuss-phase.md"
+      reference: "$gsd-discuss-phase"
+    ui_phase:
+      public: "$pik-ui-phase"
+      workflow_doc: "core/workflows/ui-phase.md"
+      reference: "$gsd-ui-phase"
+    debug:
+      public: "$pik-debug"
+      workflow_doc: "core/workflows/debug.md"
+      reference: "$gsd-debug"
+    plan_phase:
+      public: "$pik-plan-phase"
+      workflow_doc: "core/workflows/plan-phase.md"
+      reference: "$gsd-plan-phase"
+    execute_phase:
+      public: "$pik-execute-phase"
+      workflow_doc: "core/workflows/execute-phase.md"
+      reference: "$gsd-execute-phase"
+    code_review:
+      public: "$pik-code-review"
+      workflow_doc: "core/workflows/code-review.md"
+      reference: "$gsd-code-review"
+    verify_work:
+      public: "$pik-verify-work"
+      workflow_doc: "core/workflows/verify-work.md"
+      reference: "$gsd-verify-work"
+    complete_milestone:
+      public: "$pik-complete-milestone"
+      workflow_doc: "core/workflows/complete-milestone.md"
+      reference: "$gsd-complete-milestone"
+
+spec_context:
+  enabled: true
+  provider: "graphrag-local"
+  source_paths:
+    - "docs"
+    - "documents"
+    - "仕様書"
+  rag_sources_path: ".planning/knowledge/RAG_SOURCES.md"
+  status_path: ".planning/knowledge/DOC_RAG_STATUS.md"
+  glossary_path: ".planning/knowledge/GLOSSARY.md"
+  requirement_trace_path: ".planning/knowledge/REQUIREMENT_TRACE.md"
+  index_handoff_path: ".planning/knowledge/RAG_INDEX_HANDOFF.md"
+  index_result_path: ".planning/knowledge/RAG_INDEX_RESULT.md"
+  query_result_path: ".planning/knowledge/RAG_QUERY_RESULT.md"
+  index_command: "graphrag index --root graphrag-workspace --method fast"
+  query_command: "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
+  scan_extensions:
+    - ".md"
+    - ".txt"
+    - ".csv"
+    - ".pdf"
+    - ".docx"
+    - ".xlsx"
+  require_citations: true
+
+code_map:
+  provider: "graphify"
+  enabled: false
+  graph_path: ".planning/graphs/graph.json"
+  report_path: ".planning/graphs/GRAPH_REPORT.md"
+  baseline_path: ".planning/graphs/graph.baseline.json"
+  build_result_path: ".planning/graphs/GRAPH_BUILD_RESULT.md"
+  diff_result_path: ".planning/graphs/GRAPH_DIFF.md"
+  update_command: "graphify update ."
+
+evidence_loop:
+  require_source_citation: true
+  require_test_record: true
+  writeback_enabled: true
+  records_path: ".planning/evidence/"
+  writeback_targets:
+    - ".planning/issues/"
+    - ".planning/debug/"
+    - ".planning/phases/"
+
+knowledge:
+  graphify:
+    enabled: false
+    graph_path: ".planning/graphs/graph.json"
+    report_path: ".planning/graphs/GRAPH_REPORT.md"
+    update_command: "graphify update ."
+  graphrag:
+    enabled: true
+    mode: "local"
+    profile: "local_basic"
+    requires_api_key: false
+    root: "graphrag-workspace"
+    llm_provider: "ollama"
+    llm_model: "qwen2.5:14b"
+    embedding_provider: "ollama"
+    embedding_model: "nomic-embed-text"
+    api_base: "http://127.0.0.1:11434"
+    vector_store: "lancedb"
+    index_command: "graphrag index --root graphrag-workspace --method fast"
+    local_query_command: "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
+
+workflow:
+  mode: "maintenance"
+  require_graph_before_edit: true
+  require_rag_before_business_claim: true
+  require_source_verification: true
+  auto_advance: false
+
+privacy:
+  network_policy: "local_only"
+  allow_external_rag: false
+  allowed_hosts:
+    - "127.0.0.1"
+    - "localhost"
+  local_only:
+    - "AGENTS.md"
+    - "project.manifest.yml"
+    - ".planning/"
+    - "docs/architecture/"
+    - "graphify-corpus/"
+    - "graphify-out/"
+    - "graphrag-workspace/"
+    - ".ai-work/"
+    - ".ai-notes/"
+    - ".codex-work/"
+
+subsystems: []
+
+commands:
+  build: ""
+  test: ""
+  lint: ""
+  typecheck: ""
+  run_local: ""

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Project Intelligence Kit - QA Dashboard</title>
+  <meta name="description" content="AI-PIKit 本地验证报告、质量脚本、截图证据和 runtime pack 状态。">
+  <link rel="stylesheet" href="assets/pik-site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="topbar">
+    <a class="brand-mark" href="../README.md">AI Project Intelligence Kit</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="product.html">产品</a>
+      <a href="commands.html">命令</a>
+      <a href="technical-guide.html">技术教程</a>
+      <a href="quality-dashboard.html" aria-current="page">QA</a>
+      <a href="../verification/reports/latest.md">验证报告</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-title">
+      <p class="eyebrow">Quality Evidence</p>
+      <h1>AI-PIKit QA Dashboard。</h1>
+      <p>这里集中查看 integration、docs、RAG、MVP3、workflow facade、policy hardening、全命令面、schema、naming、runtime、visual 和两轮正式测试的本地证据。绿色状态必须能追到具体报告或截图。</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>质量状态</h2>
+        <p>先跑 `npm run verify:quality`、`npm run verify:integration`、`npm run verify:full-command-surface`，正式轮再跑 `run-full-test-plan.mjs`。当前命令面以 `package.json` 为准，最近一次全命令面为 68 / 68。</p>
+      </div>
+      <div class="grid">
+        <article class="panel panel-pad">
+          <h3>Integration</h3>
+          <p id="integration-summary">读取 `latest.json` 中...</p>
+          <p><a class="button" href="../verification/reports/latest.md">打开 Markdown 报告</a></p>
+        </article>
+        <article class="panel panel-pad">
+          <h3>Docs / RAG / Schema / Naming</h3>
+          <p id="docs-summary">读取 docs/RAG/schema/naming 报告中...</p>
+          <p><a class="button" href="../verification/reports/docs-check.md">Docs</a> <a class="button" href="../verification/reports/docs-update-fixture.md">Docs Update</a> <a class="button" href="../verification/reports/rag-command-check.md">RAG Matrix</a> <a class="button" href="../verification/reports/rag-local-check.md">Local RAG</a> <a class="button" href="../verification/reports/schema-check.md">Schema</a> <a class="button" href="../verification/reports/naming-check.md">Naming</a></p>
+        </article>
+        <article class="panel panel-pad">
+          <h3>Runtime / Visual</h3>
+          <p id="runtime-summary">读取 runtime/visual 报告中...</p>
+          <p><a class="button" href="../verification/reports/runtime-pack-status.md">Runtime</a> <a class="button" href="../verification/reports/visual-check.md">Visual</a></p>
+        </article>
+        <article class="panel panel-pad">
+          <h3>MVP3 / MVP3.5 / MVP6 / Full Surface</h3>
+          <p id="mvp3-summary">读取 MVP3 和全命令面报告中...</p>
+          <p><a class="button" href="../verification/reports/mvp3-evidence-policy-check.md">MVP3</a> <a class="button" href="../verification/reports/mvp35-refresh-control-check.md">MVP3.5</a> <a class="button" href="../verification/reports/workflow-facade-check.md">Facade</a> <a class="button" href="../verification/reports/policy-hardening-check.md">Policy</a> <a class="button" href="../verification/reports/full-command-surface-check.md">Command Surface</a></p>
+        </article>
+        <article class="panel panel-pad">
+          <h3>Formal Test Rounds</h3>
+          <p id="round-summary">读取两轮全量测试报告中...</p>
+          <p><a class="button" href="../verification/reports/full-test-round-1.md">Round 1</a> <a class="button" href="../verification/reports/full-test-round-2.md">Round 2</a> <a class="button" href="full-test-plan.md">测试计划</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>验证脚本覆盖了什么</h2>
+        <p>Dashboard 的绿色状态必须能追到具体脚本和报告。下面这张表说明每个质量入口到底在证明哪一类能力。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>命令</th><th>覆盖范围</th><th>报告</th></tr></thead>
+          <tbody>
+            <tr><td><code>npm run verify:docs</code></td><td>HTML/Markdown 本地链接、共享 CSS、命令手册覆盖。</td><td><a href="../verification/reports/docs-check.md">docs-check.md</a></td></tr>
+            <tr><td><code>npm run verify:rag-local</code></td><td>Local GraphRAG、Ollama、LanceDB、no external API key、privacy audit。</td><td><a href="../verification/reports/rag-local-check.md">rag-local-check.md</a></td></tr>
+            <tr><td><code>npm run verify:mvp3</code></td><td>RAG golden、citation audit、trace matrix、policy、help skills。</td><td><a href="../verification/reports/mvp3-evidence-policy-check.md">mvp3-evidence-policy-check.md</a></td></tr>
+            <tr><td><code>npm run verify:mvp35</code></td><td>preflight、refresh plan、显式 refresh-run、mode 切换、文档同步。</td><td><a href="../verification/reports/mvp35-refresh-control-check.md">mvp35-refresh-control-check.md</a></td></tr>
+            <tr><td><code>npm run verify:workflow-facade</code></td><td>public workflow 自动写 facade、输出下一步建议、并证明不触发 heavy refresh。</td><td><a href="../verification/reports/workflow-facade-check.md">workflow-facade-check.md</a></td></tr>
+            <tr><td><code>npm run verify:policy-hardening</code></td><td>policy lock/verify/diff、四态语义、profile 阻断和 no heavy refresh 约束。</td><td><a href="../verification/reports/policy-hardening-check.md">policy-hardening-check.md</a></td></tr>
+            <tr><td><code>npm run verify:full-command-surface</code></td><td><code>package.json</code> 中全部 <code>pik-*</code> / <code>pik</code> bin 命令。</td><td><a href="../verification/reports/full-command-surface-check.md">full-command-surface-check.md</a></td></tr>
+            <tr><td><code>npm run verify:integration</code></td><td>init、docs、Graphify、runtime pack、workflow guard、evidence writeback。</td><td><a href="../verification/reports/latest.md">latest.md</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="section-header">
+        <h2>命令覆盖矩阵</h2>
+        <p>这不是使用手册，而是 QA 视角的覆盖表：这些命令都必须在全命令面验证中被执行，不能只是写在文档里。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>层</th><th>命令</th><th>主要报告</th></tr></thead>
+          <tbody>
+            <tr><td>初始化</td><td><code>pik</code>, <code>pik-init</code>, <code>pik-verify</code>, <code>pik-map</code></td><td><code>full-command-surface-check.md</code></td></tr>
+            <tr><td>Codebase</td><td><code>pik-codebase</code>, <code>pik-codebase-scan</code>, <code>pik-codebase-status</code></td><td><code>latest.md</code></td></tr>
+            <tr><td>文档/RAG</td><td><code>pik-docs-scan</code>, <code>pik-docs-status</code>, <code>pik-docs-normalize</code>, <code>pik-docs-extract</code>, <code>pik-docs-diff</code>, <code>pik-docs-citations</code>, <code>pik-citation-audit</code>, <code>pik-rag-init-local</code>, <code>pik-rag-golden-add</code>, <code>pik-rag-golden-run</code>, <code>pik-rag-eval</code>, <code>pik-docs-index</code>, <code>pik-docs-query</code></td><td><code>rag-local-check.md</code>, <code>mvp3-evidence-policy-check.md</code></td></tr>
+            <tr><td>Graphify</td><td><code>pik-graph-build</code>, <code>pik-graph-status</code>, <code>pik-graph-query</code>, <code>pik-graph-diff</code>, <code>pik-graph-impact</code>, <code>pik-graph-risk</code>, <code>pik-graph-freshness</code></td><td><code>graph-hardening-check.md</code>, <code>latest.md</code></td></tr>
+            <tr><td>Refresh / Mode</td><td><code>pik-preflight</code>, <code>pik-refresh-plan</code>, <code>pik-refresh-run</code>, <code>pik-mode-status</code>, <code>pik-mode-set</code></td><td><code>mvp35-refresh-control-check.md</code></td></tr>
+            <tr><td>Privacy / License</td><td><code>pik-privacy-audit</code>, <code>pik-offline-lock</code>, <code>pik-outbound-audit</code>, <code>pik-license-audit</code></td><td><code>privacy-strict-check.md</code>, <code>license-audit-check.md</code></td></tr>
+            <tr><td>Evidence / Trace / Policy</td><td><code>pik-evidence-record</code>, <code>pik-evidence-status</code>, <code>pik-trace-build</code>, <code>pik-trace-query</code>, <code>pik-trace-audit</code>, <code>pik-policy-list</code>, <code>pik-policy-check</code>, <code>pik-policy-explain</code>, <code>pik-policy-lock</code>, <code>pik-policy-verify</code>, <code>pik-policy-diff</code>, <code>pik-help-skills</code></td><td><code>mvp3-evidence-policy-check.md</code>, <code>policy-hardening-check.md</code></td></tr>
+            <tr><td>Runtime</td><td><code>pik-runtime-install</code>, <code>pik-runtime-status</code></td><td><code>runtime-pack-status.md</code></td></tr>
+            <tr><td>Workflow guard</td><td><code>pik-workflow-run</code>, <code>pik-workflow-status</code>, <code>pik-workflow-continue</code>, <code>pik-workflow-audit</code>, <code>pik-gate-check</code>, <code>pik-completion-check</code></td><td><code>latest.md</code></td></tr>
+            <tr><td>Public workflow</td><td><code>pik-new-milestone</code>, <code>pik-spec-phase</code>, <code>pik-discuss-phase</code>, <code>pik-ui-phase</code>, <code>pik-debug</code>, <code>pik-plan-phase</code>, <code>pik-execute-phase</code>, <code>pik-code-review</code>, <code>pik-verify-work</code>, <code>pik-complete-milestone</code></td><td><code>latest.md</code>, <code>full-command-surface-check.md</code></td></tr>
+            <tr><td>Context</td><td><code>pik-context-debug</code>, <code>pik-context-execute</code></td><td><code>full-command-surface-check.md</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="section-header">
+        <h2>截图证据</h2>
+        <p>这些截图由 `npm run verify:visual` 生成，用来确认页面没有空白、错位、横向溢出或命令块不齐。</p>
+      </div>
+      <div class="grid">
+        <article class="panel panel-pad">
+          <h3>Product</h3>
+          <a href="../verification/reports/product-desktop.png"><img class="dashboard-shot" src="../verification/reports/product-desktop.png" alt="Product desktop screenshot"></a>
+        </article>
+        <article class="panel panel-pad">
+          <h3>Commands</h3>
+          <a href="../verification/reports/commands-desktop.png"><img class="dashboard-shot" src="../verification/reports/commands-desktop.png" alt="Commands desktop screenshot"></a>
+        </article>
+        <article class="panel panel-pad">
+          <h3>Technical Guide</h3>
+          <a href="../verification/reports/technical-guide-desktop.png"><img class="dashboard-shot" src="../verification/reports/technical-guide-desktop.png" alt="Technical guide desktop screenshot"></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>本地命令</h2>
+        <p>dashboard 只展示结果，不替代命令。任何绿色状态都必须能由下面命令重新生成。</p>
+      </div>
+      <pre class="code-block"><code>npm run check
+npm run verify:rag-local
+npm run verify:docs-extract
+npm run verify:graph-hardening
+npm run verify:privacy-strict
+npm run verify:license
+npm run verify:mvp3
+npm run verify:mvp35
+npm run verify:workflow-facade
+npm run verify:policy-hardening
+npm run verify:full-command-surface
+npm run verify:quality
+npm run verify:integration
+
+node scripts/run-full-test-plan.mjs --run-id round-1
+node scripts/run-full-test-plan.mjs --run-id round-2
+
+# 外部 GraphRAG 验证，只能用于允许外发的脱敏 fixture
+GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>QA dashboard 读取 `verification/reports/` 中的本地报告。file:// 打开时如果浏览器限制 JSON 读取，请直接打开对应 Markdown 报告。</p>
+  </footer>
+
+  <script>
+    async function readJson(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(path);
+      return response.json();
+    }
+
+    function statusText(data) {
+      if (!data) return "报告未生成";
+      if (data.summary) return `PASS ${data.summary.pass} / FAIL ${data.summary.fail} / WARN ${data.summary.warn}`;
+      return `${data.status || "UNKNOWN"} / issues ${Array.isArray(data.issues) ? data.issues.length : "?"}`;
+    }
+
+    Promise.allSettled([
+      readJson("../verification/reports/latest.json"),
+      readJson("../verification/reports/docs-check.json"),
+      readJson("../verification/reports/docs-update-fixture.json"),
+      readJson("../verification/reports/rag-command-check.json"),
+      readJson("../verification/reports/rag-local-check.json"),
+      readJson("../verification/reports/schema-check.json"),
+      readJson("../verification/reports/naming-check.json"),
+      readJson("../verification/reports/runtime-pack-status.json"),
+      readJson("../verification/reports/visual-check.json"),
+      readJson("../verification/reports/mvp3-evidence-policy-check.json"),
+      readJson("../verification/reports/mvp35-refresh-control-check.json"),
+      readJson("../verification/reports/workflow-facade-check.json"),
+      readJson("../verification/reports/policy-hardening-check.json"),
+      readJson("../verification/reports/full-command-surface-check.json"),
+      readJson("../verification/reports/full-test-round-1.json"),
+      readJson("../verification/reports/full-test-round-2.json"),
+    ]).then((results) => {
+      const values = results.map((item) => item.status === "fulfilled" ? item.value : null);
+      document.getElementById("integration-summary").textContent = statusText(values[0]);
+      document.getElementById("docs-summary").textContent = `Docs ${statusText(values[1])}; Docs Update ${statusText(values[2])}; RAG Matrix ${statusText(values[3])}; Local RAG ${statusText(values[4])}; Schema ${statusText(values[5])}; Naming ${statusText(values[6])}`;
+      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[7])}; Visual ${statusText(values[8])}`;
+      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[9])}; MVP3.5 ${statusText(values[10])}; Facade ${statusText(values[11])}; Policy ${statusText(values[12])}; Full Surface ${statusText(values[13])}`;
+      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[14])}; Round 2 ${statusText(values[15])}`;
+    }).catch(() => {
+      document.getElementById("integration-summary").textContent = "浏览器阻止本地 JSON 读取，请打开 Markdown 报告。";
+    });
+  </script>
+</body>
+</html>
