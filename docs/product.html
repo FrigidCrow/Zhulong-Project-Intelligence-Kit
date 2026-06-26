@@ -169,7 +169,7 @@
           <div class="comparison-row">
             <div>文档依据</div>
             <div>需要人工复制粘贴，文档一多就断层。</div>
-            <div>`pik-docs-scan`、`pik-docs-query`、可选 GraphRAG，把依据写回 `.planning/knowledge/`。</div>
+            <div>`pik-docs-sync`、`pik-docs-query`、`pik-answer-audit`、可选 GraphRAG，把依据和审计写回 `.planning/`。</div>
           </div>
           <div class="comparison-row">
             <div>完成定义</div>
@@ -225,7 +225,7 @@
             </div>
             <div class="story-row">
               <strong>文档更新</strong>
-              <p>文档新增或变更后先跑 `pik-preflight` 和 `pik-refresh-plan`。确实相关时再跑 `pik-refresh-run --rag` 或 `pik-docs-index --run`。</p>
+              <p>文档新增或变更后先跑 `pik-docs-sync`。它只标记 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG；需要新索引时再显式加 `--index`。</p>
             </div>
             <div class="story-row">
               <strong>代码更新</strong>
@@ -237,7 +237,9 @@
             <pre class="code-block"><code>pik-debug --target "$PWD" "障害内容"
 pik-preflight --target "$PWD"
 pik-refresh-plan --target "$PWD"
+pik-docs-sync --target "$PWD"
 pik-docs-query --target "$PWD" "仕様根拠"
+pik-answer-audit --target "$PWD"
 pik-graph-query --target "$PWD" "変更対象"
 pik-plan-phase --target "$PWD" "MVP1"
 pik-execute-phase --target "$PWD" "実装"
@@ -360,7 +362,7 @@ pik-mode-set --target "$PWD" full-strict</code></pre>
           </article>
           <article class="panel panel-pad">
             <h3>能力验证</h3>
-            <p>`npm run verify:integration` 覆盖 init、docs、Graphify、runtime pack、workflow guard 和 evidence；`npm run verify:mvp3` 覆盖 golden、citation、trace、policy、help skills；`npm run verify:mvp35` 覆盖 refresh/preflight/mode 控制；`npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 覆盖无感编排层和策略合同。</p>
+            <p>`npm run verify:integration` 覆盖 init、docs、Graphify、runtime pack、workflow guard 和 evidence；`npm run verify:knowledge-reliability` 覆盖 docs sync、docs query、answer audit；`npm run verify:mvp3` 覆盖 golden、citation、trace、policy、help skills；`npm run verify:mvp35` 覆盖 refresh/preflight/mode 控制；`npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 覆盖无感编排层和策略合同。</p>
           </article>
           <article class="panel panel-pad">
             <h3>命令面验证</h3>

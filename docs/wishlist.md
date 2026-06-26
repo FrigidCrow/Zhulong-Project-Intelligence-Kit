@@ -199,8 +199,8 @@ pik-policy-check --target "$PWD" --strict
 
 ### MVP4: Knowledge Reliability Mode
 
-- `pik-docs-sync`：文档更新后一键 scan / extract / diff / index / citation audit。
-- `pik-answer-audit`：检查回答是否有 citation、是否命中规格、是否有幻觉风险。
+- `pik-docs-sync`：文档更新后一键 scan / diff / extract / citation audit，只有显式 `--index` 才执行 GraphRAG index。
+- `pik-answer-audit`：第一版检查回答是否有 citation、citation 源文件是否存在、行号是否合法；命中规格和幻觉风险判断进入后续增强。
 - GraphRAG query route：local / global / drift / basic 自动选择。
 - RAG 评估指标增强：context precision、context recall、faithfulness、answer relevancy。
 

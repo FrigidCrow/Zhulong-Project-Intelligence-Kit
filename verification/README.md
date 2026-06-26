@@ -8,6 +8,7 @@
 - complete workflow 必须通过 codebase、docs、graph、plan、implementation、verification、evidence、writeback gate。
 - 默认 Local GraphRAG 不需要外部 API key。
 - MVP3 的 golden、citation、trace、policy、help skills 必须能在 fixture 中复跑。
+- MVP4.0 的 docs sync、docs query、answer audit 主路径必须能在 fixture 中复跑。
 
 运行确定性验证：
 
@@ -15,6 +16,9 @@
 npm run check
 npm run verify:rag-local
 npm run verify:docs-extract
+npm run verify:docs-sync
+npm run verify:answer-audit
+npm run verify:knowledge-reliability
 npm run verify:graph-hardening
 npm run verify:privacy-strict
 npm run verify:license
@@ -28,6 +32,8 @@ npm run verify:integration
 `verify:rag-local` 是默认保密路径验证。它运行 Ollama + LanceDB 的本地 GraphRAG，不需要外部 API key，并在 index/query 前后执行 `pik-privacy-audit`。
 
 `verify:docs-extract`、`verify:graph-hardening`、`verify:privacy-strict`、`verify:license` 覆盖 MVP2 hardening：本地文档抽取/citation、Graphify impact/risk/freshness、offline privacy lock/outbound blocking、license metadata review。
+
+`verify:docs-sync`、`verify:answer-audit`、`verify:knowledge-reliability` 覆盖 MVP4.0 Knowledge Reliability Lite：文档轻量同步、显式 `--index` 重索引、最近 query 默认 answer audit、坏 citation 阻断、missing citation profile 语义和 public workflow 只提示不自动运行。
 
 `verify:mvp3` 覆盖 MVP3 Evidence Quality & Policy Mode：RAG golden cases、citation audit、trace matrix、policy check、help skills。
 
@@ -50,6 +56,9 @@ verification/reports/latest.md
 verification/reports/latest.json
 verification/reports/docs-check.md
 verification/reports/docs-update-fixture.md
+verification/reports/docs-sync-check.md
+verification/reports/answer-audit-check.md
+verification/reports/knowledge-reliability-check.md
 verification/reports/rag-command-check.md
 verification/reports/rag-local-check.md
 verification/reports/docs-extract-citation-check.md

@@ -236,11 +236,15 @@ function runDocumentAndRagCommands() {
   const citations = runAlias("pik-docs-citations", ["--target", projectRoot, "FULL_SURFACE_SENTINEL_7719"]);
   assertIncludes("pik-docs-citations", citations.output, "FULL_SURFACE_SENTINEL_7719");
   runAlias("pik-citation-audit", ["--target", projectRoot]);
+  const docsSync = runAlias("pik-docs-sync", ["--target", projectRoot]);
+  assertIncludes("pik-docs-sync", docsSync.output, "heavy refresh executed: no");
   runAlias("pik-docs-index", ["--target", projectRoot]);
   const indexRun = runAlias("pik-docs-index", ["--target", projectRoot, "--run"]);
   assertIncludes("pik-docs-index --run", indexRun.output, "status success");
   const localQuery = runAlias("pik-docs-query", ["--target", projectRoot, "FULL_SURFACE_SENTINEL_7719"]);
   assertIncludes("pik-docs-query", localQuery.output, "FULL_SURFACE_SENTINEL_7719");
+  const answerAudit = runAlias("pik-answer-audit", ["--target", projectRoot]);
+  assertIncludes("pik-answer-audit", answerAudit.output, "answer audit PASS");
   const ragQuery = runAlias("pik-docs-query", ["--target", projectRoot, "--rag", "FULL_SURFACE_SENTINEL_7719"]);
   assertIncludes("pik-docs-query --rag", ragQuery.output, "FULL_SURFACE_SENTINEL_7719");
   runAlias("pik-rag-golden-add", ["--target", projectRoot, "--question", "FULL_SURFACE_SENTINEL_7719", "--expect", "FULL_SURFACE_SENTINEL_7719", "--citation", "docs/specs/approval.md:3"]);
@@ -369,6 +373,8 @@ assertFileIncludes("policy lock report", path.join(projectRoot, ".planning", "po
 assertFileIncludes("policy verify report", path.join(projectRoot, ".planning", "policies", "POLICY_VERIFY.md"), "Status: PASS");
 assertFileIncludes("policy diff report", path.join(projectRoot, ".planning", "policies", "POLICY_DIFF.md"), "Status: CLEAN");
 assertFileIncludes("trace audit report", path.join(projectRoot, ".planning", "trace", "TRACE_AUDIT.md"), "Status: PASS");
+assertFileIncludes("docs sync report", path.join(projectRoot, ".planning", "knowledge", "DOCS_SYNC.md"), "Heavy refresh executed: no");
+assertFileIncludes("answer audit report", path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.md"), "Status: PASS");
 assertFileIncludes("help skills report", path.join(projectRoot, ".planning", "help", "HELP_SKILLS.md"), "Recommendations");
 assertFileIncludes("refresh state", path.join(projectRoot, ".planning", "refresh", "REFRESH_STATE.json"), "\"graph\"");
 assertFileIncludes("preflight report", path.join(projectRoot, ".planning", "refresh", "PREFLIGHT.md"), "Heavy refresh executed: no");
