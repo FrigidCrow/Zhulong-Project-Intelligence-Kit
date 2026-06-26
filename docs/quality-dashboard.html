@@ -30,7 +30,7 @@
     <section class="section">
       <div class="section-header">
         <h2>质量状态</h2>
-        <p>先跑 `npm run verify:quality`、`npm run verify:integration`、`npm run verify:full-command-surface`，正式轮再跑 `run-full-test-plan.mjs`。当前命令面以 `package.json` 为准，最近一次全命令面为 68 / 68。</p>
+        <p>先跑 `npm run verify:quality`、`npm run verify:integration`、`npm run verify:full-command-surface`，正式轮再跑 `run-full-test-plan.mjs`。当前命令面以 `package.json` 为准，最近一次全命令面为 70 / 70。</p>
       </div>
       <div class="grid">
         <article class="panel panel-pad">
@@ -41,7 +41,7 @@
         <article class="panel panel-pad">
           <h3>Docs / RAG / Schema / Naming</h3>
           <p id="docs-summary">读取 docs/RAG/schema/naming 报告中...</p>
-          <p><a class="button" href="../verification/reports/docs-check.md">Docs</a> <a class="button" href="../verification/reports/docs-update-fixture.md">Docs Update</a> <a class="button" href="../verification/reports/rag-command-check.md">RAG Matrix</a> <a class="button" href="../verification/reports/rag-local-check.md">Local RAG</a> <a class="button" href="../verification/reports/schema-check.md">Schema</a> <a class="button" href="../verification/reports/naming-check.md">Naming</a></p>
+          <p><a class="button" href="../verification/reports/docs-check.md">Docs</a> <a class="button" href="../verification/reports/docs-update-fixture.md">Docs Update</a> <a class="button" href="../verification/reports/docs-sync-check.md">Docs Sync</a> <a class="button" href="../verification/reports/answer-audit-check.md">Answer Audit</a> <a class="button" href="../verification/reports/knowledge-reliability-check.md">Knowledge</a> <a class="button" href="../verification/reports/rag-command-check.md">RAG Matrix</a> <a class="button" href="../verification/reports/rag-local-check.md">Local RAG</a> <a class="button" href="../verification/reports/schema-check.md">Schema</a> <a class="button" href="../verification/reports/naming-check.md">Naming</a></p>
         </article>
         <article class="panel panel-pad">
           <h3>Runtime / Visual</h3>
@@ -71,6 +71,9 @@
           <thead><tr><th>命令</th><th>覆盖范围</th><th>报告</th></tr></thead>
           <tbody>
             <tr><td><code>npm run verify:docs</code></td><td>HTML/Markdown 本地链接、共享 CSS、命令手册覆盖。</td><td><a href="../verification/reports/docs-check.md">docs-check.md</a></td></tr>
+            <tr><td><code>npm run verify:docs-sync</code></td><td><code>pik-docs-sync</code> 默认轻量同步、文档新增/修改/删除 stale 标记、<code>--index</code> 显式重索引。</td><td><a href="../verification/reports/docs-sync-check.md">docs-sync-check.md</a></td></tr>
+            <tr><td><code>npm run verify:answer-audit</code></td><td><code>pik-answer-audit</code> 默认来源、<code>--from</code>、<code>--answer</code>、profile 状态和 workflow facade 建议。</td><td><a href="../verification/reports/answer-audit-check.md">answer-audit-check.md</a></td></tr>
+            <tr><td><code>npm run verify:knowledge-reliability</code></td><td>Knowledge Reliability Lite 主路径：docs sync -> docs query -> answer audit。</td><td><a href="../verification/reports/knowledge-reliability-check.md">knowledge-reliability-check.md</a></td></tr>
             <tr><td><code>npm run verify:rag-local</code></td><td>Local GraphRAG、Ollama、LanceDB、no external API key、privacy audit。</td><td><a href="../verification/reports/rag-local-check.md">rag-local-check.md</a></td></tr>
             <tr><td><code>npm run verify:mvp3</code></td><td>RAG golden、citation audit、trace matrix、policy、help skills。</td><td><a href="../verification/reports/mvp3-evidence-policy-check.md">mvp3-evidence-policy-check.md</a></td></tr>
             <tr><td><code>npm run verify:mvp35</code></td><td>preflight、refresh plan、显式 refresh-run、mode 切换、文档同步。</td><td><a href="../verification/reports/mvp35-refresh-control-check.md">mvp35-refresh-control-check.md</a></td></tr>
@@ -94,7 +97,7 @@
           <tbody>
             <tr><td>初始化</td><td><code>pik</code>, <code>pik-init</code>, <code>pik-verify</code>, <code>pik-map</code></td><td><code>full-command-surface-check.md</code></td></tr>
             <tr><td>Codebase</td><td><code>pik-codebase</code>, <code>pik-codebase-scan</code>, <code>pik-codebase-status</code></td><td><code>latest.md</code></td></tr>
-            <tr><td>文档/RAG</td><td><code>pik-docs-scan</code>, <code>pik-docs-status</code>, <code>pik-docs-normalize</code>, <code>pik-docs-extract</code>, <code>pik-docs-diff</code>, <code>pik-docs-citations</code>, <code>pik-citation-audit</code>, <code>pik-rag-init-local</code>, <code>pik-rag-golden-add</code>, <code>pik-rag-golden-run</code>, <code>pik-rag-eval</code>, <code>pik-docs-index</code>, <code>pik-docs-query</code></td><td><code>rag-local-check.md</code>, <code>mvp3-evidence-policy-check.md</code></td></tr>
+            <tr><td>文档/RAG</td><td><code>pik-docs-scan</code>, <code>pik-docs-status</code>, <code>pik-docs-normalize</code>, <code>pik-docs-extract</code>, <code>pik-docs-diff</code>, <code>pik-docs-citations</code>, <code>pik-docs-sync</code>, <code>pik-citation-audit</code>, <code>pik-rag-init-local</code>, <code>pik-rag-golden-add</code>, <code>pik-rag-golden-run</code>, <code>pik-rag-eval</code>, <code>pik-docs-index</code>, <code>pik-docs-query</code>, <code>pik-answer-audit</code></td><td><code>docs-sync-check.md</code>, <code>answer-audit-check.md</code>, <code>rag-local-check.md</code>, <code>mvp3-evidence-policy-check.md</code></td></tr>
             <tr><td>Graphify</td><td><code>pik-graph-build</code>, <code>pik-graph-status</code>, <code>pik-graph-query</code>, <code>pik-graph-diff</code>, <code>pik-graph-impact</code>, <code>pik-graph-risk</code>, <code>pik-graph-freshness</code></td><td><code>graph-hardening-check.md</code>, <code>latest.md</code></td></tr>
             <tr><td>Refresh / Mode</td><td><code>pik-preflight</code>, <code>pik-refresh-plan</code>, <code>pik-refresh-run</code>, <code>pik-mode-status</code>, <code>pik-mode-set</code></td><td><code>mvp35-refresh-control-check.md</code></td></tr>
             <tr><td>Privacy / License</td><td><code>pik-privacy-audit</code>, <code>pik-offline-lock</code>, <code>pik-outbound-audit</code>, <code>pik-license-audit</code></td><td><code>privacy-strict-check.md</code>, <code>license-audit-check.md</code></td></tr>
@@ -137,6 +140,9 @@
       <pre class="code-block"><code>npm run check
 npm run verify:rag-local
 npm run verify:docs-extract
+npm run verify:docs-sync
+npm run verify:answer-audit
+npm run verify:knowledge-reliability
 npm run verify:graph-hardening
 npm run verify:privacy-strict
 npm run verify:license
@@ -177,6 +183,9 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
       readJson("../verification/reports/latest.json"),
       readJson("../verification/reports/docs-check.json"),
       readJson("../verification/reports/docs-update-fixture.json"),
+      readJson("../verification/reports/docs-sync-check.json"),
+      readJson("../verification/reports/answer-audit-check.json"),
+      readJson("../verification/reports/knowledge-reliability-check.json"),
       readJson("../verification/reports/rag-command-check.json"),
       readJson("../verification/reports/rag-local-check.json"),
       readJson("../verification/reports/schema-check.json"),
@@ -193,10 +202,10 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
     ]).then((results) => {
       const values = results.map((item) => item.status === "fulfilled" ? item.value : null);
       document.getElementById("integration-summary").textContent = statusText(values[0]);
-      document.getElementById("docs-summary").textContent = `Docs ${statusText(values[1])}; Docs Update ${statusText(values[2])}; RAG Matrix ${statusText(values[3])}; Local RAG ${statusText(values[4])}; Schema ${statusText(values[5])}; Naming ${statusText(values[6])}`;
-      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[7])}; Visual ${statusText(values[8])}`;
-      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[9])}; MVP3.5 ${statusText(values[10])}; Facade ${statusText(values[11])}; Policy ${statusText(values[12])}; Full Surface ${statusText(values[13])}`;
-      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[14])}; Round 2 ${statusText(values[15])}`;
+      document.getElementById("docs-summary").textContent = `Docs ${statusText(values[1])}; Docs Update ${statusText(values[2])}; Docs Sync ${statusText(values[3])}; Answer Audit ${statusText(values[4])}; Knowledge ${statusText(values[5])}; RAG Matrix ${statusText(values[6])}; Local RAG ${statusText(values[7])}; Schema ${statusText(values[8])}; Naming ${statusText(values[9])}`;
+      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[10])}; Visual ${statusText(values[11])}`;
+      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[12])}; MVP3.5 ${statusText(values[13])}; Facade ${statusText(values[14])}; Policy ${statusText(values[15])}; Full Surface ${statusText(values[16])}`;
+      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[17])}; Round 2 ${statusText(values[18])}`;
     }).catch(() => {
       document.getElementById("integration-summary").textContent = "浏览器阻止本地 JSON 读取，请打开 Markdown 报告。";
     });

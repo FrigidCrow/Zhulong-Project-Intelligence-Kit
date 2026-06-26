@@ -1,0 +1,88 @@
+{
+  "generated": "2026-06-26T17:56:25.284Z",
+  "status": "PASS",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project",
+  "evidence": [
+    "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project --template greenfield-app --name docs_sync_fixture --mode new --force: exit 0",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0",
+    "first docs sync: found docs sync STALE_NEEDS_REFRESH",
+    "first docs sync heavy: found heavy refresh executed: no",
+    "DOCS_SYNC first: found Status: STALE_NEEDS_REFRESH",
+    "default docs sync no RAG index: file absent .planning/knowledge/RAG_INDEX_RESULT.md",
+    "pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project DOCS_SYNC_SENTINEL_4101: exit 0",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0",
+    "clean docs sync: found docs sync PASS",
+    "DOCS_SYNC clean: found Citation audit: PASS",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0",
+    "modified docs sync: found docs sync STALE_NEEDS_REFRESH",
+    "modified docs sync count: found modified 1",
+    "pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project DOCS_SYNC_SENTINEL_4102: exit 0",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project --index: exit 0",
+    "indexed docs sync heavy: found heavy refresh executed: yes",
+    "indexed docs sync status: found index success",
+    "RAG index result: found Status: success",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0",
+    "removed docs sync: found docs sync STALE_NEEDS_REFRESH",
+    "removed docs sync count: found removed 1"
+  ],
+  "commandResults": [
+    {
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project --template greenfield-app --name docs_sync_fixture --mode new --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/REQUIREMENT_TRACE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-s",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 1\nmodified 0\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project DOCS_SYNC_SENTINEL_4101",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Document citations: DOCS_SYNC_SENTINEL_4101\n- docs/spec.md:3 DOCS_SYNC_SENTINEL_4101 first version.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/CITATIONS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "docs sync PASS\nadded 0\nmodified 0\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 0\nmodified 1\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project DOCS_SYNC_SENTINEL_4102",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Document citations: DOCS_SYNC_SENTINEL_4102\n- docs/spec.md:4 DOCS_SYNC_SENTINEL_4102 changed.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/CITATIONS.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project --index",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "docs sync PASS\nadded 0\nmodified 0\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: yes\nindex success",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 0\nmodified 0\nremoved 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stderr": ""
+    }
+  ],
+  "issues": []
+}

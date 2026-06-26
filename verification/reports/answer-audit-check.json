@@ -1,0 +1,130 @@
+{
+  "generated": "2026-06-26T17:56:26.374Z",
+  "status": "PASS",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project",
+  "missingSourceRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project",
+  "evidence": [
+    "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --template greenfield-app --name answer_audit_fixture --mode new --force: exit 0",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project: exit 0",
+    "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project ANSWER_AUDIT_SENTINEL_4201: exit 0",
+    "docs query writes result: found DOCS_QUERY_RESULT.md",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project: exit 0",
+    "default answer audit pass: found answer audit PASS",
+    "ANSWER_AUDIT default: found Status: PASS",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --from .planning/knowledge/DOCS_QUERY_RESULT.md: exit 0",
+    "explicit answer audit pass: found answer audit PASS",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer ANSWER_AUDIT_SENTINEL_4201 [docs/spec.md:3]: exit 0",
+    "inline answer audit pass: found answer audit PASS",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer bad citation [docs/missing.md:1]: exit 1",
+    "invalid citation fails: found answer audit FAIL",
+    "invalid citation missing source: found source file missing",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer No citation in this default-local-rag answer.: exit 0",
+    "missing citation waived: found answer audit WAIVED_WITH_RISK",
+    "pik mode set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project full-strict: exit 0",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer No citation in this full-strict answer.: exit 1",
+    "strict missing citation fails: found answer audit FAIL",
+    "pik workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project debug ANSWER_AUDIT workflow suggestion: exit 0",
+    "workflow does not block command execution: found heavy refresh executed: no",
+    "workflow facade suggests answer audit: found pik-answer-audit --target <repo>",
+    "workflow does not auto-run answer audit: file absent project/.planning/quality/ANSWER_AUDIT.md",
+    "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project --template greenfield-app --name missing_source_fixture --mode new --force: exit 0",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project: exit 1",
+    "missing answer source fails: found answer audit FAIL",
+    "missing answer source next: found pik-docs-query --target <repo>"
+  ],
+  "commandResults": [
+    {
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --template greenfield-app --name answer_audit_fixture --mode new --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/REQUIREMENT_TRA",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 1\nmodified 0\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project ANSWER_AUDIT_SENTINEL_4201",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "Document context query: ANSWER_AUDIT_SENTINEL_4201\n- docs/spec.md:3 ANSWER_AUDIT_SENTINEL_4201 source-backed answer.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "answer audit PASS\nsource .planning/knowledge/DOCS_QUERY_RESULT.md\ncitations 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --from .planning/knowledge/DOCS_QUERY_RESULT.md",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "answer audit PASS\nsource .planning/knowledge/DOCS_QUERY_RESULT.md\ncitations 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer ANSWER_AUDIT_SENTINEL_4201 [docs/spec.md:3]",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "answer audit PASS\nsource --answer\ncitations 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer bad citation [docs/missing.md:1]",
+      "status": 1,
+      "expectedStatus": 1,
+      "stdout": "answer audit FAIL\nsource --answer\ncitations 1\nFAIL docs/missing.md:1 source file missing\nnext pik-docs-query --target <repo> \"<question or keywords>\"\nnext pik-docs-citations --target <repo> \"<query>\"\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer No citation in this default-local-rag answer.",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "answer audit WAIVED_WITH_RISK\nsource --answer\ncitations 0\nWAIVED_WITH_RISK --answer missing citation in answer source\nnext pik-docs-citations --target <repo> \"<query>\"\nnext pik-answer-audit --target <repo> --from <answer-file>\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik mode set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project full-strict",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "mode full-strict\nProfile: full-strict\nLabel: Full Strict\nRAG required: yes\nGraph required: yes\nStrict: yes\nDescription: 严格模式：文档/RAG 和 Graphify stale 都会让 preflight strict 失败。\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/refresh/MODE.md",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project --answer No citation in this full-strict answer.",
+      "status": 1,
+      "expectedStatus": 1,
+      "stdout": "answer audit FAIL\nsource --answer\ncitations 0\nFAIL --answer missing citation in answer source\nnext pik-docs-citations --target <repo> \"<query>\"\nnext pik-answer-audit --target <repo> --from <answer-file>\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    },
+    {
+      "command": "pik workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project debug ANSWER_AUDIT workflow suggestion",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "workflow debug-answer-audit-workflow-suggestion\nfacade BLOCKED\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/context/debug-answer-audit-workflow-suggestion.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/context/handoffs/debug-answer-audit-workflow-suggestion-HANDOFF.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/workflows/debug-answer-audit-workflow-suggestion/WORKFLOW_FACADE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/workflows/debug-answer-audit-workflow-suggestion/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nFAIL codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nFAIL graph .planning/graphs\nFAIL privacy /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stderr": ""
+    },
+    {
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project --template greenfield-app --name missing_source_fixture --mode new --force",
+      "status": 0,
+      "expectedStatus": 0,
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry6",
+      "stderr": ""
+    },
+    {
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project",
+      "status": 1,
+      "expectedStatus": 1,
+      "stdout": "answer audit FAIL\nsource missing\ncitations 0\nFAIL answer source no answer source found\nnext pik-docs-query --target <repo> --rag \"<question>\"\nnext pik-docs-query --target <repo> \"<question or keywords>\"\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-answer-audit-0zkuAm/missing-source-project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stderr": ""
+    }
+  ],
+  "issues": []
+}

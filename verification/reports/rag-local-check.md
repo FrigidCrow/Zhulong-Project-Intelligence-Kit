@@ -1,6 +1,6 @@
 # AI-PIKit Local GraphRAG Verification
 
-生成时间: 2026-06-25T13:53:54.995Z
+生成时间: 2026-06-26T17:56:23.605Z
 
 ## 摘要
 
@@ -57,8 +57,8 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-1IjJ2R/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-q00FwY`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-q00FwY/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-rag-local.mjs'`
 
 ## Issues

@@ -1,6 +1,6 @@
 # AI-PIKit Privacy Strict / Offline Lock Verification
 
-生成时间: 2026-06-25T13:53:57.802Z
+生成时间: 2026-06-26T17:56:28.004Z
 
 ## 摘要
 
@@ -24,8 +24,8 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-jLqkx1`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-jLqkx1/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-0fTvu1`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-0fTvu1/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-privacy-strict.mjs'`
 
 ## Issues

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-25T13:55:22.904Z",
+  "generated": "2026-06-26T17:55:38.957Z",
   "status": "PASS",
   "checkedFiles": [
     "README.md",
@@ -255,6 +255,21 @@
     },
     {
       "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-sync-check.md",
+      "target": "verification/reports/docs-sync-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/answer-audit-check.md",
+      "target": "verification/reports/answer-audit-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/knowledge-reliability-check.md",
+      "target": "verification/reports/knowledge-reliability-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/rag-command-check.md",
       "target": "verification/reports/rag-command-check.md"
     },
@@ -327,6 +342,21 @@
       "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/docs-check.md",
       "target": "verification/reports/docs-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-sync-check.md",
+      "target": "verification/reports/docs-sync-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/answer-audit-check.md",
+      "target": "verification/reports/answer-audit-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/knowledge-reliability-check.md",
+      "target": "verification/reports/knowledge-reliability-check.md"
     },
     {
       "file": "docs/quality-dashboard.html",

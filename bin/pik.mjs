@@ -118,6 +118,8 @@ const COMMAND_ALIASES = new Map([
   ["pik-docs-citations", ["docs", "citations"]],
   ["pik-docs-index", ["docs", "index"]],
   ["pik-docs-query", ["docs", "query"]],
+  ["pik-docs-sync", ["docs", "sync"]],
+  ["pik-answer-audit", ["answer", "audit"]],
   ["pik-rag-init-local", ["rag", "init-local"]],
   ["pik-rag-golden-add", ["rag", "golden-add"]],
   ["pik-rag-golden-run", ["rag", "golden-run"]],
@@ -179,6 +181,7 @@ const BOOLEAN_FLAGS = new Set([
   "all",
   "graph",
   "json",
+  "index",
   "rag",
   "run",
   "save-baseline",
@@ -292,10 +295,15 @@ Usage:
   pik-docs-extract --target <repo>
   pik-docs-diff --target <repo>
   pik-docs-citations --target <repo> "<question or keywords>"
+  pik-docs-sync --target <repo>
+  pik-docs-sync --target <repo> --index
   pik-docs-index --target <repo>
   pik-docs-index --target <repo> --run
   pik-docs-query --target <repo> "<question or keywords>"
   pik-docs-query --target <repo> --rag "<question>"
+  pik-answer-audit --target <repo>
+  pik-answer-audit --target <repo> --from .planning/knowledge/RAG_QUERY_RESULT.md
+  pik-answer-audit --target <repo> --answer "<answer text with citations>"
   pik-rag-init-local --target <repo>
   pik-rag-init-local --target <repo> --force
   pik-rag-golden-add --target <repo> --question "<q>" --expect "<term>" --citation "<path:line>"
@@ -1755,6 +1763,10 @@ function documentIndexPaths(target) {
     reportPath: path.join(target, ".planning", "knowledge", "DOCUMENT_EXTRACT_REPORT.md"),
     diffPath: path.join(target, ".planning", "knowledge", "DOCUMENT_DIFF.md"),
     citationsPath: path.join(target, ".planning", "knowledge", "CITATIONS.md"),
+    docsQueryJson: path.join(target, ".planning", "knowledge", "DOCS_QUERY_RESULT.json"),
+    docsQueryMd: path.join(target, ".planning", "knowledge", "DOCS_QUERY_RESULT.md"),
+    docsSyncJson: path.join(target, ".planning", "knowledge", "DOCS_SYNC.json"),
+    docsSyncMd: path.join(target, ".planning", "knowledge", "DOCS_SYNC.md"),
   };
 }
 
@@ -2002,6 +2014,166 @@ ${matches.length ? matches.slice(0, 20).map((match, index) => `${index + 1}. \`$
   return paths.citationsPath;
 }
 
+function writeDocsQueryResult(target, query, result, backend = "local-documents") {
+  const paths = documentIndexPaths(target);
+  fs.mkdirSync(paths.knowledgeDir, { recursive: true });
+  const generatedAt = new Date().toISOString();
+  const matches = result.matches || [];
+  const status = result.missing ? "failed" : matches.length > 0 ? "success" : "no_match";
+  const data = {
+    generatedAt,
+    status,
+    backend,
+    query,
+    matches: matches.slice(0, 50),
+    heavyRefreshExecuted: false,
+  };
+  writeJsonFile(paths.docsQueryJson, data);
+  const content = `# Docs Query Result
+
+Generated: ${generatedAt}
+
+## Query
+
+${query}
+
+## Result
+
+- Status: ${status}
+- Backend: ${backend}
+- Matches: ${matches.length}
+- Heavy refresh executed: no
+
+## Answer
+
+${matches.length
+  ? matches.slice(0, 8).map((match) => `- \`${match.sourcePath}:${match.line}\` - ${match.text}`).join("\n")
+  : result.missing ? "- Missing local document index." : "- No local document matches."}
+
+## Next Command
+
+\`\`\`bash
+pik-answer-audit --target <repo>
+\`\`\`
+`;
+  fs.writeFileSync(paths.docsQueryMd, content);
+  return { jsonPath: paths.docsQueryJson, mdPath: paths.docsQueryMd, data };
+}
+
+function docsSync(target, args = {}) {
+  const diff = diffDocuments(target);
+  const changedCount = diff.added.length + diff.modified.length + diff.removed.length;
+  const extraction = extractDocuments(target);
+  const citations = citationAudit(target);
+  const indexResult = args.index ? runRagIndex(target, args) : null;
+  const stale = changedCount > 0 || (!diff.previous && diff.current.map.size > 0);
+  const status = indexResult && !indexResult.ok
+    ? "FAIL"
+    : stale && !indexResult
+      ? "STALE_NEEDS_REFRESH"
+      : citations.ok
+        ? "PASS"
+        : "WAIVED_WITH_RISK";
+  const paths = documentIndexPaths(target);
+  const generatedAt = new Date().toISOString();
+  const data = {
+    generatedAt,
+    status,
+    stale,
+    changedCount,
+    diff: {
+      previousIndex: diff.previous?.generatedAt || null,
+      currentDocuments: diff.current.map.size,
+      added: diff.added.map((doc) => doc.path),
+      modified: diff.modified.map((item) => item.after.path),
+      removed: diff.removed.map((doc) => doc.path),
+      unchanged: diff.unchanged.length,
+      report: path.relative(target, diff.paths.diffPath),
+    },
+    extraction: {
+      documents: extraction.index.documents.length,
+      extracted: extraction.index.documents.filter((doc) => doc.extracted).length,
+      report: path.relative(target, extraction.paths.reportPath),
+      index: path.relative(target, extraction.paths.indexPath),
+    },
+    citationAudit: {
+      status: citations.ok ? "PASS" : "FAIL",
+      citations: citations.records.length,
+      issues: citations.issues,
+      report: path.relative(target, citations.outPath),
+    },
+    index: indexResult
+      ? {
+        status: indexResult.ok ? "success" : "failed",
+        command: indexResult.command,
+        report: path.relative(target, indexResult.resultPath),
+      }
+      : null,
+    heavyRefreshExecuted: Boolean(args.index),
+  };
+  writeJsonFile(paths.docsSyncJson, data);
+  const content = `# Docs Sync
+
+Generated: ${generatedAt}
+
+## Summary
+
+- Status: ${status}
+- Changed documents: ${changedCount}
+- Added: ${diff.added.length}
+- Modified: ${diff.modified.length}
+- Removed: ${diff.removed.length}
+- Extracted documents: ${data.extraction.extracted} / ${data.extraction.documents}
+- Citation audit: ${data.citationAudit.status}
+- Heavy refresh executed: ${args.index ? "yes" : "no"}
+
+## Sync Order
+
+1. Diff current source documents against the previous \`DOCUMENT_INDEX.json\`.
+2. Extract documents and overwrite \`DOCUMENT_INDEX.json\`.
+3. Run citation audit.
+4. Run GraphRAG index only when \`--index\` is explicit.
+
+## Diff
+
+- Previous index: ${diff.previous?.generatedAt || "missing"}
+- Diff report: \`${path.relative(target, diff.paths.diffPath)}\`
+
+### Added
+
+${diff.added.length ? diff.added.map((doc) => `- \`${doc.path}\``).join("\n") : "- None"}
+
+### Modified
+
+${diff.modified.length ? diff.modified.map((item) => `- \`${item.after.path}\``).join("\n") : "- None"}
+
+### Removed
+
+${diff.removed.length ? diff.removed.map((doc) => `- \`${doc.path}\``).join("\n") : "- None"}
+
+## Citation Audit
+
+- Report: \`${path.relative(target, citations.outPath)}\`
+- Issues: ${citations.issues.length}
+
+${citations.issues.length ? citations.issues.map((issue) => `- \`${issue.citation}\`: ${issue.detail}`).join("\n") : "No citation issues found."}
+
+## Index
+
+${indexResult
+  ? `- Status: ${indexResult.ok ? "success" : "failed"}\n- Command: \`${markdownCell(indexResult.command)}\`\n- Report: \`${path.relative(target, indexResult.resultPath)}\``
+  : "- Skipped. Run `pik-docs-sync --target <repo> --index` only when GraphRAG refresh is approved."}
+
+## Next Commands
+
+${status === "STALE_NEEDS_REFRESH"
+  ? "- `pik-refresh-plan --target <repo>`\n- `pik-docs-sync --target <repo> --index`"
+  : "- `pik-answer-audit --target <repo>` after the next docs/RAG answer."}
+`;
+  fs.writeFileSync(paths.docsSyncMd, content);
+  return { ...data, paths };
+}
+
 function qualityPaths(target) {
   const qualityDir = path.join(target, ".planning", "quality");
   return {
@@ -2009,6 +2181,8 @@ function qualityPaths(target) {
     goldenPath: path.join(qualityDir, "rag-goldens.json"),
     goldenRunPath: path.join(qualityDir, "RAG_GOLDEN_RUN.md"),
     ragEvalPath: path.join(qualityDir, "RAG_EVAL.md"),
+    answerAuditJson: path.join(qualityDir, "ANSWER_AUDIT.json"),
+    answerAuditMd: path.join(qualityDir, "ANSWER_AUDIT.md"),
   };
 }
 
@@ -2212,6 +2386,269 @@ Generated: ${new Date().toISOString()}
   console.log(`rag eval ${ok ? "PASS" : "FAIL"}`);
   console.log(`write ${paths.ragEvalPath}`);
   process.exitCode = ok ? 0 : 1;
+}
+
+function answerSourceCandidates(target) {
+  const docPaths = documentIndexPaths(target);
+  const ragPaths = ragArtifactPaths(target);
+  return [
+    { kind: "rag-query", path: ragPaths.queryResult },
+    { kind: "docs-query", path: docPaths.docsQueryMd },
+    { kind: "citations", path: docPaths.citationsPath },
+  ];
+}
+
+function resolveAnswerSource(target, args = {}) {
+  if (args.answer) {
+    return {
+      kind: "inline-answer",
+      sourcePath: null,
+      relativePath: "--answer",
+      text: String(args.answer),
+      exists: true,
+    };
+  }
+  if (args.from) {
+    const sourcePath = path.isAbsolute(args.from) ? args.from : path.join(target, args.from);
+    return {
+      kind: "explicit-file",
+      sourcePath,
+      relativePath: path.relative(target, sourcePath) || args.from,
+      text: fs.existsSync(sourcePath) ? fs.readFileSync(sourcePath, "utf8") : "",
+      exists: fs.existsSync(sourcePath),
+    };
+  }
+  for (const candidate of answerSourceCandidates(target)) {
+    if (fs.existsSync(candidate.path)) {
+      return {
+        kind: candidate.kind,
+        sourcePath: candidate.path,
+        relativePath: path.relative(target, candidate.path),
+        text: fs.readFileSync(candidate.path, "utf8"),
+        exists: true,
+      };
+    }
+  }
+  return {
+    kind: "missing",
+    sourcePath: null,
+    relativePath: "",
+    text: "",
+    exists: false,
+  };
+}
+
+function normalizeCitationPath(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^["'`[(]+/, "")
+    .replace(/["'`\])]+$/, "")
+    .replace(/^\.\//, "");
+}
+
+function parseAnswerCitationToken(value) {
+  const clean = normalizeCitationPath(value);
+  if (!clean || clean.includes("://")) return null;
+  const lineMatch = clean.match(/^(.*):(\d+)$/);
+  const sourcePath = lineMatch ? lineMatch[1] : clean;
+  if (!/\.(md|markdown|txt|csv|pdf|docx|xlsx)$/i.test(sourcePath)) return null;
+  return {
+    sourcePath,
+    line: lineMatch ? Number(lineMatch[2]) : null,
+  };
+}
+
+function parseAnswerCitations(text) {
+  const records = [];
+  const seen = new Set();
+  const add = (record) => {
+    if (!record?.sourcePath) return;
+    const key = `${record.sourcePath}:${record.line || ""}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    records.push(record);
+  };
+
+  for (const record of parseCitationRecords(text)) {
+    add({ sourcePath: record.sourcePath, line: record.line, text: record.text || "" });
+  }
+
+  const citationPattern = /(?:^|[\s`[(])(\.?[\w./\-\u3040-\u30ff\u3400-\u9fff]+?\.(?:md|markdown|txt|csv|pdf|docx|xlsx)(?::\d+)?)(?=$|[\s`\])])/giu;
+  for (const match of String(text || "").matchAll(citationPattern)) {
+    add(parseAnswerCitationToken(match[1]));
+  }
+
+  return records;
+}
+
+function isLineCheckableSource(filePath) {
+  return [".md", ".markdown", ".txt", ".csv"].includes(path.extname(filePath).toLowerCase());
+}
+
+function validateAnswerCitations(target, citations) {
+  const issues = [];
+  const validated = [];
+  for (const citation of citations) {
+    const citationPath = normalizeCitationPath(citation.sourcePath);
+    const absolutePath = path.isAbsolute(citationPath) ? citationPath : path.join(target, citationPath);
+    const relativePath = path.relative(target, absolutePath);
+    const outsideTarget = relativePath.startsWith("..") || path.isAbsolute(relativePath);
+    if (outsideTarget) {
+      issues.push({ citation: citationPath, detail: "citation points outside target repository" });
+      validated.push({ ...citation, sourcePath: citationPath, exists: false, lineValid: false });
+      continue;
+    }
+    if (!fs.existsSync(absolutePath)) {
+      issues.push({ citation: `${citationPath}${citation.line ? `:${citation.line}` : ""}`, detail: "source file missing" });
+      validated.push({ ...citation, sourcePath: citationPath, exists: false, lineValid: citation.line == null });
+      continue;
+    }
+    let lineValid = true;
+    if (citation.line != null) {
+      if (citation.line < 1) {
+        lineValid = false;
+      } else if (isLineCheckableSource(absolutePath)) {
+        const lineCount = fs.readFileSync(absolutePath, "utf8").split(/\r?\n/).length;
+        lineValid = citation.line <= lineCount;
+      }
+      if (!lineValid) {
+        issues.push({ citation: `${citationPath}:${citation.line}`, detail: "invalid line number" });
+      }
+    }
+    validated.push({
+      ...citation,
+      sourcePath: citationPath,
+      exists: true,
+      lineValid,
+    });
+  }
+  return { issues, validated };
+}
+
+function missingCitationStatus(profile) {
+  if (profile.strict || profile.name === "full-strict") {
+    return { status: "FAIL", blocking: true };
+  }
+  return { status: "WAIVED_WITH_RISK", blocking: false };
+}
+
+function answerAudit(target, args = {}) {
+  const profile = activeRefreshProfile(target);
+  const source = resolveAnswerSource(target, args);
+  const generatedAt = new Date().toISOString();
+  const suggestions = [
+    'pik-docs-query --target <repo> --rag "<question>"',
+    'pik-docs-query --target <repo> "<question or keywords>"',
+  ];
+
+  if (!source.exists) {
+    return {
+      generatedAt,
+      status: "FAIL",
+      blocking: true,
+      profile: profile.name,
+      source,
+      citations: [],
+      issues: [{ citation: "answer source", detail: "no answer source found" }],
+      suggestions,
+      heavyRefreshExecuted: false,
+    };
+  }
+
+  const citations = parseAnswerCitations(source.text);
+  if (citations.length === 0) {
+    const state = missingCitationStatus(profile);
+    return {
+      generatedAt,
+      status: state.status,
+      blocking: state.blocking,
+      profile: profile.name,
+      source,
+      citations: [],
+      issues: [{ citation: source.relativePath || source.kind, detail: "missing citation in answer source" }],
+      suggestions: ["pik-docs-citations --target <repo> \"<query>\"", "pik-answer-audit --target <repo> --from <answer-file>"],
+      heavyRefreshExecuted: false,
+    };
+  }
+
+  const validation = validateAnswerCitations(target, citations);
+  const ok = validation.issues.length === 0;
+  return {
+    generatedAt,
+    status: ok ? "PASS" : "FAIL",
+    blocking: !ok,
+    profile: profile.name,
+    source,
+    citations: validation.validated,
+    issues: validation.issues,
+    suggestions: ok ? [] : ["pik-docs-query --target <repo> \"<question or keywords>\"", "pik-docs-citations --target <repo> \"<query>\""],
+    heavyRefreshExecuted: false,
+  };
+}
+
+function writeAnswerAuditReports(target, result) {
+  const paths = qualityPaths(target);
+  fs.mkdirSync(paths.qualityDir, { recursive: true });
+  writeJsonFile(paths.answerAuditJson, {
+    generatedAt: result.generatedAt,
+    status: result.status,
+    blocking: result.blocking,
+    profile: result.profile,
+    source: {
+      kind: result.source.kind,
+      path: result.source.relativePath || null,
+      exists: result.source.exists,
+    },
+    citations: result.citations,
+    issues: result.issues,
+    suggestions: result.suggestions,
+    heavyRefreshExecuted: false,
+  });
+  const content = `# Answer Audit
+
+Generated: ${result.generatedAt}
+
+## Summary
+
+- Status: ${result.status}
+- Blocking: ${result.blocking ? "yes" : "no"}
+- Profile: \`${result.profile}\`
+- Source: \`${result.source.relativePath || result.source.kind}\`
+- Citations: ${result.citations.length}
+- Issues: ${result.issues.length}
+- Heavy refresh executed: no
+
+## Citations
+
+${result.citations.length
+  ? result.citations.map((citation) => `- \`${citation.sourcePath}${citation.line ? `:${citation.line}` : ""}\` exists=${citation.exists ? "yes" : "no"} line_valid=${citation.lineValid === false ? "no" : "yes"}`).join("\n")
+  : "- None"}
+
+## Issues
+
+${result.issues.length ? result.issues.map((issue) => `- \`${issue.citation}\`: ${issue.detail}`).join("\n") : "No answer audit issues found."}
+
+## Next Commands
+
+${result.suggestions.length ? result.suggestions.map((command) => `- \`${command}\``).join("\n") : "- No follow-up command required."}
+`;
+  fs.writeFileSync(paths.answerAuditMd, content);
+  return { jsonPath: paths.answerAuditJson, mdPath: paths.answerAuditMd };
+}
+
+function answerAuditCommand(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const result = answerAudit(target, args);
+  const written = writeAnswerAuditReports(target, result);
+  console.log(`answer audit ${result.status}`);
+  console.log(`source ${result.source.relativePath || result.source.kind}`);
+  console.log(`citations ${result.citations.length}`);
+  for (const issue of result.issues) console.log(`${result.status} ${issue.citation} ${issue.detail}`);
+  for (const suggestion of result.suggestions) console.log(`next ${suggestion}`);
+  console.log(`write ${written.mdPath}`);
+  console.log("heavy refresh executed: no");
+  process.exitCode = result.blocking ? 1 : 0;
 }
 
 function writeDocStatus(target, scan, options = {}) {
@@ -3908,12 +4345,12 @@ const HELP_SKILL_SCENARIOS = [
     commands: [
       "pik-preflight --target <repo>",
       "pik-refresh-plan --target <repo>",
-      "pik-docs-extract --target <repo>",
-      "pik-docs-diff --target <repo>",
+      "pik-docs-sync --target <repo>",
       "pik-docs-citations --target <repo> \"<query>\"",
+      "pik-answer-audit --target <repo>",
       "pik-rag-golden-run --target <repo>",
     ],
-    reason: "先抽取和 diff，再用 citation/golden 确认规格依据。",
+    reason: "先轻量同步文档，再用 citation/answer audit/golden 确认规格依据。",
   },
   {
     id: "改修影响面",
@@ -3957,7 +4394,7 @@ const HELP_SKILL_SCENARIOS = [
     commands: [
       "pik-init --target <repo> --template brownfield-monorepo --mode existing",
       "pik-codebase-scan --target <repo>",
-      "pik-docs-extract --target <repo>",
+      "pik-docs-sync --target <repo>",
       "pik-rag-init-local --target <repo>",
       "pik-trace-build --target <repo>",
     ],
@@ -4079,6 +4516,16 @@ function rag(args) {
   }
   if (subcommand === "eval") {
     ragEval(args);
+    return;
+  }
+  usage();
+  process.exitCode = 1;
+}
+
+function answer(args) {
+  const subcommand = args._[0];
+  if (subcommand === "audit") {
+    answerAuditCommand(args);
     return;
   }
   usage();
@@ -5403,7 +5850,16 @@ function workflowFacadePaths(target, state) {
   };
 }
 
-function workflowFacadeNextCommands(gates, preflight) {
+function pendingAnswerAudit(target) {
+  const candidates = answerSourceCandidates(target).slice(0, 2).filter((candidate) => fs.existsSync(candidate.path));
+  if (candidates.length === 0) return false;
+  const latestQueryMs = Math.max(...candidates.map((candidate) => fs.statSync(candidate.path).mtimeMs));
+  const auditPath = qualityPaths(target).answerAuditMd;
+  if (!fs.existsSync(auditPath)) return true;
+  return fs.statSync(auditPath).mtimeMs + GRAPH_STALE_GRACE_MS < latestQueryMs;
+}
+
+function workflowFacadeNextCommands(target, gates, preflight) {
   const commands = [];
   for (const gate of gates) {
     if (gate.blocking) commands.push(nextCommandForGate(gate.name));
@@ -5411,6 +5867,7 @@ function workflowFacadeNextCommands(gates, preflight) {
   for (const domain of preflight.domains || []) {
     if (domain.action === "refresh") commands.push(domain.command);
   }
+  if (pendingAnswerAudit(target)) commands.push("pik-answer-audit --target <repo>");
   return uniqueList(commands).filter(Boolean);
 }
 
@@ -5421,7 +5878,7 @@ function writeWorkflowFacade(target, state, route, gateResult) {
   const policy = lightweightPolicyChecks(target, { strict: profile.strict, requireOfflineLock: false });
   const paths = workflowFacadePaths(target, state);
   fs.mkdirSync(path.dirname(paths.mdPath), { recursive: true });
-  const nextCommands = workflowFacadeNextCommands(gateResult.gates, preflight);
+  const nextCommands = workflowFacadeNextCommands(target, gateResult.gates, preflight);
   const status = gateResult.ok && policy.status === "PASS" && preflight.status === "PASS"
     ? "PASS"
     : gateResult.ok ? "PASS_WITH_WARNINGS" : "BLOCKED";
@@ -5999,6 +6456,8 @@ function docs(args) {
     docsDiff(args);
   } else if (subcommand === "citations") {
     docsCitations(args);
+  } else if (subcommand === "sync") {
+    docsSyncCommand(args);
   } else if (subcommand === "citation-audit") {
     citationAuditCommand(args);
   } else if (subcommand === "index") {
@@ -6085,6 +6544,20 @@ function docsDiff(args) {
   }
 }
 
+function docsSyncCommand(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const result = docsSync(target, args);
+  console.log(`docs sync ${result.status}`);
+  console.log(`added ${result.diff.added.length}`);
+  console.log(`modified ${result.diff.modified.length}`);
+  console.log(`removed ${result.diff.removed.length}`);
+  console.log(`write ${result.paths.docsSyncMd}`);
+  console.log(`heavy refresh executed: ${args.index ? "yes" : "no"}`);
+  if (result.index) console.log(`index ${result.index.status}`);
+  process.exitCode = result.status === "FAIL" ? 1 : 0;
+}
+
 function docsCitations(args) {
   const target = path.resolve(args.target || process.cwd());
   requireDir(target, "Target");
@@ -6154,26 +6627,38 @@ function docsQuery(args) {
       console.log(result.stdout.trim());
     }
     console.log(`status ${result.ok ? "success" : "failed"}`);
+    if (result.ok) console.log('next pik-answer-audit --target "$PWD"');
     if (!result.ok) {
       process.exitCode = 1;
     }
     return;
   }
-  const result = queryNormalizedDocs(target, query);
+  let backend = "local-extracted-documents";
+  let result = queryExtractedDocuments(target, query);
   if (result.missing) {
-    console.log("missing .planning/knowledge/normalized/");
-    console.log("Run: pik-docs-normalize --target <repo>");
+    backend = "local-normalized-text";
+    result = queryNormalizedDocs(target, query);
+  }
+  const written = writeDocsQueryResult(target, query, result, backend);
+  if (result.missing) {
+    console.log("missing .planning/knowledge/extracted/ and .planning/knowledge/normalized/");
+    console.log("Run: pik-docs-sync --target <repo>");
+    console.log(`write ${written.mdPath}`);
     process.exitCode = 1;
     return;
   }
   console.log(`Document context query: ${query}`);
   if (result.matches.length === 0) {
-    console.log("No local normalized text matches.");
+    console.log("No local document text matches.");
+    console.log(`write ${written.mdPath}`);
+    console.log('next pik-answer-audit --target "$PWD"');
     return;
   }
   for (const match of result.matches.slice(0, 8)) {
     console.log(`- ${match.sourcePath}:${match.line} ${match.text}`);
   }
+  console.log(`write ${written.mdPath}`);
+  console.log('next pik-answer-audit --target "$PWD"');
 }
 
 function graph(args) {
@@ -6833,6 +7318,8 @@ try {
     docs(args);
   } else if (args.command === "rag") {
     rag(args);
+  } else if (args.command === "answer") {
+    answer(args);
   } else if (args.command === "preflight") {
     preflightCommand(args);
   } else if (args.command === "refresh") {

@@ -5,6 +5,65 @@ Full name: **AI Project Intelligence Kit**
 Documentation abbreviation: **AI-PIKit**  
 Command namespace: **`pik-*`**
 
+## 2026-06-27: MVP4.0 Knowledge Reliability Lite
+
+本阶段目标：把“文档更新后怎么同步”和“AI 回答有没有依据”做成默认简单用法。范围刻意保持轻量，不做 `pik-rag-route`，不让 workflow 自动触发重任务。
+
+新增命令：
+
+- `pik-docs-sync`
+- `pik-answer-audit`
+
+新增能力：
+
+- `pik-docs-sync --target <repo>` 默认按 diff -> extract -> citation audit 轻量同步文档，输出 `heavy refresh executed: no`。
+- `pik-docs-sync --target <repo> --index` 才允许执行 configured GraphRAG index，输出 `heavy refresh executed: yes`。
+- 文档新增、修改、删除时，`DOCS_SYNC` 状态写 `STALE_NEEDS_REFRESH`，默认不阻断，是否阻断交给 profile / policy。
+- `pik-docs-query` 现在会写 `.planning/knowledge/DOCS_QUERY_RESULT.md` 和 `.planning/knowledge/DOCS_QUERY_RESULT.json`。
+- `pik-answer-audit --target <repo>` 默认审计最近一次 `RAG_QUERY_RESULT.md`、`DOCS_QUERY_RESULT.md` 或 `CITATIONS.md`，日常不用复制长 answer。
+- `pik-answer-audit --from <file>` 可审指定文件，`--answer "<text>"` 只作为调试 escape hatch。
+- `answer audit` 第一版只做 citation/source-grounding：检查 citation 是否存在、源文件是否存在、行号是否合法；不做 LLM/NLI 级幻觉判断。
+- public workflow facade 如果发现最近 query 结果但没有 answer audit，只把 `pik-answer-audit --target <repo>` 加到 next commands，不自动运行、不阻断 completion。
+- `pik-help-skills` 的“文档更新”场景改为优先推荐 `pik-docs-sync` 和 `pik-answer-audit`。
+
+新增产物：
+
+- `.planning/knowledge/DOCS_SYNC.json`
+- `.planning/knowledge/DOCS_SYNC.md`
+- `.planning/knowledge/DOCS_QUERY_RESULT.json`
+- `.planning/knowledge/DOCS_QUERY_RESULT.md`
+- `.planning/quality/ANSWER_AUDIT.json`
+- `.planning/quality/ANSWER_AUDIT.md`
+
+新增验证：
+
+- `npm run verify:docs-sync`
+- `npm run verify:answer-audit`
+- `npm run verify:knowledge-reliability`
+
+验证证据：
+
+- `npm run check`: PASS
+- `npm run verify:docs-sync`: PASS
+- `npm run verify:answer-audit`: PASS
+- `npm run verify:knowledge-reliability`: PASS
+- `npm run verify:quality`: PASS
+- `npm run verify:integration`: PASS 132 / FAIL 0 / WARN 1
+- `npm run verify:all`: PASS
+- `npm run verify:full-command-surface`: PASS, 70 / 70 commands executed
+- `verification/reports/docs-sync-check.md`
+- `verification/reports/answer-audit-check.md`
+- `verification/reports/knowledge-reliability-check.md`
+- `verification/reports/full-command-surface-check.md`
+
+文档同步：
+
+- `README.md`：新增 MVP4.0 说明、默认 docs sync / answer audit 用法、验证脚本和 70 命令面。
+- `docs/commands.html`：新增 `pik-docs-sync`、`pik-answer-audit` 的表格和全命令卡片。
+- `docs/technical-guide.html`：新增 Knowledge Reliability Lite 流程、artifact contract 和验证入口。
+- `docs/quality-plan.md`：新增质量矩阵和专项脚本说明。
+- `docs/quality-dashboard.html` / `docs/product.html`：同步 70 / 70 命令面和新报告入口。
+
 ## 2026-06-25: MVP6 Workflow Facade & Policy Guard Contract
 
 本阶段目标：把“命令很多”的心智负担收敛到 public workflow，同时把“允许跳过 / 必须阻断 / 带风险继续”固化成 AI-PIKit native policy-as-code 合同。

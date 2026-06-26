@@ -57,7 +57,8 @@
             <code>├─ project.manifest.yml</code>
             <code class="accent">└─ .planning/</code>
             <code class="indent">├─ codebase/ CODEBASE_STATUS.md</code>
-            <code class="indent">├─ knowledge/ RAG_SOURCES.md</code>
+            <code class="indent">├─ knowledge/ DOCS_SYNC.md</code>
+            <code class="indent">├─ quality/ ANSWER_AUDIT.md</code>
             <code class="indent">├─ graphs/ GRAPH_REPORT.md</code>
             <code class="indent">├─ refresh/ REFRESH_STATE.json</code>
             <code class="indent">├─ workflows/ WORKFLOW_STATE.json</code>
@@ -237,7 +238,8 @@ ollama pull nomic-embed-text</code></pre>
           <div class="diagram">
             <div class="node">`pik-docs-scan` 写 `RAG_SOURCES.md` 和 `DOC_RAG_STATUS.md`。</div>
             <div class="node">`pik-docs-extract` 抽取 md/txt/csv/pdf/docx/xlsx，写 `DOCUMENT_INDEX.json`。</div>
-            <div class="node">`pik-docs-diff` 识别新增、删除、变更；`pik-docs-citations` 写 source citation。</div>
+            <div class="node">`pik-docs-sync` 默认先 diff 再 extract，发现变更写 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG。</div>
+            <div class="node">`pik-docs-citations` 写 source citation；`pik-answer-audit` 审计最近一次 docs/RAG 回答是否有依据。</div>
             <div class="node">`pik-citation-audit` 检查 citation 是否指向真实源文件。</div>
             <div class="node">`pik-rag-init-local` 写 `graphrag-workspace/settings.yaml` 和 `LOCAL_RAG_STATUS.md`。</div>
             <div class="node">`pik-docs-query --rag` 先过隐私审计，再执行本地 GraphRAG query command。</div>
@@ -318,6 +320,17 @@ pik-trace-audit --target "$PWD"</code></pre>
           </div>
           <p>核心产物是 `.planning/quality/` 和 `.planning/trace/`。以后接可视化 QA 时，这两类文件会成为“仕様依据 -> 代码影响面 -> 测试 -> evidence”的数据源。</p>
           <div class="panel panel-pad">
+            <h3>MVP4.0 Knowledge Reliability Lite</h3>
+            <p>Knowledge Reliability Lite 把文档更新和回答依据做成默认轻量流程。它不会每次都重建 GraphRAG，也不会在 public workflow 里自动审计，只会在有最近 query 且缺少 answer audit 时提示下一条命令。</p>
+            <pre class="code-block"><code>pik-docs-sync --target "$PWD"
+pik-docs-query --target "$PWD" "代理承認 上限"
+pik-answer-audit --target "$PWD"
+
+# 只有明确需要重建本地 GraphRAG index 时
+pik-docs-sync --target "$PWD" --index</code></pre>
+            <p>核心产物是 `.planning/knowledge/DOCS_SYNC.md`、`.planning/knowledge/DOCS_QUERY_RESULT.md` 和 `.planning/quality/ANSWER_AUDIT.md`。`pik-answer-audit --target "$PWD"` 会自动读取最近一次 RAG/docs query 结果；`--answer` 只作为调试入口。</p>
+          </div>
+          <div class="panel panel-pad">
             <h3>MVP3.5 执行预算</h3>
             <p>Refresh control 让 AI-PIKit 能提醒 GraphRAG / Graphify 是否落后当前 commit，但普通 workflow 不会自动重建。重刷新必须显式运行。</p>
             <pre class="code-block"><code>pik-preflight --target "$PWD"
@@ -374,6 +387,9 @@ pik-policy-diff --target "$PWD"</code></pre>
           <pre class="code-block"><code>npm run check
 npm run verify:rag-local
 npm run verify:docs-extract
+npm run verify:docs-sync
+npm run verify:answer-audit
+npm run verify:knowledge-reliability
 npm run verify:graph-hardening
 npm run verify:privacy-strict
 npm run verify:license
@@ -389,7 +405,7 @@ node scripts/run-full-test-plan.mjs --run-id round-2
 
 # 外部 GraphRAG 验证，只能在允许外发脱敏 fixture 时使用
 GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
-          <p>`verify:rag-local` 会真实运行本地 GraphRAG，不需要 API key。`verify:mvp3` 会验证 golden、citation、trace、policy、help skills。`verify:mvp35` 会验证刷新预算、preflight、mode 和文档同步。`verify:workflow-facade` 会验证 public workflow 写 `WORKFLOW_FACADE` 且不触发 heavy refresh。`verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义和 profile 阻断规则。`verify:full-command-surface` 会执行 `package.json` 中全部命令入口。默认 integration 未启用外部 live GraphRAG 时会保留一个 WARN；这不影响默认本地模式。</p>
+          <p>`verify:rag-local` 会真实运行本地 GraphRAG，不需要 API key。`verify:docs-sync` 会证明默认同步不触发 heavy refresh，`--index` 才执行 RAG index。`verify:answer-audit` 会证明无参数 answer audit、`--from`、`--answer`、profile 状态语义和 workflow facade 建议。`verify:knowledge-reliability` 会覆盖 docs sync -> docs query -> answer audit 主路径。`verify:mvp3` 会验证 golden、citation、trace、policy、help skills。`verify:mvp35` 会验证刷新预算、preflight、mode 和文档同步。`verify:workflow-facade` 会验证 public workflow 写 `WORKFLOW_FACADE` 且不触发 heavy refresh。`verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义和 profile 阻断规则。`verify:full-command-surface` 会执行 `package.json` 中全部命令入口。默认 integration 未启用外部 live GraphRAG 时会保留一个 WARN；这不影响默认本地模式。</p>
         </section>
 
         <section id="lifecycle" class="page-section">
@@ -412,21 +428,22 @@ pik-codebase-scan --target "$PWD"
 pik-codebase-status --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
-              <h3>第一次导入文档：scan、normalize、query</h3>
-              <p>把 仕様書、QA、議事録、画面设计放到项目文档目录后，先让 AI-PIKit 生成来源清单，再做归一化和查询。</p>
+              <h3>第一次导入文档：sync、query、audit</h3>
+              <p>把 仕様書、QA、議事録、画面设计放到项目文档目录后，优先用 `pik-docs-sync` 建立文档索引，再查询并审计回答依据。</p>
               <pre class="code-block"><code>pik-docs-scan --target "$PWD"
-pik-docs-normalize --target "$PWD"
-pik-docs-query --target "$PWD" "承認 上限 仕様"</code></pre>
+pik-docs-sync --target "$PWD"
+pik-docs-query --target "$PWD" "承認 上限 仕様"
+pik-answer-audit --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>文档更新：不要只改文件，要刷新 AI-PIKit 的知识层</h3>
-              <p>新增 QA、更新議事録、替换仕様書后，先做 lightweight preflight。只有文档路径相关时，才做差分刷新。</p>
+              <p>新增 QA、更新議事録、替换仕様書后，先做 lightweight sync。默认只标记 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG；只有明确需要新索引时才加 `--index`。</p>
               <pre class="code-block"><code>pik-preflight --target "$PWD"
 pik-refresh-plan --target "$PWD"
-pik-docs-scan --target "$PWD"
-pik-docs-extract --target "$PWD"
-pik-docs-diff --target "$PWD"
-pik-refresh-run --target "$PWD" --rag</code></pre>
+pik-docs-sync --target "$PWD"
+
+# 需要重建本地 GraphRAG index 时再执行
+pik-docs-sync --target "$PWD" --index</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>代码结构更新：刷新 codebase 和 graph</h3>
@@ -491,7 +508,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
               <tbody>
                 <tr><td>初始化</td><td><code>pik</code>, <code>pik-init</code>, <code>pik-verify</code>, <code>pik-map</code></td><td>CLI 可用，目标项目有 `.planning/` 基础结构。</td></tr>
                 <tr><td>Codebase</td><td><code>pik-codebase</code>, <code>pik-codebase-scan</code>, <code>pik-codebase-status</code></td><td>既存项目有 source/test/config baseline。</td></tr>
-                <tr><td>文档/RAG</td><td><code>pik-docs-scan</code>, <code>pik-docs-status</code>, <code>pik-docs-normalize</code>, <code>pik-docs-extract</code>, <code>pik-docs-diff</code>, <code>pik-docs-citations</code>, <code>pik-citation-audit</code>, <code>pik-rag-init-local</code>, <code>pik-rag-golden-add</code>, <code>pik-rag-golden-run</code>, <code>pik-rag-eval</code>, <code>pik-docs-index</code>, <code>pik-docs-query</code></td><td>文档来源、抽取、citation、golden、RAG eval 可复查。</td></tr>
+                <tr><td>文档/RAG</td><td><code>pik-docs-scan</code>, <code>pik-docs-status</code>, <code>pik-docs-normalize</code>, <code>pik-docs-extract</code>, <code>pik-docs-diff</code>, <code>pik-docs-citations</code>, <code>pik-docs-sync</code>, <code>pik-citation-audit</code>, <code>pik-rag-init-local</code>, <code>pik-rag-golden-add</code>, <code>pik-rag-golden-run</code>, <code>pik-rag-eval</code>, <code>pik-docs-index</code>, <code>pik-docs-query</code>, <code>pik-answer-audit</code></td><td>文档来源、抽取、同步、citation、answer audit、golden、RAG eval 可复查。</td></tr>
                 <tr><td>Graphify</td><td><code>pik-graph-build</code>, <code>pik-graph-status</code>, <code>pik-graph-query</code>, <code>pik-graph-diff</code>, <code>pik-graph-impact</code>, <code>pik-graph-risk</code>, <code>pik-graph-freshness</code></td><td>代码图谱、影响面、风险和 stale 状态可检查。</td></tr>
                 <tr><td>Refresh / Mode</td><td><code>pik-preflight</code>, <code>pik-refresh-plan</code>, <code>pik-refresh-run</code>, <code>pik-mode-status</code>, <code>pik-mode-set</code></td><td>普通流程只提醒，显式命令才刷新，模式可切换。</td></tr>
                 <tr><td>Privacy / License</td><td><code>pik-privacy-audit</code>, <code>pik-offline-lock</code>, <code>pik-outbound-audit</code>, <code>pik-license-audit</code></td><td>local-only、外发风险和 license 风险可审计。</td></tr>
@@ -513,7 +530,10 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
             <div class="artifact"><code>.planning/codebase/CODEBASE_STATUS.md</code><p>代码基线。既存项目没有这个文件，workflow 不应该允许收口。</p></div>
             <div class="artifact"><code>.planning/knowledge/RAG_SOURCES.md</code><p>文档来源清单。证明文档不是靠聊天复制粘贴临时塞进去。</p></div>
             <div class="artifact"><code>.planning/knowledge/normalized/</code><p>本地查询使用的规范化文档。文档更新后需要刷新。</p></div>
-            <div class="artifact"><code>.planning/knowledge/RAG_QUERY_RESULT.md</code><p>外部/本地 RAG 查询结果。用于 docs gate 和证据引用。</p></div>
+            <div class="artifact"><code>.planning/knowledge/DOCS_SYNC.md</code><p>文档同步报告。记录 diff/extract/citation audit 和是否执行 heavy refresh。</p></div>
+            <div class="artifact"><code>.planning/knowledge/DOCS_QUERY_RESULT.md</code><p>普通本地文档查询结果。默认 answer audit 会读取它。</p></div>
+            <div class="artifact"><code>.planning/knowledge/RAG_QUERY_RESULT.md</code><p>本地 GraphRAG 查询结果。默认 answer audit 会优先读取它。</p></div>
+            <div class="artifact"><code>.planning/quality/ANSWER_AUDIT.md</code><p>回答依据审计报告。记录 citation 是否存在、源文件是否存在和当前 profile 下是否阻断。</p></div>
             <div class="artifact"><code>.planning/quality/RAG_EVAL.md</code><p>RAG golden 和 citation 的汇总结果。用于判断文档问答是否还能稳定命中依据。</p></div>
             <div class="artifact"><code>.planning/graphs/GRAPH_REPORT.md</code><p>Graphify 报告。用于影响面说明和 code review。</p></div>
             <div class="artifact"><code>.planning/trace/TRACE_MATRIX.md</code><p>文档、代码、测试、evidence 的追踪矩阵。用于可视化 QA 和 policy。</p></div>
@@ -535,7 +555,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
               <thead><tr><th>现象</th><th>优先检查</th><th>修复命令</th></tr></thead>
               <tbody>
                 <tr><td>既存项目 completion 被 codebase gate 阻断</td><td><code>.planning/codebase/CODEBASE_STATUS.md</code> 是否存在，源码数量是否为 0。</td><td><code>pik-codebase-scan --target "$PWD"</code></td></tr>
-                <tr><td>docs gate 失败</td><td><code>RAG_SOURCES.md</code>、<code>DOC_RAG_STATUS.md</code>、<code>RAG_QUERY_RESULT.md</code>。</td><td><code>pik-docs-scan --target "$PWD" && pik-docs-normalize --target "$PWD"</code></td></tr>
+                <tr><td>docs gate 失败</td><td><code>RAG_SOURCES.md</code>、<code>DOC_RAG_STATUS.md</code>、<code>RAG_QUERY_RESULT.md</code>。</td><td><code>pik-docs-sync --target "$PWD"</code></td></tr>
                 <tr><td>graph gate 失败</td><td><code>.planning/graphs/GRAPH_REPORT.md</code> 是否存在，graph 是否 stale。</td><td><code>pik-graph-build --target "$PWD" --run</code></td></tr>
                 <tr><td>preflight 显示 <code>behind-unrelated</code></td><td><code>PREFLIGHT.md</code> 中 changed files 是否不在文档源或代码路径下。</td><td><code>pik-refresh-plan --target "$PWD"</code>，无关则跳过。</td></tr>
                 <tr><td>preflight 显示 RAG stale</td><td>是否有文档源路径变更；是否需要更新 GraphRAG index。</td><td><code>pik-refresh-run --target "$PWD" --rag</code></td></tr>

@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-25T13:52:49.101Z",
+  "generated": "2026-06-26T17:55:39.637Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-9stnOF",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-9stnOF/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-eu4BZc",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-eu4BZc/project",
   "evidence": [
     "initial local docs query: found INITIAL_APPROVAL_RULE",
     "RAG_SOURCES after update: found 2026-06-25_update.md",

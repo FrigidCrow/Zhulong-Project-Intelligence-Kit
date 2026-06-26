@@ -95,6 +95,9 @@ npm run verify:docs-update
 npm run verify:rag
 npm run verify:rag-local
 npm run verify:docs-extract
+npm run verify:docs-sync
+npm run verify:answer-audit
+npm run verify:knowledge-reliability
 npm run verify:graph-hardening
 npm run verify:privacy-strict
 npm run verify:license
@@ -111,7 +114,7 @@ npm run verify:quality
 npm run verify:all
 ```
 
-其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `pik-rag-init-local`、`pik-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
+其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `pik-rag-init-local`、`pik-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `pik-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
 
 `verify:mvp3` 覆盖 Evidence Quality & Policy Mode：RAG golden、citation audit、trace matrix、policy check、help skills。`verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` 和 `pik` bin 命令，确认命令入口不是只写在文档里。
 
@@ -125,7 +128,9 @@ npm run verify:all
 | 既存项目接入 | `pik-init --mode existing` 后必须 `pik-codebase-scan` | integration report | 增加 monorepo、无测试项目、旧框架项目 |
 | 文档扫描/抽取 | `pik-docs-scan` 生成来源清单，`pik-docs-extract` 抽取 pdf/docx/xlsx 并生成 citation 索引 | `docs-extract-citation-check.md` | 增加页码/Sheet 名和更强 chunk citation |
 | 文档归一化 | `pik-docs-normalize` 写 normalized 文档 | `.planning/knowledge/normalized/` | 增加编码、日文文件名、重复文件测试 |
-| 本地文档查询 | `pik-docs-query` 可命中 QA/仕様依据 | CR-017 fixture | 增加 terminology/glossary 查询 |
+| 文档轻量同步 | `pik-docs-sync` 默认 diff/extract/citation audit，不触发 GraphRAG index；`--index` 才重索引 | `docs-sync-check.md` | 增加更细的 doc owner、文档类型和变更影响面分类 |
+| 本地文档查询 | `pik-docs-query` 可命中 QA/仕様依据，并写 `DOCS_QUERY_RESULT.md/json` | `knowledge-reliability-check.md` | 增加 terminology/glossary 查询 |
+| 回答依据审计 | `pik-answer-audit` 默认审最近 query；坏 citation FAIL；缺 citation 按 profile 输出 `WAIVED_WITH_RISK` 或 `FAIL` | `answer-audit-check.md` + `knowledge-reliability-check.md` | 增加 answer faithfulness / context recall / contradiction 检查 |
 | RAG/GraphRAG | 默认本地 GraphRAG，`--run`、`--rag` 执行配置命令并写结果 | `rag-local-check.md` + `rag-command-check.md` + live GraphRAG smoke | 增加完整 graph-local profile 和 enterprise RAG provider matrix |
 | RAG 可信度 | golden case、citation audit、RAG eval | `mvp3-evidence-policy-check.md` | 增加更细的 answer faithfulness / context recall 指标 |
 | Graphify build | `pik-graph-build --run` 同步 graph/report，local-only 下先过 privacy audit | integration report + `privacy-strict-check.md` | 增加真实 Graphify 大项目 smoke |
@@ -225,18 +230,20 @@ pik-debug --target "$PWD" "既存障害"
 
 必测：
 
-1. 第一次 `pik-docs-scan` 和 `pik-docs-normalize`。
-2. 查询旧文档关键字，记录命中。
+1. 第一次 `pik-docs-sync`，确认写入 `DOCS_SYNC.md/json`。
+2. 查询旧文档关键字，确认 `DOCS_QUERY_RESULT.md/json` 写入。
 3. 新增或修改 QA/議事録。
-4. 重跑 `pik-docs-scan`、`pik-docs-normalize`。
-5. 如果配置 RAG，再跑 `pik-docs-index --run`。
+4. 重跑 `pik-docs-sync`，确认输出 `STALE_NEEDS_REFRESH` 且 `heavy refresh executed: no`。
+5. 如果配置 RAG 且需要重建索引，再显式跑 `pik-docs-sync --index`。
 6. 查询新关键字，确认命中新文档。
+7. 跑 `pik-answer-audit --target "$PWD"`，确认回答依据状态。
 
 通过标准：
 
 - `RAG_SOURCES.md` 更新来源数量或 mtime 线索。
-- normalized 目录出现新内容。
-- `pik-docs-query` 能命中新规则。
+- `DOCS_SYNC.md` 记录新增、修改或删除。
+- `pik-docs-query` 能命中新规则，并写 `DOCS_QUERY_RESULT.md/json`。
+- `ANSWER_AUDIT.md` 对最近 query 给出 `PASS`、`WAIVED_WITH_RISK` 或 `FAIL`。
 - RAG 模式下 `RAG_INDEX_RESULT.md` 和 `RAG_QUERY_RESULT.md` 更新。
 
 ### 5.5 Runtime command pack 场景
@@ -440,6 +447,38 @@ Status: implemented
 - `npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 必须 PASS。
 - 新增功能、命令和验证结果必须同步更新 `README.md`、`docs/changelog.md`、`docs/commands.html`、`docs/technical-guide.html`、`docs/quality-plan.md`、`docs/quality-dashboard.html`。
 
+### Loop 1.8: MVP4.0 Knowledge Reliability Lite
+
+Status: implemented
+
+目标：把“文档更新后怎么同步”和“AI 回答有没有依据”做成默认简单用法，同时保持轻量，不引入 `pik-rag-route`，不让 workflow 自动触发重任务。
+
+新增命令：
+
+- `pik-docs-sync`
+- `pik-answer-audit`
+
+新增产物：
+
+- `.planning/knowledge/DOCS_SYNC.json`
+- `.planning/knowledge/DOCS_SYNC.md`
+- `.planning/knowledge/DOCS_QUERY_RESULT.json`
+- `.planning/knowledge/DOCS_QUERY_RESULT.md`
+- `.planning/quality/ANSWER_AUDIT.json`
+- `.planning/quality/ANSWER_AUDIT.md`
+
+完成定义：
+
+- `pik-docs-sync --target <repo>` 默认必须先 diff 再 extract，并输出 `heavy refresh executed: no`。
+- 文档新增、修改、删除必须让 `DOCS_SYNC` 输出 `STALE_NEEDS_REFRESH`，默认 exit 0。
+- `pik-docs-sync --target <repo> --index` 才允许执行 configured GraphRAG index，并输出 `heavy refresh executed: yes`。
+- `pik-docs-query` 必须写 `DOCS_QUERY_RESULT.md/json`，并提示 `pik-answer-audit --target "$PWD"`。
+- `pik-answer-audit --target <repo>` 必须自动选择最近一次 `RAG_QUERY_RESULT.md`、`DOCS_QUERY_RESULT.md` 或 `CITATIONS.md`。
+- 有效 citation 必须 `PASS`；不存在源文件或非法行号必须 `FAIL`。
+- missing citation 在 `graph-lite` 和 `default-local-rag` 下必须 `WAIVED_WITH_RISK` 且 exit 0；在 `full-strict` 下必须 `FAIL` 且非 0。
+- public workflow facade 只建议 `pik-answer-audit`，不得自动运行，也不得新增 completion 阻断。
+- `npm run verify:docs-sync`、`npm run verify:answer-audit`、`npm run verify:knowledge-reliability`、`npm run verify:full-command-surface` 必须 PASS。
+
 ### Loop 2: 扩展 fixture
 
 目标：不要只靠 CR-017 一个样本。
@@ -552,7 +591,9 @@ Status: partially implemented
 | --- | --- |
 | 支持新项目接入 | init/codebase/docs/verify 的命令输出和 `.planning/INIT_PROFILE.md` |
 | 支持既存项目接入 | source count > 0 的 `CODEBASE_STATUS.md` |
-| 支持文档查询 | `RAG_SOURCES.md`、normalized 文件、query output |
+| 支持文档同步 | `DOCS_SYNC.md/json`、`DOCUMENT_INDEX.json`、`DOCUMENT_DIFF.md`、`heavy refresh executed` 标记 |
+| 支持文档查询 | `RAG_SOURCES.md`、`DOCS_QUERY_RESULT.md/json`、query output |
+| 支持回答依据审计 | `ANSWER_AUDIT.md/json`、citation 源文件检查、profile 状态语义 |
 | 支持 GraphRAG | `rag-local-check.md`、`RAG_INDEX_RESULT.md`、`RAG_QUERY_RESULT.md`、privacy audit、live/fixture 标记 |
 | 支持 Graphify | `.planning/graphs/graph.json`、`GRAPH_REPORT.md`、query/diff output |
 | 支持 runtime | 安装目录文件、渲染后的 `PIK_CLI`、runtime status |
@@ -567,6 +608,9 @@ verification/reports/*.png
 verification/reports/latest.json
 verification/reports/docs-check.md
 verification/reports/docs-update-fixture.md
+verification/reports/docs-sync-check.md
+verification/reports/answer-audit-check.md
+verification/reports/knowledge-reliability-check.md
 verification/reports/rag-command-check.md
 verification/reports/rag-local-check.md
 verification/reports/schema-check.md
