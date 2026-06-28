@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-28T10:22:13.014Z",
+  "generated": "2026-06-28T13:57:46.962Z",
   "status": "PASS",
   "scannedFiles": [
     "README.md",
@@ -163,6 +163,7 @@
     "scripts/verify-rag-local.mjs",
     "scripts/verify-runtime-packs.mjs",
     "scripts/verify-schema.mjs",
+    "scripts/verify-security-governance.mjs",
     "scripts/verify-skills-usability.mjs",
     "scripts/verify-visual.mjs",
     "scripts/verify-workflow-closure.mjs",

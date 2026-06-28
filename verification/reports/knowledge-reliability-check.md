@@ -1,6 +1,6 @@
 # AI-PIKit Knowledge Reliability Lite Verification
 
-生成时间: 2026-06-28T10:21:55.173Z
+生成时间: 2026-06-28T13:57:25.505Z
 
 ## 摘要
 
@@ -9,22 +9,22 @@
 
 ## 证据
 
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force: exit 0
-- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-UUZR4d/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force: exit 0
+- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-UUZR4d/project: exit 0
 - knowledge docs sync status: found docs sync STALE_NEEDS_REFRESH
 - knowledge docs sync light: found heavy refresh executed: no
-- pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project KNOWLEDGE_RELIABILITY_SENTINEL_4301: exit 0
+- pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-UUZR4d/project KNOWLEDGE_RELIABILITY_SENTINEL_4301: exit 0
 - knowledge docs query writes result: found DOCS_QUERY_RESULT.md
 - DOCS_QUERY_RESULT: found KNOWLEDGE_RELIABILITY_SENTINEL_4301
-- pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project: exit 0
+- pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-UUZR4d/project: exit 0
 - knowledge answer audit: found answer audit PASS
 - knowledge answer audit light: found heavy refresh executed: no
 - ANSWER_AUDIT: found Status: PASS
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-UUZR4d`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-UUZR4d/project`
 - 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-knowledge-reliability.mjs'`
 
 ## 问题

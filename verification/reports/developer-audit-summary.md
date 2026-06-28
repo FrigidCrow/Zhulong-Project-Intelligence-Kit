@@ -1,15 +1,20 @@
 # AI-PIKit Developer Audit Summary
 
-生成时间: 2026-06-28T10:20:59.824Z
+生成时间: 2026-06-28T15:46:46.243Z
 
 ## 摘要
 
-- Run ID: `2026-06-28T10-19-11-341Z`
+- Run ID: `2026-06-28T15-45-31-164Z-23400-ae1e41`
 - 原始产物目录: `.pik-audit/latest/`
 - 命令覆盖: 71
 - Runtime skill/prompt 覆盖: 33
+- Skill behavior score: 100
+- Ragas-style knowledge score: 100
+- Promptfoo-style redteam score: 100
 - 功能审计状态: PASS
 - 对标审计状态: PASS
+- Quality control score: 99 / A
+- Quality release decision: RELEASE_OK
 - Benchmark comparison score: 87
 - Token 规则: 只有真实 Codex JSONL 中存在 usage 时才统计；缺失时写 `TOKEN_USAGE_UNAVAILABLE`。
 - 记忆隔离规则: 每轮使用 fresh fixture；真实 Codex 对标必须使用 `--ephemeral --ignore-rules`，需要完全不读用户配置时额外启用 `AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1`。
@@ -17,6 +22,8 @@
 ## 评分怎么读
 
 - `Benchmark comparison` 是所有 benchmark 行的保守平均分，不是 AI-PIKit 单体分。
+- `SKILL_SCORES` 是结构质量分，`SKILL_BEHAVIOR_SCORES` 是 deterministic 行为契约分。
+- `RAGAS_STYLE_KNOWLEDGE_SCORES` 和 `PROMPTFOO_STYLE_REDTEAM_SCORES` 是本地代理指标，不调用外部 SaaS 或外部模型。
 - 本轮工具平均分: AI-PIKit=90/A, GSD=88/B, Superpowers=82/B。
 - AI-PIKit `graph-lite` 是低成本模式，故意不强制 GraphRAG/RAG，评分不会按 full-local 满分计算。
 - AI-PIKit `full-local` 在无文档场景输出 `EXPECTED_BLOCK`，这是正确安全边界，但会拉低横向平均。
@@ -27,24 +34,30 @@
 
 | 工具 | 模式 | 状态 | 评分 | 耗时 | Token | 隔离 |
 | --- | --- | --- | --- | --- | --- | --- |
-| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2453 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3321 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| GSD | skill-pack-backed-replay | PASS | 88 | 261 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| Superpowers | skill-pack-backed-replay | PASS | 82 | 248 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | graph-lite-dev-loop | WAIVED_WITH_RISK | 88 | 2513 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | full-local-graphify-graphrag | EXPECTED_BLOCK | 75 | 3309 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| GSD | skill-pack-backed-replay | WAIVED_WITH_RISK | 88 | 246 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| Superpowers | skill-pack-backed-replay | WAIVED_WITH_RISK | 82 | 250 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2703 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3896 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| GSD | skill-pack-backed-replay | PASS | 88 | 266 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| Superpowers | skill-pack-backed-replay | PASS | 82 | 270 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2568 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3525 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| GSD | skill-pack-backed-replay | PASS | 88 | 229 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| Superpowers | skill-pack-backed-replay | PASS | 82 | 227 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | graph-lite-dev-loop | WAIVED_WITH_RISK | 88 | 2444 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | full-local-graphify-graphrag | EXPECTED_BLOCK | 75 | 3299 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| GSD | skill-pack-backed-replay | WAIVED_WITH_RISK | 88 | 234 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| Superpowers | skill-pack-backed-replay | WAIVED_WITH_RISK | 82 | 229 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2529 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3175 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| GSD | skill-pack-backed-replay | PASS | 88 | 240 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| Superpowers | skill-pack-backed-replay | PASS | 82 | 228 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
 
 ## 主要结论
 
 - 本轮命令面覆盖 71 个 `pik` / `pik-*` bin，命令平均分 100。
 - Runtime pack 覆盖 33 个 Codex / Claude Code / GitHub Copilot skill/prompt，平均分 100。
+- Skill behavior 契约分 100，用于补足静态 skill 分无法证明真实触发和行为的问题。
 - 功能 gate 加权分 100，用于证明 workflow、policy、RAG、Graphify、cockpit 和 docs completeness 的闭环。
+- Ragas-style knowledge 分 100，覆盖 context recall、faithfulness、citation validity、tool call accuracy、agent goal accuracy。
+- Promptfoo-style redteam 分 100，覆盖 prompt injection、越权、外部 RAG、危险命令和 evidence 跳过。
+- SkillsBench-style with/without skill delta: docs-complete: pass +100pp, score +74; docs-missing: pass +100pp, score +57; docs-partial: pass +100pp, score +74。
+- Security governance 状态 PASS，默认 local-only，外部 RAG 需要显式 opt-in。
+- 长期质量控制总分 99/A，发布判断 RELEASE_OK。
 - Benchmark comparison 87 是所有对标行的保守平均分，不是 AI-PIKit 单体分；AI-PIKit 单体平均见三方横向总览。
 - AI-PIKit full-local benchmark 已把 Graphify 与 GraphRAG/RAG 耗时拆开；graph-lite benchmark 用于低成本开发循环。
 - GSD 与 Superpowers 本轮使用本机真实 skill/plugin 文件做 skill-pack-backed replay；real agent subprocess 另行记录，不混入 replay 分数。
@@ -54,7 +67,7 @@
 - GSD 的短板是它不是当前项目的 repository-local AI-PIKit CLI，Codex typed-agent 能力和本地 RAG/Graphify/policy 默认融合都不是它的原生闭环。
 - Superpowers 的优势是轻量、通用、TDD 和 verification-before-completion 思路清晰；本轮 replay 平均分 82/B。
 - Superpowers 的短板是缺少面向文档密集型开发的项目知识层、代码影响图、citation/evidence/policy 本地闭环；更像开发纪律增强包，不是项目 intelligence layer。
-- 真实 agent subprocess 状态单独统计为：AI-PIKit=FAIL, GSD=FAIL, Superpowers=FAIL。它不成功时不能证明模型执行质量，只能证明当前环境的 live-agent benchmark 条件不足。
+- 真实 agent subprocess 状态单独统计为：AI-PIKit=SKIPPED, GSD=SKIPPED, Superpowers=SKIPPED。它不成功时不能证明模型执行质量，只能证明当前环境的 live-agent benchmark 条件不足。
 - 因此本轮可信结论是：AI-PIKit 在“本地项目知识中枢 + 工作流 + evidence/policy + Graphify/RAG 集成”上领先；GSD 在 workflow 设计参考价值上更成熟；Superpowers 在轻量开发纪律上更简洁。
 
 ## 报告入口
@@ -62,7 +75,12 @@
 - `.pik-audit/latest/AUDIT_REPORT.md`
 - `.pik-audit/latest/COMMAND_SCORES.md`
 - `.pik-audit/latest/SKILL_SCORES.md`
+- `.pik-audit/latest/SKILL_BEHAVIOR_SCORES.md`
 - `.pik-audit/latest/FEATURE_SCORES.md`
+- `.pik-audit/latest/SECURITY_GOVERNANCE_CHECK.md`
+- `.pik-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.md`
+- `.pik-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.md`
+- `.pik-audit/latest/QUALITY_CONTROL_SCORECARD.md`
 - `.pik-audit/latest/BENCHMARK_COMPARISON.md`
 - `.pik-audit/latest/TIME_BREAKDOWN.md`
 - `.pik-audit/latest/TOKEN_USAGE.md`

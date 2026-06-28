@@ -5,6 +5,60 @@ Full name: **AI Project Intelligence Kit**
 Documentation abbreviation: **AI-PIKit**  
 Command namespace: **`pik-*`**
 
+## 2026-06-28: Long-Term Quality Control Scorecard
+
+本阶段把质量检查从“脚本集合”升级为长期可复跑的内部质量控制机制。它不新增公开 `pik-*` 用户命令，不进入 `docs/commands.html`，只新增维护者 npm scripts 和审计报告。
+
+新增内部质量入口：
+
+- `npm run dev:audit:skill-behavior`
+- `npm run dev:audit:skill-beavior`，兼容计划文档里的拼写
+- `npm run dev:audit:security-governance`
+- `npm run dev:audit:ragas-style`
+- `npm run dev:audit:promptfoo-redteam`
+- `npm run verify:security-governance`
+- `npm run verify:quality:daily`
+- `npm run verify:quality:release`
+
+新增和扩展产物：
+
+- `.pik-audit/latest/SKILL_BEHAVIOR_SCORES.md/json`
+- `.pik-audit/latest/SECURITY_GOVERNANCE_CHECK.md/json`
+- `.pik-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.md/json`
+- `.pik-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.md/json`
+- `.pik-audit/latest/QUALITY_CONTROL_SCORECARD.md/json/html`
+- `verification/reports/security-governance-check.md/json`
+- `verification/reports/quality-control-summary.md/json`
+
+评分口径：
+
+- Static Skill Quality: 10
+- Trigger Accuracy: 15
+- Command / Tool Trajectory: 20
+- Workflow / Evidence Closure: 20
+- Knowledge / RAG Quality: 15
+- Safety / Governance: 10
+- Efficiency / Stability: 10
+
+关键边界：
+
+- `SKILL_SCORES` 是结构质量分；`SKILL_BEHAVIOR_SCORES` 是 deterministic 行为契约分，按 33 个 runtime skill/prompt × 5 类 case 归档。
+- `BENCHMARK_COMPARISON` 记录 SkillsBench-style with_skill / without_skill delta。
+- `RAGAS_STYLE_KNOWLEDGE_SCORES` 和 `PROMPTFOO_STYLE_REDTEAM_SCORES` 是本地代理指标，不调用外部 SaaS 或外部模型。
+- 默认 local-only，`privacy.allow_external_rag = false`，`privacy.allow_external_tools = false`。
+- 外部 RAG 只能通过 `--doc-policy strict --rag external --allow-external-rag` 显式开启，并生成风险报告。
+- Codex、Claude Code、GitHub Copilot 是用户主动使用的外部 coding runtime 例外；这个例外不允许 AI-PIKit 命令默认外发项目资料。
+- 外部机制只借鉴方法：OpenAI Agent Skill Evals、SkillsBench、Ragas、Promptfoo、OWASP Agentic Top 10、NIST AI RMF；当前不强制引入外部 SaaS。
+- 2026-06-29 复核并补充方法论链接：OpenAI Agent Skills / skill evals、SkillsBench、Anthropic agent evals、Ragas agent metrics、Promptfoo Agent Skills、OWASP Agentic Top 10 2026、NIST AI RMF / AI 600-1。README、quality plan、developer audit 和 verification README 均标注采用方式与 local-only 边界。
+
+文档同步：
+
+- `README.md`
+- `docs/quality-plan.md`
+- `docs/internal/dev-audit.md`
+- `verification/README.md`
+- `docs/changelog.md`
+
 ## 2026-06-28: MVP4.3 Init Wizard & Document/RAG Policy Simplification
 
 本阶段把 `pik-init` 从单纯生成 `.planning/` 的入口，升级为项目级一次性接入向导语义。

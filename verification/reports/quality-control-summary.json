@@ -1,0 +1,96 @@
+{
+  "generated": "2026-06-28T15:46:46.232Z",
+  "status": "PASS",
+  "total_score": 99,
+  "grade": "A",
+  "release_decision": "RELEASE_OK",
+  "critical_fail": false,
+  "dimensions": [
+    {
+      "id": "static_skill_quality",
+      "label": "Static Skill Quality",
+      "weight": 10,
+      "score": 100
+    },
+    {
+      "id": "trigger_accuracy",
+      "label": "Trigger Accuracy",
+      "weight": 15,
+      "score": 100
+    },
+    {
+      "id": "command_tool_trajectory",
+      "label": "Command / Tool Trajectory",
+      "weight": 20,
+      "score": 100
+    },
+    {
+      "id": "workflow_evidence_closure",
+      "label": "Workflow / Evidence Closure",
+      "weight": 20,
+      "score": 100
+    },
+    {
+      "id": "knowledge_rag_quality",
+      "label": "Knowledge / RAG Quality",
+      "weight": 15,
+      "score": 100
+    },
+    {
+      "id": "safety_governance",
+      "label": "Safety / Governance",
+      "weight": 10,
+      "score": 100
+    },
+    {
+      "id": "efficiency_stability",
+      "label": "Efficiency / Stability",
+      "weight": 10,
+      "score": 85
+    }
+  ],
+  "methodology_reviewed_at": "2026-06-29",
+  "methodology_sources": [
+    {
+      "name": "OpenAI Agent Skills docs",
+      "url": "https://developers.openai.com/codex/skills",
+      "adoption": "runtime skill/prompt structure and trigger boundary"
+    },
+    {
+      "name": "OpenAI Testing Agent Skills Systematically with Evals",
+      "url": "https://developers.openai.com/blog/eval-skills",
+      "adoption": "prompt -> trace/artifacts -> checks -> score for SKILL_BEHAVIOR_SCORES"
+    },
+    {
+      "name": "SkillsBench / SkillsBench 1.1",
+      "url": "https://arxiv.org/abs/2602.12670",
+      "adoption": "with_skill / without_skill delta in BENCHMARK_COMPARISON"
+    },
+    {
+      "name": "Anthropic Demystifying evals for AI agents",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "adoption": "trajectory + outcome and deterministic regression eval layering"
+    },
+    {
+      "name": "Ragas agent metrics",
+      "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/agents/",
+      "adoption": "local proxy knowledge metrics for tool call and goal accuracy"
+    },
+    {
+      "name": "Promptfoo Agent Skills",
+      "url": "https://www.promptfoo.dev/docs/integrations/agent-skill/",
+      "adoption": "local proxy eval/redteam matrix"
+    },
+    {
+      "name": "OWASP Top 10 for Agentic Applications 2026",
+      "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+      "adoption": "agent security governance checklist"
+    },
+    {
+      "name": "NIST AI RMF / NIST AI 600-1 GenAI Profile",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "adoption": "risk management and release gate governance"
+    }
+  ],
+  "methodology_boundary": "Local deterministic scoring is primary. Ragas-style and Promptfoo-style are local proxy metrics; no external SaaS or external model call is used by default."
+}

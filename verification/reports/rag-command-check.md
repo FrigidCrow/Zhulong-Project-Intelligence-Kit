@@ -1,6 +1,6 @@
 # AI-PIKit RAG Command Verification
 
-生成时间: 2026-06-28T10:21:34.373Z
+生成时间: 2026-06-28T13:56:53.840Z
 
 ## 摘要
 
@@ -57,8 +57,8 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-rag-commands.mjs'`
 
 ## Issues

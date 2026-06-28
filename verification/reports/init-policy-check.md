@@ -1,6 +1,6 @@
 # AI-PIKit Init Policy Verification
 
-生成时间: 2026-06-28T10:22:58.184Z
+生成时间: 2026-06-28T13:58:37.511Z
 
 ## 摘要
 
@@ -19,7 +19,7 @@
 
 ## 证据
 
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/reference-none --template greenfield-app --name reference_none --mode new --force: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/reference-none --template greenfield-app --name reference_none --mode new --force: exit 0
 - default init policy: found Document policy: reference
 - default init rag: found RAG backend: none
 - default init heavy: found Heavy refresh executed: no
@@ -30,44 +30,44 @@
 - default config graphrag disabled: graphrag disabled
 - default INIT_PROFILE: found RAG backend: `none`
 - default no graphrag workspace: path absent reference-none/graphrag-workspace/settings.yaml
-- pik mode status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/reference-none: exit 0
+- pik mode status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/reference-none: exit 0
 - default mode document policy: found Document policy: reference
 - default mode rag backend: found RAG backend: none
 - default mode internal profile: found Internal profile: graph-lite
-- pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/reference-none --run: exit 1
+- pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/reference-none --run: exit 1
 - rag none index blocked: found RAG backend disabled
 - rag none index report: found RAG backend disabled
-- pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/reference-none --rag INIT_POLICY_SENTINEL: exit 1
+- pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/reference-none --rag INIT_POLICY_SENTINEL: exit 1
 - rag none query blocked: found RAG backend disabled
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/strict-none --doc-policy strict --rag none --force: exit 1
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/strict-none --doc-policy strict --rag none --force: exit 1
 - strict none rejected: found strict requires --rag local or --rag external
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/external-blocked --doc-policy strict --rag external --force: exit 1
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/external-blocked --doc-policy strict --rag external --force: exit 1
 - external without opt-in rejected: found External RAG is disabled by default
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/external-allowed --doc-policy strict --rag external --allow-external-rag --force: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/external-allowed --doc-policy strict --rag external --allow-external-rag --force: exit 0
 - external opt-in init: found RAG backend: external
 - external opt-in config: external rag opt-in recorded
 - external risk report: found project document content
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/strict-local --template brownfield-monorepo --mode existing --doc-policy strict --rag local --setup-rag skip --force: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/strict-local --template brownfield-monorepo --mode existing --doc-policy strict --rag local --setup-rag skip --force: exit 0
 - strict local init: found Document policy: strict
 - strict local rag: found RAG backend: local
 - strict local config: strict local policy recorded
 - strict local models: default local models recorded
 - strict local provider: local GraphRAG provider configured
 - strict local setup plan: found Heavy refresh executed: no
-- pik mode status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/strict-local: exit 0
+- pik mode status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/strict-local: exit 0
 - strict local mode status: found Document policy: strict
 - strict local mode profile: found Internal profile: full-strict
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/mode-aliases --doc-policy reference --rag none --force: exit 0
-- pik mode set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/mode-aliases docs-strict: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/mode-aliases --doc-policy reference --rag none --force: exit 0
+- pik mode set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/mode-aliases docs-strict: exit 0
 - mode set docs-strict: found Document policy: strict
 - mode set docs-strict backend: found RAG backend: local
 - mode set docs-strict profile: found Internal profile: full-strict
 - mode strict config: docs-strict maps to strict/local
-- pik mode set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/mode-aliases docs-reference: exit 0
+- pik mode set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/mode-aliases docs-reference: exit 0
 - mode set docs-reference: found Document policy: reference
 - mode set docs-reference profile: found Internal profile: graph-lite
 - mode reference config: docs-reference maps to graph-lite
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-5ubEZc/interactive-wizard --interactive --force <interactive>: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-init-policy-3PF9hn/interactive-wizard --interactive --force <interactive>: exit 0
 - interactive wizard banner: found AI-PIKit init wizard
 - interactive project prompt: found Project type
 - interactive policy output: found Document policy: strict

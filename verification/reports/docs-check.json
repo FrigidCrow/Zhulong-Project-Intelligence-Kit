@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-28T10:21:31.821Z",
+  "generated": "2026-06-28T15:47:02.262Z",
   "status": "PASS",
   "checkedFiles": [
     "README.md",
@@ -98,6 +98,11 @@
       "file": "README.md",
       "link": "verification/reports/developer-audit-summary.md",
       "target": "verification/reports/developer-audit-summary.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/quality-control-summary.md",
+      "target": "verification/reports/quality-control-summary.md"
     },
     {
       "file": "README.md",
@@ -208,6 +213,11 @@
       "file": "README.md",
       "link": "verification/reports/developer-audit-summary.md",
       "target": "verification/reports/developer-audit-summary.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/quality-control-summary.md",
+      "target": "verification/reports/quality-control-summary.md"
     },
     {
       "file": "README.md",

@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-28T10:21:34.371Z",
+  "generated": "2026-06-28T13:56:53.838Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
   "commandsCovered": [
     "pik docs scan",
     "pik docs status",
@@ -51,105 +51,105 @@
   ],
   "commandResults": [
     {
-      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project --template greenfield-app --name rag_command_fixture --mode new --force",
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project --template greenfield-app --name rag_command_fixture --mode new --force",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/evidence/README.m",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/evidence/README.m",
       "stderr": ""
     },
     {
-      "command": "pik docs scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik docs scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
       "stderr": ""
     },
     {
-      "command": "pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 3\nsource roots docs, documents, 仕様書",
       "stderr": ""
     },
     {
-      "command": "pik docs status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik docs status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "Document context status\nLast scan: 2026-06-28T10:21:33.070Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stdout": "Document context status\nLast scan: 2026-06-28T13:56:52.423Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOC_RAG_STATUS.md",
       "stderr": ""
     },
     {
-      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "Document context status\nLast scan: 2026-06-28T10:21:33.070Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stdout": "Document context status\nLast scan: 2026-06-28T13:56:52.423Z\nTotal source documents: 3\nNormalized documents: 0\nRAG backend: Not configured\nIndex status: Not indexed\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOC_RAG_STATUS.md",
       "stderr": ""
     },
     {
-      "command": "pik docs normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik docs normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
       "stderr": ""
     },
     {
-      "command": "pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/normalized/MANIFEST.md\nnormalized 3\nskipped 0",
       "stderr": ""
     },
     {
-      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project RAG_COMMAND_SENTINEL",
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project RAG_COMMAND_SENTINEL",
       "status": 0,
-      "stdout": "Document context query: RAG_COMMAND_SENTINEL\n- docs/qa/QA-101.md:3 - RAG_COMMAND_SENTINEL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "Document context query: RAG_COMMAND_SENTINEL\n- docs/qa/QA-101.md:3 - RAG_COMMAND_SENTINEL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
       "stderr": ""
     },
     {
-      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project RAG_MINUTES_SENTINEL",
+      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project RAG_MINUTES_SENTINEL",
       "status": 0,
-      "stdout": "Document context query: RAG_MINUTES_SENTINEL\n- documents/minutes.txt:2 RAG_MINUTES_SENTINEL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "Document context query: RAG_MINUTES_SENTINEL\n- documents/minutes.txt:2 RAG_MINUTES_SENTINEL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
       "stderr": ""
     },
     {
-      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
       "stderr": ""
     },
     {
-      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_INDEX_HANDOFF.md\nbackend document RAG handoff\nrun directly with: pik-docs-index --target <repo> --run",
       "stderr": ""
     },
     {
-      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project --run",
+      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project --run",
       "status": 0,
-      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
       "stderr": ""
     },
     {
-      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project --run",
+      "command": "pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project --run",
       "status": 0,
-      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stdout": "run node .planning/fixtures/fake-rag-index.mjs\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
       "stderr": ""
     },
     {
-      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project --rag 代理承認の上限金額",
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project --rag 代理承認の上限金額",
       "status": 0,
-      "stdout": "RAG context query: 代理承認の上限金額\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認の上限金額'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認の上限金額\nRAG_ANSWER_SENTINEL_42420\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "RAG context query: 代理承認の上限金額\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認の上限金額'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認の上限金額\nRAG_ANSWER_SENTINEL_42420\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
       "stderr": ""
     },
     {
-      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project --backend graphrag 代理承認",
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project --backend graphrag 代理承認",
       "status": 0,
-      "stdout": "RAG context query: 代理承認\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認\nRAG_ANSWER_SENTINEL_42420\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "RAG context query: 代理承認\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認\nRAG_ANSWER_SENTINEL_42420\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
       "stderr": ""
     },
     {
-      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project --rag 代理承認",
+      "command": "pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project --rag 代理承認",
       "status": 0,
-      "stdout": "RAG context query: 代理承認\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認\nRAG_ANSWER_SENTINEL_42420\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "RAG context query: 代理承認\nrun node .planning/fixtures/fake-rag-query.mjs '代理承認'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/RAG_QUERY_RESULT.md\nFAKE_RAG_QUERY_OK query=代理承認\nRAG_ANSWER_SENTINEL_42420\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
       "stderr": ""
     },
     {
-      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project",
+      "command": "pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project",
       "status": 0,
-      "stdout": "Document context status\nLast scan: 2026-06-28T10:21:33.826Z\nTotal source documents: 3\nNormalized documents: 3\nRAG backend: graphrag\nIndex status: Indexed by configured RAG command\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-3tCvX6/project/.planning/knowledge/DOC_RAG_STATUS.md",
+      "stdout": "Document context status\nLast scan: 2026-06-28T13:56:53.264Z\nTotal source documents: 3\nNormalized documents: 3\nRAG backend: graphrag\nIndex status: Indexed by configured RAG command\nstatus /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-commands-7Pwpv4/project/.planning/knowledge/DOC_RAG_STATUS.md",
       "stderr": ""
     }
   ],

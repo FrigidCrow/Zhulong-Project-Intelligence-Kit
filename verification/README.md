@@ -24,6 +24,7 @@ npm run verify:answer-audit
 npm run verify:knowledge-reliability
 npm run verify:graph-hardening
 npm run verify:privacy-strict
+npm run verify:security-governance
 npm run verify:license
 npm run verify:mvp3
 npm run verify:mvp35
@@ -37,15 +38,20 @@ npm run verify:docs-completeness
 npm run verify:quality-closure
 npm run verify:dev-audit-harness
 npm run verify:quality
+npm run verify:quality:daily
+npm run verify:quality:release
 npm run verify:integration
 
 # 维护者内部审计 / 对标，不属于普通用户命令面
+npm run dev:audit:skill-behavior
+npm run dev:audit:ragas-style
+npm run dev:audit:promptfoo-redteam
 npm run dev:audit:full
 ```
 
 `verify:rag-local` 是严格文档模式的本地 RAG smoke。它运行 Ollama + LanceDB 的本地 GraphRAG，不需要外部 API key，并在 index/query 前后执行 `pik-privacy-audit`。该脚本有明确超时边界：默认 index 300 秒、query 90 秒；超时会写入 `rag-local-check` 报告并失败，不会让质量 gate 无期限等待。
 
-`verify:docs-extract`、`verify:graph-hardening`、`verify:privacy-strict`、`verify:license` 覆盖 MVP2 hardening：本地文档抽取/citation、Graphify impact/risk/freshness、offline privacy lock/outbound blocking、license metadata review。
+`verify:docs-extract`、`verify:graph-hardening`、`verify:privacy-strict`、`verify:security-governance`、`verify:license` 覆盖 hardening：本地文档抽取/citation、Graphify impact/risk/freshness、offline privacy lock/outbound blocking、外部 RAG opt-in、安全治理、license metadata review。
 
 `verify:docs-sync`、`verify:answer-audit`、`verify:knowledge-reliability` 覆盖 MVP4.0 Knowledge Reliability Lite：文档轻量同步、显式 `--index` 重索引、最近 query 默认 answer audit、坏 citation 阻断、missing citation profile 语义和 public workflow 只提示不自动运行。
 
@@ -67,9 +73,11 @@ npm run dev:audit:full
 
 `verify:docs-completeness` 检查 `docs/commands.html` 是否覆盖全部 71 个命令的独立锚点、详情字段、示例和 README 跳转。
 
-`verify:quality-closure` 是最终聚合 gate，会串起 check、quality、full command surface、integration、runtime、skills、workflow、cockpit、init policy 和 docs completeness。
+`verify:quality-closure` 是最终聚合 gate，会串起 check、quality、full command surface、integration、runtime、skills、security governance、workflow、cockpit、init policy 和 docs completeness。`verify:quality:daily` 是日常质量入口，`verify:quality:release` 是发版质量入口。
 
-`verify:dev-audit-harness` 只验证维护者内部审计机制本身：`.pik-audit/` 是否 git ignored、`dev:audit:*` npm scripts 是否存在、三种 fixture 是否能生成。`dev:audit:full` 会进一步生成命令评分、skills 评分、feature gate 评分、AI-PIKit / GSD / Superpowers 同题对标、时间拆分和 token 统计边界。GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，真实 Codex 子进程结果单独记录，不混入 replay 分数。`Benchmark comparison` 是全部对标行的保守平均，不等于 AI-PIKit 单体分；AI-PIKit 产品分以三方总览中的 AI-PIKit 平均分为准。原始产物在 `.pik-audit/latest/`，可提交摘要在 `verification/reports/developer-audit-summary.md/json`。
+`verify:dev-audit-harness` 只验证维护者内部审计机制本身：`.pik-audit/` 是否 git ignored、`dev:audit:*` npm scripts 是否存在、三种 fixture 是否能生成。`dev:audit:skill-behavior` 生成 `SKILL_BEHAVIOR_SCORES`，按 33 个 runtime skill/prompt × 5 类 case 补足静态 `SKILL_SCORES` 不能证明真实行为契约的问题。`dev:audit:ragas-style` 生成本地代理 Ragas 指标；`dev:audit:promptfoo-redteam` 生成本地代理 Promptfoo 红队矩阵。`dev:audit:full` 会进一步生成命令评分、skills 评分、skill behavior 评分、feature gate 评分、security governance、Ragas-style、Promptfoo-style、quality control scorecard、AI-PIKit / GSD / Superpowers 同题对标、SkillsBench-style delta、时间拆分和 token 统计边界。GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，真实 Codex 子进程结果单独记录，不混入 replay 分数。`Benchmark comparison` 是全部对标行的保守平均，不等于 AI-PIKit 单体分；AI-PIKit 产品分以三方总览中的 AI-PIKit 平均分为准。原始产物在 `.pik-audit/latest/`，可提交摘要在 `verification/reports/developer-audit-summary.md/json` 和 `verification/reports/quality-control-summary.md/json`。
+
+质量评价方法论链接已在 2026-06-29 复核：OpenAI [Agent Skills docs](https://developers.openai.com/codex/skills) 和 [skill evals](https://developers.openai.com/blog/eval-skills) 用于 skill 结构与行为评估；[SkillsBench](https://arxiv.org/abs/2602.12670) / [SkillsBench 1.1](https://www.skillsbench.ai/blogs/skillsbench-1-1) 用于 with_skill / without_skill delta；[Anthropic agent evals](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) 用于 trajectory + outcome 分层；[Ragas agent metrics](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/agents/) 和 [Promptfoo Agent Skills](https://www.promptfoo.dev/docs/integrations/agent-skill/) 只做本地代理指标；[OWASP Agentic Top 10 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) 与 [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) / [NIST AI 600-1](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) 用于治理 checklist 和 release gate。默认不接外部 SaaS，不调用外部模型，不外发内部资料。
 
 只有在 fixture 数据允许离开本机时，才运行外部 live GraphRAG 验证：
 
@@ -94,6 +102,7 @@ verification/reports/rag-local-check.md
 verification/reports/docs-extract-citation-check.md
 verification/reports/graph-hardening-check.md
 verification/reports/privacy-strict-check.md
+verification/reports/security-governance-check.md
 verification/reports/init-policy-check.md
 verification/reports/business-chain-audit.md
 verification/reports/OUTBOUND_AUDIT.md
@@ -115,6 +124,8 @@ verification/reports/dev-audit-harness-check.md
 verification/reports/dev-audit-harness-check.json
 verification/reports/developer-audit-summary.md
 verification/reports/developer-audit-summary.json
+verification/reports/quality-control-summary.md
+verification/reports/quality-control-summary.json
 verification/reports/visual-check.md
 verification/reports/quality-enhancement-report.md
 ```

@@ -1,0 +1,31 @@
+{
+  "generated": "2026-06-28T15:46:27.194Z",
+  "status": "PASS",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-security-governance-QMyYuh",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-security-governance-QMyYuh/project",
+  "score": 100,
+  "external_framework_mapping": {
+    "owasp_agentic_top_10": "prompt injection, tool misuse, excessive agency, identity/privilege abuse",
+    "nist_ai_rmf": "govern, map, measure, manage controls for internal AI system risk",
+    "promptfoo_redteam": "future automated adversarial prompt regression harness"
+  },
+  "evidence": [
+    "default init: found RAG backend: none",
+    "default config: privacy.network_policy local_only",
+    "default config: allow_external_rag false",
+    "default config: allow_external_tools false",
+    "offline lock: found privacy audit PASS",
+    "strict privacy audit: found privacy audit PASS",
+    "outbound audit: found outbound audit PASS",
+    "external RAG opt-in: found External RAG is disabled by default",
+    "external RAG risk report: found may be sent to the configured external provider",
+    "external RAG config: allow_external_rag true after explicit opt-in",
+    "runtime boundary Codex: found Codex",
+    "runtime boundary Claude Code: found Claude Code",
+    "runtime boundary GitHub Copilot: found GitHub Copilot",
+    "runtime boundary exception: found Codex、Claude Code、GitHub Copilot 是外部 runtime",
+    "local-only docs: found local-only",
+    "allow external RAG docs: found --allow-external-rag"
+  ],
+  "issues": []
+}

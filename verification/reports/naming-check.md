@@ -1,6 +1,6 @@
 # AI-PIKit Naming Verification
 
-生成时间: 2026-06-28T10:22:13.016Z
+生成时间: 2026-06-28T13:57:46.964Z
 
 ## 摘要
 
@@ -170,6 +170,7 @@
 - `scripts/verify-rag-local.mjs`
 - `scripts/verify-runtime-packs.mjs`
 - `scripts/verify-schema.mjs`
+- `scripts/verify-security-governance.mjs`
 - `scripts/verify-skills-usability.mjs`
 - `scripts/verify-visual.mjs`
 - `scripts/verify-workflow-closure.mjs`
