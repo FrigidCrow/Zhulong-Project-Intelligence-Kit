@@ -81,6 +81,7 @@
     <div class="doc-layout">
       <aside class="toc" aria-label="目录">
         <a href="#model">心智模型</a>
+        <a href="#scenarios">场景选择模型</a>
         <a href="#repo">仓库结构</a>
         <a href="#install">接入目标项目</a>
         <a href="#guard">Workflow guard</a>
@@ -126,6 +127,23 @@ pik command
   -> completion-check</code></pre>
             </div>
           </div>
+        </section>
+
+        <section id="scenarios" class="page-section">
+          <h2>场景选择模型</h2>
+          <p>AI-PIKit 的核心不是让所有项目都强行启用 RAG，而是把 workflow、代码地图、文档依据和 evidence 按项目约束组合起来。文档少的项目可以轻量接入；对日/仕様書驱动项目再启用严格文档和本地 GraphRAG。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>项目类型</th><th>初始化选择</th><th>知识层</th><th>阻断规则</th><th>典型命令</th></tr></thead>
+              <tbody>
+                <tr><td>文档少 / 无文档</td><td><code>--doc-policy reference --rag none</code></td><td>本地文档扫描 + Graphify 代码地图</td><td>缺文档输出 <code>WAIVED_WITH_RISK</code>，不阻断日常开发</td><td><code>pik-codebase-scan</code>、<code>pik-docs-sync</code>、<code>pik-debug</code></td></tr>
+                <tr><td>普通既有改修</td><td>先 <code>reference</code>，必要时升到 <code>strict</code></td><td>codebase baseline + Graphify 影响面</td><td>代码图缺失或 privacy 问题阻断；文档缺失按风险放行</td><td><code>pik-graph-build --run</code>、<code>pik-preflight</code>、<code>pik-graph-impact</code></td></tr>
+                <tr><td>对日 / 规格严格</td><td><code>--doc-policy strict --rag local --setup-rag skip</code></td><td>本地 GraphRAG、citation、answer audit、trace</td><td>missing citation、RAG stale、Graphify stale、外部 provider 均可阻断</td><td><code>pik-rag-init-local</code>、<code>pik-docs-index --run</code>、<code>pik-answer-audit</code></td></tr>
+                <tr><td>Leader 演示</td><td>读取当前项目状态</td><td>workflow / RAG / Graphify / evidence / policy 汇总</td><td>不触发刷新，只展示已有 artifact 的可信度</td><td><code>pik-cockpit-build</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">判断规则很简单：如果文档只是辅助上下文，使用 <code>reference + rag none</code>；如果文档是验收依据，使用 <code>strict + rag local</code>。外部 RAG 永远不是默认路线。</div>
         </section>
 
         <section id="repo" class="page-section">
@@ -196,7 +214,7 @@ pik-codebase-status --target "$PWD"</code></pre>
               <tbody>
                 <tr><td><code>context</code></td><td>context packet 和 handoff 是否存在。</td><td>证明 workflow 已启动并留下执行上下文。</td></tr>
                 <tr><td><code>codebase</code></td><td><code>CODEBASE_STATUS.md</code>；既存项目源码数量大于 0。</td><td>避免对未知代码库直接下结论。</td></tr>
-                <tr><td><code>docs</code></td><td>真实文档扫描结果或成功 RAG query。</td><td>业务规则必须有仕様/QA/議事録依据。</td></tr>
+                <tr><td><code>docs</code></td><td>真实文档扫描结果，或带有本地源文件 citation 的成功 RAG/docs query。</td><td>业务规则必须有仕様/QA/議事録依据，不能只靠聊天记忆。</td></tr>
                 <tr><td><code>graph</code></td><td>Graphify graph/report 存在且不 stale。</td><td>改修前要知道代码影响面。</td></tr>
                 <tr><td><code>plan</code></td><td>手动标记计划 gate。</td><td>确认方案已形成。</td></tr>
                 <tr><td><code>implementation</code></td><td>手动标记实现 gate。</td><td>确认改动已实施。</td></tr>
@@ -579,10 +597,13 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
               <tbody>
                 <tr><td>既存项目 completion 被 codebase gate 阻断</td><td><code>.planning/codebase/CODEBASE_STATUS.md</code> 是否存在，源码数量是否为 0。</td><td><code>pik-codebase-scan --target "$PWD"</code></td></tr>
                 <tr><td>docs gate 失败</td><td><code>RAG_SOURCES.md</code>、<code>DOC_RAG_STATUS.md</code>、<code>RAG_QUERY_RESULT.md</code>。</td><td><code>pik-docs-sync --target "$PWD"</code></td></tr>
+                <tr><td>出现 <code>RAG backend disabled</code></td><td><code>.planning/config.json</code> 是否是 <code>rag_backend: none</code>。</td><td>轻量项目改用 <code>pik-docs-query --target "$PWD" "关键词"</code>；严格项目重新选择 <code>--rag local</code> 并运行 <code>pik-rag-init-local --target "$PWD"</code>。</td></tr>
+                <tr><td>出现 <code>WAIVED_WITH_RISK</code></td><td>当前是否为 <code>reference</code> 文档策略；缺少哪些 docs/RAG/citation artifact。</td><td>允许继续但要用 <code>pik-evidence-record</code> 写明风险；规格强约束任务切到 <code>pik-mode-set --target "$PWD" docs-strict</code> 并补 citation。</td></tr>
                 <tr><td>graph gate 失败</td><td><code>.planning/graphs/GRAPH_REPORT.md</code> 是否存在，graph 是否 stale。</td><td><code>pik-graph-build --target "$PWD" --run</code></td></tr>
                 <tr><td>preflight 显示 <code>behind-unrelated</code></td><td><code>PREFLIGHT.md</code> 中 changed files 是否不在文档源或代码路径下。</td><td><code>pik-refresh-plan --target "$PWD"</code>，无关则跳过。</td></tr>
                 <tr><td>preflight 显示 RAG stale</td><td>是否有文档源路径变更；是否需要更新 GraphRAG index。</td><td><code>pik-refresh-run --target "$PWD" --rag</code></td></tr>
                 <tr><td>preflight 显示 Graph stale</td><td>是否有源码或测试路径变更；是否需要更新 Graphify 图谱。</td><td><code>pik-refresh-run --target "$PWD" --graph</code></td></tr>
+                <tr><td><code>docs-strict</code> 或 <code>full-strict</code> 阻断 completion</td><td><code>ANSWER_AUDIT.md</code>、<code>GRAPH_FRESHNESS.md</code>、<code>POLICY_CHECK.md</code> 是否有 <code>FAIL</code> 或 <code>STALE_NEEDS_REFRESH</code>。</td><td>按报告补 citation、显式刷新 RAG/Graphify，或回到 <code>docs-reference</code> 并记录风险。</td></tr>
                 <tr><td>plan/implementation/verification 失败</td><td>是否用 <code>pik-workflow-continue</code> 标记了人工 gate。</td><td><code>pik-workflow-continue --target "$PWD" --gate verification --evidence "npm test passed"</code></td></tr>
                 <tr><td>evidence 或 writeback 失败</td><td><code>.planning/evidence/</code> 和目标 issue/debug/phase 是否有 <code>AI-PIKit Evidence Writeback</code>。</td><td><code>pik-evidence-record --target "$PWD" "検証済み" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md</code></td></tr>
                 <tr><td>policy check 失败</td><td><code>POLICY_CHECK.md</code> 中失败项；常见是没有 offline lock、没有 citation、没有 golden 或 trace matrix。</td><td><code>pik-offline-lock --target "$PWD" && pik-citation-audit --target "$PWD" && pik-trace-build --target "$PWD"</code></td></tr>

@@ -55,10 +55,12 @@
     <div class="doc-layout">
       <aside class="toc" aria-label="目录">
         <a href="#rules">通用规则</a>
+        <a href="#scenario-playbook">场景路线</a>
         <a href="#new-project">新项目接入</a>
         <a href="#existing-project">既有项目接入</a>
         <a href="#daily-loop">日常开发循环</a>
         <a href="#docs-update-loop">文档更新循环</a>
+        <a href="#status-playbook">状态处理</a>
         <a href="#quality-loop">质量验证循环</a>
         <a href="#command-overview">命令分类一览</a>
         <a href="#all-commands">全命令详情</a>
@@ -72,19 +74,35 @@
 node bin/pik.mjs docs sync --target /path/to/repo</code></pre>
         </section>
 
+        <section id="scenario-playbook" class="page-section">
+          <h2>场景路线</h2>
+          <p>先判断项目文档严格程度，再决定是否启用 RAG。默认路线是轻量接入：文档只做参考、RAG 不安装、GraphRAG index 不运行；只有规格强约束项目才进入本地 RAG 路线。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>场景</th><th>推荐策略</th><th>先跑命令</th><th>后续命令</th><th>默认不要跑</th></tr></thead>
+              <tbody>
+                <tr><td>文档少 / 无文档 / 先试用</td><td><code>reference + rag none</code></td><td><a href="#cmd-pik-init"><code>pik-init</code></a>、<a href="#cmd-pik-codebase-scan"><code>pik-codebase-scan</code></a>、<a href="#cmd-pik-docs-sync"><code>pik-docs-sync</code></a></td><td><a href="#cmd-pik-debug"><code>pik-debug</code></a>、<a href="#cmd-pik-plan-phase"><code>pik-plan-phase</code></a></td><td><code>pik-rag-init-local</code>、<code>pik-docs-index --run</code></td></tr>
+                <tr><td>对日 / 仕様書驱动 / 文档严格</td><td><code>strict + rag local</code></td><td><a href="#cmd-pik-init"><code>pik-init</code></a>、<a href="#cmd-pik-rag-init-local"><code>pik-rag-init-local</code></a>、<a href="#cmd-pik-docs-index"><code>pik-docs-index --run</code></a></td><td><a href="#cmd-pik-docs-query"><code>pik-docs-query --rag</code></a>、<a href="#cmd-pik-answer-audit"><code>pik-answer-audit</code></a>、<a href="#cmd-pik-completion-check"><code>pik-completion-check</code></a></td><td>外部 provider、外部 URL、无 citation 收口</td></tr>
+                <tr><td>既有项目改修</td><td>先建代码和图谱基线</td><td><a href="#cmd-pik-codebase-scan"><code>pik-codebase-scan</code></a>、<a href="#cmd-pik-codebase-status"><code>pik-codebase-status</code></a>、<a href="#cmd-pik-graph-build"><code>pik-graph-build --run</code></a></td><td><a href="#cmd-pik-preflight"><code>pik-preflight</code></a>、<a href="#cmd-pik-graph-impact"><code>pik-graph-impact</code></a>、<a href="#cmd-pik-debug"><code>pik-debug</code></a></td><td>移动原源码、默认强刷 RAG</td></tr>
+                <tr><td>文档更新</td><td>轻量同步优先</td><td><a href="#cmd-pik-docs-sync"><code>pik-docs-sync</code></a></td><td><a href="#cmd-pik-docs-query"><code>pik-docs-query</code></a>、<a href="#cmd-pik-answer-audit"><code>pik-answer-audit</code></a>；需要时才 <code>pik-docs-sync --index</code></td><td>把普通文档更新变成默认重索引</td></tr>
+                <tr><td>Leader 演示</td><td>本地静态快照</td><td><a href="#cmd-pik-cockpit-build"><code>pik-cockpit-build</code></a></td><td>打开 <code>.planning/cockpit/index.html</code></td><td>把 cockpit 当作刷新命令</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section id="new-project" class="page-section">
           <h2>新项目从 0 接入</h2>
-          <p>先接入 AI-PIKit，再安装 runtime pack，然后建立代码、文档、本地 RAG 和 Graphify 基线，最后进入第一次 milestone。</p>
+          <p>先接入 AI-PIKit，再安装 runtime pack，然后建立代码和文档轻量基线，最后进入第一次 milestone。默认不安装 RAG；如果项目从一开始就是规格严格型，再切到下面的本地 RAG 路线。</p>
           <pre class="code-block"><code>cd /path/to/new-project
 
-pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new --doc-policy reference --rag none
 pik-runtime-install --runtime codex --dest ~/.codex/skills --force
 pik-runtime-install --runtime claude-code --dest ~/.claude/skills --force
 pik-runtime-install --runtime github-copilot --dest .github/prompts --force
 
 pik-codebase-scan --target "$PWD"
 pik-docs-sync --target "$PWD"
-pik-rag-init-local --target "$PWD"
 pik-graph-build --target "$PWD" --run
 
 pik-new-milestone --target "$PWD" "MVP1 walking skeleton"
@@ -93,23 +111,27 @@ pik-plan-phase --target "$PWD" "MVP1 phase 1"
 pik-execute-phase --target "$PWD" "实现第一条纵向链路"
 pik-verify-work --target "$PWD" "验证 MVP1 phase 1"
 pik-complete-milestone --target "$PWD" "MVP1 walking skeleton"</code></pre>
+          <p>严格文档项目在初始化时改用本地 RAG 路线：</p>
+          <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new --doc-policy strict --rag local --setup-rag skip
+pik-rag-init-local --target "$PWD"
+pik-docs-index --target "$PWD" --run</code></pre>
         </section>
 
         <section id="existing-project" class="page-section">
           <h2>既有项目接入</h2>
-          <p>既有项目不要移动原源码。AI-PIKit 只叠加 <code>.planning/</code>，先扫描已有代码和文档，再从当前真实改修任务进入第一次 workflow。</p>
+          <p>既有项目不要移动原源码。AI-PIKit 只叠加 <code>.planning/</code>，先扫描已有代码和文档，再从当前真实改修任务进入第一次 workflow。默认仍然是 <code>reference + rag none</code>，避免一接入就安装 RAG 或重建索引。</p>
           <pre class="code-block"><code>cd /path/to/existing-project
 
-pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"
 pik-codebase-status --target "$PWD"
 
 pik-docs-sync --target "$PWD"
-pik-rag-init-local --target "$PWD"
 pik-graph-build --target "$PWD" --run
 pik-preflight --target "$PWD"
 
 pik-debug --target "$PWD" "生产审批金额异常"</code></pre>
+          <p>如果这个既有项目是对日/规格严格项目，接入时直接选择 <code>--doc-policy strict --rag local --setup-rag skip</code>，再单独执行 <code>pik-rag-init-local</code> 和 <code>pik-docs-index --run</code>。</p>
         </section>
 
         <section id="daily-loop" class="page-section">
@@ -134,6 +156,23 @@ pik-answer-audit --target "$PWD"
 # 只有明确需要重建本地 GraphRAG index 时才运行
 pik-privacy-audit --target "$PWD" --strict
 pik-docs-sync --target "$PWD" --index</code></pre>
+        </section>
+
+        <section id="status-playbook" class="page-section">
+          <h2>状态处理</h2>
+          <p>AI-PIKit 的报告会尽量给出四态结果。日常不要只看 exit code，还要看状态语义和 next commands。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>状态 / 提示</th><th>什么时候出现</th><th>怎么处理</th></tr></thead>
+              <tbody>
+                <tr><td><code>PASS</code></td><td>对应 gate 或 audit 可以作为完成证据。</td><td>继续 workflow，并用 <a href="#cmd-pik-evidence-record"><code>pik-evidence-record</code></a> 写回证据。</td></tr>
+                <tr><td><code>WAIVED_WITH_RISK</code></td><td><code>reference</code> 文档策略下缺文档、缺 citation 或 cockpit 缺 artifact。</td><td>允许继续，但必须在 evidence 或 workflow 报告里写明风险；规格强约束任务应切到 <code>docs-strict</code>。</td></tr>
+                <tr><td><code>STALE_NEEDS_REFRESH</code></td><td>RAG 或 Graphify 距离相关 commit 已落后。</td><td>先跑 <a href="#cmd-pik-refresh-plan"><code>pik-refresh-plan</code></a>；确认相关后再显式刷新。</td></tr>
+                <tr><td><code>FAIL</code></td><td>隐私、外部 provider、missing citation、full-strict stale 等阻断项。</td><td>打开对应报告，按 next commands 修复后重跑检查。</td></tr>
+                <tr><td><code>RAG backend disabled</code></td><td>项目初始化为 <code>--rag none</code>，但执行了 GraphRAG index/query。</td><td>轻量项目改用普通 <code>pik-docs-query</code>；严格项目重新选择本地 RAG 并运行 <code>pik-rag-init-local</code>。</td></tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section id="quality-loop" class="page-section">

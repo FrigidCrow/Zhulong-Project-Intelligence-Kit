@@ -67,6 +67,30 @@ AI-PIKit 是一个 **AI 工程上下文框架**，由四层组成：
 | 完成前检查 | [pik-completion-check](docs/commands.html#cmd-pik-completion-check) |
 | 项目驾驶舱 | [pik-cockpit-build](docs/commands.html#cmd-pik-cockpit-build) |
 
+## 场景路线速查
+
+AI-PIKit 不要求所有项目都走“文档严格 + 本地 RAG”。先按项目实际情况选路线，再进入命令手册看细节。
+
+| 场景 | 推荐策略 | 先跑什么 | 后续怎么走 | 默认不要做什么 |
+| --- | --- | --- | --- | --- |
+| 文档少、无文档、先轻量接入 | `--doc-policy reference --rag none` | `pik-init`、`pik-codebase-scan`、`pik-docs-sync` | 直接进入 `pik-debug` / `pik-plan-phase`，缺文档时用 `WAIVED_WITH_RISK` 留风险 | 不默认安装 RAG，不跑 `pik-rag-init-local`，不跑 `pik-docs-index --run` |
+| 对日、仕様書驱动、验收强依赖文档 | `--doc-policy strict --rag local` | `pik-init --setup-rag skip`、`pik-rag-init-local`、`pik-docs-index --run` | 查询后跑 `pik-answer-audit`，完成前跑 `pik-completion-check` | 不改成外部 provider，不跳过 citation |
+| 既有项目改修 | 先 `reference`，需要时升到 `strict` | `pik-codebase-scan`、`pik-codebase-status`、`pik-graph-build --run` | 从 `pik-debug` 或 `pik-plan-phase` 进入当前真实任务 | 不移动原源码，不把 `.planning/` 当业务目录 |
+| 文档更新 | 保持当前策略 | `pik-docs-sync`、`pik-docs-query`、`pik-answer-audit` | 只有需要新索引时才 `pik-docs-sync --index` | 不让日常 workflow 自动重建 GraphRAG |
+| 代码影响面确认 | 代码地图优先 | `pik-preflight`、`pik-refresh-plan`、`pik-graph-impact`、`pik-graph-risk` | Graph stale 且相关时显式 `pik-refresh-run --graph` | 不因为无关 commit 强刷 Graphify |
+| Leader 演示 / 项目状态说明 | 本地静态驾驶舱 | `pik-cockpit-build` | 打开 `.planning/cockpit/index.html` 看 workflow、RAG、Graphify、quality、privacy 状态 | 不把 cockpit 当刷新命令，它只读已有 artifact |
+
+## 状态处理速查
+
+| 状态 / 提示 | 含义 | 建议动作 |
+| --- | --- | --- |
+| `PASS` | 可以作为完成证据。 | 继续 workflow，并把关键结论写入 evidence。 |
+| `WAIVED_WITH_RISK` | 允许继续，但依据不足。常见于 `reference` 文档策略、无文档或无 citation。 | 在 `pik-evidence-record` 或 workflow 报告里写明风险；如果是规格强约束任务，切到 `docs-strict` 并补文档/RAG。 |
+| `STALE_NEEDS_REFRESH` | RAG 或 Graphify 距离当前变更有相关落后。 | 先跑 `pik-refresh-plan` 判断是否相关；相关才显式 `pik-refresh-run --rag`、`pik-refresh-run --graph` 或 `pik-docs-sync --index`。 |
+| `FAIL` | 当前 profile 下必须阻断。 | 打开对应报告，例如 `POLICY_CHECK.md`、`ANSWER_AUDIT.md`、`GRAPH_FRESHNESS.md`，按 next commands 修复。 |
+| `RAG backend disabled` | 当前项目是 `--rag none`，不能执行 GraphRAG index/query。 | 文档只做参考时用 `pik-docs-query` 普通查询；严格项目重新选择 `--rag local` 并运行 `pik-rag-init-local`。 |
+| completion blocked | workflow gate 没闭合。 | 跑 `pik-workflow-audit`，补 `pik-workflow-continue`、`pik-evidence-record --writeback`，最后再跑 `pik-completion-check`。 |
+
 ## 快速开始
 
 ### 新项目
