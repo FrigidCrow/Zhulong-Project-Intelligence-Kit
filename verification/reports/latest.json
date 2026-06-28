@@ -1,12 +1,12 @@
 {
-  "generated": "2026-06-28T05:46:29.186Z",
+  "generated": "2026-06-28T10:22:49.558Z",
   "summary": {
     "pass": 132,
     "fail": 0,
     "warn": 1
   },
   "verdict": "pass",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh",
   "workRootRemovedAfterRun": true,
   "liveGraphRag": "not requested",
   "checks": [
@@ -79,259 +79,259 @@
     {
       "name": "AI-PIKit native handoff marker: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "AI-PIKit native handoff marker: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Found: Workflow kernel: AI-PIKit native"
     },
     {
       "name": "Workflow doc marker: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "Context packet includes document RAG status",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
       "detail": "Found: Document RAG Status"
     },
     {
       "name": "Context packet includes code map status",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
       "detail": "Found: Code Map Status"
     },
     {
       "name": "Context packet includes Graphify output",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
       "detail": "Found: Graph Report"
     },
     {
@@ -341,10 +341,10 @@
       "detail": "Found: workflow guard FAIL"
     },
     {
-      "name": "AI-PIKit workflow-run alias fails docs gate before document scan",
+      "name": "AI-PIKit workflow-run alias marks docs gate as risk before document scan",
       "status": "PASS",
       "evidence": "pik-workflow-run",
-      "detail": "Found: FAIL docs"
+      "detail": "Found: WAIVED_WITH_RISK docs"
     },
     {
       "name": "AI-PIKit workflow-run alias fails codebase gate before codebase scan",
@@ -463,8 +463,8 @@
     {
       "name": "Real Graphify graph has nodes and edges/links",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/real-graphify/.planning/graphs/graph.json",
-      "detail": "269 nodes, 220 edges/links"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/real-graphify/.planning/graphs/graph.json",
+      "detail": "270 nodes, 221 edges/links"
     },
     {
       "name": "AI-PIKit graph status reads real Graphify graph",
@@ -810,12 +810,12 @@
     }
   ],
   "artifacts": [
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/init-new-project",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/init-existing-project",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/workflow-guard",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/workflow-alias",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/real-graphify"
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/init-new-project",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/init-existing-project",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/fixture-pik-native",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/workflow-guard",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/workflow-alias",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-ZMsBYh/real-graphify"
   ],
   "assessment": [
     {

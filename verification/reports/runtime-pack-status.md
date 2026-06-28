@@ -1,6 +1,6 @@
 # AI-PIKit Runtime Pack Verification
 
-生成时间: 2026-06-28T05:46:29.769Z
+生成时间: 2026-06-28T10:22:50.230Z
 
 ## 摘要
 
@@ -9,12 +9,12 @@
 
 ## Runtime Installs
 
-- codex: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-ppTFyP/codex`
+- codex: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-jgo6Fd/codex`
 
 ```text
 runtime codex
 source /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills
-dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-ppTFyP/codex
+dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-jgo6Fd/codex
 ok pik-cockpit-build rendered
 ok pik-code-review rendered
 ok pik-complete-milestone rendered
@@ -27,12 +27,12 @@ ok pik-spec-phase rendered
 ok pik-ui-phase rendered
 ok pik-verify-work rendered
 ```
-- claude-code: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-ppTFyP/claude-code`
+- claude-code: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-jgo6Fd/claude-code`
 
 ```text
 runtime claude-code
 source /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills
-dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-ppTFyP/claude-code
+dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-jgo6Fd/claude-code
 ok pik-cockpit-build rendered
 ok pik-code-review rendered
 ok pik-complete-milestone rendered
@@ -45,12 +45,12 @@ ok pik-spec-phase rendered
 ok pik-ui-phase rendered
 ok pik-verify-work rendered
 ```
-- github-copilot: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-ppTFyP/github-copilot`
+- github-copilot: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-jgo6Fd/github-copilot`
 
 ```text
 runtime github-copilot
 source /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts
-dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-ppTFyP/github-copilot
+dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-runtime-jgo6Fd/github-copilot
 ok pik-cockpit-build rendered
 ok pik-code-review rendered
 ok pik-complete-milestone rendered

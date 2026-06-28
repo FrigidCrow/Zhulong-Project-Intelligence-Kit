@@ -62,7 +62,7 @@ verification/reports/developer-audit-summary.md
 | 命令 | 验证点 |
 | --- | --- |
 | `pik` | help 可输出命令总览 |
-| `pik-init` | 新项目、既存项目均可生成 `.planning/` |
+| `pik-init` | 新项目、既存项目均可生成 `.planning/`，并写入 `reference/strict` 文档策略和 `none/local/external` RAG 后端 |
 | `pik-verify` | 检查必需文件和目录 |
 | `pik-map` | 生成轻量代码结构说明 |
 
@@ -110,7 +110,7 @@ verification/reports/developer-audit-summary.md
 | `pik-refresh-plan` | 区分无关 commit 与文档/代码相关 commit |
 | `pik-refresh-run` | 显式刷新 RAG/Graphify 后更新 `REFRESH_STATE.json` |
 | `pik-mode-status` | 输出当前执行预算模式 |
-| `pik-mode-set` | 可切换 `default-local-rag`、`graph-lite`、`full-strict` |
+| `pik-mode-set` | 可切换 `docs-reference`、`docs-strict`，并兼容 `default-local-rag`、`graph-lite`、`full-strict` |
 
 ### Graphify / 代码地图
 

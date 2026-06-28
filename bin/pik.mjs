@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 import zlib from "node:zlib";
 import { execFileSync, execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { createInterface } from "node:readline/promises";
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const LOCAL_ONLY_PATHS = [
@@ -41,9 +42,38 @@ const DEFAULT_CODE_SOURCE_PATHS = [
   "internal",
   "pkg",
 ];
+const DEFAULT_DOCUMENT_POLICY = "reference";
+const DEFAULT_RAG_BACKEND = "none";
+const DEFAULT_LOCAL_LLM_MODEL = "qwen2.5:7b";
+const DEFAULT_LOCAL_EMBEDDING_MODEL = "bge-m3";
+const DOCUMENT_POLICIES = new Set(["reference", "strict"]);
+const RAG_BACKENDS = new Set(["none", "local", "external"]);
+const DOCUMENT_POLICY_ALIASES = {
+  "docs-reference": "reference",
+  "doc-reference": "reference",
+  "reference": "reference",
+  "graph-lite": "reference",
+  "docs-strict": "strict",
+  "doc-strict": "strict",
+  "strict": "strict",
+  "full-strict": "strict",
+};
+const PROFILE_ALIASES = {
+  "reference": "graph-lite",
+  "docs-reference": "graph-lite",
+  "doc-reference": "graph-lite",
+  "graph-lite": "graph-lite",
+  "strict": "full-strict",
+  "docs-strict": "full-strict",
+  "doc-strict": "full-strict",
+  "full-strict": "full-strict",
+  "default-local-rag": "default-local-rag",
+};
 const REFRESH_PROFILES = {
   "default-local-rag": {
     label: "Default Local RAG",
+    documentPolicy: "reference",
+    defaultRagBackend: "local",
     ragRequired: true,
     graphRequired: true,
     strict: false,
@@ -51,6 +81,8 @@ const REFRESH_PROFILES = {
   },
   "graph-lite": {
     label: "Graph Lite",
+    documentPolicy: "reference",
+    defaultRagBackend: "none",
     ragRequired: false,
     graphRequired: true,
     strict: false,
@@ -58,6 +90,8 @@ const REFRESH_PROFILES = {
   },
   "full-strict": {
     label: "Full Strict",
+    documentPolicy: "strict",
+    defaultRagBackend: "local",
     ragRequired: true,
     graphRequired: true,
     strict: true,
@@ -189,6 +223,9 @@ const BOOLEAN_FLAGS = new Set([
   "verbose",
   "explain",
   "strict",
+  "allow-external-rag",
+  "interactive",
+  "no-interactive",
 ]);
 const WORKFLOW_COMMANDS = {
   "new-milestone": {
@@ -287,6 +324,9 @@ Usage:
   pik-init --target <repo> --template <name> --name <project_name> --force
   pik-init --target <repo> --template greenfield-app --name <project_name> --mode new
   pik-init --target <repo> --template brownfield-monorepo --name <project_name> --mode existing
+  pik-init --target <repo> --doc-policy reference --rag none
+  pik-init --target <repo> --doc-policy strict --rag local --setup-rag skip
+  pik-init --target <repo> --doc-policy strict --rag external --allow-external-rag
   pik-codebase --target <repo>
   pik-codebase-scan --target <repo>
   pik-codebase-status --target <repo>
@@ -317,6 +357,7 @@ Usage:
   pik-refresh-run --target <repo> --graph
   pik-refresh-run --target <repo> --all
   pik-mode-status --target <repo>
+  pik-mode-set --target <repo> docs-reference|docs-strict
   pik-mode-set --target <repo> default-local-rag|graph-lite|full-strict
   pik-citation-audit --target <repo>
   pik-trace-build --target <repo>
@@ -389,6 +430,11 @@ function parseArgs(argv) {
     const key = item.slice(2);
     const targetKey = key === "command" ? "recordCommand" : key;
     const next = rest[i + 1];
+    if (key === "rag" && next && !next.startsWith("--") && RAG_BACKENDS.has(next.trim().toLowerCase())) {
+      args[targetKey] = next;
+      i += 1;
+      continue;
+    }
     if (BOOLEAN_FLAGS.has(key) || !next || next.startsWith("--")) {
       args[targetKey] = true;
     } else {
@@ -483,15 +529,258 @@ function copyTemplateTree(sourceDir, targetDir, values, options = {}) {
   }
 }
 
-function init(args) {
+function validateInitPolicy({ documentPolicy, ragBackend, allowExternalRag }) {
+  if (documentPolicy === "strict" && ragBackend === "none") {
+    throw new Error("Invalid init policy: --doc-policy strict requires --rag local or --rag external. Recommended: --rag local --setup-rag skip.");
+  }
+  if (ragBackend === "external" && !allowExternalRag) {
+    throw new Error("External RAG is disabled by default. Re-run with --allow-external-rag only after confirming project data may leave the local machine.");
+  }
+}
+
+function hasInitArg(args, ...keys) {
+  return keys.some((key) => Object.prototype.hasOwnProperty.call(args, key));
+}
+
+function shouldRunInitWizard(args) {
+  if (args["no-interactive"]) return false;
+  if (args.interactive) return true;
+  return Boolean(process.stdin.isTTY && process.stdout.isTTY);
+}
+
+function createInitPrompter(args) {
+  if (args.interactive && !process.stdin.isTTY) {
+    const scriptedInput = fs.readFileSync(0, "utf8").split(/\r?\n/);
+    return {
+      async ask(prompt) {
+        process.stdout.write(prompt);
+        const answer = scriptedInput.length ? scriptedInput.shift() : "";
+        console.log(answer);
+        return answer;
+      },
+      close() {},
+    };
+  }
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  return {
+    ask(prompt) {
+      return rl.question(prompt);
+    },
+    close() {
+      rl.close();
+    },
+  };
+}
+
+async function promptChoice(prompter, message, choices, defaultValue) {
+  const defaultIndex = Math.max(0, choices.findIndex((choice) => choice.value === defaultValue));
+  console.log("");
+  console.log(message);
+  choices.forEach((choice, index) => {
+    const marker = choice.value === defaultValue ? " (default)" : "";
+    console.log(`${index + 1}. ${choice.label}${marker}`);
+  });
+  while (true) {
+    const answer = (await prompter.ask(`Select [${defaultIndex + 1}]: `)).trim().toLowerCase();
+    if (!answer) return defaultValue;
+    if (/^\d+$/.test(answer)) {
+      const index = Number(answer) - 1;
+      if (choices[index]) return choices[index].value;
+    }
+    const match = choices.find((choice) => {
+      const aliases = [choice.value, choice.label, ...(choice.aliases || [])].map((item) => String(item).toLowerCase());
+      return aliases.includes(answer);
+    });
+    if (match) return match.value;
+    console.log(`Invalid choice: ${answer}`);
+  }
+}
+
+async function resolveInitWizardArgs(args) {
+  if (!shouldRunInitWizard(args)) return args;
+  const resolved = { ...args };
+  const prompter = createInitPrompter(resolved);
+  try {
+    console.log("AI-PIKit init wizard");
+    console.log("Press Enter to accept defaults. Explicit CLI flags always win.");
+
+    if (!hasInitArg(resolved, "mode")) {
+      const mode = await promptChoice(prompter, "1. Project type?", [
+        { value: "existing", label: "existing - existing project", aliases: ["既有", "既存"] },
+        { value: "new", label: "new - new project", aliases: ["新项目", "新規"] },
+      ], "existing");
+      resolved.mode = mode;
+      if (!hasInitArg(resolved, "template")) {
+        resolved.template = mode === "new" ? "greenfield-app" : "brownfield-monorepo";
+      }
+    }
+
+    if (!hasInitArg(resolved, "doc-policy", "docPolicy")) {
+      resolved["doc-policy"] = await promptChoice(prompter, "2. Document policy?", [
+        { value: "reference", label: "reference - docs are useful references", aliases: ["不严格", "参考"] },
+        { value: "strict", label: "strict - docs are blocking specification evidence", aliases: ["严格", "仕様"] },
+      ], DEFAULT_DOCUMENT_POLICY);
+    }
+
+    const documentPolicy = normalizeDocumentPolicy(resolved["doc-policy"] || resolved.docPolicy || DEFAULT_DOCUMENT_POLICY);
+    if (!hasInitArg(resolved, "rag", "rag-backend", "ragBackend")) {
+      const ragChoices = documentPolicy === "strict"
+        ? [
+          { value: "local", label: "local - local GraphRAG + local models", aliases: ["本地"] },
+          { value: "external", label: "external - external RAG provider, explicit risk opt-in", aliases: ["外部"] },
+        ]
+        : [
+          { value: "none", label: "none - no RAG install, local workflow only", aliases: ["不启用"] },
+          { value: "local", label: "local - local GraphRAG + local models", aliases: ["本地"] },
+          { value: "external", label: "external - external RAG provider, explicit risk opt-in", aliases: ["外部"] },
+        ];
+      resolved.rag = await promptChoice(prompter, "3. RAG backend?", ragChoices, documentPolicy === "strict" ? "local" : DEFAULT_RAG_BACKEND);
+    }
+
+    const ragBackend = normalizeRagBackend(resolved.rag || resolved["rag-backend"] || resolved.ragBackend || DEFAULT_RAG_BACKEND);
+    if (ragBackend === "local" && !hasInitArg(resolved, "setup-rag", "setupRag")) {
+      resolved["setup-rag"] = await promptChoice(prompter, "4. Local RAG setup?", [
+        { value: "skip", label: "skip - write setup plan only", aliases: ["later", "以后"] },
+        { value: "ask", label: "ask - check dependencies and guide setup", aliases: ["check", "检查"] },
+        { value: "install", label: "install - try local setup now", aliases: ["安装"] },
+      ], "skip");
+    }
+
+    if (ragBackend === "external" && !hasInitArg(resolved, "allow-external-rag", "allowExternalRag")) {
+      const confirm = await promptChoice(prompter, "5. External RAG may send documents/query context outside this machine. Confirm?", [
+        { value: "no", label: "no - stop and keep data local", aliases: ["n"] },
+        { value: "yes", label: "yes - I have approval to use external RAG", aliases: ["y"] },
+      ], "no");
+      if (confirm === "yes") resolved["allow-external-rag"] = true;
+    }
+  } finally {
+    prompter.close();
+  }
+  return resolved;
+}
+
+function writeExternalRagRisk(target, details) {
+  const outPath = path.join(target, ".planning", "privacy", "EXTERNAL_RAG_RISK.md");
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  const content = `# External RAG Risk Acknowledgement
+
+Generated: ${new Date().toISOString()}
+
+## Summary
+
+- Document policy: \`${details.documentPolicy}\`
+- RAG backend: \`external\`
+- Explicit opt-in: ${details.allowExternalRag ? "yes" : "no"}
+- Privacy boundary: project document content, extracted text units, embeddings, query text, and graph context may be sent to the configured external provider.
+
+## Required Rule
+
+Do not use external RAG for confidential customer projects unless the project has written approval for data export. The default and recommended strict setup is:
+
+\`\`\`bash
+pik-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
+\`\`\`
+
+## Why This Matters
+
+GraphRAG indexing reads project documents and creates intermediate text units, entity/relationship context, summaries, vectors, and query context. If provider settings point to external LLM or embedding services, those contents can leave the local machine.
+`;
+  fs.writeFileSync(outPath, content);
+  return outPath;
+}
+
+function writeLocalRagSetupPlan(target, details) {
+  const outPath = path.join(target, ".planning", "knowledge", "LOCAL_RAG_SETUP_PLAN.md");
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  const graphRagAvailable = commandAvailable("graphrag");
+  const ollamaAvailable = commandAvailable("ollama");
+  let modelAvailable = false;
+  let embeddingAvailable = false;
+  if (ollamaAvailable) {
+    modelAvailable = ollamaModelAvailable(details.model);
+    embeddingAvailable = ollamaModelAvailable(details.embedding);
+  }
+  const content = `# Local RAG Setup Plan
+
+Generated: ${new Date().toISOString()}
+
+## Selected Policy
+
+- Document policy: \`${details.documentPolicy}\`
+- RAG backend: \`local\`
+- Setup mode: \`${details.setupRag}\`
+- Heavy refresh executed: no
+
+## Recommended Local Models
+
+- LLM: \`${details.model}\`
+- Embedding: \`${details.embedding}\`
+
+## Dependency Check
+
+- GraphRAG CLI: ${graphRagAvailable ? "present" : "missing"}
+- Ollama CLI: ${ollamaAvailable ? "present" : "missing"}
+- LLM model: ${modelAvailable ? "present" : "missing"}
+- Embedding model: ${embeddingAvailable ? "present" : "missing"}
+
+## Next Steps
+
+\`\`\`bash
+python3 -m pip install --user graphrag
+brew install ollama
+brew services start ollama
+ollama pull ${details.model}
+ollama pull ${details.embedding}
+pik-rag-init-local --target "$PWD"
+\`\`\`
+
+## Safety
+
+Keep \`.planning/config.json\` and \`graphrag-workspace/settings.yaml\` on Ollama / localhost for confidential projects. Switching provider, API base, or key settings to an external service can send source documents and query context outside the machine.
+`;
+  fs.writeFileSync(outPath, content);
+  return { outPath, graphRagAvailable, ollamaAvailable, modelAvailable, embeddingAvailable };
+}
+
+function configureProjectPolicy(target, options) {
+  const configPath = planningConfigPath(target);
+  const current = readPlanningConfig(target);
+  const applied = applyProjectPolicyToConfig(current, options);
+  writeJsonFile(configPath, applied.config);
+  if (applied.ragBackend === "external") {
+    applied.externalRiskPath = writeExternalRagRisk(target, {
+      documentPolicy: applied.documentPolicy,
+      allowExternalRag: Boolean(options.allowExternalRag),
+    });
+  }
+  if (applied.ragBackend === "local") {
+    applied.localRagSetup = writeLocalRagSetupPlan(target, {
+      documentPolicy: applied.documentPolicy,
+      setupRag: options.setupRag || "skip",
+      model: applied.localModel,
+      embedding: applied.localEmbedding,
+    });
+  }
+  return applied;
+}
+
+async function init(rawArgs) {
+  const args = await resolveInitWizardArgs(rawArgs);
   const target = path.resolve(args.target || process.cwd());
   const template = args.template || "brownfield-monorepo";
   const projectName = args.name || path.basename(target);
   const templateDir = path.join(kitRoot, "templates", template);
   const mode = args.mode || (template === "greenfield-app" ? "new" : "existing");
+  const documentPolicy = normalizeDocumentPolicy(args["doc-policy"] || args.docPolicy || DEFAULT_DOCUMENT_POLICY);
+  const ragBackend = normalizeRagBackend(args.rag || args["rag-backend"] || args.ragBackend || DEFAULT_RAG_BACKEND);
+  const setupRag = String(args["setup-rag"] || args.setupRag || "skip").toLowerCase();
+  const allowExternalRag = Boolean(args["allow-external-rag"] || args.allowExternalRag);
+  const localModel = args.model || process.env.AI_PIKIT_LOCAL_LLM_MODEL || DEFAULT_LOCAL_LLM_MODEL;
+  const localEmbedding = args.embedding || process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || DEFAULT_LOCAL_EMBEDDING_MODEL;
 
   requireDir(target, "Target");
   requireDir(templateDir, "Template");
+  validateInitPolicy({ documentPolicy, ragBackend, allowExternalRag });
 
   const values = {
     PROJECT_NAME: projectName,
@@ -502,15 +791,67 @@ function init(args) {
 
   copyTemplateTree(path.join(kitRoot, "core"), target, values, { force: args.force });
   copyTemplateTree(templateDir, target, values, { force: args.force });
+  const policy = configureProjectPolicy(target, {
+    documentPolicy,
+    ragBackend,
+    setupRag,
+    allowExternalRag,
+    model: localModel,
+    embedding: localEmbedding,
+  });
   ensureLocalExcludes(target);
-  writeInitProfile(target, { projectName, template, mode, force: Boolean(args.force) });
+  writeInitProfile(target, {
+    projectName,
+    template,
+    mode,
+    force: Boolean(args.force),
+    documentPolicy: policy.documentPolicy,
+    ragBackend: policy.ragBackend,
+    profileName: policy.profileName,
+    setupRag,
+    localModel: policy.localModel,
+    localEmbedding: policy.localEmbedding,
+    localRagSetupPath: policy.localRagSetup?.outPath,
+    externalRiskPath: policy.externalRiskPath,
+  });
+
+  if (policy.ragBackend === "local" && setupRag === "install") {
+    ragInitLocal({
+      target,
+      force: args.force,
+      model: policy.localModel,
+      embedding: policy.localEmbedding,
+    });
+  }
 
   console.log(`\nInitialized ${projectName} with template ${template} in ${mode} mode`);
+  console.log(`Document policy: ${policy.documentPolicy}`);
+  console.log(`RAG backend: ${policy.ragBackend}`);
+  console.log(`Internal profile: ${policy.profileName}`);
+  console.log("Heavy refresh executed: no");
 }
 
 function writeInitProfile(target, profile) {
   const outPath = path.join(target, ".planning", "INIT_PROFILE.md");
   const mode = profile.mode === "new" ? "new" : "existing";
+  const localRagLines = profile.ragBackend === "local"
+    ? [
+      `- Local LLM model: \`${profile.localModel}\``,
+      `- Local embedding model: \`${profile.localEmbedding}\``,
+      profile.localRagSetupPath ? `- Local RAG setup plan: \`${path.relative(target, profile.localRagSetupPath)}\`` : "- Local RAG setup plan: pending",
+      "- Run `pik-rag-init-local --target <repo>` after GraphRAG, Ollama, and models are available.",
+    ].join("\n")
+    : profile.ragBackend === "external"
+      ? [
+        "- External RAG is explicitly opted in.",
+        profile.externalRiskPath ? `- External RAG risk report: \`${path.relative(target, profile.externalRiskPath)}\`` : "- External RAG risk report: missing",
+        "- Do not use external RAG for confidential projects without written approval.",
+      ].join("\n")
+      : [
+        "- RAG is disabled for this project by default.",
+        "- `pik-docs-sync` and extracted-document query remain available.",
+        "- `pik-docs-index --run` and `pik-docs-query --rag` require switching to local or external RAG first.",
+      ].join("\n");
   const content = `# AI-PIKit Init Profile
 
 Generated: ${new Date().toISOString()}
@@ -521,6 +862,14 @@ Generated: ${new Date().toISOString()}
 - Template: ${profile.template}
 - Mode: ${mode}
 - Force: ${profile.force ? "true" : "false"}
+- Document policy: \`${profile.documentPolicy}\`
+- RAG backend: \`${profile.ragBackend}\`
+- Internal profile: \`${profile.profileName}\`
+- Heavy refresh executed: no
+
+## RAG Setup
+
+${localRagLines}
 
 ## Guard Baseline
 
@@ -528,7 +877,8 @@ ${mode === "new"
   ? "- New project mode: codebase may initially be empty; codebase guard expects scaffold/source files once implementation starts."
   : "- Existing project mode: codebase guard expects source inventory before risky workflow execution."}
 - Run \`pik-codebase-scan --target <repo>\` after init.
-- Run document and graph checks before implementation workflows.
+- Run \`pik-docs-sync --target <repo>\` after init when the project has documents.
+- Run \`pik-graph-build --target <repo> --run\` only when code-map baseline is explicitly needed.
 `;
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, content);
@@ -550,16 +900,189 @@ function readPlanningConfig(target) {
   }
 }
 
+function normalizeDocumentPolicy(value, fallback = DEFAULT_DOCUMENT_POLICY) {
+  const key = String(value || "").trim().toLowerCase();
+  if (DOCUMENT_POLICY_ALIASES[key]) return DOCUMENT_POLICY_ALIASES[key];
+  if (DOCUMENT_POLICIES.has(key)) return key;
+  return fallback;
+}
+
+function normalizeRagBackend(value, fallback = DEFAULT_RAG_BACKEND) {
+  const key = String(value || "").trim().toLowerCase();
+  return RAG_BACKENDS.has(key) ? key : fallback;
+}
+
+function normalizeProfileName(value, fallback = null) {
+  const key = String(value || "").trim().toLowerCase();
+  return PROFILE_ALIASES[key] || (REFRESH_PROFILES[key] ? key : fallback);
+}
+
+function profileNameForDocumentPolicy(policy) {
+  return normalizeDocumentPolicy(policy) === "strict" ? "full-strict" : "graph-lite";
+}
+
+function documentPolicyFromProfile(profileName) {
+  const normalized = normalizeProfileName(profileName, "graph-lite");
+  return REFRESH_PROFILES[normalized]?.documentPolicy || DEFAULT_DOCUMENT_POLICY;
+}
+
+function inferRagBackend(config, profileName = null) {
+  if (config.graphrag?.enabled === true) {
+    if (config.graphrag?.mode === "external" || config.spec_context?.provider === "graphrag-external") return "external";
+    return "local";
+  }
+  if (config.rag_backend) return normalizeRagBackend(config.rag_backend);
+  if (config.spec_context?.enabled === true && /rag/i.test(String(config.spec_context?.provider || ""))) {
+    return config.spec_context.provider === "graphrag-external" ? "external" : "local";
+  }
+  const profile = REFRESH_PROFILES[normalizeProfileName(profileName, "graph-lite")];
+  return profile?.defaultRagBackend || DEFAULT_RAG_BACKEND;
+}
+
+function projectPolicyState(target) {
+  const config = readPlanningConfig(target);
+  const explicitProfile = config.execution_budget?.profile || config.execution?.profile || "";
+  const profileName = normalizeProfileName(explicitProfile, config.document_policy ? profileNameForDocumentPolicy(config.document_policy) : "graph-lite");
+  const documentPolicy = normalizeDocumentPolicy(config.document_policy || config.execution_budget?.document_policy || documentPolicyFromProfile(profileName));
+  const ragBackend = inferRagBackend(config, profileName);
+  return { config, profileName, documentPolicy, ragBackend };
+}
+
+function applyProjectPolicyToConfig(config, options = {}) {
+  const documentPolicy = normalizeDocumentPolicy(options.documentPolicy || config.document_policy);
+  const ragBackend = normalizeRagBackend(options.ragBackend || config.rag_backend);
+  const profileName = normalizeProfileName(options.profile, profileNameForDocumentPolicy(documentPolicy));
+  const localModel = options.model || config.graphrag?.llm_model || process.env.AI_PIKIT_LOCAL_LLM_MODEL || DEFAULT_LOCAL_LLM_MODEL;
+  const localEmbedding = options.embedding || config.graphrag?.embedding_model || process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || DEFAULT_LOCAL_EMBEDDING_MODEL;
+
+  config.document_policy = documentPolicy;
+  config.rag_backend = ragBackend;
+  config.execution_budget = {
+    ...(config.execution_budget || {}),
+    profile: profileName,
+    document_policy: documentPolicy,
+    rag_backend: ragBackend,
+    heavy_refresh: "explicit_or_policy",
+    auto_refresh: false,
+    refresh_state_path: ".planning/refresh/REFRESH_STATE.json",
+    warn_on_unrelated_commit_distance: true,
+    note: "Ordinary workflow commands must not auto-run GraphRAG index, Graphify build, or refresh-run.",
+  };
+
+  config.privacy = {
+    ...(config.privacy || {}),
+    network_policy: ragBackend === "external" ? "external_rag_opt_in" : "local_only",
+    allow_external_rag: ragBackend === "external",
+    allow_external_tools: false,
+    allowed_hosts: ["127.0.0.1", "localhost"],
+    forbidden_env_keys: [
+      "GRAPHRAG_API_KEY",
+      "OPENAI_API_KEY",
+      "AZURE_OPENAI_API_KEY",
+      "DEEPSEEK_API_KEY",
+      "ANTHROPIC_API_KEY",
+      "GEMINI_API_KEY",
+    ],
+  };
+
+  const baseSpec = {
+    ...(config.spec_context || {}),
+    source_paths: Array.isArray(config.spec_context?.source_paths) ? config.spec_context.source_paths : DEFAULT_DOC_SOURCE_PATHS,
+    scan_extensions: Array.isArray(config.spec_context?.scan_extensions) ? config.spec_context.scan_extensions : DEFAULT_DOC_EXTENSIONS,
+    require_citations: documentPolicy === "strict",
+  };
+
+  if (ragBackend === "none") {
+    config.spec_context = {
+      ...baseSpec,
+      enabled: false,
+      provider: "none",
+      index_command: "",
+      query_command: "",
+    };
+    config.graphrag = {
+      ...(config.graphrag || {}),
+      enabled: false,
+      mode: "none",
+      profile: "disabled",
+      requires_api_key: false,
+      root: "graphrag-workspace",
+      llm_provider: "none",
+      llm_model: localModel,
+      embedding_provider: "none",
+      embedding_model: localEmbedding,
+      api_base: "",
+      vector_store: "none",
+      index_command: "",
+      local_query_command: "",
+    };
+  } else if (ragBackend === "local") {
+    config.spec_context = {
+      ...baseSpec,
+      enabled: true,
+      provider: "graphrag-local",
+      index_command: "graphrag index --root graphrag-workspace --method fast",
+      query_command: "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}",
+    };
+    config.graphrag = {
+      ...(config.graphrag || {}),
+      enabled: true,
+      mode: "local",
+      profile: "local_basic",
+      requires_api_key: false,
+      root: "graphrag-workspace",
+      llm_provider: "ollama",
+      llm_model: localModel,
+      embedding_provider: "ollama",
+      embedding_model: localEmbedding,
+      api_base: "http://127.0.0.1:11434",
+      vector_store: "lancedb",
+      index_command: "graphrag index --root graphrag-workspace --method fast",
+      local_query_command: "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}",
+    };
+  } else {
+    config.spec_context = {
+      ...baseSpec,
+      enabled: true,
+      provider: "graphrag-external",
+      index_command: config.spec_context?.index_command || "",
+      query_command: config.spec_context?.query_command || "",
+    };
+    config.graphrag = {
+      ...(config.graphrag || {}),
+      enabled: true,
+      mode: "external",
+      profile: "external_opt_in",
+      requires_api_key: true,
+      root: "graphrag-workspace",
+      llm_provider: config.graphrag?.llm_provider || "external-provider",
+      llm_model: config.graphrag?.llm_model || "",
+      embedding_provider: config.graphrag?.embedding_provider || "external-provider",
+      embedding_model: config.graphrag?.embedding_model || "",
+      api_base: config.graphrag?.api_base || "",
+      vector_store: config.graphrag?.vector_store || "",
+      index_command: config.graphrag?.index_command || "",
+      local_query_command: config.graphrag?.local_query_command || "",
+    };
+  }
+
+  return { config, documentPolicy, ragBackend, profileName, localModel, localEmbedding };
+}
+
 function planningConfigPath(target) {
   return path.join(target, ".planning", "config.json");
 }
 
 function activeRefreshProfile(target) {
-  const config = readPlanningConfig(target);
-  const name = config.execution_budget?.profile || config.execution?.profile || "default-local-rag";
+  const { config, profileName, documentPolicy, ragBackend } = projectPolicyState(target);
+  const name = normalizeProfileName(profileName, profileNameForDocumentPolicy(documentPolicy));
+  const profile = REFRESH_PROFILES[name] || REFRESH_PROFILES["graph-lite"];
   return {
-    name: REFRESH_PROFILES[name] ? name : "default-local-rag",
-    ...(REFRESH_PROFILES[name] || REFRESH_PROFILES["default-local-rag"]),
+    name: profile ? name : "graph-lite",
+    ...(profile || REFRESH_PROFILES["graph-lite"]),
+    documentPolicy,
+    ragBackend,
+    rawProfile: config.execution_budget?.profile || null,
   };
 }
 
@@ -1242,12 +1765,16 @@ function refreshRunCommand(args) {
 
 function modeStatusText(profile) {
   return [
-    `Profile: ${profile.name}`,
-    `Label: ${profile.label}`,
+    `Document policy: ${profile.documentPolicy}`,
+    `RAG backend: ${profile.ragBackend}`,
     `RAG required: ${profile.ragRequired ? "yes" : "no"}`,
     `Graph required: ${profile.graphRequired ? "yes" : "no"}`,
+    `Strict blocking: ${profile.strict ? "yes" : "no"}`,
     `Strict: ${profile.strict ? "yes" : "no"}`,
+    `Internal profile: ${profile.name}`,
+    `Label: ${profile.label}`,
     `Description: ${profile.description}`,
+    `Heavy refresh executed: no`,
   ].join("\n");
 }
 
@@ -1263,6 +1790,13 @@ ${modeStatusText(profile)}
 \`\`\`
 
 ## Profiles
+
+Recommended user modes:
+
+- \`docs-reference\`: 文档只做参考，缺文档/缺 citation 用 \`WAIVED_WITH_RISK\` 记录，不阻断普通开发。
+- \`docs-strict\`: 文档是强约束依据，缺 citation、RAG stale、Graphify stale 会按严格规则阻断。
+
+Legacy internal profiles:
 
 ${Object.entries(REFRESH_PROFILES).map(([name, item]) => `- \`${name}\`: ${item.description}`).join("\n")}
 `;
@@ -1282,24 +1816,35 @@ function modeStatusCommand(args) {
 function modeSetCommand(args) {
   const target = path.resolve(args.target || process.cwd());
   requireDir(target, "Target");
-  const next = args.profile || args._[1] || "default-local-rag";
+  const nextRaw = args.profile || args._[1] || "docs-reference";
+  const next = normalizeProfileName(nextRaw);
   if (!REFRESH_PROFILES[next]) {
-    console.log(`unknown mode ${next}`);
-    console.log(`available ${Object.keys(REFRESH_PROFILES).join(", ")}`);
+    console.log(`unknown mode ${nextRaw}`);
+    console.log(`available docs-reference, docs-strict, ${Object.keys(REFRESH_PROFILES).join(", ")}`);
     process.exitCode = 1;
     return;
   }
   const configPath = planningConfigPath(target);
   const config = readPlanningConfig(target);
-  config.execution_budget = {
-    ...(config.execution_budget || {}),
+  const documentPolicy = documentPolicyFromProfile(next);
+  const currentBackend = inferRagBackend(config, next);
+  const ragBackend = next === "full-strict" && currentBackend === "none" ? "local" : currentBackend;
+  const applied = applyProjectPolicyToConfig(config, {
+    documentPolicy,
+    ragBackend,
     profile: next,
-    heavy_refresh: "explicit_or_policy",
-    auto_refresh: false,
-    refresh_state_path: ".planning/refresh/REFRESH_STATE.json",
-    note: "Do not enable automatic GraphRAG/Graphify rebuilds for ordinary workflow commands.",
-  };
-  writeJsonFile(configPath, config);
+    model: config.graphrag?.llm_model,
+    embedding: config.graphrag?.embedding_model,
+  });
+  writeJsonFile(configPath, applied.config);
+  if (applied.ragBackend === "local" && !fs.existsSync(path.join(target, ".planning", "knowledge", "LOCAL_RAG_SETUP_PLAN.md"))) {
+    writeLocalRagSetupPlan(target, {
+      documentPolicy: applied.documentPolicy,
+      setupRag: "skip",
+      model: applied.localModel,
+      embedding: applied.localEmbedding,
+    });
+  }
   const profile = activeRefreshProfile(target);
   const state = loadRefreshState(target);
   state.profile = next;
@@ -2758,6 +3303,11 @@ function ragArtifactPaths(target) {
   };
 }
 
+function ragExecutionDisabled(target) {
+  const config = readPlanningConfig(target);
+  return inferRagBackend(config, config.execution_budget?.profile) === "none";
+}
+
 function configuredRagIndexCommand(target, args = {}) {
   const config = readPlanningConfig(target);
   return args["index-command"]
@@ -2792,7 +3342,8 @@ function writeRagIndexHandoff(target, args = {}) {
   const paths = ragArtifactPaths(target);
   fs.mkdirSync(path.dirname(paths.indexHandoff), { recursive: true });
   const generatedAt = new Date().toISOString();
-  const indexCommand = configuredRagIndexCommand(target, args);
+  const ragDisabled = ragExecutionDisabled(target);
+  const indexCommand = ragDisabled ? "(disabled: current RAG backend is none)" : configuredRagIndexCommand(target, args);
   const content = `# RAG Index Handoff
 
 Generated: ${generatedAt}
@@ -2803,8 +3354,9 @@ Build or refresh the document RAG backend for AI-PIKit spec context.
 
 ## Current Backend
 
-- Provider: Local GraphRAG by default
-- Runtime: Ollama + LanceDB, no external API key
+- RAG backend: \`${inferRagBackend(readPlanningConfig(target), activeRefreshProfile(target).name)}\`
+- Provider: ${ragDisabled ? "disabled" : "configured GraphRAG"}
+- Runtime: ${ragDisabled ? "not required" : "Ollama + LanceDB for local RAG"}
 - Replaceable: true
 
 ## Suggested Command
@@ -2822,6 +3374,7 @@ pik-docs-index --target <repo> --run
 ## Notes
 
 - Run \`pik-rag-init-local --target <repo>\` before indexing confidential documents.
+- If RAG backend is \`none\`, switch intentionally with \`pik-init --doc-policy strict --rag local\` on first setup or \`pik-mode-set docs-strict\`, then run \`pik-rag-init-local\`.
 - In local-only mode, \`pik-docs-index --run\` runs \`pik-privacy-audit\` before GraphRAG.
 - Do not change \`model_provider\`, \`api_base\`, or API-key settings to an external service unless the project has explicitly opted out of local-only mode.
 - External providers can receive source document chunks, extracted text units, query text, and generated context.
@@ -2834,12 +3387,35 @@ pik-docs-index --target <repo> --run
 function runRagIndex(target, args = {}) {
   const paths = ragArtifactPaths(target);
   fs.mkdirSync(path.dirname(paths.indexResult), { recursive: true });
-  const command = configuredRagIndexCommand(target, args);
+  const command = ragExecutionDisabled(target) ? "" : configuredRagIndexCommand(target, args);
   const generatedAt = new Date().toISOString();
   let stdout = "";
   let stderr = "";
   let ok = true;
   let errorMessage = "";
+
+  if (ragExecutionDisabled(target)) {
+    ok = false;
+    errorMessage = "RAG backend disabled: current project uses --rag none. Run pik-init with --rag local for first setup, or switch policy intentionally before running GraphRAG index.";
+    const resultContent = `# RAG Index Result
+
+Generated: ${generatedAt}
+
+## Result
+
+- Status: failed
+- Reason: RAG backend disabled
+- Heavy refresh executed: no
+
+## Stderr
+
+\`\`\`text
+${limitedText(errorMessage)}
+\`\`\`
+`;
+    fs.writeFileSync(paths.indexResult, resultContent);
+    return { ok, command: "(disabled)", resultPath: paths.indexResult, errorMessage };
+  }
 
   const privacy = enforcePrivacyBeforeRagRun(target, command, "index");
   if (!privacy.ok) {
@@ -2946,12 +3522,45 @@ ${limitedText(stderr || errorMessage) || "(empty)"}
 function runRagQuery(target, query, args = {}) {
   const paths = ragArtifactPaths(target);
   fs.mkdirSync(path.dirname(paths.queryResult), { recursive: true });
-  const command = configuredRagQueryCommand(target, args, query);
+  const command = ragExecutionDisabled(target) ? "" : configuredRagQueryCommand(target, args, query);
   const generatedAt = new Date().toISOString();
   let stdout = "";
   let stderr = "";
   let ok = true;
   let errorMessage = "";
+
+  if (ragExecutionDisabled(target)) {
+    ok = false;
+    errorMessage = "RAG backend disabled: current project uses --rag none. Use normal pik-docs-query without --rag, or initialize local RAG explicitly.";
+    const resultContent = `# RAG Query Result
+
+Generated: ${generatedAt}
+
+## Query
+
+${query}
+
+## Result
+
+- Status: failed
+- Reason: RAG backend disabled
+- Heavy refresh executed: no
+
+## Answer
+
+\`\`\`text
+(empty)
+\`\`\`
+
+## Stderr
+
+\`\`\`text
+${limitedText(errorMessage)}
+\`\`\`
+`;
+    fs.writeFileSync(paths.queryResult, resultContent);
+    return { ok, command: "(disabled)", resultPath: paths.queryResult, stdout, stderr, errorMessage };
+  }
 
   const privacy = enforcePrivacyBeforeRagRun(target, command, "query");
   if (!privacy.ok) {
@@ -3065,8 +3674,8 @@ function localGraphRagOptions(target, args = {}) {
   const config = readPlanningConfig(target);
   const graphRag = config.graphrag || {};
   return {
-    model: args.model || graphRag.llm_model || process.env.AI_PIKIT_LOCAL_LLM_MODEL || "qwen2.5:14b",
-    embedding: args.embedding || graphRag.embedding_model || process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || "nomic-embed-text",
+    model: args.model || graphRag.llm_model || process.env.AI_PIKIT_LOCAL_LLM_MODEL || DEFAULT_LOCAL_LLM_MODEL,
+    embedding: args.embedding || graphRag.embedding_model || process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || DEFAULT_LOCAL_EMBEDDING_MODEL,
     apiBase: args["api-base"] || graphRag.api_base || process.env.AI_PIKIT_LOCAL_OLLAMA_BASE || "http://127.0.0.1:11434",
     indexMethod: args["index-method"] || "fast",
     queryMethod: args["query-method"] || "basic",
@@ -3189,6 +3798,17 @@ function writeLocalGraphRagSettings(settingsPath, options) {
 function updateLocalGraphRagConfig(target, options) {
   const configPath = path.join(target, ".planning", "config.json");
   const config = readPlanningConfig(target);
+  config.document_policy = normalizeDocumentPolicy(config.document_policy || (config.execution_budget?.profile === "full-strict" ? "strict" : "reference"));
+  config.rag_backend = "local";
+  config.execution_budget = {
+    ...(config.execution_budget || {}),
+    profile: config.document_policy === "strict" ? "full-strict" : (config.execution_budget?.profile === "default-local-rag" ? "default-local-rag" : "graph-lite"),
+    document_policy: config.document_policy,
+    rag_backend: "local",
+    heavy_refresh: "explicit_or_policy",
+    auto_refresh: false,
+    refresh_state_path: ".planning/refresh/REFRESH_STATE.json",
+  };
   config.spec_context = {
     ...(config.spec_context || {}),
     enabled: true,
@@ -3422,14 +4042,17 @@ function runPrivacyAudit(target, options = {}) {
   }
 
   if (options.strictLocal) {
+    const ragBackend = inferRagBackend(config, config.execution_budget?.profile);
     if (networkPolicy !== "local_only") issues.push({ file: ".planning/config.json", detail: `privacy.network_policy must be local_only, got ${networkPolicy}` });
     if (privacy.allow_external_rag !== false) issues.push({ file: ".planning/config.json", detail: "privacy.allow_external_rag must be false in default local mode" });
     if (privacy.allow_external_tools === true) issues.push({ file: ".planning/config.json", detail: "privacy.allow_external_tools must not be true in strict local mode" });
-    if (config.spec_context?.provider !== "graphrag-local") issues.push({ file: ".planning/config.json", detail: "spec_context.provider must be graphrag-local" });
-    if (config.graphrag?.mode !== "local") issues.push({ file: ".planning/config.json", detail: "graphrag.mode must be local" });
-    if (config.graphrag?.requires_api_key !== false) issues.push({ file: ".planning/config.json", detail: "graphrag.requires_api_key must be false" });
-    if (config.graphrag?.api_base && !String(config.graphrag.api_base).startsWith("http://127.0.0.1") && !String(config.graphrag.api_base).startsWith("http://localhost")) {
-      issues.push({ file: ".planning/config.json", detail: `graphrag.api_base must point to localhost, got ${config.graphrag.api_base}` });
+    if (ragBackend === "local") {
+      if (config.spec_context?.provider !== "graphrag-local") issues.push({ file: ".planning/config.json", detail: "spec_context.provider must be graphrag-local when rag_backend is local" });
+      if (config.graphrag?.mode !== "local") issues.push({ file: ".planning/config.json", detail: "graphrag.mode must be local when rag_backend is local" });
+      if (config.graphrag?.requires_api_key !== false) issues.push({ file: ".planning/config.json", detail: "graphrag.requires_api_key must be false" });
+      if (config.graphrag?.api_base && !String(config.graphrag.api_base).startsWith("http://127.0.0.1") && !String(config.graphrag.api_base).startsWith("http://localhost")) {
+        issues.push({ file: ".planning/config.json", detail: `graphrag.api_base must point to localhost, got ${config.graphrag.api_base}` });
+      }
     }
     if (options.requireOfflineLock && !offlineLock) {
       issues.push({ file: ".planning/privacy/OFFLINE_LOCK.json", detail: "offline lock is required but not enabled" });
@@ -3856,8 +4479,12 @@ function policySnapshot(target) {
     version: 1,
     product: "AI-PIKit",
     profile: profile.name,
+    document_policy: profile.documentPolicy,
+    rag_backend: profile.ragBackend,
     execution_budget: {
       profile: config.execution_budget?.profile || profile.name,
+      document_policy: config.execution_budget?.document_policy || profile.documentPolicy,
+      rag_backend: config.execution_budget?.rag_backend || profile.ragBackend,
       heavy_refresh: config.execution_budget?.heavy_refresh || "explicit_or_policy",
       auto_refresh: config.execution_budget?.auto_refresh === true,
       refresh_state_path: config.execution_budget?.refresh_state_path || ".planning/refresh/REFRESH_STATE.json",
@@ -3873,17 +4500,17 @@ function policySnapshot(target) {
       forbidden_env_keys: Array.isArray(config.privacy?.forbidden_env_keys) ? config.privacy.forbidden_env_keys : [],
     },
     spec_context: {
-      enabled: config.spec_context?.enabled !== false,
-      provider: config.spec_context?.provider || "graphrag-local",
+      enabled: config.spec_context?.enabled === true,
+      provider: config.spec_context?.provider || "none",
       source_paths: Array.isArray(config.spec_context?.source_paths) ? config.spec_context.source_paths : DEFAULT_DOC_SOURCE_PATHS,
       scan_extensions: Array.isArray(config.spec_context?.scan_extensions) ? config.spec_context.scan_extensions : DEFAULT_DOC_EXTENSIONS,
-      require_citations: config.spec_context?.require_citations !== false,
+      require_citations: config.spec_context?.require_citations === true,
       index_command: config.spec_context?.index_command || "",
       query_command: config.spec_context?.query_command || "",
     },
     graphrag: {
       enabled: config.graphrag?.enabled === true,
-      mode: config.graphrag?.mode || "local",
+      mode: config.graphrag?.mode || "none",
       requires_api_key: config.graphrag?.requires_api_key === true,
       api_base: config.graphrag?.api_base || "",
       root: config.graphrag?.root || "graphrag-workspace",
@@ -6332,10 +6959,20 @@ function hasSuccessfulResult(filePath) {
   return /Status:\s*success/i.test(fs.readFileSync(filePath, "utf8"));
 }
 
+function citationSourceExists(target, text) {
+  const citationPattern = /\[((?:docs|documents|仕様書|\.planning\/knowledge)\/[^\]\n]+?)\]/g;
+  let match;
+  while ((match = citationPattern.exec(text))) {
+    const source = match[1].replace(/:\d+(?::\d+)?$/, "");
+    if (fs.existsSync(path.join(target, source))) return true;
+  }
+  return false;
+}
+
 function hasDocumentEvidence(target) {
   const knowledgeDir = path.join(target, ".planning", "knowledge");
   const queryResultPath = path.join(knowledgeDir, "RAG_QUERY_RESULT.md");
-  if (hasSuccessfulResult(queryResultPath)) return true;
+  if (hasSuccessfulResult(queryResultPath) && citationSourceExists(target, fs.readFileSync(queryResultPath, "utf8"))) return true;
 
   const sourcesPath = path.join(knowledgeDir, "RAG_SOURCES.md");
   if (fs.existsSync(sourcesPath)) {
@@ -6417,7 +7054,7 @@ function evaluateWorkflowGates(target, state) {
   if (hasDocumentEvidence(target)) {
     gates.push(workflowPassGate("docs", ".planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md"));
   } else if (!profile.ragRequired) {
-    gates.push(workflowGate("docs", "WAIVED_WITH_RISK", false, ".planning/knowledge", "Document/RAG evidence missing; graph-lite allows code/graph-only work but completion must record WAIVED_WITH_RISK."));
+    gates.push(workflowGate("docs", "WAIVED_WITH_RISK", false, ".planning/knowledge", "Document/RAG evidence missing; reference document policy allows code/graph-only work but completion must record WAIVED_WITH_RISK."));
   } else {
     gates.push(workflowFailGate("docs", ".planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md", "Document/RAG evidence missing."));
   }
@@ -7253,6 +7890,7 @@ function docsIndex(args) {
     console.log(`run ${result.command}`);
     console.log(`write ${result.resultPath}`);
     console.log(`status ${result.ok ? "success" : "failed"}`);
+    if (!result.ok && result.errorMessage) console.log(result.errorMessage);
     if (!result.ok) {
       process.exitCode = 1;
     }
@@ -7284,6 +7922,7 @@ function docsQuery(args) {
       console.log(result.stdout.trim());
     }
     console.log(`status ${result.ok ? "success" : "failed"}`);
+    if (!result.ok && result.errorMessage) console.log(result.errorMessage);
     if (result.ok) console.log('next pik-answer-audit --target "$PWD"');
     if (!result.ok) {
       process.exitCode = 1;
@@ -7975,58 +8614,62 @@ function workflowHandoff(args, route) {
 
 const args = parseArgs(normalizeArgv(process.argv.slice(2)));
 
-try {
-  if (args.command === "help" && args._[0] === "skills") {
-    help(args);
-  } else if (!args.command || args.command === "help" || args.command === "--help") {
-    usage();
-  } else if (args.command === "init") {
-    init(args);
-  } else if (args.command === "docs") {
-    docs(args);
-  } else if (args.command === "rag") {
-    rag(args);
-  } else if (args.command === "answer") {
-    answer(args);
-  } else if (args.command === "preflight") {
-    preflightCommand(args);
-  } else if (args.command === "refresh") {
-    refresh(args);
-  } else if (args.command === "mode") {
-    mode(args);
-  } else if (args.command === "trace") {
-    trace(args);
-  } else if (args.command === "policy") {
-    policy(args);
-  } else if (args.command === "help") {
-    help(args);
-  } else if (args.command === "privacy") {
-    privacy(args);
-  } else if (args.command === "license") {
-    license(args);
-  } else if (args.command === "graph") {
-    graph(args);
-  } else if (args.command === "evidence") {
-    evidence(args);
-  } else if (args.command === "runtime") {
-    runtime(args);
-  } else if (args.command === "context") {
-    context(args);
-  } else if (args.command === "workflow") {
-    workflow(args);
-  } else if (args.command === "cockpit") {
-    cockpit(args);
-  } else if (args.command === "codebase") {
-    codebase(args);
-  } else if (args.command === "verify") {
-    verify(args);
-  } else if (args.command === "map") {
-    map(args);
-  } else {
-    usage();
+async function main() {
+  try {
+    if (args.command === "help" && args._[0] === "skills") {
+      help(args);
+    } else if (!args.command || args.command === "help" || args.command === "--help") {
+      usage();
+    } else if (args.command === "init") {
+      await init(args);
+    } else if (args.command === "docs") {
+      docs(args);
+    } else if (args.command === "rag") {
+      rag(args);
+    } else if (args.command === "answer") {
+      answer(args);
+    } else if (args.command === "preflight") {
+      preflightCommand(args);
+    } else if (args.command === "refresh") {
+      refresh(args);
+    } else if (args.command === "mode") {
+      mode(args);
+    } else if (args.command === "trace") {
+      trace(args);
+    } else if (args.command === "policy") {
+      policy(args);
+    } else if (args.command === "help") {
+      help(args);
+    } else if (args.command === "privacy") {
+      privacy(args);
+    } else if (args.command === "license") {
+      license(args);
+    } else if (args.command === "graph") {
+      graph(args);
+    } else if (args.command === "evidence") {
+      evidence(args);
+    } else if (args.command === "runtime") {
+      runtime(args);
+    } else if (args.command === "context") {
+      context(args);
+    } else if (args.command === "workflow") {
+      workflow(args);
+    } else if (args.command === "cockpit") {
+      cockpit(args);
+    } else if (args.command === "codebase") {
+      codebase(args);
+    } else if (args.command === "verify") {
+      verify(args);
+    } else if (args.command === "map") {
+      map(args);
+    } else {
+      usage();
+      process.exitCode = 1;
+    }
+  } catch (error) {
+    console.error(`error: ${error.message}`);
     process.exitCode = 1;
   }
-} catch (error) {
-  console.error(`error: ${error.message}`);
-  process.exitCode = 1;
 }
+
+await main();

@@ -1,6 +1,6 @@
 # AI-PIKit Local GraphRAG Verification
 
-生成时间: 2026-06-28T05:45:33.428Z
+生成时间: 2026-06-28T10:21:51.722Z
 
 ## 摘要
 
@@ -9,17 +9,19 @@
 
 ## Local Profile
 
-- LLM: `qwen2.5:14b`
-- Embedding: `nomic-embed-text`
+- LLM: `qwen2.5:7b`
+- Embedding: `bge-m3`
 - Provider: `ollama`
 - API base: `http://127.0.0.1:11434`
 - Vector store: `lancedb`
 - External API key: not required
+- Index timeout: 300000ms
+- Query timeout: 90000ms
 
 ## Evidence
 
-- ollama model present: qwen2.5:14b
-- ollama model present: nomic-embed-text
+- ollama model present: qwen2.5:7b
+- ollama model present: bge-m3
 - local settings: file exists graphrag-workspace/settings.yaml
 - local settings: found model_provider: ollama
 - local settings: file exists graphrag-workspace/settings.yaml
@@ -38,11 +40,12 @@
 - RAG_INDEX_RESULT: file exists .planning/knowledge/RAG_INDEX_RESULT.md
 - RAG_INDEX_RESULT: found Status: success
 - pik docs query --rag local: found 42,420
-- pik docs query --rag local: found LOCAL_RAG_SENTINEL_42420
 - RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md
 - RAG_QUERY_RESULT: found Status: success
 - RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md
 - RAG_QUERY_RESULT: found 42,420
+- RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md
+- RAG_QUERY_RESULT: found Data: Sources
 - pik-privacy-audit after query: found privacy audit PASS
 - PRIVACY_AUDIT: file exists .planning/knowledge/PRIVACY_AUDIT.md
 - PRIVACY_AUDIT: found Status: PASS
@@ -57,8 +60,8 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-WsV8XS`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-WsV8XS/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-dCHTSJ`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-dCHTSJ/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-rag-local.mjs'`
 
 ## Issues

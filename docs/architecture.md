@@ -6,7 +6,7 @@ AI Project Intelligence Kit，文档缩写 **AI-PIKit**，把 AI coding runtime 
 flowchart LR
   R["Codex / Claude Code / GitHub Copilot"] --> C["pik-* CLI"]
   C --> W["Workflow guard"]
-  C --> K["Document / Local GraphRAG"]
+  C --> K["Document Policy / RAG Backend"]
   C --> G["Graphify code map"]
   C --> E["Evidence / Trace / Policy"]
   W --> P[".planning/workflows"]
@@ -44,7 +44,7 @@ Workflow guard 会检查：
 
 任一 gate 不通过，`pik-completion-check` 就不能通过。
 
-## 2. Document / Local GraphRAG Layer
+## 2. Document Policy / RAG Backend Layer
 
 文档层用于对日文档密集型项目：
 
@@ -55,11 +55,28 @@ Workflow guard 会检查：
 - API / DB / 测试规格
 - 运行手顺和交付说明
 
-默认知识后端是 **Local GraphRAG Default Mode**：
+AI-PIKit 现在把“文档严格程度”和“RAG 后端”分开配置。`pik-init` 默认是轻量模式：
+
+```text
+document_policy: reference
+rag_backend: none
+execution_budget.profile: graph-lite
+privacy.network_policy: local_only
+```
+
+这意味着普通项目可以先不安装 GraphRAG，也不需要本地模型。文档仍然可以被 `pik-docs-sync` 扫描、抽取、查询和引用审计；只是 `pik-docs-index --run` 和 `pik-docs-query --rag` 会在 `rag none` 下明确失败，避免误触发 GraphRAG。
+
+对日/规格严格项目推荐在初始化时选择本地 RAG：
+
+```bash
+pik-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
+```
+
+本地 RAG 使用：
 
 - `graphrag-workspace/settings.yaml`
-- Ollama 本地 LLM
-- Ollama 本地 embedding
+- Ollama 本地 LLM，默认 `qwen2.5:7b`
+- Ollama 本地 embedding，默认 `bge-m3`
 - LanceDB
 - `http://127.0.0.1:11434`
 - 不需要 `GRAPHRAG_API_KEY`
@@ -147,7 +164,7 @@ pik-policy-diff --target "$PWD"
 pik-help-skills --target "$PWD" "我现在是文档更新情况，有没有适合我的命令"
 ```
 
-MVP6 开始，workflow / policy gate 使用四态语义：`PASS`、`FAIL`、`WAIVED_WITH_RISK`、`STALE_NEEDS_REFRESH`。`graph-lite` 可以带风险跳过文档，`default-local-rag` 对 stale 只提醒，`full-strict` 对 stale、missing citation 和外部 provider 硬阻断。policy lock/verify/diff 只做轻量检查，不触发 GraphRAG index 或 Graphify build。
+MVP6 开始，workflow / policy gate 使用四态语义：`PASS`、`FAIL`、`WAIVED_WITH_RISK`、`STALE_NEEDS_REFRESH`。公开语义是 `reference` / `strict`：`reference` 可以带风险跳过文档并写 `WAIVED_WITH_RISK`，`strict` 对 stale、missing citation 和外部 provider 硬阻断。内部 profile `graph-lite`、`default-local-rag`、`full-strict` 继续兼容，但不作为新用户的一层概念。policy lock/verify/diff 只做轻量检查，不触发 GraphRAG index 或 Graphify build。
 
 ## 5. Runtime Adapter Layer
 
@@ -226,6 +243,7 @@ npm run verify:mvp3
 npm run verify:mvp35
 npm run verify:workflow-facade
 npm run verify:policy-hardening
+npm run verify:init-policy
 npm run verify:cockpit-build
 npm run verify:full-command-surface
 npm run verify:skills-usability
@@ -241,6 +259,7 @@ npm run dev:audit:full
 - `verify:mvp3` 验证 golden、citation、trace、policy、help skills。
 - `verify:mvp35` 验证 refresh/preflight/mode、相关/无关 commit 判断和文档同步要求。
 - `verify:workflow-facade` 验证 public workflow 自动写 facade、输出下一步建议并保持 no heavy refresh。
+- `verify:init-policy` 验证 `pik-init` 的文档策略/RAG 后端选择、外部 RAG opt-in、`rag none` 阻断 GraphRAG 执行。
 - `verify:policy-hardening` 验证 policy lock/verify/diff、四态语义、profile 阻断和 no heavy refresh。
 - `verify:cockpit-build` 验证 cockpit 独立模板、假数据样例、稳定 `cockpit-viewmodel.v1` 和 `pik-cockpit-build` 真实项目快照；真实快照能生成本地静态驾驶舱，安全处理 Graphify HTML，并展示 RAG/workflow/quality/privacy/evidence 状态。Graphify impact 预览借鉴 Graphify viewer 的固定图模型，支持搜索、节点详情、legend 过滤和大图 community 聚合。
 - `verify:full-command-surface` 执行 `package.json` 中全部 `pik-*` / `pik` 命令。

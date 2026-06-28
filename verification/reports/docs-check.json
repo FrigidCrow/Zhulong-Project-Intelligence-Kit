@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-28T05:44:30.494Z",
+  "generated": "2026-06-28T10:21:31.821Z",
   "status": "PASS",
   "checkedFiles": [
     "README.md",
@@ -83,6 +83,11 @@
       "file": "README.md",
       "link": "verification/reports/quality-closure-check.md",
       "target": "verification/reports/quality-closure-check.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/business-chain-audit.md",
+      "target": "verification/reports/business-chain-audit.md"
     },
     {
       "file": "README.md",
@@ -203,6 +208,11 @@
       "file": "README.md",
       "link": "verification/reports/developer-audit-summary.md",
       "target": "verification/reports/developer-audit-summary.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/wishlist.md",
+      "target": "docs/wishlist.md"
     },
     {
       "file": "docs/architecture.md",
@@ -416,6 +426,11 @@
     },
     {
       "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/init-policy-check.md",
+      "target": "verification/reports/init-policy-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/full-command-surface-check.md",
       "target": "verification/reports/full-command-surface-check.md"
     },
@@ -438,6 +453,11 @@
       "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/docs-completeness-check.md",
       "target": "verification/reports/docs-completeness-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/business-chain-audit.md",
+      "target": "verification/reports/business-chain-audit.md"
     },
     {
       "file": "docs/quality-dashboard.html",
@@ -516,6 +536,11 @@
     },
     {
       "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/init-policy-check.md",
+      "target": "verification/reports/init-policy-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/full-command-surface-check.md",
       "target": "verification/reports/full-command-surface-check.md"
     },
@@ -538,6 +563,11 @@
       "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/docs-completeness-check.md",
       "target": "verification/reports/docs-completeness-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/business-chain-audit.md",
+      "target": "verification/reports/business-chain-audit.md"
     },
     {
       "file": "docs/quality-dashboard.html",

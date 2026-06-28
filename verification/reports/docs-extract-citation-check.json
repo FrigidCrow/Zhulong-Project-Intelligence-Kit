@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-28T05:45:34.392Z",
+  "generated": "2026-06-28T10:21:52.637Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-noPjkx",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-noPjkx/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-A7PoIZ",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-A7PoIZ/project",
   "evidence": [
     "pik docs extract: found extracted 6",
     "DOCUMENT_EXTRACT_REPORT: found docx-zip-xml",

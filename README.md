@@ -30,6 +30,7 @@ pik 命令
 | Changelog | 每个阶段做了什么、验证证据在哪里、下一阶段边界是什么 | [docs/changelog.md](docs/changelog.md) |
 | 验证报告 | 最近一次完整验证结果 | [verification/reports/latest.md](verification/reports/latest.md) |
 | 质量闭环报告 | skills、workflow、docs completeness 和最终聚合 gate | [verification/reports/quality-closure-check.md](verification/reports/quality-closure-check.md) |
+| 业务链审计 | init、命令面、skills、workflow、policy、文档一致性的断链检查 | [verification/reports/business-chain-audit.md](verification/reports/business-chain-audit.md) |
 | 开发者审计 / 对标 | 维护者专用的命令、skills、功能 gate、AI-PIKit/GSD/Superpowers 对标机制 | [docs/internal/dev-audit.md](docs/internal/dev-audit.md) |
 | 开发者审计摘要 | 最近一次内部审计总分、对标表、耗时和 token 统计边界 | [verification/reports/developer-audit-summary.md](verification/reports/developer-audit-summary.md) |
 | 增强报告 | 基于质量计划的本次增强总结、证据和后续边界 | [verification/reports/quality-enhancement-report.md](verification/reports/quality-enhancement-report.md) |
@@ -72,25 +73,35 @@ AI-PIKit 是一个 **AI 工程上下文框架**，由四层组成：
 ```bash
 cd /path/to/new-project
 
-pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+pik-init --target "$PWD" \
+  --template greenfield-app \
+  --name my_new_project \
+  --mode new \
+  --doc-policy reference \
+  --rag none
+
 pik-codebase-scan --target "$PWD"
-pik-docs-scan --target "$PWD"
+pik-docs-sync --target "$PWD"
 pik-verify --target "$PWD"
 ```
+
+这是默认轻量接入：文档只做参考，不安装 RAG，也不会跑 GraphRAG index。适合文档少、文档不完整、先想把 AI-PIKit + Graphify/workflow 用起来的项目。
 
 ### 既存项目
 
 ```bash
 cd /path/to/existing-project
 
-pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+pik-init --target "$PWD" \
+  --template brownfield-monorepo \
+  --name existing_project \
+  --mode existing \
+  --doc-policy reference \
+  --rag none
+
 pik-codebase-scan --target "$PWD"
 pik-codebase-status --target "$PWD"
-pik-docs-scan --target "$PWD"
-pik-docs-normalize --target "$PWD"
-pik-docs-extract --target "$PWD"
-pik-rag-init-local --target "$PWD"
-pik-offline-lock --target "$PWD"
+pik-docs-sync --target "$PWD"
 pik-graph-build --target "$PWD" --run
 pik-preflight --target "$PWD"
 pik-verify --target "$PWD"
@@ -103,11 +114,52 @@ pik-verify --target "$PWD"
 - 原项目源码结构、入口、测试目录明显变化后，重跑 `pik-codebase-scan --target "$PWD"`。
 - Graphify 输出过期或改修前需要重新判断影响面时，重跑 `pik-graph-build --target "$PWD" --run`。
 - 仕様書、QA、議事録、设计文档新增或更新后，优先运行 `pik-docs-sync --target "$PWD"`。它会按 diff -> extract -> citation audit 的顺序轻量同步，并只标记 `STALE_NEEDS_REFRESH`，不会默认重建 GraphRAG。
-- 默认使用本地 GraphRAG 时，第一次接入或文档来源变化后运行 `pik-rag-init-local --target "$PWD"`，再运行 `pik-docs-index --target "$PWD" --run`。
+- 如果项目是对日/规格书强约束，初始化时直接选择 `--doc-policy strict --rag local --setup-rag skip`。严格模式要求 RAG 后端存在，缺 citation、RAG stale、Graphify stale 会阻断完成。
 
-## 默认本地 GraphRAG
+## Init 文档策略与 RAG 后端
 
-AI-PIKit 的默认知识后端是 **Local GraphRAG Default Mode**。默认配置不需要 `GRAPHRAG_API_KEY`，也不允许把文档发给外部 LLM provider。
+`pik-init` 是项目第一次接入 AI-PIKit 的入口。它不只是生成 `.planning/`，还会确定文档策略和 RAG 后端。
+
+真实终端里可以直接运行向导：
+
+```bash
+pik-init --target "$PWD"
+```
+
+向导会依次询问项目类型、文档策略、RAG 后端、本地 RAG 是否现在处理依赖、外部 RAG 是否确认数据外发风险。CI、脚本和 Codex / Claude Code / GitHub Copilot runtime pack 应使用显式参数写法，避免等待输入。
+
+| 选择 | 含义 | 适合场景 |
+| --- | --- | --- |
+| `--doc-policy reference --rag none` | 默认轻量模式。文档只做参考，不安装 RAG。 | 文档少、无文档、普通改修、先低成本接入 |
+| `--doc-policy strict --rag local` | 严格文档模式。本地 GraphRAG + 本地模型作为知识后端。 | 对日、仕様書驱动、验收强依赖文档 |
+| `--doc-policy strict --rag external --allow-external-rag` | 外部 RAG 显式 opt-in。 | 只有项目明确允许外发数据时 |
+
+默认值是：
+
+```text
+document_policy: reference
+rag_backend: none
+execution_budget.profile: graph-lite
+privacy.network_policy: local_only
+privacy.allow_external_rag: false
+```
+
+所以默认不需要 `GRAPHRAG_API_KEY`，不会安装本地模型，也不会把文档发给外部 LLM provider。`pik-docs-index --run` 和 `pik-docs-query --rag` 在 `rag none` 项目里会明确失败并提示 `RAG backend disabled`，避免误跑 GraphRAG。
+
+## 严格项目的本地 GraphRAG
+
+对日文档密集型项目推荐：
+
+```bash
+pik-init --target "$PWD" \
+  --template brownfield-monorepo \
+  --mode existing \
+  --doc-policy strict \
+  --rag local \
+  --setup-rag skip
+```
+
+`--setup-rag skip` 不会安装依赖，只会写 `.planning/knowledge/LOCAL_RAG_SETUP_PLAN.md`。准备好本地依赖后再显式执行 `pik-rag-init-local`。
 
 本地依赖安装和检查：
 
@@ -121,8 +173,8 @@ brew services start ollama
 
 graphrag --help
 ollama --version
-ollama pull qwen2.5:14b
-ollama pull nomic-embed-text
+ollama pull qwen2.5:7b
+ollama pull bge-m3
 ```
 
 如果你用 Ollama macOS App，也可以打开 App 让它提供本地 `ollama` CLI；关键是 `ollama --version` 可用，并且 `http://127.0.0.1:11434` 只指向本机服务。
@@ -154,8 +206,8 @@ graphrag-workspace/input/
 ```text
 model_provider: ollama
 api_base: http://127.0.0.1:11434
-llm model: qwen2.5:14b
-embedding model: nomic-embed-text
+llm model: qwen2.5:7b
+embedding model: bge-m3
 vector store: lancedb
 profile: local_basic
 external API key: not required
@@ -166,8 +218,10 @@ external API key: not required
 外部 GraphRAG 只能作为显式 opt-in：
 
 ```bash
-GRAPHRAG_API_KEY=<your key> npm run verify:integration -- --live-graphrag
+pik-init --target "$PWD" --doc-policy strict --rag external --allow-external-rag
 ```
+
+它会写 `.planning/privacy/EXTERNAL_RAG_RISK.md`。除非项目明确允许数据外发，否则不要使用外部 RAG。
 
 ## MVP2 强化能力
 
@@ -388,8 +442,8 @@ pik-answer-audit --target "$PWD" --answer "回答内容 [docs/spec.md:3]"
 | --- | --- |
 | 有 citation 且源文件存在 | `PASS` |
 | citation 指向不存在文件或非法行号 | `FAIL` |
-| 无 citation，`graph-lite` / `default-local-rag` | `WAIVED_WITH_RISK`，exit 0 |
-| 无 citation，`full-strict` | `FAIL`，exit 1 |
+| 无 citation，`reference` 文档策略 | `WAIVED_WITH_RISK`，exit 0 |
+| 无 citation，`strict` 文档策略 | `FAIL`，exit 1 |
 
 `pik-docs-query` 现在也会写 `.planning/knowledge/DOCS_QUERY_RESULT.md/json`，并提示下一步运行 `pik-answer-audit --target "$PWD"`。public workflow facade 如果发现最近 query 结果但还没有 answer audit，只会把 `pik-answer-audit --target <repo>` 加到 next commands，不会自动运行、不会阻断 completion。
 
@@ -414,7 +468,8 @@ pik-refresh-plan --target "$PWD"
 pik-refresh-run --target "$PWD" --rag
 pik-refresh-run --target "$PWD" --graph
 pik-mode-status --target "$PWD"
-pik-mode-set --target "$PWD" graph-lite
+pik-mode-set --target "$PWD" docs-reference
+pik-mode-set --target "$PWD" docs-strict
 ```
 
 产物：
@@ -427,13 +482,14 @@ pik-mode-set --target "$PWD" graph-lite
 .planning/refresh/MODE.md
 ```
 
-三种模式：
+公开给用户的模式：
 
-| 模式 | 用途 |
+| 模式 | 用途 | 内部兼容 profile |
 | --- | --- |
-| `default-local-rag` | 默认模式。本地 GraphRAG + Graphify 都参与，但 stale 只提醒，不自动重建。 |
-| `graph-lite` | 轻量模式。适合先只用 AI-PIKit + Graphify/codebase，RAG 缺失可以标记 `WAIVED_WITH_RISK`。 |
-| `full-strict` | 严格模式。相关文档或代码变更导致 stale 时，`pik-preflight --strict` / policy 会失败。 |
+| `docs-reference` | 文档只做参考；缺文档/缺 citation 允许继续，但必须记录 `WAIVED_WITH_RISK`。 | `graph-lite` |
+| `docs-strict` | 文档是强约束依据；缺 citation、RAG stale、Graphify stale 会阻断。 | `full-strict` |
+
+旧 profile 名 `graph-lite`、`default-local-rag`、`full-strict` 仍然兼容，但新项目文档和 skills 应优先使用 `reference/strict` 语义。
 
 新增能力或命令时必须同步更新 `README.md`、`docs/changelog.md`、`docs/commands.html` 和 `docs/quality-plan.md`。`npm run verify:mvp35` 会检查这条规则。
 
@@ -491,13 +547,13 @@ pik-policy-diff --target "$PWD"
 | `WAIVED_WITH_RISK` | 允许继续，但报告必须写明风险和缺失依据。 |
 | `STALE_NEEDS_REFRESH` | RAG/Graphify 可能落后；是否阻断由 profile 决定。 |
 
-profile 规则：
+文档策略和内部 profile 规则：
 
-| Profile | 规则 |
+| 用户语义 | 内部 profile | 规则 |
 | --- | --- |
-| `graph-lite` | 文档/RAG 缺失允许继续，但 workflow 和 completion/evidence 必须写 `WAIVED_WITH_RISK`；Graphify 仍 required；隐私问题永远 FAIL。 |
-| `default-local-rag` | stale RAG / stale Graphify 只提醒，不自动刷新，也默认不阻断。 |
-| `full-strict` | stale RAG、stale Graphify、missing citation、外部 provider、API key、外部 URL 都会阻断。 |
+| `reference` / `docs-reference` | `graph-lite` | 文档/RAG 缺失允许继续，但 workflow 和 completion/evidence 必须写 `WAIVED_WITH_RISK`；Graphify 仍 required；隐私问题永远 FAIL。 |
+| legacy local RAG | `default-local-rag` | stale RAG / stale Graphify 只提醒，不自动刷新，也默认不阻断。保留兼容，不作为新项目推荐默认。 |
+| `strict` / `docs-strict` | `full-strict` | stale RAG、stale Graphify、missing citation、外部 provider、API key、外部 URL 都会阻断。 |
 
 `pik-policy-lock` 会生成稳定 policy snapshot 和 SHA-256 hash。`pik-policy-verify` 会重新生成当前 snapshot，对比 lock，并执行轻量 privacy/preflight/citation/graph freshness checks。`pik-policy-diff` 会输出字段级差异，例如 `privacy.allow_external_rag: false -> true`。三个命令都会输出 `heavy refresh executed: no`，证明它们不会触发 GraphRAG index 或 Graphify build。
 
@@ -655,11 +711,11 @@ FAIL 0
 WARN 1
 ```
 
-`WARN 1` 是默认未启用外部 LLM live GraphRAG fixture。它不影响默认本地 GraphRAG、fixture RAG、Graphify、runtime pack 和 workflow guard 的通过结论。
+`WARN 1` 是默认未启用外部 LLM live GraphRAG fixture。它不影响默认 `reference + rag none`、本地 fixture RAG、Graphify、runtime pack 和 workflow guard 的通过结论。
 
-`npm run verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`npm run verify:rag-local` 会真实运行本地 GraphRAG：Ollama + LanceDB + no external API key，并确认 query 命中 fixture 规格。最近一次 live GraphRAG fixture 验证结果为 `PASS 136 / FAIL 0 / WARN 0`，使用脱敏 fixture 文档，不使用真实项目文档。
+`npm run verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`npm run verify:rag-local` 会真实运行本地 GraphRAG：Ollama + LanceDB + no external API key，并确认 query 命中 fixture 规格。该 smoke 有明确超时边界：默认 index 300 秒、query 90 秒；如果本地模型或 GraphRAG query 卡住，会写入 `rag-local-check` 报告并失败，不会让质量 gate 无期限等待。外部 live GraphRAG fixture 只使用脱敏 fixture 文档，不使用真实项目文档。
 
-`npm run verify:docs-sync` 会测试 `pik-docs-sync` 默认不触发 GraphRAG index、文档新增/修改/删除输出 `STALE_NEEDS_REFRESH`、`--index` 才执行 configured RAG index。`npm run verify:answer-audit` 会测试默认无参数审计最近 query、显式 `--from`、调试 `--answer`、missing citation 在不同 profile 下的状态和 workflow facade 只提示不自动运行。`npm run verify:knowledge-reliability` 会测试轻量知识可靠性主路径：docs sync -> docs query -> answer audit。`npm run verify:mvp3` 会专项测试 RAG golden、citation audit、trace matrix、policy check 和 help skills。`npm run verify:mvp35` 会专项测试 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`npm run verify:workflow-facade` 会验证 public workflow 的无感编排层和 no heavy refresh 约束。`npm run verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义、profile 阻断规则和 policy 命令不触发重刷新。`npm run verify:cockpit-build` 会验证 Graphify HTML 安全复制/阻断、fallback 影响图、RAG 证据面板、`WAIVED_WITH_RISK` 和 no hidden heavy refresh。`npm run verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` / `pik` bin 命令，并写入 [verification/reports/full-command-surface-check.md](verification/reports/full-command-surface-check.md)。当前全命令面为 71 / 71。
+`npm run verify:docs-sync` 会测试 `pik-docs-sync` 默认不触发 GraphRAG index、文档新增/修改/删除输出 `STALE_NEEDS_REFRESH`、`--index` 才执行 configured RAG index。`npm run verify:answer-audit` 会测试默认无参数审计最近 query、显式 `--from`、调试 `--answer`、missing citation 在不同 profile 下的状态和 workflow facade 只提示不自动运行。`npm run verify:knowledge-reliability` 会测试轻量知识可靠性主路径：docs sync -> docs query -> answer audit。`npm run verify:init-policy` 会验证 `pik-init` 默认 `reference + rag none`、`strict + rag none` 硬失败、外部 RAG 必须 `--allow-external-rag`、本地 RAG 只写 setup plan 且不触发重刷新。`npm run verify:business-chain` 会聚合 init、全命令面、skills、workflow、policy、docs completeness，输出业务链断链审计。`npm run verify:mvp3` 会专项测试 RAG golden、citation audit、trace matrix、policy check 和 help skills。`npm run verify:mvp35` 会专项测试 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`npm run verify:workflow-facade` 会验证 public workflow 的无感编排层和 no heavy refresh 约束。`npm run verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义、profile 阻断规则和 policy 命令不触发重刷新。`npm run verify:cockpit-build` 会验证 Graphify HTML 安全复制/阻断、fallback 影响图、RAG 证据面板、`WAIVED_WITH_RISK` 和 no hidden heavy refresh。`npm run verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` / `pik` bin 命令，并写入 [verification/reports/full-command-surface-check.md](verification/reports/full-command-surface-check.md)。当前全命令面为 71 / 71。
 
 MVP4.2 质量闭环新增 cockpit gate：`npm run verify:skills-usability` 会把 Codex / Claude Code / GitHub Copilot runtime pack 安装到临时目录并检查 33 个 skill/prompt；`npm run verify:workflow-closure` 会跑新项目、既有项目、graph-lite、full-strict 四条 fixture；`npm run verify:docs-completeness` 会检查 [docs/commands.html](docs/commands.html) 是否覆盖 71 个命令的独立锚点、字段、示例和 README 跳转；`npm run verify:quality-closure` 聚合 check、quality、integration、runtime、skills、workflow、cockpit 和 docs completeness，报告写入 [verification/reports/quality-closure-check.md](verification/reports/quality-closure-check.md)。
 
@@ -706,3 +762,18 @@ project.manifest.yml
 ```
 
 不会搬动原项目源码，也不会把目标项目复制进 AI-PIKit 仓库。
+
+## 未来 Roadmap：前端体验智能层
+
+AI-PIKit 后续会增加一个专门的 **Frontend Experience Intelligence Mode**。目标是在本地做画面迁移和 UI 状态建模，让 AI 不只读 画面設計書 的文字，还能理解 screen、route、modal、tab、state、transition、component、test 之间的关系。
+
+未来形态：
+
+- 先做调查阶段，研究前后端联动、前端可视验证、AI 调错组件/route/state 的常见失败，以及如何把截图、DOM/ARIA、交互 smoke、视觉 diff 写成 evidence。
+- 本地可视化拖拽画布，用节点表示画面/状态，用边表示迁移。
+- 结构化产物写入 `.planning/ui/SCREEN_FLOW.json`、`.planning/ui/SCREEN_FLOW.md`、`.planning/ui/screen-flow.html`。
+- screen flow 进入 docs sync / RAG / trace，让 AI 能按画面迁移关系查询仕様依据。
+- Graphify 侧把 screen -> route -> component -> file -> test 接入代码影响面。
+- 默认 local-only，不依赖 Figma、外部白板或外部设计平台。
+
+这不是当前已实现命令；它是后续独立前端增强阶段，详细愿望见 [docs/wishlist.md](docs/wishlist.md)。

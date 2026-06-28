@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-28T05:45:48.865Z",
+  "generated": "2026-06-28T10:22:03.617Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-MANjDi",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-MANjDi/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-xgOcLR",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-xgOcLR/project",
   "evidence": [
     "pik docs index --run: found status success",
     "pik graph build --run: found status success",

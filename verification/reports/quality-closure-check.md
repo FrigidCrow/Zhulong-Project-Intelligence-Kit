@@ -1,6 +1,6 @@
 # AI-PIKit Quality Closure Verification
 
-生成时间: 2026-06-28T05:46:34.489Z
+生成时间: 2026-06-28T10:23:17.726Z
 
 ## 摘要
 
@@ -17,6 +17,8 @@
 - PASS `npm run verify:skills-usability`
 - PASS `npm run verify:workflow-closure`
 - PASS `npm run verify:cockpit-build`
+- PASS `npm run verify:init-policy`
+- PASS `npm run verify:business-chain`
 - PASS `npm run verify:docs-completeness`
 
 ## 边界

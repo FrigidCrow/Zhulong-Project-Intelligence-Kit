@@ -1,10 +1,10 @@
 # AI-PIKit Developer Audit Summary
 
-生成时间: 2026-06-28T05:44:01.341Z
+生成时间: 2026-06-28T10:20:59.824Z
 
 ## 摘要
 
-- Run ID: `2026-06-27T19-01-06-200Z`
+- Run ID: `2026-06-28T10-19-11-341Z`
 - 原始产物目录: `.pik-audit/latest/`
 - 命令覆盖: 71
 - Runtime skill/prompt 覆盖: 33
@@ -27,18 +27,18 @@
 
 | 工具 | 模式 | 状态 | 评分 | 耗时 | Token | 隔离 |
 | --- | --- | --- | --- | --- | --- | --- |
-| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2295 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3133 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| GSD | skill-pack-backed-replay | PASS | 88 | 281 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| Superpowers | skill-pack-backed-replay | PASS | 82 | 238 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | graph-lite-dev-loop | WAIVED_WITH_RISK | 88 | 2616 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | full-local-graphify-graphrag | EXPECTED_BLOCK | 75 | 2889 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| GSD | skill-pack-backed-replay | WAIVED_WITH_RISK | 88 | 221 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| Superpowers | skill-pack-backed-replay | WAIVED_WITH_RISK | 82 | 231 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2317 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 2811 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| GSD | skill-pack-backed-replay | PASS | 88 | 230 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
-| Superpowers | skill-pack-backed-replay | PASS | 82 | 224 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2453 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3321 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| GSD | skill-pack-backed-replay | PASS | 88 | 261 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| Superpowers | skill-pack-backed-replay | PASS | 82 | 248 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | graph-lite-dev-loop | WAIVED_WITH_RISK | 88 | 2513 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | full-local-graphify-graphrag | EXPECTED_BLOCK | 75 | 3309 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| GSD | skill-pack-backed-replay | WAIVED_WITH_RISK | 88 | 246 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| Superpowers | skill-pack-backed-replay | WAIVED_WITH_RISK | 82 | 250 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | graph-lite-dev-loop | PASS | 88 | 2703 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| AI-PIKit | full-local-graphify-graphrag | PASS | 100 | 3896 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| GSD | skill-pack-backed-replay | PASS | 88 | 266 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
+| Superpowers | skill-pack-backed-replay | PASS | 82 | 270 ms | TOKEN_USAGE_UNAVAILABLE | PASS |
 
 ## 主要结论
 

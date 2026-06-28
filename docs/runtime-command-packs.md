@@ -8,6 +8,20 @@ AI-PIKit 的 runtime command pack 用来让 Codex、Claude Code、GitHub Copilot
 - GSD 只作为参考设计，不作为用户命令面。
 - runtime pack 只生成技能或 prompt 文件。
 - 真正可信的执行和证据落在目标项目 `.planning/`。
+- 文档严格程度和 RAG 后端由项目第一次 `pik-init` 决定；真实终端可以直接运行 `pik-init --target "$PWD"` 进入向导，runtime skill 默认使用显式参数，避免等待输入。runtime skill 不会偷偷安装 RAG、切换外部 provider 或触发 GraphRAG index。
+
+推荐接入顺序：
+
+```bash
+# 文档少 / 无文档 / 先轻量接入
+pik-init --target "$PWD" --doc-policy reference --rag none
+
+# 对日 / 规格严格 / 本地知识后端
+pik-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
+
+# 明确允许外部 RAG 的项目才使用
+pik-init --target "$PWD" --doc-policy strict --rag external --allow-external-rag
+```
 
 ## 1. Codex
 
@@ -132,6 +146,7 @@ pik-runtime-status --runtime github-copilot --dest .github/prompts
 
 - 指向本地 `bin/pik.mjs`。
 - 默认 local-only，不把项目文档路由到外部 provider。
+- 默认 `reference + rag none` 可以不安装 GraphRAG；`strict + rag local` 需要用户显式准备本地 GraphRAG/Ollama 模型。
 - workflow 命令不得隐藏触发 heavy refresh；GraphRAG index、Graphify build、refresh-run 必须来自显式 `--run`、`--index` 或 `pik-refresh-run`。
 - meaningful verification 必须用 `pik-evidence-record` 和 `--writeback` 留证。
 

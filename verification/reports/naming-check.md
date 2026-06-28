@@ -1,6 +1,6 @@
 # AI-PIKit Naming Verification
 
-生成时间: 2026-06-28T05:45:55.645Z
+生成时间: 2026-06-28T10:22:13.016Z
 
 ## 摘要
 
@@ -149,6 +149,7 @@
 - `scripts/run-full-test-plan.mjs`
 - `scripts/validate-japanese-fixture.mjs`
 - `scripts/verify-answer-audit.mjs`
+- `scripts/verify-business-chain.mjs`
 - `scripts/verify-cockpit-build.mjs`
 - `scripts/verify-docs-completeness.mjs`
 - `scripts/verify-docs-extract-citation.mjs`
@@ -157,6 +158,7 @@
 - `scripts/verify-docs.mjs`
 - `scripts/verify-full-command-surface.mjs`
 - `scripts/verify-graph-hardening.mjs`
+- `scripts/verify-init-policy.mjs`
 - `scripts/verify-knowledge-reliability.mjs`
 - `scripts/verify-license-audit.mjs`
 - `scripts/verify-mvp3-evidence-policy.mjs`

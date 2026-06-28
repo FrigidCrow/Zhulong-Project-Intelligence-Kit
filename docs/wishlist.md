@@ -247,6 +247,54 @@ pik-policy-check --target "$PWD" --strict
 - 本次 AI 修改的证据链是否完整。
 - leader view 和 engineer view 的更多筛选、导出和截图证据。
 
+### 未来专门阶段：Frontend Experience Intelligence Mode
+
+这个阶段用于解决前端项目里“画面之间怎么迁移、哪个 UI 状态来自哪个仕様、哪个组件实现了哪个画面”的上下文问题。目标不是做一个在线设计 SaaS，而是在本地项目里提供可视化拖拽的画面迁移建模能力，并把结果变成 AI-PIKit 可检索、可追踪、可审计的本地 artifact。
+
+前置调查阶段：
+
+- 研究前后端如何联动建模：screen / route / component / API / DB / permission / backend handler / test 之间如何建立可追踪关系。
+- 研究前端可视化验证怎么做：AI 改前端代码后，如何用截图、DOM snapshot、accessibility tree、route state、视觉 diff 和交互 smoke 证明它改对了。
+- 研究 AI 前端常见失败：调错组件、改错 route、遗漏 loading/empty/error state、样式局部正确但页面整体错位、截图看起来对但数据流不对。
+- 研究如何把视觉证据写成 artifact：截图原图、diff 图、DOM/ARIA 摘要、交互步骤、失败定位和关联代码文件必须能进入 evidence / trace / cockpit。
+- 研究是否需要引入 Playwright / Storybook / component preview / visual regression 工具，并明确哪些只在本地运行。
+- 调查阶段产物先写成 `docs/field-notes/frontend-experience-intelligence-research.md` 或 `.planning/ui/FRONTEND_RESEARCH.md`，再决定是否实现拖拽画布和 `pik-ui-flow-*` 命令。
+
+未来目标：
+
+- 本地静态或本地服务式 UI 画布，支持拖拽创建 screen、route、modal、tab、state、transition。
+- 每个画面节点可以关联 画面設計書、仕様、QA、API、DB、组件文件、测试文件和 evidence。
+- 迁移边可以表达点击、提交、戻る、异常、权限不足、loading、empty state 等状态。
+- 画布数据不是只存图片，必须保存为结构化文件，进入 docs sync / RAG / trace。
+- AI 在 `pik-ui-phase`、`pik-plan-phase`、`pik-execute-phase` 中可以读取 screen flow，理解画面迁移和影响面。
+- Graphify 侧可以把 screen -> route -> component -> file -> test 的关系接入代码图。
+
+未来候选产物：
+
+```text
+.planning/ui/SCREEN_FLOW.json
+.planning/ui/SCREEN_FLOW.md
+.planning/ui/screen-flow.html
+.planning/ui/screen-flow-assets/
+```
+
+未来候选命令：
+
+```text
+pik-ui-flow-init
+pik-ui-flow-edit
+pik-ui-flow-import
+pik-ui-flow-query
+pik-ui-flow-audit
+```
+
+边界：
+
+- 默认 local-only，不接 Figma、外部白板或外部设计平台。
+- 第一版优先支持本地 JSON + HTML viewer/editor，而不是复杂协同编辑。
+- 画面截图、设计图、迁移关系进入 RAG 前必须保留原始文件路径和引用关系，不能只让 AI 根据图片猜。
+- 调查阶段没有完成前，不进入拖拽编辑器实现，避免只做“看起来能画图”，但不能解决前端 AI 改错和前后端不一致的问题。
+
 ## 9. North Star
 
 AI-PIKit 应该让 AI 辅助开发从“孤立 prompt”变成“有工程证据的开发过程”：

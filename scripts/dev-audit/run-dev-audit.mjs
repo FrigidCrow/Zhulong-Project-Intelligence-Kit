@@ -499,6 +499,14 @@ function auditCommands(options = {}) {
   const report = parseJsonReport("full-command-surface-check.json") || reportBefore;
   const commandResults = report?.commandResults || [];
   const docs = readText(path.join(kitRoot, "docs", "commands.html"));
+  const crashPattern = /(ReferenceError|TypeError|SyntaxError|UnhandledPromiseRejection|ERR_MODULE_NOT_FOUND|command not found|Traceback)/i;
+  const explicitHeavyRefreshCommands = new Set(["pik-refresh-run"]);
+  const artifactCommands = new Set([
+    "pik-docs-index",
+    "pik-docs-sync",
+    "pik-graph-build",
+    "pik-refresh-run",
+  ]);
   const commandScores = catalog.map((item) => {
     const relatedResults = commandResults.filter((result) => {
       const first = String(result.command || "").split(/\s+/)[0];
@@ -507,14 +515,43 @@ function auditCommands(options = {}) {
     const executable = relatedResults.length > 0 && relatedResults.every((result) => result.status === result.expectedStatus);
     const docCovered = docs.includes(`id="cmd-${item.command}"`) && docs.includes(item.logicalName);
     const hasOutput = Boolean(item.outputs);
-    const heavySafe = !/是；这是显式刷新命令/.test(item.heavyRefresh) || ["pik-refresh-run"].includes(item.command);
+    const noCrash = relatedResults.every((result) => !crashPattern.test(`${result.stdout || ""}\n${result.stderr || ""}`));
+    const hiddenHeavyRefresh = relatedResults.some((result) => {
+      const text = `${result.stdout || ""}\n${result.stderr || ""}`;
+      return /heavy refresh executed:\s*yes/i.test(text) && !explicitHeavyRefreshCommands.has(item.command);
+    });
+    const heavySafe = !hiddenHeavyRefresh && (!/是；这是显式刷新命令/.test(item.heavyRefresh) || explicitHeavyRefreshCommands.has(item.command));
+    const outputContract = {
+      smoke_exit_expected: executable,
+      declared_outputs: hasOutput,
+      no_runtime_crash: noCrash,
+      artifact_or_stdout_contract: hasOutput && relatedResults.length > 0,
+      no_hidden_heavy_refresh: heavySafe,
+    };
+    const designExpectation = {
+      docs_detail_covered: docCovered,
+      parameters_documented: Boolean(item.params?.length),
+      success_example_present: Boolean(item.successExample),
+      refresh_semantics_declared: Boolean(item.heavyRefresh),
+      explicit_refresh_only: heavySafe,
+      explicit_refresh_command: explicitHeavyRefreshCommands.has(item.command) || artifactCommands.has(item.command),
+    };
     const score =
-      (executable ? 30 : 12) +
-      (docCovered ? 20 : 5) +
-      (hasOutput ? 15 : 5) +
-      (heavySafe ? 15 : 8) +
-      (item.params?.length ? 10 : 5) +
-      (item.successExample ? 10 : 4);
+      (outputContract.smoke_exit_expected ? 25 : 8) +
+      (outputContract.declared_outputs ? 15 : 5) +
+      (outputContract.no_runtime_crash ? 15 : 0) +
+      (outputContract.no_hidden_heavy_refresh ? 15 : 0) +
+      (designExpectation.docs_detail_covered ? 15 : 4) +
+      (designExpectation.parameters_documented ? 5 : 2) +
+      (designExpectation.success_example_present ? 5 : 1) +
+      (designExpectation.refresh_semantics_declared ? 5 : 1);
+    const reasons = [
+      executable ? "smoke 命令按预期退出" : "smoke 命令未覆盖或退出码不符合预期",
+      hasOutput ? "命令目录声明了 stdout/artifact 产物" : "缺少明确产物声明",
+      noCrash ? "输出中未发现运行时崩溃特征" : "输出中出现崩溃/异常特征",
+      heavySafe ? "符合 no hidden heavy refresh 设计" : "出现非显式 heavy refresh 风险",
+      docCovered ? "commands.html 有独立详情锚点" : "commands.html 缺少独立详情锚点",
+    ];
     return {
       command: item.command,
       logical_name: item.logicalName,
@@ -524,8 +561,11 @@ function auditCommands(options = {}) {
       executable,
       verifier_results: relatedResults.length,
       docs_covered: docCovered,
+      output_contract: outputContract,
+      design_expectation: designExpectation,
       heavy_refresh: item.heavyRefresh,
       outputs: item.outputs,
+      reasons,
     };
   });
   const average = Math.round(commandScores.reduce((sum, item) => sum + item.score, 0) / Math.max(1, commandScores.length));
@@ -547,14 +587,24 @@ function auditCommands(options = {}) {
 - 平均分: ${data.average_score}
 - full-command-surface: ${data.verifier_status}
 
-${markdownTable(["命令", "逻辑名", "分类", "分数", "等级", "可执行", "文档"], commandScores.map((item) => [
+## 评分规则
+
+- 执行可用性: smoke 命令必须按预期退出，且输出不能出现明显运行时崩溃。
+- 输出规范: 命令必须在 catalog 中声明 stdout 或落盘 artifact，并由全命令面验证覆盖。
+- 设计预期: 不能隐藏触发 heavy refresh；显式刷新只能来自 \`--run\`、\`--index\` 或 \`pik-refresh-run\` 等明确入口。
+- 文档闭环: \`docs/commands.html\` 必须有该命令独立锚点、参数、示例和产物说明。
+
+${markdownTable(["命令", "逻辑名", "分类", "分数", "等级", "可执行", "输出规范", "设计预期", "文档", "原因"], commandScores.map((item) => [
     `\`${item.command}\``,
     item.logical_name,
     item.category,
     item.score,
     item.grade,
     item.executable ? "PASS" : "FAIL",
+    Object.values(item.output_contract).every(Boolean) ? "PASS" : "WARN",
+    Object.values(item.design_expectation).filter(Boolean).length >= 4 ? "PASS" : "WARN",
     item.docs_covered ? "PASS" : "FAIL",
+    item.reasons.join("<br>"),
   ]))}
 `;
   writeReportPair("COMMAND_SCORES", data, md);
@@ -562,9 +612,11 @@ ${markdownTable(["命令", "逻辑名", "分类", "分数", "等级", "可执行
 }
 
 function hasUnsafeGsdLine(text) {
-  return text.split(/\r?\n/).some((line) => {
+  const lines = text.split(/\r?\n/);
+  return lines.some((line, index) => {
     if (!/[$/]gsd-/.test(line)) return false;
-    return !/(never|not|do not|不要|不|reference|historical|only|参考)/i.test(line);
+    const window = [lines[index - 1] || "", line, lines[index + 1] || ""].join(" ");
+    return !/(never|not|do not|不要|不|reference|historical|only|参考)/i.test(window);
   });
 }
 
@@ -578,46 +630,84 @@ function auditSkills(options = {}) {
   }
   const report = parseJsonReport("skills-usability-check.json");
   const renderedInstallPass = report?.status === "PASS" && (report?.issues || []).length === 0;
+  const renderedByRuntimeAndName = new Map();
+  for (const runtimeResult of report?.results || []) {
+    for (const installed of runtimeResult.installed || []) {
+      if (!installed.exists || !installed.filePath) continue;
+      renderedByRuntimeAndName.set(`${runtimeResult.runtime}:${installed.skill}`, installed.filePath);
+    }
+  }
   const items = runtimeItems();
   const scores = items.map((item) => {
-    const text = readText(item.file);
-    const sourceCallsPik = text.includes(item.name) && text.includes("bin/pik.mjs");
-    const sourceLocalOnly = /local-only|local_only/i.test(text);
-    const sourceNoHeavy = /heavy refresh/i.test(text);
-    const sourceEvidence = /evidence|writeback/i.test(text);
-    const sourceNoUnsafeGsd = !hasUnsafeGsdLine(text);
-    const callsPik = renderedInstallPass || sourceCallsPik;
-    const localOnly = renderedInstallPass || sourceLocalOnly;
-    const noHeavy = renderedInstallPass || sourceNoHeavy;
-    const noUnsafeGsd = renderedInstallPass || sourceNoUnsafeGsd;
-    const evidence = renderedInstallPass || sourceEvidence;
-    const score = renderedInstallPass
-      ? 100
-      : (callsPik ? 25 : 5) +
-        (localOnly ? 20 : 5) +
-        (noHeavy ? 20 : 5) +
-        (evidence ? 15 : 5) +
-        (noUnsafeGsd ? 10 : 0) +
-        (report?.status === "PASS" ? 10 : 4);
+    const sourceText = readText(item.file);
+    const renderedFile = renderedByRuntimeAndName.get(`${item.runtime}:${item.name}`) || "";
+    const renderedText = renderedFile ? readText(renderedFile) : "";
+    const text = renderedText || sourceText;
+    const escapedName = item.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const callsPik = text.includes(item.name) && text.includes("bin/pik.mjs");
+    const invocationExample = callsPik && (
+      new RegExp(`\\$?/?${escapedName}`, "i").test(text) ||
+      /workflow run|cockpit build|docs query|graph status|evidence\s+record/i.test(text)
+    );
+    const localOnly = /local-only|local_only/i.test(text);
+    const noHeavy = /heavy refresh/i.test(text);
+    const evidence = /evidence|writeback/i.test(text);
+    const noUnsafeGsd = !hasUnsafeGsdLine(text);
+    const noUnrenderedTemplate = !/{{PIK_CLI}}|{{PIK_KIT_ROOT}}|{{PIK_GENERATED_AT}}|__PIK_/i.test(text);
+    const outputContract = {
+      runtime_pack_install_pass: renderedInstallPass,
+      local_cli_reference: callsPik,
+      invocation_example_present: invocationExample,
+      no_unrendered_template: noUnrenderedTemplate,
+      no_unsafe_gsd_instruction: noUnsafeGsd,
+    };
+    const designExpectation = {
+      local_only_guard_visible: localOnly,
+      no_hidden_heavy_refresh_visible: noHeavy,
+      evidence_or_report_writeback_visible: evidence,
+      points_to_repository_cli: callsPik,
+      command_name_matches_skill: text.includes(item.name),
+    };
+    const score =
+      (outputContract.runtime_pack_install_pass ? 25 : 8) +
+      (outputContract.local_cli_reference ? 20 : 5) +
+      (outputContract.invocation_example_present ? 10 : 3) +
+      (outputContract.no_unrendered_template ? 10 : 0) +
+      (outputContract.no_unsafe_gsd_instruction ? 10 : 0) +
+      (designExpectation.local_only_guard_visible ? 10 : 3) +
+      (designExpectation.no_hidden_heavy_refresh_visible ? 10 : 3) +
+      (designExpectation.evidence_or_report_writeback_visible ? 5 : 1);
+    const reasons = [
+      renderedInstallPass ? "runtime pack 临时安装和 status 验证通过" : "runtime pack 安装/status 验证未通过",
+      callsPik ? "skill/prompt 指向本仓库 bin/pik.mjs" : "未明确指向本地 bin/pik.mjs",
+      invocationExample ? "包含对应 pik-* 调用示例" : "缺少对应 pik-* 调用示例",
+      localOnly ? "包含 local-only/privacy 约束" : "缺少 local-only/privacy 约束",
+      noHeavy ? "包含 no hidden heavy refresh 约束" : "缺少 no hidden heavy refresh 约束",
+      evidence ? "包含 evidence/report writeback 约束" : "缺少 evidence/report writeback 约束",
+      noUnsafeGsd ? "未发现可执行 gsd-* 指令" : "存在危险 gsd-* 指令",
+    ];
     return {
       runtime: item.runtime,
       name: item.name,
       file: relative(item.file),
+      rendered_file: renderedFile ? relative(renderedFile) : "",
       score: Math.min(100, score),
       grade: grade(Math.min(100, score)),
       rendered_install_pass: renderedInstallPass,
       calls_pik: callsPik,
+      invocation_example_present: invocationExample,
       local_only: localOnly,
       no_hidden_heavy_refresh: noHeavy,
       evidence_writeback: evidence,
       no_unsafe_gsd: noUnsafeGsd,
+      output_contract: outputContract,
+      design_expectation: designExpectation,
       source_static_checks: {
-        calls_pik: sourceCallsPik,
-        local_only: sourceLocalOnly,
-        no_hidden_heavy_refresh: sourceNoHeavy,
-        evidence_writeback: sourceEvidence,
-        no_unsafe_gsd: sourceNoUnsafeGsd,
+        template_contains_pik_cli_placeholder: sourceText.includes("{{PIK_CLI}}"),
+        command_name_matches_skill: sourceText.includes(item.name),
+        no_unsafe_gsd: !hasUnsafeGsdLine(sourceText),
       },
+      reasons,
     };
   });
   const average = Math.round(scores.reduce((sum, item) => sum + item.score, 0) / Math.max(1, scores.length));
@@ -639,15 +729,25 @@ function auditSkills(options = {}) {
 - 平均分: ${data.average_score}
 - skills-usability: ${data.verifier_status}
 
-${markdownTable(["Runtime", "Skill/Prompt", "分数", "等级", "pik 调用", "local-only", "no heavy", "evidence"], scores.map((item) => [
+## 评分规则
+
+- 安装可用性: runtime pack 必须能安装到临时目录，并通过 status 检查。
+- 输出规范: skill/prompt 不能有未渲染模板变量，必须包含对应 \`pik-*\` 调用示例。
+- 设计预期: 必须指向本地 \`bin/pik.mjs\`，说明 local-only、no hidden heavy refresh 和 evidence/report writeback。
+- 安全边界: 不允许出现可执行意义上的 \`gsd-*\` 指令。
+
+${markdownTable(["Runtime", "Skill/Prompt", "分数", "等级", "安装", "pik 调用", "示例", "local-only", "no heavy", "evidence", "原因"], scores.map((item) => [
     item.runtime,
     `\`${item.name}\``,
     item.score,
     item.grade,
+    item.rendered_install_pass ? "PASS" : "FAIL",
     item.calls_pik ? "PASS" : "FAIL",
+    item.invocation_example_present ? "PASS" : "WARN",
     item.local_only ? "PASS" : "FAIL",
     item.no_hidden_heavy_refresh ? "PASS" : "FAIL",
     item.evidence_writeback ? "PASS" : "FAIL",
+    item.reasons.join("<br>"),
   ]))}
 `;
   writeReportPair("SKILL_SCORES", data, md);
@@ -868,6 +968,8 @@ function benchmarkPikScenario(root, scenario, withIntelligence) {
   runPik(root, "pik-codebase-scan", ["codebase", "scan", "--target", root], "pik_setup_ms", commands);
   configureFakeIntelligence(root);
   if (withIntelligence) {
+    runPik(root, "pik-mode-set-full-strict", ["mode", "set", "--target", root, "full-strict"], "pik_guard_ms", commands);
+    runPik(root, "pik-offline-lock-full-strict", ["privacy", "offline-lock", "--target", root], "pik_guard_ms", commands);
     runPik(root, "pik-docs-sync", ["docs", "sync", "--target", root], "pik_graphrag_ms", commands);
     runPik(root, "pik-rag-init-local", ["rag", "init-local", "--target", root, "--force", "--skip-model-check"], "pik_graphrag_ms", commands);
     runPik(root, "pik-graph-build-run", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
@@ -887,6 +989,8 @@ function benchmarkPikScenario(root, scenario, withIntelligence) {
   commands.push({ ...test, bucket: "pik_dev_workflow_ms" });
   if (!withIntelligence) {
     runPik(root, "pik-graph-build-run-lite-after-change", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
+  } else {
+    runPik(root, "pik-graph-build-run-full-after-change", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
   }
   completeWorkflow(root, commands);
   if (withIntelligence) {
@@ -914,7 +1018,7 @@ function benchmarkPikScenario(root, scenario, withIntelligence) {
     buckets,
     token_usage: { status: "TOKEN_USAGE_UNAVAILABLE", reason: "deterministic shell benchmark, no AI subprocess" },
     memory_isolation: memoryIsolation,
-    heavy_refresh_executed: withIntelligence ? "explicit graph-build --run only" : "explicit graph-build --run (Graphify only)",
+    heavy_refresh_executed: withIntelligence ? "explicit full-strict mode plus graph-build --run before/after code change" : "explicit graph-build --run (Graphify only)",
     commands,
   };
 }

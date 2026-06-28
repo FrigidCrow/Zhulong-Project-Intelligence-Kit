@@ -1,48 +1,48 @@
 {
-  "generated": "2026-06-28T05:45:36.681Z",
+  "generated": "2026-06-28T10:21:55.171Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project",
   "evidence": [
-    "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force: exit 0",
-    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project: exit 0",
+    "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force: exit 0",
+    "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project: exit 0",
     "knowledge docs sync status: found docs sync STALE_NEEDS_REFRESH",
     "knowledge docs sync light: found heavy refresh executed: no",
-    "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project KNOWLEDGE_RELIABILITY_SENTINEL_4301: exit 0",
+    "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project KNOWLEDGE_RELIABILITY_SENTINEL_4301: exit 0",
     "knowledge docs query writes result: found DOCS_QUERY_RESULT.md",
     "DOCS_QUERY_RESULT: found KNOWLEDGE_RELIABILITY_SENTINEL_4301",
-    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project: exit 0",
+    "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project: exit 0",
     "knowledge answer audit: found answer audit PASS",
     "knowledge answer audit light: found heavy refresh executed: no",
     "ANSWER_AUDIT: found Status: PASS"
   ],
   "commandResults": [
     {
-      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force",
+      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wc",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wc",
       "stderr": ""
     },
     {
-      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project",
+      "command": "pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 1\nmodified 0\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 1\nmodified 0\nremoved 0\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
       "stderr": ""
     },
     {
-      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project KNOWLEDGE_RELIABILITY_SENTINEL_4301",
+      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project KNOWLEDGE_RELIABILITY_SENTINEL_4301",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "Document context query: KNOWLEDGE_RELIABILITY_SENTINEL_4301\n- docs/qa/QA-900.md:3 KNOWLEDGE_RELIABILITY_SENTINEL_4301 must be cited before completion.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "Document context query: KNOWLEDGE_RELIABILITY_SENTINEL_4301\n- docs/qa/QA-900.md:3 KNOWLEDGE_RELIABILITY_SENTINEL_4301 must be cited before completion.\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nnext pik-answer-audit --target \"$PWD\"",
       "stderr": ""
     },
     {
-      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project",
+      "command": "pik answer audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "answer audit PASS\nsource .planning/knowledge/DOCS_QUERY_RESULT.md\ncitations 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-4yNAYB/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stdout": "answer audit PASS\nsource .planning/knowledge/DOCS_QUERY_RESULT.md\ncitations 1\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-knowledge-reliability-Rk9nGi/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
       "stderr": ""
     }
   ],

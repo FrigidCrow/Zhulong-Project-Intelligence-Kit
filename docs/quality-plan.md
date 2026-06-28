@@ -85,7 +85,7 @@ Result: PASS 136 / FAIL 0 / WARN 0
 Evidence: verification/reports/latest.md, verification/reports/latest.json
 ```
 
-当前默认模式已经是 Local GraphRAG Default Mode：Ollama + LanceDB + local-only privacy audit，不需要外部 API key。外部 LLM live GraphRAG 只作为显式 opt-in smoke，用脱敏 fixture 验证外部接入能力。
+当前默认初始化已经改为 `reference + rag none + local_only`：普通项目可以不安装 GraphRAG，也不会误触发 GraphRAG index。真实终端的 `pik-init --target "$PWD"` 会进入 init wizard；CI/非 TTY 验证使用显式参数，不等待输入。对日/规格严格项目在 `pik-init` 时选择 `--doc-policy strict --rag local --setup-rag skip`，再显式准备本地 GraphRAG / Ollama / 模型。外部 LLM live GraphRAG 只作为显式 opt-in smoke，用脱敏 fixture 验证外部接入能力。
 
 当前已经固化：
 
@@ -105,6 +105,7 @@ npm run verify:mvp3
 npm run verify:mvp35
 npm run verify:workflow-facade
 npm run verify:policy-hardening
+npm run verify:init-policy
 npm run verify:cockpit-build
 npm run verify:full-command-surface
 npm run verify:schema
@@ -116,7 +117,7 @@ npm run verify:quality
 npm run verify:all
 ```
 
-其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `pik-rag-init-local`、`pik-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `pik-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:cockpit-build` 覆盖项目驾驶舱、Graphify HTML 安全复制/阻断、fallback 图、RAG 证据面板和 no hidden heavy refresh。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
+其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `pik-rag-init-local`、`pik-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key；默认 index 超时 300 秒、query 超时 90 秒，慢模型或 GraphRAG query 卡住会报告失败而不是无限等待。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `pik-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:init-policy` 覆盖 `pik-init` 文档策略/RAG 后端选择、strict 强制 RAG、外部 RAG opt-in、rag none 阻断 GraphRAG 执行。`verify:cockpit-build` 覆盖项目驾驶舱、Graphify HTML 安全复制/阻断、fallback 图、RAG 证据面板和 no hidden heavy refresh。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
 
 `verify:mvp3` 覆盖 Evidence Quality & Policy Mode：RAG golden、citation audit、trace matrix、policy check、help skills。`verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` 和 `pik` bin 命令，确认命令入口不是只写在文档里。
 
@@ -180,14 +181,15 @@ Superpowers: 82 / B
 | --- | --- | --- | --- |
 | CLI 语法 | `bin/pik.mjs` 可被 Node 解析 | `npm run check` | 增加所有 alias 的 help smoke test |
 | 命令路由 | `pik-*` bin 均路由到本地 CLI | `package.json` bin + `docs-check.md` + integration | 增加所有 alias 的独立 smoke test |
-| 新项目接入 | `pik-init --mode new` 生成工作台 | integration report | 增加空仓库、前端、后端 fixture |
-| 既存项目接入 | `pik-init --mode existing` 后必须 `pik-codebase-scan` | integration report | 增加 monorepo、无测试项目、旧框架项目 |
+| Init 策略 | `pik-init` 默认 reference + rag none；strict 不能 rag none；external 必须 opt-in | `init-policy-check.md` | 增加交互式 wizard 测试 |
+| 新项目接入 | `pik-init --mode new --doc-policy reference --rag none` 生成工作台 | integration report + init-policy report | 增加空仓库、前端、后端 fixture |
+| 既存项目接入 | `pik-init --mode existing --doc-policy reference --rag none` 后必须 `pik-codebase-scan` | integration report + init-policy report | 增加 monorepo、无测试项目、旧框架项目 |
 | 文档扫描/抽取 | `pik-docs-scan` 生成来源清单，`pik-docs-extract` 抽取 pdf/docx/xlsx 并生成 citation 索引 | `docs-extract-citation-check.md` | 增加页码/Sheet 名和更强 chunk citation |
 | 文档归一化 | `pik-docs-normalize` 写 normalized 文档 | `.planning/knowledge/normalized/` | 增加编码、日文文件名、重复文件测试 |
 | 文档轻量同步 | `pik-docs-sync` 默认 diff/extract/citation audit，不触发 GraphRAG index；`--index` 才重索引 | `docs-sync-check.md` | 增加更细的 doc owner、文档类型和变更影响面分类 |
 | 本地文档查询 | `pik-docs-query` 可命中 QA/仕様依据，并写 `DOCS_QUERY_RESULT.md/json` | `knowledge-reliability-check.md` | 增加 terminology/glossary 查询 |
 | 回答依据审计 | `pik-answer-audit` 默认审最近 query；坏 citation FAIL；缺 citation 按 profile 输出 `WAIVED_WITH_RISK` 或 `FAIL` | `answer-audit-check.md` + `knowledge-reliability-check.md` | 增加 answer faithfulness / context recall / contradiction 检查 |
-| RAG/GraphRAG | 默认本地 GraphRAG，`--run`、`--rag` 执行配置命令并写结果 | `rag-local-check.md` + `rag-command-check.md` + live GraphRAG smoke | 增加完整 graph-local profile 和 enterprise RAG provider matrix |
+| RAG/GraphRAG | 默认不启用 RAG；`strict + rag local` 才配置本地 GraphRAG；`rag none` 必须阻断 `--run` / `--rag` | `init-policy-check.md` + `rag-local-check.md` + `rag-command-check.md` + live GraphRAG smoke | 增加完整 graph-local profile 和 enterprise RAG provider matrix |
 | RAG 可信度 | golden case、citation audit、RAG eval | `mvp3-evidence-policy-check.md` | 增加更细的 answer faithfulness / context recall 指标 |
 | Graphify build | `pik-graph-build --run` 同步 graph/report，local-only 下先过 privacy audit | integration report + `privacy-strict-check.md` | 增加真实 Graphify 大项目 smoke |
 | Graph impact/risk/freshness | `pik-graph-impact`、`pik-graph-risk`、`pik-graph-freshness --strict` | `graph-hardening-check.md` | 增加调用链/path query 验证 |
@@ -462,7 +464,7 @@ Status: implemented
 - 文档源相关 commit 必须推荐 `pik-refresh-run --rag`。
 - 源码或测试相关 commit 必须推荐 `pik-refresh-run --graph`。
 - `pik-refresh-run --rag|--graph|--all` 必须在成功后更新 `REFRESH_STATE.json`。
-- `pik-mode-set` 必须支持 `default-local-rag`、`graph-lite`、`full-strict`。
+- `pik-mode-set` 必须支持 `docs-reference`、`docs-strict`，并兼容 `default-local-rag`、`graph-lite`、`full-strict`。
 - 新增功能、命令或 skills 必须同步更新 `README.md`、`docs/changelog.md`、`docs/commands.html`、`docs/quality-plan.md`。
 - `npm run verify:mvp35` 必须 PASS。
 
@@ -495,9 +497,9 @@ Status: implemented
 - `pik-policy-verify` 必须对比 lock，并执行轻量 privacy、preflight、citation、graph freshness checks。
 - `pik-policy-diff` 必须输出字段级差异，例如 `privacy.allow_external_rag: false -> true`。
 - `PASS`、`FAIL`、`WAIVED_WITH_RISK`、`STALE_NEEDS_REFRESH` 必须在 workflow/policy/completion 里含义一致。
-- `graph-lite` 无文档允许继续，但 completion/evidence 必须写 `WAIVED_WITH_RISK`。
-- `default-local-rag` 对 stale 只提醒，不自动刷新。
-- `full-strict` 对 stale RAG、stale Graphify、missing citation、外部 provider/API key/URL 必须非 0。
+- `reference` / `docs-reference` 无文档允许继续，但 completion/evidence 必须写 `WAIVED_WITH_RISK`。
+- `default-local-rag` 保留为 legacy 兼容 profile，对 stale 只提醒，不自动刷新。
+- `strict` / `docs-strict` 对 stale RAG、stale Graphify、missing citation、外部 provider/API key/URL 必须非 0。
 - public workflow 必须写 `WORKFLOW_FACADE`，并输出 `heavy refresh executed: no`。
 - policy 命令不得执行 `pik-docs-index --run`、`pik-graph-build --run`、`pik-refresh-run`。
 - `npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 必须 PASS。
@@ -531,7 +533,7 @@ Status: implemented
 - `pik-docs-query` 必须写 `DOCS_QUERY_RESULT.md/json`，并提示 `pik-answer-audit --target "$PWD"`。
 - `pik-answer-audit --target <repo>` 必须自动选择最近一次 `RAG_QUERY_RESULT.md`、`DOCS_QUERY_RESULT.md` 或 `CITATIONS.md`。
 - 有效 citation 必须 `PASS`；不存在源文件或非法行号必须 `FAIL`。
-- missing citation 在 `graph-lite` 和 `default-local-rag` 下必须 `WAIVED_WITH_RISK` 且 exit 0；在 `full-strict` 下必须 `FAIL` 且非 0。
+- missing citation 在 `reference` / `docs-reference` 下必须 `WAIVED_WITH_RISK` 且 exit 0；在 `strict` / `docs-strict` 下必须 `FAIL` 且非 0。
 - public workflow facade 只建议 `pik-answer-audit`，不得自动运行，也不得新增 completion 阻断。
 - `npm run verify:docs-sync`、`npm run verify:answer-audit`、`npm run verify:knowledge-reliability`、`npm run verify:full-command-surface` 必须 PASS。
 
@@ -750,9 +752,9 @@ verification/reports/quality-closure-check.md/json
 验证范围：
 
 - `verify:skills-usability`：Codex / Claude Code / GitHub Copilot 三种 runtime 都安装到临时目录，10 个核心 workflow skill/prompt 全部存在，指向本地 `bin/pik.mjs`，不残留模板变量，不出现可执行意义的 `gsd-*` 指导，并包含 local-only、no hidden heavy refresh、evidence writeback 约束。
-- `verify:workflow-closure`：覆盖新项目第一次闭环、既有项目文档更新、`graph-lite` 无文档风险放行、`full-strict` stale / privacy 阻断；默认路径必须输出 `heavy refresh executed: no`，不得创建 `REFRESH_RUN.md`。
+- `verify:workflow-closure`：覆盖新项目第一次闭环、既有项目文档更新、`reference` 无文档风险放行、`strict` stale / privacy 阻断；默认路径必须输出 `heavy refresh executed: no`，不得创建 `REFRESH_RUN.md`。
 - `verify:docs-completeness`：在 MVP4.1 当时检查 `docs/commands.html` 对 `package.json` 的 70 个 `pik-*` / `pik` bin 都有 `cmd-<command>` 独立锚点；MVP4.2 已随 `pik-cockpit-build` 扩展到 71 个。一览中的物理名和逻辑名都能跳转，每个详情块包含 usage、参数、示例、产物、场景等字段，README 关键命令能跳到对应详情。
-- `verify:quality-closure`：聚合 `check`、`verify:quality`、`verify:full-command-surface`、`verify:integration`、`verify:runtime`、`verify:skills-usability`、`verify:workflow-closure`、`verify:docs-completeness`。
+- `verify:quality-closure`：聚合 `check`、`verify:quality`、`verify:full-command-surface`、`verify:integration`、`verify:runtime`、`verify:skills-usability`、`verify:workflow-closure`、`verify:cockpit-build`、`verify:init-policy`、`verify:docs-completeness`。
 
 MVP4.1 的完成标准：
 
@@ -825,6 +827,7 @@ P2：
 - 增加完整 graph-local profile 和 live/local/enterprise RAG provider matrix。
 - 扩展 schema validation 到严格 JSON Schema、issue/phase 实例和更多负例。
 - 输出更多 JSON report 字段供 dashboard 聚合。
+- 规划 Frontend Experience Intelligence Mode 的调查阶段：前后端联动建模、前端可视化验证、AI 调错组件/route/state 的失败模式、截图/DOM/ARIA/视觉 diff/交互 smoke 如何进入 evidence。
 
 P3：
 
@@ -832,6 +835,7 @@ P3：
 - Graph impact/risk 命令。
 - 更严格的 OS-level offline mode。
 - 完整 graph-local profile：在本地 LLM 上稳定完成实体/关系抽取和 `local/global` graph search。
+- 前端增强专门阶段：调查完成后再提供本地拖拽编辑器或静态 HTML editor，把画面迁移、UI 状态、组件映射、设计依据写入 `.planning/ui/SCREEN_FLOW.json`，并接入 RAG、trace、cockpit 和 Graphify impact。
 
 ## 12. 不达标时的处理规则
 

@@ -195,7 +195,10 @@ function usageFor(command) {
   const target = '--target "$PWD"';
   const samples = {
     pik: "pik --help\nnode bin/pik.mjs --help",
-    "pik-init": `pik-init ${target} --template brownfield-monorepo --name existing_project --mode existing`,
+    "pik-init": `pik-init ${target} --interactive
+pik-init ${target} --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
+pik-init ${target} --template brownfield-monorepo --mode existing --doc-policy strict --rag local --setup-rag skip
+pik-init ${target} --doc-policy strict --rag external --allow-external-rag`,
     "pik-verify": `pik-verify ${target}`,
     "pik-map": `pik-map ${target}`,
     "pik-codebase": `pik-codebase ${target}`,
@@ -219,7 +222,9 @@ function usageFor(command) {
     "pik-refresh-plan": `pik-refresh-plan ${target}`,
     "pik-refresh-run": `pik-refresh-run ${target} --graph\npik-refresh-run ${target} --rag`,
     "pik-mode-status": `pik-mode-status ${target}`,
-    "pik-mode-set": `pik-mode-set ${target} graph-lite\npik-mode-set ${target} full-strict`,
+    "pik-mode-set": `pik-mode-set ${target} docs-reference
+pik-mode-set ${target} docs-strict
+pik-mode-set ${target} graph-lite`,
     "pik-citation-audit": `pik-citation-audit ${target}`,
     "pik-trace-build": `pik-trace-build ${target}`,
     "pik-trace-query": `pik-trace-query ${target} "代理承認"`,
@@ -263,13 +268,24 @@ function usageFor(command) {
 function paramsFor(command) {
   const params = ["--target <repo>: 指定目标项目目录。"];
   if (command === "pik") return ["--help: 查看命令帮助。"];
-  if (command === "pik-init") params.push("--template <name>: 选择初始化模板。", "--name <name>: 写入项目名。", "--mode new|existing: 指定新项目或既存项目。", "--force: 覆盖已有模板文件。");
+  if (command === "pik-init") params.push(
+    "--template <name>: 选择初始化模板。",
+    "--name <name>: 写入项目名。",
+    "--mode new|existing: 指定新项目或既存项目。",
+    "--doc-policy reference|strict: 选择文档是参考资料还是强约束依据。",
+    "--rag none|local|external: 选择不启用 RAG、本地 RAG 或外部 RAG。",
+    "--setup-rag ask|install|skip: 本地 RAG 依赖处理方式；默认 skip，只写 setup plan。",
+    "--allow-external-rag: 显式确认外部 RAG 可能导致文档内容离开本机。",
+    "--interactive: 强制进入 init wizard；真实终端只运行 `pik-init --target <repo>` 也会进入向导。",
+    "--no-interactive: 在真实终端中也跳过向导，使用显式参数或默认值。",
+    "--force: 覆盖已有模板文件。",
+  );
   if (command.includes("docs-query")) params.push("--rag: 使用 configured RAG query command。");
   if (command === "pik-docs-sync") params.push("--index: 显式允许同步后执行 GraphRAG index。");
   if (command === "pik-docs-index" || command === "pik-graph-build") params.push("--run: 显式执行配置的外部工具命令。");
   if (command === "pik-answer-audit") params.push("--from <file>: 指定回答来源文件。", "--answer <text>: 调试用，直接传入回答文本。");
   if (command === "pik-refresh-run") params.push("--rag: 刷新 RAG。", "--graph: 刷新 Graphify/code map。", "--all: 两者都刷新。", "--force: 忽略普通跳过建议。");
-  if (command === "pik-mode-set") params.push("graph-lite|default-local-rag|full-strict: 目标执行 profile。");
+  if (command === "pik-mode-set") params.push("docs-reference|docs-strict: 推荐用户语义。", "graph-lite|default-local-rag|full-strict: 兼容旧内部 profile。");
   if (command === "pik-graph-impact") params.push("--files <paths>: 逗号分隔的变更文件。");
   if (command === "pik-evidence-record") params.push("--command <cmd>: 记录验证命令。", "--result <text>: 记录验证结果。", "--source <paths>: 记录依据来源。", "--writeback <file>: 回写到工作记录。");
   if (command === "pik-runtime-install" || command === "pik-runtime-status") return ["--runtime codex|claude-code|github-copilot: 目标 runtime。", "--dest <dir>: 安装或检查目录。", "--force: 安装时覆盖已有文件。"];
@@ -312,6 +328,7 @@ function whenFor(command) {
 
 function defaultBehaviorFor(command) {
   if (command === "pik-docs-sync") return "默认只跑 scan / diff / extract / citation audit，发现变更只写 STALE_NEEDS_REFRESH，不自动重建 index。";
+  if (command === "pik-init") return "真实终端默认进入 init wizard；CI/非 TTY 默认使用 `reference + rag none + local_only`。只叠加 `.planning/` 和配置，不安装 RAG、不执行 GraphRAG index、不执行 Graphify build；strict 必须显式选择 local/external RAG。";
   if (command === "pik-docs-index") return "默认只写 handoff；带 --run 才执行 configured index_command。";
   if (command === "pik-graph-build") return "默认只写 handoff；带 --run 才执行 configured Graphify/code map command。";
   if (command === "pik-refresh-run") return "显式刷新命令，会根据参数执行 RAG、Graphify 或两者，并更新 REFRESH_STATE。";

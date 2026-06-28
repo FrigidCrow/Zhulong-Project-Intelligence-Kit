@@ -1,6 +1,6 @@
 # AI-PIKit Docs Update Fixture
 
-生成时间: 2026-06-28T05:44:31.199Z
+生成时间: 2026-06-28T10:21:32.614Z
 
 ## 摘要
 
@@ -17,9 +17,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-klPUAt`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-klPUAt/project`
-- New document: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-klPUAt/project/docs/minutes/2026-06-25_update.md`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-xSmLTU`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-xSmLTU/project`
+- New document: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-xSmLTU/project/docs/minutes/2026-06-25_update.md`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-docs-update-fixture.mjs'`
 
 ## Issues

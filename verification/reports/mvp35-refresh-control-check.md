@@ -1,6 +1,6 @@
 # AI-PIKit MVP3.5 Refresh Control Verification
 
-生成时间: 2026-06-28T05:45:51.778Z
+生成时间: 2026-06-28T10:22:06.972Z
 
 ## 摘要
 
@@ -22,51 +22,51 @@
 - git config user.name AI-PIKit Test: exit 0
 - git add .: exit 0
 - git commit -m initial docs and source: exit 0
-- pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project --template greenfield-app --name mvp35_refresh_fixture --mode new --force: exit 0
-- pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
-- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project --run: exit 0
-- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project --run: exit 0
-- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project --template greenfield-app --name mvp35_refresh_fixture --mode new --force: exit 0
+- pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
+- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project --run: exit 0
+- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project --run: exit 0
+- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - fresh baseline preflight: found preflight PASS
 - fresh baseline preflight: found heavy refresh executed: no
 - refresh state after initial runs: found "rag"
 - refresh state after initial runs: found "graph"
 - git add .: exit 0
 - git commit -m unrelated root note: exit 0
-- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - unrelated commit preflight: found preflight PASS
 - unrelated commit preflight: found behind-unrelated
 - unrelated commit preflight: found action: skip
 - git add .: exit 0
 - git commit -m doc update: exit 0
-- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - doc update refresh plan: found refresh plan WARN
 - doc update refresh plan: found rag refresh
 - doc update refresh plan: found recommend differential refresh
-- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project --rag: exit 0
+- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project --rag: exit 0
 - rag refresh run: found rag refresh PASS
 - rag refresh report: found RAG diff/extract/index completed
-- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - post rag refresh preflight: found preflight PASS
 - git add .: exit 0
 - git commit -m source update: exit 0
-- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - source update refresh plan: found refresh plan WARN
 - source update refresh plan: found graph refresh
-- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project --graph: exit 0
+- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project --graph: exit 0
 - graph refresh run: found graph refresh PASS
 - graph refresh report: found Graphify build completed
-- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project --strict: exit 0
+- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project --strict: exit 0
 - post graph refresh strict preflight: found preflight PASS
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project graph-lite: exit 0
+- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project graph-lite: exit 0
 - mode set graph-lite: found mode graph-lite
-- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - mode status graph-lite: found RAG required: no
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project full-strict: exit 0
+- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project full-strict: exit 0
 - mode set full-strict: found mode full-strict
-- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project: exit 0
+- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project: exit 0
 - mode status full-strict: found Strict: yes
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project default-local-rag: exit 0
+- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project default-local-rag: exit 0
 - README documents pik-preflight: found pik-preflight
 - commands.html documents pik-preflight: found pik-preflight
 - changelog documents pik-preflight: found pik-preflight
@@ -91,8 +91,8 @@
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-QENgwg/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp35-refresh-NJ86Iq/project`
 - 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-mvp35-refresh-control.mjs'`
 
 ## 问题

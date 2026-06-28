@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-28T05:46:34.489Z",
+  "generated": "2026-06-28T10:23:17.726Z",
   "status": "PASS",
   "checks": [
     "check",
@@ -10,6 +10,8 @@
     "verify:skills-usability",
     "verify:workflow-closure",
     "verify:cockpit-build",
+    "verify:init-policy",
+    "verify:business-chain",
     "verify:docs-completeness"
   ],
   "results": [
@@ -22,7 +24,7 @@
     {
       "script": "verify:quality",
       "status": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:quality\n> npm run verify:docs && npm run verify:docs-update && npm run verify:rag && npm run verify:rag-local && npm run verify:docs-extract && npm run verify:docs-sync && npm run verify:answer-audit && npm run verify:knowledge-reliability && npm run verify:graph-hardening && npm run verify:privacy-strict && npm run verify:license && npm run verify:mvp3 && npm run verify:mvp35 && npm run verify:workflow-facade && npm run verify:policy-hardening && npm run verify:schema && npm run verify:naming && npm run verify:runtime && npm run verify:visual\n\n\n> ai-project-intelligence-kit@0.1.0 verify:docs\n> node scripts/verify-docs.mjs\n\ndocs check PASS files=20 links=119 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:docs-update\n> node scripts/verify-docs-update-fixture.mjs\n\ndocs update fixture PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:rag\n> node scripts/verify-rag-commands.mjs\n\nrag command check PASS commands=15 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:rag-local\n> node scripts/verify-rag-local.mjs\n\nlocal graphrag check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:docs-extract\n> node scripts/verify-docs-extract-citation.mjs\n\ndocs extract citation check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:docs-sync\n> node scripts/verify-docs-sync.mjs\n\ndocs sync check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:answer-audit\n> node scripts/verify-answer-audit.mjs\n\nanswer audit check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:knowledge-reliability\n> node scripts/verify-knowledge-reliability.mjs\n\nknowledge reliability check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:graph-hardening\n> node scripts/verify-graph-hardening.mjs\n\ngraph hardening check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:privacy-strict\n> node scripts/verify-privacy-strict.mjs\n\nprivacy strict check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:license\n> node scripts/verify-license-audit.mjs\n\nlicense audit check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:mvp3\n> node scripts/verify-mvp3-evidence-policy.mjs\n\nmvp3 evidence policy check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:mvp35\n> node scripts/verify-mvp35-refresh-control.mjs\n\nmvp35 refresh control check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:workflow-facade\n> node scripts/verify-workflow-facade.mjs\n\nworkflow facade check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:policy-hardening\n> node scripts/verify-policy-hardening.mjs\n\npolicy hardening check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:schema\n> node scripts/verify-schema.mjs\n\nschema check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:naming\n> node scripts/verify-naming.mjs\n\nnaming check PASS files=166 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:runtime\n> node scripts/verify-runtime-packs.mjs\n\nruntime pack check PASS runtimes=3 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:visual\n> node scripts/verify-visual.mjs\n\nvisual check PASS pages=4 viewports=2 issues=0",
+      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:quality\n> npm run verify:docs && npm run verify:docs-update && npm run verify:rag && npm run verify:rag-local && npm run verify:docs-extract && npm run verify:docs-sync && npm run verify:answer-audit && npm run verify:knowledge-reliability && npm run verify:graph-hardening && npm run verify:privacy-strict && npm run verify:license && npm run verify:mvp3 && npm run verify:mvp35 && npm run verify:workflow-facade && npm run verify:policy-hardening && npm run verify:init-policy && npm run verify:schema && npm run verify:naming && npm run verify:runtime && npm run verify:visual\n\n\n> ai-project-intelligence-kit@0.1.0 verify:docs\n> node scripts/verify-docs.mjs\n\ndocs check PASS files=20 links=125 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:docs-update\n> node scripts/verify-docs-update-fixture.mjs\n\ndocs update fixture PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:rag\n> node scripts/verify-rag-commands.mjs\n\nrag command check PASS commands=15 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:rag-local\n> node scripts/verify-rag-local.mjs\n\nlocal graphrag check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:docs-extract\n> node scripts/verify-docs-extract-citation.mjs\n\ndocs extract citation check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:docs-sync\n> node scripts/verify-docs-sync.mjs\n\ndocs sync check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:answer-audit\n> node scripts/verify-answer-audit.mjs\n\nanswer audit check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:knowledge-reliability\n> node scripts/verify-knowledge-reliability.mjs\n\nknowledge reliability check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:graph-hardening\n> node scripts/verify-graph-hardening.mjs\n\ngraph hardening check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:privacy-strict\n> node scripts/verify-privacy-strict.mjs\n\nprivacy strict check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:license\n> node scripts/verify-license-audit.mjs\n\nlicense audit check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:mvp3\n> node scripts/verify-mvp3-evidence-policy.mjs\n\nmvp3 evidence policy check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:mvp35\n> node scripts/verify-mvp35-refresh-control.mjs\n\nmvp35 refresh control check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:workflow-facade\n> node scripts/verify-workflow-facade.mjs\n\nworkflow facade check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:policy-hardening\n> node scripts/verify-policy-hardening.mjs\n\npolicy hardening check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:init-policy\n> node scripts/verify-init-policy.mjs\n\ninit policy check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:schema\n> node scripts/verify-schema.mjs\n\nschema check PASS issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:naming\n> node scripts/verify-naming.mjs\n\nnaming check PASS files=168 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:runtime\n> node scripts/verify-runtime-packs.mjs\n\nruntime pack check PASS runtimes=3 issues=0\n\n> ai-project-intelligence-kit@0.1.0 verify:visual\n> node scripts/verify-visual.mjs\n\nvisual check PASS pages=4 viewports=2 issues=0",
       "stderr": ""
     },
     {
@@ -62,6 +64,18 @@
       "stderr": ""
     },
     {
+      "script": "verify:init-policy",
+      "status": 0,
+      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:init-policy\n> node scripts/verify-init-policy.mjs\n\ninit policy check PASS issues=0",
+      "stderr": ""
+    },
+    {
+      "script": "verify:business-chain",
+      "status": 0,
+      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:business-chain\n> node scripts/verify-business-chain.mjs\n\nbusiness chain audit PASS gates=6 issues=0",
+      "stderr": ""
+    },
+    {
       "script": "verify:docs-completeness",
       "status": 0,
       "stdout": "> ai-project-intelligence-kit@0.1.0 verify:docs-completeness\n> node scripts/verify-docs-completeness.mjs\n\ndocs completeness check PASS commands=71 issues=0",
@@ -77,6 +91,8 @@
     "npm run verify:skills-usability: PASS",
     "npm run verify:workflow-closure: PASS",
     "npm run verify:cockpit-build: PASS",
+    "npm run verify:init-policy: PASS",
+    "npm run verify:business-chain: PASS",
     "npm run verify:docs-completeness: PASS"
   ],
   "issues": []

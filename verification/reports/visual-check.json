@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-28T05:46:11.724Z",
+  "generated": "2026-06-28T10:22:29.575Z",
   "status": "PASS",
   "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "results": [
@@ -7,7 +7,7 @@
       "page": "docs/product.html",
       "viewport": "desktop",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/product-desktop.png",
-      "bytes": 1379349,
+      "bytes": 1388077,
       "metrics": {
         "h1": "基于你项目的 AI 编程。",
         "brand": "AI Project Intelligence Kit",
@@ -24,7 +24,7 @@
       "page": "docs/commands.html",
       "viewport": "desktop",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/commands-desktop.png",
-      "bytes": 11325231,
+      "bytes": 11555223,
       "metrics": {
         "h1": "AI-PIKit 命令控制台。",
         "brand": "AI Project Intelligence Kit",
@@ -41,7 +41,7 @@
       "page": "docs/technical-guide.html",
       "viewport": "desktop",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/technical-guide-desktop.png",
-      "bytes": 3226017,
+      "bytes": 3303557,
       "metrics": {
         "h1": "了解 AI-PIKit 架构。",
         "brand": "AI Project Intelligence Kit",
@@ -58,7 +58,7 @@
       "page": "docs/quality-dashboard.html",
       "viewport": "desktop",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/quality-dashboard-desktop.png",
-      "bytes": 1090214,
+      "bytes": 1126581,
       "metrics": {
         "h1": "AI-PIKit QA Dashboard。",
         "brand": "AI Project Intelligence Kit",
@@ -75,7 +75,7 @@
       "page": "docs/product.html",
       "viewport": "mobile",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/product-mobile.png",
-      "bytes": 1143935,
+      "bytes": 1155329,
       "metrics": {
         "h1": "基于你项目的 AI 编程。",
         "brand": "AI Project Intelligence Kit",
@@ -92,7 +92,7 @@
       "page": "docs/commands.html",
       "viewport": "mobile",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/commands-mobile.png",
-      "bytes": 8381462,
+      "bytes": 8658253,
       "metrics": {
         "h1": "AI-PIKit 命令控制台。",
         "brand": "AI Project Intelligence Kit",
@@ -109,7 +109,7 @@
       "page": "docs/technical-guide.html",
       "viewport": "mobile",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/technical-guide-mobile.png",
-      "bytes": 2550355,
+      "bytes": 2656158,
       "metrics": {
         "h1": "了解 AI-PIKit 架构。",
         "brand": "AI Project Intelligence Kit",
@@ -126,7 +126,7 @@
       "page": "docs/quality-dashboard.html",
       "viewport": "mobile",
       "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/quality-dashboard-mobile.png",
-      "bytes": 694468,
+      "bytes": 719418,
       "metrics": {
         "h1": "AI-PIKit QA Dashboard。",
         "brand": "AI Project Intelligence Kit",

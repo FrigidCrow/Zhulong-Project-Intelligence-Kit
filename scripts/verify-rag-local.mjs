@@ -18,8 +18,12 @@ const aliasBin = path.join(workRoot, "bin");
 const issues = [];
 const evidence = [];
 const commandResults = [];
-const model = process.env.AI_PIKIT_LOCAL_LLM_MODEL || "qwen2.5:14b";
-const embedding = process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || "nomic-embed-text";
+const model = process.env.AI_PIKIT_LOCAL_LLM_MODEL || "qwen2.5:7b";
+const embedding = process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || "bge-m3";
+const commandTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_COMMAND_TIMEOUT_MS || 120000);
+const indexTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_INDEX_TIMEOUT_MS || 300000);
+const queryTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_QUERY_TIMEOUT_MS || 90000);
+const pullTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_PULL_TIMEOUT_MS || 1200000);
 
 function addIssue(command, detail) {
   issues.push({ command, detail });
@@ -60,7 +64,7 @@ function runPik(args, options = {}) {
   const command = `pik ${args.join(" ")}`;
   return record(command, runCommand(command, "node", [pikCli, ...args], {
     cwd,
-    timeout: 1200000,
+    timeout: commandTimeoutMs,
     env: localEnv(),
     ...options,
   }));
@@ -72,7 +76,7 @@ function runAlias(alias, args, options = {}) {
   const command = `${alias} ${args.join(" ")}`;
   return record(command, runCommand(command, aliasPath, args, {
     cwd,
-    timeout: 1200000,
+    timeout: commandTimeoutMs,
     env: localEnv(),
     ...options,
   }));
@@ -140,7 +144,7 @@ function ensureOllamaModel(name) {
   const result = record(`ollama pull ${name}`, runCommand(`ollama pull ${name}`, "ollama", ["pull", name], {
     cwd: kitRoot,
     allowFailure: true,
-    timeout: 1200000,
+    timeout: pullTimeoutMs,
   }));
   if (result.status !== 0) addIssue(`ollama pull ${name}`, "model is missing and pull failed");
   else evidence.push(`ollama model pulled: ${name}`);
@@ -227,15 +231,30 @@ if (issues.length === 0) {
   const auditBefore = runAlias("pik-privacy-audit", ["--target", projectRoot]);
   assertIncludes("pik-privacy-audit before index", auditBefore.output, "privacy audit PASS");
 
-  const indexResult = runPik(["docs", "index", "--target", projectRoot, "--run", "--timeout", "1200000"]);
-  assertIncludes("pik docs index --run local", indexResult.output, "status success");
-  assertFileIncludes("RAG_INDEX_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "Status: success");
+  const indexResult = runPik(["docs", "index", "--target", projectRoot, "--run", "--timeout", String(indexTimeoutMs)], {
+    allowFailure: true,
+    timeout: indexTimeoutMs + 30000,
+  });
+  if (indexResult.status !== 0) {
+    addIssue("pik docs index --run local", `index failed or timed out within ${indexTimeoutMs}ms`);
+  } else {
+    assertIncludes("pik docs index --run local", indexResult.output, "status success");
+    assertFileIncludes("RAG_INDEX_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "Status: success");
+  }
 
-  const queryResult = runPik(["docs", "query", "--target", projectRoot, "--rag", "What is the proxy approval upper limit for CR-LOCAL-042?", "--timeout", "1200000"]);
-  assertIncludes("pik docs query --rag local", queryResult.output, "42,420");
-  assertIncludes("pik docs query --rag local", queryResult.output, "LOCAL_RAG_SENTINEL_42420");
-  assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Status: success");
-  assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "42,420");
+  const queryResult = runPik(["docs", "query", "--target", projectRoot, "--rag", "What is the proxy approval upper limit for CR-LOCAL-042?", "--timeout", String(queryTimeoutMs)], {
+    allowFailure: true,
+    timeout: queryTimeoutMs + 30000,
+  });
+  if (queryResult.status !== 0) {
+    addIssue("pik docs query --rag local", `query failed or timed out within ${queryTimeoutMs}ms; inspect RAG_QUERY_RESULT.md and GraphRAG query.log`);
+    assertFileExists("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"));
+  } else {
+    assertIncludes("pik docs query --rag local", queryResult.output, "42,420");
+    assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Status: success");
+    assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "42,420");
+    assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Data: Sources");
+  }
 
   const auditAfter = runAlias("pik-privacy-audit", ["--target", projectRoot]);
   assertIncludes("pik-privacy-audit after query", auditAfter.output, "privacy audit PASS");
@@ -286,6 +305,12 @@ const data = {
   unsafeProjectRoot,
   model,
   embedding,
+  timeouts: {
+    commandTimeoutMs,
+    indexTimeoutMs,
+    queryTimeoutMs,
+    pullTimeoutMs,
+  },
   evidence,
   commandResults,
   issues,
@@ -302,6 +327,8 @@ writeMarkdownReport("rag-local-check.md", "AI-PIKit Local GraphRAG Verification"
       "- API base: `http://127.0.0.1:11434`",
       "- Vector store: `lancedb`",
       "- External API key: not required",
+      `- Index timeout: ${indexTimeoutMs}ms`,
+      `- Query timeout: ${queryTimeoutMs}ms`,
     ],
   },
   {

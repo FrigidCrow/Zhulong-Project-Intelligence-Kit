@@ -1,6 +1,6 @@
 # AI-PIKit Schema Check
 
-生成时间: 2026-06-28T05:45:55.433Z
+生成时间: 2026-06-28T10:22:12.752Z
 
 ## 摘要
 
@@ -32,14 +32,14 @@
 - workflow handoff: .planning/context/handoffs/debug-schema-validation-smoke-HANDOFF.md
 - evidence index: .planning/evidence/INDEX.md
 - evidence index: markdown sections checked
-- evidence record: .planning/evidence/20260628T054555Z-schema-validation-evidence.md
+- evidence record: .planning/evidence/20260628T102212Z-schema-validation-evidence.md
 - evidence record: markdown sections checked
 - debug writeback target: .planning/debug/schema-debug.md
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-schema-0vdnuw`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-schema-0vdnuw/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-schema-IdOC18`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-schema-IdOC18/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-schema.mjs'`
 
 ## Issues

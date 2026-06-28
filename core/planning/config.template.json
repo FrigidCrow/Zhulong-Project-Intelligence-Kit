@@ -14,8 +14,12 @@
     "search_gitignored": true,
     "sub_repos": []
   },
+  "document_policy": "reference",
+  "rag_backend": "none",
   "execution_budget": {
-    "profile": "default-local-rag",
+    "profile": "graph-lite",
+    "document_policy": "reference",
+    "rag_backend": "none",
     "heavy_refresh": "explicit_or_policy",
     "auto_refresh": false,
     "refresh_state_path": ".planning/refresh/REFRESH_STATE.json",
@@ -99,16 +103,16 @@
     }
   },
   "spec_context": {
-    "enabled": true,
-    "provider": "graphrag-local",
+    "enabled": false,
+    "provider": "none",
     "source_paths": ["docs", "documents", "仕様書"],
     "scan_extensions": [".md", ".txt", ".csv", ".pdf", ".docx", ".xlsx"],
-    "require_citations": true,
+    "require_citations": false,
     "index_handoff_path": ".planning/knowledge/RAG_INDEX_HANDOFF.md",
     "index_result_path": ".planning/knowledge/RAG_INDEX_RESULT.md",
     "query_result_path": ".planning/knowledge/RAG_QUERY_RESULT.md",
-    "index_command": "graphrag index --root graphrag-workspace --method fast",
-    "query_command": "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
+    "index_command": "",
+    "query_command": ""
   },
   "privacy": {
     "network_policy": "local_only",
@@ -145,19 +149,19 @@
     "build_timeout": 600
   },
   "graphrag": {
-    "enabled": true,
-    "mode": "local",
-    "profile": "local_basic",
+    "enabled": false,
+    "mode": "none",
+    "profile": "disabled",
     "requires_api_key": false,
     "root": "graphrag-workspace",
-    "llm_provider": "ollama",
-    "llm_model": "qwen2.5:14b",
-    "embedding_provider": "ollama",
-    "embedding_model": "nomic-embed-text",
-    "api_base": "http://127.0.0.1:11434",
-    "vector_store": "lancedb",
-    "index_command": "graphrag index --root graphrag-workspace --method fast",
-    "local_query_command": "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
+    "llm_provider": "none",
+    "llm_model": "qwen2.5:7b",
+    "embedding_provider": "none",
+    "embedding_model": "bge-m3",
+    "api_base": "",
+    "vector_store": "none",
+    "index_command": "",
+    "local_query_command": ""
   },
   "project_code": "{{PROJECT_NAME}}"
 }
