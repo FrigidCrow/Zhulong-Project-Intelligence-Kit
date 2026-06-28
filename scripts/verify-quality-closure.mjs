@@ -15,6 +15,7 @@ const checks = [
   "verify:integration",
   "verify:runtime",
   "verify:skills-usability",
+  "verify:security-governance",
   "verify:workflow-closure",
   "verify:cockpit-build",
   "verify:init-policy",

@@ -33,6 +33,7 @@ pik 命令
 | 业务链审计 | init、命令面、skills、workflow、policy、文档一致性的断链检查 | [verification/reports/business-chain-audit.md](verification/reports/business-chain-audit.md) |
 | 开发者审计 / 对标 | 维护者专用的命令、skills、功能 gate、AI-PIKit/GSD/Superpowers 对标机制 | [docs/internal/dev-audit.md](docs/internal/dev-audit.md) |
 | 开发者审计摘要 | 最近一次内部审计总分、对标表、耗时和 token 统计边界 | [verification/reports/developer-audit-summary.md](verification/reports/developer-audit-summary.md) |
+| 长期质量控制摘要 | 100 分质量控制口径、Skill 行为分、安全治理和发布判断 | [verification/reports/quality-control-summary.md](verification/reports/quality-control-summary.md) |
 | 增强报告 | 基于质量计划的本次增强总结、证据和后续边界 | [verification/reports/quality-enhancement-report.md](verification/reports/quality-enhancement-report.md) |
 | Workflow / Policy 增强报告 | 本次无感编排层和 policy-as-code 合同的实施总结 | [verification/reports/workflow-policy-enhancement-report.md](verification/reports/workflow-policy-enhancement-report.md) |
 
@@ -665,34 +666,95 @@ AI-PIKit CLI 本身是本地文件工具，不主动上传数据。
 
 ## 验证
 
+下面这些是维护 AI-PIKit 自身时使用的内部检查命令。它们是 npm scripts，不是用户项目里的公开 `pik-*` 产品命令，也不会进入 `docs/commands.html`。
+
+日常开发优先跑：
+
 ```bash
 npm run check
+npm run verify:skills-usability
+npm run verify:privacy-strict
+npm run verify:security-governance
+npm run dev:audit:skill-behavior
+npm run verify:quality:daily
+```
+
+发版或大改前跑：
+
+```bash
+npm run verify:quality:release
+npm run dev:audit:full
+```
+
+完整基础验证：
+
+```bash
+npm run check
+npm run verify:self
 npm run verify:rag
 npm run verify:rag-local
+npm run verify:docs
+npm run verify:docs-update
 npm run verify:docs-extract
 npm run verify:docs-sync
 npm run verify:answer-audit
 npm run verify:knowledge-reliability
 npm run verify:graph-hardening
 npm run verify:privacy-strict
+npm run verify:security-governance
 npm run verify:license
 npm run verify:mvp3
 npm run verify:mvp35
 npm run verify:workflow-facade
 npm run verify:policy-hardening
+npm run verify:init-policy
 npm run verify:cockpit-build
 npm run verify:full-command-surface
 npm run verify:skills-usability
 npm run verify:workflow-closure
 npm run verify:docs-completeness
+npm run verify:business-chain
+npm run verify:schema
+npm run verify:naming
+npm run verify:runtime
+npm run verify:visual
 npm run verify:quality-closure
 npm run verify:dev-audit-harness
 npm run verify:quality
 npm run verify:integration
 
-# 维护者内部审计 / 对标，不属于普通用户命令面
+# 维护者内部审计 / 对标
+npm run dev:audit:quick
+npm run dev:audit:inventory
+npm run dev:audit:commands
+npm run dev:audit:skills
+npm run dev:audit:skill-behavior
+npm run dev:audit:skill-beavior
+npm run dev:audit:features
+npm run dev:audit:security-governance
+npm run dev:audit:ragas-style
+npm run dev:audit:promptfoo-redteam
+npm run dev:audit:benchmark
+npm run dev:audit:report
 npm run dev:audit:full
+npm run dev:audit:nightly
 ```
+
+专项命令用途：
+
+| 命令 | 用途 |
+| --- | --- |
+| `npm run verify:quality:daily` | 日常快速质量入口，串起语法、skills、privacy、security、quality closure 和 skill behavior。 |
+| `npm run verify:quality:release` | 发版质量入口，串起完整验证、业务链、全命令面、安全治理和完整 dev audit。 |
+| `npm run dev:audit:skill-behavior` | 生成 `SKILL_BEHAVIOR_SCORES`，检查 Codex / Claude Code / GitHub Copilot runtime skill 的行为契约。 |
+| `npm run dev:audit:skill-beavior` | 兼容计划文档里的拼写，等价于 `dev:audit:skill-behavior`。 |
+| `npm run dev:audit:security-governance` | 生成 `.pik-audit/latest/SECURITY_GOVERNANCE_CHECK.*`。 |
+| `npm run dev:audit:ragas-style` | 生成 `.pik-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.*`，使用本地报告代理 Ragas 指标。 |
+| `npm run dev:audit:promptfoo-redteam` | 生成 `.pik-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.*`，使用本地矩阵代理 Promptfoo 红队回归。 |
+| `npm run dev:audit:benchmark` | 生成 AI-PIKit / GSD / Superpowers 对标结果。 |
+| `npm run dev:audit:full` | 生成完整内部审计、质量控制总分、对标、耗时和 token 边界报告。 |
+| `npm run verify:security-governance` | 验证默认 local-only、外部 RAG opt-in、风险报告和外部 runtime 例外边界。 |
+| `npm run verify:full-test-plan` | 执行完整测试计划脚本入口。 |
 
 两轮全量测试使用：
 
@@ -719,7 +781,34 @@ WARN 1
 
 MVP4.2 质量闭环新增 cockpit gate：`npm run verify:skills-usability` 会把 Codex / Claude Code / GitHub Copilot runtime pack 安装到临时目录并检查 33 个 skill/prompt；`npm run verify:workflow-closure` 会跑新项目、既有项目、graph-lite、full-strict 四条 fixture；`npm run verify:docs-completeness` 会检查 [docs/commands.html](docs/commands.html) 是否覆盖 71 个命令的独立锚点、字段、示例和 README 跳转；`npm run verify:quality-closure` 聚合 check、quality、integration、runtime、skills、workflow、cockpit 和 docs completeness，报告写入 [verification/reports/quality-closure-check.md](verification/reports/quality-closure-check.md)。
 
-维护者内部审计使用 `npm run dev:audit:full`，不会新增公开 `pik-*` 命令，也不会进入命令手册。最新完整审计为 `96 / A`，最新三方 benchmark 为 `PASS`：AI-PIKit `90 / A`，GSD `88 / B`，Superpowers `82 / B`。AI-PIKit `graph-lite` 在完整文档、无文档、文档不全三种场景都能闭环；AI-PIKit full-local 在无文档场景输出 `EXPECTED_BLOCK`，这是正确的安全边界；GSD / Superpowers 现在使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 skill hash、指令摘录、fixture、代码改修、测试和证据文件，不再用模糊的 prompt framework 退化表述。摘要见 [verification/reports/developer-audit-summary.md](verification/reports/developer-audit-summary.md)，完整本地产物在 `.pik-audit/latest/`。
+维护者内部审计使用 `npm run dev:audit:full`，不会新增公开 `pik-*` 命令，也不会进入命令手册。长期质量控制采用 100 分制：Static Skill Quality 10、Trigger Accuracy 15、Command / Tool Trajectory 20、Workflow / Evidence Closure 20、Knowledge / RAG Quality 15、Safety / Governance 10、Efficiency / Stability 10。`SKILL_SCORES` 是结构质量分；`SKILL_BEHAVIOR_SCORES` 是 deterministic 行为契约分，会对 33 个 Codex / Claude Code / GitHub Copilot runtime skill/prompt 生成 explicit、implicit、near-miss、negative、adversarial 五类 case。`RAGAS_STYLE_KNOWLEDGE_SCORES` 和 `PROMPTFOO_STYLE_REDTEAM_SCORES` 是本地代理指标，不调用外部 SaaS 或外部模型。摘要见 [verification/reports/developer-audit-summary.md](verification/reports/developer-audit-summary.md) 和 [verification/reports/quality-control-summary.md](verification/reports/quality-control-summary.md)，完整本地产物在 `.pik-audit/latest/`。
+
+质量评价方法论链接已在 2026-06-29 复核。采用方式分为“直接采用”“本地代理”“治理映射”：直接采用会落到本地 deterministic 脚本和归档分数；本地代理只读取本仓库 `verification/reports/` 和 `.pik-audit/` 产物；治理映射只用于 release gate/checklist，不会把内部资料发送到外部服务。
+
+| 方法论 / 来源 | 本项目采用方式 |
+| --- | --- |
+| [OpenAI Agent Skills docs](https://developers.openai.com/codex/skills) | 作为 runtime skill/prompt 结构、`SKILL.md`、显式/隐式触发、插件分发边界的依据。 |
+| [OpenAI Testing Agent Skills Systematically with Evals](https://developers.openai.com/blog/eval-skills) | 直接采用 `prompt -> trace/artifacts -> checks -> score` 思路，落到 `SKILL_BEHAVIOR_SCORES`。 |
+| [SkillsBench paper](https://arxiv.org/abs/2602.12670) / [SkillsBench 1.1](https://www.skillsbench.ai/blogs/skillsbench-1-1) | 借鉴 paired with_skill / without_skill delta，落到 `BENCHMARK_COMPARISON.skill_delta`。 |
+| [Anthropic Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | 借鉴 trajectory + outcome、deterministic grader、regression eval 的分层思路。 |
+| [Ragas agent metrics](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/agents/) | 本地代理 ToolCallAccuracy / ToolCallF1 / AgentGoalAccuracy 等指标，落到 `RAGAS_STYLE_KNOWLEDGE_SCORES`。 |
+| [Promptfoo Agent Skills](https://www.promptfoo.dev/docs/integrations/agent-skill/) | 本地代理 eval/redteam matrix，落到 `PROMPTFOO_STYLE_REDTEAM_SCORES`；不调用 Promptfoo SaaS。 |
+| [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) | 治理映射，用于 prompt injection、tool misuse、agent boundary、越权和数据泄露检查。 |
+| [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) / [NIST AI 600-1 GenAI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) | 治理映射，用于 `SECURITY_GOVERNANCE_CHECK` 和 release gate 的 risk management 口径。 |
+
+日常质量入口：
+
+```bash
+npm run verify:quality:daily
+```
+
+发版质量入口：
+
+```bash
+npm run verify:quality:release
+```
+
+默认数据边界是 local-only：除显式 `--allow-external-rag` 外，AI-PIKit 命令不得把项目文档、源码、GraphRAG text units、embedding/query context 或 Graphify 上下文发往外部。Codex、Claude Code、GitHub Copilot 是用户主动使用的外部 coding runtime 例外，但这个例外不改变 AI-PIKit 命令自己的默认本地边界。`npm run verify:security-governance` 会复查默认 local-only、外部 RAG opt-in、风险报告和 runtime 例外说明。
 
 `AUDIT_SCORECARD.json` 里的 `Benchmark comparison: 87` 是横向 benchmark 矩阵的保守平均分，不是 AI-PIKit 单体分。它把 AI-PIKit `graph-lite`、AI-PIKit `full-local`、GSD、Superpowers 在完整文档、无文档、文档不全三类场景中的 12 行结果一起平均；其中 `graph-lite` 故意不强制 GraphRAG/RAG，`full-local` 在无文档时正确输出 `EXPECTED_BLOCK`，GSD / Superpowers 又因为不是 repository-local CLI 或 live model benchmark 被设置可信度上限。因此 87 表示“混合对标口径偏保守”，AI-PIKit 自身产品 benchmark 应看 `90 / A`。
 
