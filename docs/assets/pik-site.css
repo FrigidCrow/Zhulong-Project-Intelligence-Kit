@@ -509,6 +509,8 @@ pre {
 .section-header p,
 .page-section p {
   color: var(--muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .grid,
@@ -693,6 +695,8 @@ td,
 .story-row strong,
 .artifact code {
   color: var(--cyan);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .story-row p {
@@ -775,10 +779,13 @@ td,
 }
 
 .table-wrap {
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
+  contain: inline-size;
 }
 
 table {
@@ -829,7 +836,8 @@ th {
 .panel,
 .command-body > *,
 .detail-list,
-.detail-list dd {
+.detail-list dd,
+.artifact {
   min-width: 0;
 }
 

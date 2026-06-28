@@ -9,6 +9,8 @@
 - 默认 Local GraphRAG 不需要外部 API key。
 - MVP3 的 golden、citation、trace、policy、help skills 必须能在 fixture 中复跑。
 - MVP4.0 的 docs sync、docs query、answer audit 主路径必须能在 fixture 中复跑。
+- MVP4.1 的 skills usability、workflow closure、docs completeness 和 quality closure 必须能在 fixture 中复跑。
+- MVP4.2 的 project cockpit、Graphify HTML 安全策略、RAG 证据面板和 runtime cockpit skill 必须能在 fixture 中复跑；cockpit 模板样例必须能从 `templates/cockpit/sample-data.json` 生成到 `templates/cockpit/sample.html`，并且样例和 live 快照都使用稳定 `cockpit-viewmodel.v1`。
 
 运行确定性验证：
 
@@ -25,8 +27,17 @@ npm run verify:license
 npm run verify:mvp3
 npm run verify:mvp35
 npm run verify:full-command-surface
+npm run verify:skills-usability
+npm run verify:workflow-closure
+npm run verify:cockpit-build
+npm run verify:docs-completeness
+npm run verify:quality-closure
+npm run verify:dev-audit-harness
 npm run verify:quality
 npm run verify:integration
+
+# 维护者内部审计 / 对标，不属于普通用户命令面
+npm run dev:audit:full
 ```
 
 `verify:rag-local` 是默认保密路径验证。它运行 Ollama + LanceDB 的本地 GraphRAG，不需要外部 API key，并在 index/query 前后执行 `pik-privacy-audit`。
@@ -40,6 +51,18 @@ npm run verify:integration
 `verify:mvp35` 覆盖 MVP3.5 Execution Budget & Freshness Control：preflight、refresh plan、显式 refresh-run、mode 切换、相关/无关 commit 判断和文档同步要求。
 
 `verify:full-command-surface` 会执行 `package.json` 中声明的每个 `pik-*` / `pik` bin 命令。当前全命令面报告以 `package.json` 的实际命令数量为准。
+
+`verify:skills-usability` 会把 Codex、Claude Code、GitHub Copilot 的 runtime pack 安装到临时目录，检查 33 个 skill/prompt 是否都能指向本地 CLI，并保留 local-only、no hidden heavy refresh、evidence writeback 约束。
+
+`verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`graph-lite` 无文档风险放行、`full-strict` stale/privacy 阻断。
+
+`verify:cockpit-build` 检查 `pik-cockpit-build` 是否生成 `.planning/cockpit/index.html`、`cockpit-data.json` 和 `COCKPIT_REPORT.md`，并验证 cockpit 独立模板样例、`cockpit-viewmodel.v1`、Graphify HTML 外部 URL 阻断、fallback 图、大图 `aggregated-community` 预览、RAG 缺失 `WAIVED_WITH_RISK` 和 `heavy refresh executed: no`。
+
+`verify:docs-completeness` 检查 `docs/commands.html` 是否覆盖全部 71 个命令的独立锚点、详情字段、示例和 README 跳转。
+
+`verify:quality-closure` 是最终聚合 gate，会串起 check、quality、full command surface、integration、runtime、skills、workflow、cockpit 和 docs completeness。
+
+`verify:dev-audit-harness` 只验证维护者内部审计机制本身：`.pik-audit/` 是否 git ignored、`dev:audit:*` npm scripts 是否存在、三种 fixture 是否能生成。`dev:audit:full` 会进一步生成命令评分、skills 评分、feature gate 评分、AI-PIKit / GSD / Superpowers 同题对标、时间拆分和 token 统计边界。GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，真实 Codex 子进程结果单独记录，不混入 replay 分数。`Benchmark comparison` 是全部对标行的保守平均，不等于 AI-PIKit 单体分；AI-PIKit 产品分以三方总览中的 AI-PIKit 平均分为准。原始产物在 `.pik-audit/latest/`，可提交摘要在 `verification/reports/developer-audit-summary.md/json`。
 
 只有在 fixture 数据允许离开本机时，才运行外部 live GraphRAG 验证：
 
@@ -74,6 +97,15 @@ verification/reports/full-test-round-2.md
 verification/reports/schema-check.md
 verification/reports/naming-check.md
 verification/reports/runtime-pack-status.md
+verification/reports/skills-usability-check.md
+verification/reports/workflow-closure-check.md
+verification/reports/cockpit-build-check.md
+verification/reports/docs-completeness-check.md
+verification/reports/quality-closure-check.md
+verification/reports/dev-audit-harness-check.md
+verification/reports/dev-audit-harness-check.json
+verification/reports/developer-audit-summary.md
+verification/reports/developer-audit-summary.json
 verification/reports/visual-check.md
 verification/reports/quality-enhancement-report.md
 ```

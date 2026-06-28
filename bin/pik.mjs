@@ -173,6 +173,7 @@ const COMMAND_ALIASES = new Map([
   ["pik-workflow-audit", ["workflow", "audit"]],
   ["pik-gate-check", ["workflow", "gate-check"]],
   ["pik-completion-check", ["workflow", "completion-check"]],
+  ["pik-cockpit-build", ["cockpit", "build"]],
 ]);
 const BOOLEAN_FLAGS = new Set([
   "details",
@@ -365,6 +366,7 @@ Usage:
   pik-workflow-continue --target <repo> --gate plan --evidence "<evidence>"
   pik-workflow-audit --target <repo>
   pik-completion-check --target <repo>
+  pik-cockpit-build --target <repo>
   pik-verify --target <repo>
   pik-map --target <repo>
 Templates:
@@ -400,6 +402,12 @@ function parseArgs(argv) {
 function requireDir(dir, label) {
   if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
     throw new Error(`${label} does not exist or is not a directory: ${dir}`);
+  }
+}
+
+function requireFile(filePath, label) {
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    throw new Error(`${label} does not exist or is not a file: ${filePath}`);
   }
 }
 
@@ -5174,6 +5182,655 @@ Generated: ${new Date().toISOString()}
   return outPath;
 }
 
+function cockpitPaths(target) {
+  const cockpitDir = path.join(target, ".planning", "cockpit");
+  return {
+    cockpitDir,
+    indexHtml: path.join(cockpitDir, "index.html"),
+    dataJson: path.join(cockpitDir, "cockpit-data.json"),
+    reportMd: path.join(cockpitDir, "COCKPIT_REPORT.md"),
+    assetsDir: path.join(cockpitDir, "assets"),
+    graphifyAssetsDir: path.join(cockpitDir, "assets", "graphify"),
+  };
+}
+
+function cockpitEscapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function cockpitScrubExternalUrls(value) {
+  return String(value ?? "")
+    .replace(/https?:\/\/[^\s"'<>)]*/gi, "[external-url-redacted]")
+    .replace(/\/\/[A-Za-z0-9.-]+\.[A-Za-z]{2,}[^\s"'<>)]*/g, "[external-url-redacted]");
+}
+
+function cockpitReadTextIfExists(filePath, maxChars = 2000) {
+  if (!filePath || !fs.existsSync(filePath)) return "";
+  try {
+    return cockpitScrubExternalUrls(limitedText(fs.readFileSync(filePath, "utf8"), maxChars));
+  } catch {
+    return "";
+  }
+}
+
+function cockpitArtifact(target, relativePath, options = {}) {
+  const filePath = path.join(target, relativePath);
+  if (!fs.existsSync(filePath)) {
+    return {
+      path: relativePath,
+      exists: false,
+      status: options.missingStatus || "missing",
+      summary: options.missingSummary || "missing",
+    };
+  }
+  const stat = fs.statSync(filePath);
+  return {
+    path: relativePath,
+    exists: true,
+    status: "present",
+    modified: stat.mtime.toISOString(),
+    bytes: stat.size,
+    summary: cockpitReadTextIfExists(filePath, options.maxChars || 1600),
+  };
+}
+
+function cockpitJsonArtifact(target, relativePath) {
+  const filePath = path.join(target, relativePath);
+  const artifact = cockpitArtifact(target, relativePath, { maxChars: 800 });
+  if (!artifact.exists) return artifact;
+  artifact.data = readJsonIfExists(filePath);
+  artifact.status = artifact.data ? "present" : "invalid_json";
+  return artifact;
+}
+
+function cockpitFindGraphifyHtml(target) {
+  const outDir = path.join(target, "graphify-out");
+  if (!fs.existsSync(outDir)) return [];
+  return walkFiles(outDir, new Set([".DS_Store"]))
+    .filter((filePath) => filePath.toLowerCase().endsWith(".html"))
+    .sort();
+}
+
+function cockpitHtmlExternalRisks(filePath) {
+  const text = fs.readFileSync(filePath, "utf8");
+  const risks = [];
+  const patterns = [
+    { id: "external-url", regex: /https?:\/\/[^\s"'<>]+/gi },
+    { id: "protocol-relative-url", regex: /(?:src|href)=["']\/\/[^"']+/gi },
+    { id: "remote-script", regex: /<script\b[^>]*\bsrc=["']https?:\/\/[^"']+["'][^>]*>/gi },
+    { id: "remote-stylesheet", regex: /<link\b[^>]*\bhref=["']https?:\/\/[^"']+["'][^>]*>/gi },
+    { id: "css-import", regex: /@import\s+["']https?:\/\/[^"']+["']/gi },
+  ];
+  for (const pattern of patterns) {
+    const matches = [...text.matchAll(pattern.regex)].map((match) => cockpitScrubExternalUrls(match[0]).slice(0, 180));
+    for (const match of matches) risks.push({ id: pattern.id, match });
+  }
+  return risks;
+}
+
+function cockpitCopySafeGraphifyHtml(target, outDir) {
+  const htmlFiles = cockpitFindGraphifyHtml(target);
+  const copied = [];
+  const blocked = [];
+  fs.mkdirSync(outDir, { recursive: true });
+  for (const filePath of htmlFiles) {
+    const risks = cockpitHtmlExternalRisks(filePath);
+    const relativeSource = path.relative(target, filePath);
+    if (risks.length > 0) {
+      blocked.push({ source: relativeSource, risks });
+      continue;
+    }
+    const destination = path.join(outDir, path.basename(filePath));
+    fs.copyFileSync(filePath, destination);
+    copied.push({
+      source: relativeSource,
+      copiedTo: path.relative(target, destination),
+      cockpitHref: path.relative(path.join(target, ".planning", "cockpit"), destination),
+    });
+  }
+  return { discovered: htmlFiles.map((filePath) => path.relative(target, filePath)), copied, blocked };
+}
+
+function cockpitLoadGraph(target) {
+  const candidates = [
+    path.join(target, ".planning", "graphs", "graph.json"),
+    path.join(target, "graphify-out", "graph.json"),
+  ];
+  for (const filePath of candidates) {
+    if (!fs.existsSync(filePath)) continue;
+    try {
+      return {
+        path: path.relative(target, filePath),
+        graph: JSON.parse(fs.readFileSync(filePath, "utf8")),
+      };
+    } catch {
+      return { path: path.relative(target, filePath), graph: null, invalid: true };
+    }
+  }
+  return { path: null, graph: null };
+}
+
+function cockpitGraphPreview(target) {
+  const loaded = cockpitLoadGraph(target);
+  if (!loaded.graph) {
+    return {
+      available: false,
+      mode: "missing",
+      graphPath: loaded.path,
+      invalid: Boolean(loaded.invalid),
+      totalNodes: 0,
+      totalEdges: 0,
+      nodes: [],
+      edges: [],
+      legend: [],
+    };
+  }
+  const { nodes, edges } = graphData(loaded.graph);
+  const degree = new Map();
+  for (const edge of edges) {
+    const endpoints = graphEdgeEndpoints(edge);
+    if (!endpoints.source || !endpoints.target) continue;
+    degree.set(endpoints.source, (degree.get(endpoints.source) || 0) + 1);
+    degree.set(endpoints.target, (degree.get(endpoints.target) || 0) + 1);
+  }
+  const normalizedNodes = nodes.map((node, index) => {
+    const id = graphNodeId(node, index);
+    return {
+      id,
+      label: cockpitGraphNodeLabel(node, id),
+      kind: cockpitGraphNodeKind(node),
+      community: cockpitGraphNodeCommunity(node),
+      sourceFile: String(node?.source_file || node?.file || node?.path || ""),
+      degree: degree.get(id) || 0,
+      summary: cockpitGraphNodeSummary(node),
+    };
+  });
+  if (nodes.length > 80) {
+    return cockpitAggregatedGraphPreview(loaded.path, normalizedNodes, edges);
+  }
+  const limitedNodes = normalizedNodes
+    .sort((a, b) => b.degree - a.degree || a.id.localeCompare(b.id))
+    .slice(0, 36)
+    .map((node, index) => {
+      const angle = (Math.PI * 2 * index) / Math.max(1, Math.min(nodes.length, 36));
+      const radius = index === 0 ? 0 : 132 + ((index % 4) * 22);
+      return {
+        ...node,
+        label: node.label.slice(0, 42),
+        x: Math.round(280 + Math.cos(angle) * radius),
+        y: Math.round(180 + Math.sin(angle) * radius),
+      };
+    });
+  const nodeIds = new Set(limitedNodes.map((node) => node.id));
+  const limitedEdges = edges
+    .map((edge) => ({
+      ...graphEdgeEndpoints(edge),
+      relation: cockpitGraphEdgeRelation(edge),
+      confidence: cockpitGraphEdgeConfidence(edge),
+    }))
+    .filter((edge) => nodeIds.has(edge.source) && nodeIds.has(edge.target))
+    .slice(0, 90);
+  return {
+    available: true,
+    mode: nodes.length > limitedNodes.length ? "sampled-node" : "node",
+    graphPath: loaded.path,
+    totalNodes: nodes.length,
+    totalEdges: edges.length,
+    nodes: limitedNodes,
+    edges: limitedEdges,
+    legend: cockpitGraphLegend(limitedNodes),
+  };
+}
+
+function cockpitGraphNodeLabel(node, id) {
+  return String(node?.label || node?.name || node?.qualified_name || node?.title || id);
+}
+
+function cockpitGraphNodeKind(node) {
+  return String(node?.kind || node?.type || node?.node_type || node?.category || node?.file_type || "node").slice(0, 32);
+}
+
+function cockpitGraphNodeCommunity(node) {
+  const raw = node?.community_name || node?.community || node?.community_id || node?.cluster || node?.group;
+  if (raw !== undefined && raw !== null && raw !== "") return `community:${raw}`;
+  const kind = cockpitGraphNodeKind(node);
+  if (kind && kind !== "node") return `kind:${kind}`;
+  const source = String(node?.source_file || node?.file || node?.path || "");
+  const top = source.split(/[\\/]/).filter(Boolean)[0];
+  return top ? `path:${top}` : "unknown";
+}
+
+function cockpitGraphNodeSummary(node) {
+  const parts = [
+    node?.source_file || node?.file || node?.path,
+    node?.kind || node?.type || node?.node_type || node?.category,
+    node?.community_name || node?.community,
+  ].filter(Boolean);
+  return parts.join(" / ").slice(0, 180);
+}
+
+function cockpitGraphEdgeRelation(edge) {
+  return String(edge?.relation || edge?.type || edge?.kind || edge?.label || "relates").slice(0, 48);
+}
+
+function cockpitGraphEdgeConfidence(edge) {
+  return String(edge?.confidence || edge?.evidence || edge?.provenance || "EXTRACTED").toUpperCase().slice(0, 32);
+}
+
+function cockpitGraphLegend(nodes) {
+  const counts = new Map();
+  for (const node of nodes) counts.set(node.community, (counts.get(node.community) || 0) + 1);
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([id, count], index) => ({
+      id,
+      label: id.replace(/^(community|kind|path):/, ""),
+      count,
+      colorIndex: index % 10,
+    }));
+}
+
+function cockpitAggregatedGraphPreview(graphPath, nodes, edges) {
+  const groups = new Map();
+  for (const node of nodes) {
+    if (!groups.has(node.community)) {
+      groups.set(node.community, {
+        id: node.community,
+        label: node.community.replace(/^(community|kind|path):/, "").slice(0, 42),
+        kind: "community",
+        community: node.community,
+        sourceFile: "",
+        degree: 0,
+        summary: "Aggregated community node",
+        members: 0,
+      });
+    }
+    const group = groups.get(node.community);
+    group.members += 1;
+    group.degree += node.degree || 0;
+  }
+  const nodeCommunity = new Map(nodes.map((node) => [node.id, node.community]));
+  const edgeCounts = new Map();
+  for (const edge of edges) {
+    const endpoints = graphEdgeEndpoints(edge);
+    const source = nodeCommunity.get(endpoints.source);
+    const target = nodeCommunity.get(endpoints.target);
+    if (!source || !target || source === target) continue;
+    const key = [source, target].sort().join("::");
+    const previous = edgeCounts.get(key) || { source, target, count: 0, relations: new Set(), confidence: "AGGREGATED" };
+    previous.count += 1;
+    previous.relations.add(cockpitGraphEdgeRelation(edge));
+    edgeCounts.set(key, previous);
+  }
+  const limitedNodes = [...groups.values()]
+    .sort((a, b) => b.members - a.members || a.id.localeCompare(b.id))
+    .slice(0, 28)
+    .map((node, index, list) => {
+      const angle = (Math.PI * 2 * index) / Math.max(1, list.length);
+      const radius = index === 0 ? 0 : 132 + ((index % 4) * 22);
+      return {
+        ...node,
+        x: Math.round(280 + Math.cos(angle) * radius),
+        y: Math.round(180 + Math.sin(angle) * radius),
+      };
+    });
+  const visible = new Set(limitedNodes.map((node) => node.id));
+  const limitedEdges = [...edgeCounts.values()]
+    .filter((edge) => visible.has(edge.source) && visible.has(edge.target))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 70)
+    .map((edge) => ({
+      source: edge.source,
+      target: edge.target,
+      relation: `${edge.count} links`,
+      confidence: edge.confidence,
+      relations: [...edge.relations].slice(0, 5),
+    }));
+  return {
+    available: true,
+    mode: "aggregated-community",
+    graphPath,
+    totalNodes: nodes.length,
+    totalEdges: edges.length,
+    nodes: limitedNodes,
+    edges: limitedEdges,
+    legend: cockpitGraphLegend(limitedNodes),
+  };
+}
+
+function cockpitRenderGraphSvg(preview) {
+  if (!preview.available || preview.nodes.length === 0) {
+    return `<div class="empty-graph">Graphify graph.json missing. Run <code>pik-graph-build --target "$PWD" --run</code> when a fresh map is needed.</div>`;
+  }
+  const byId = new Map(preview.nodes.map((node) => [node.id, node]));
+  const edgeLines = preview.edges.map((edge) => {
+    const source = byId.get(edge.source);
+    const target = byId.get(edge.target);
+    if (!source || !target) return "";
+    return `<line x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}" />`;
+  }).join("\n");
+  const nodeGroups = preview.nodes.map((node, index) => {
+    const accent = index === 0 ? "main" : index % 3 === 0 ? "risk" : "normal";
+    return `<g class="graph-node ${accent}" transform="translate(${node.x} ${node.y})">
+      <circle r="${index === 0 ? 13 : 9}"></circle>
+      <text x="14" y="4">${cockpitEscapeHtml(node.label)}</text>
+    </g>`;
+  }).join("\n");
+  return `<svg class="cockpit-graph" viewBox="0 0 560 360" role="img" aria-label="Graphify impact graph">
+    <g class="graph-edges">${edgeLines}</g>
+    <g>${nodeGroups}</g>
+  </svg>`;
+}
+
+function cockpitStatusFromArtifacts(artifacts, options = {}) {
+  const required = options.required || [];
+  const missing = required.filter((key) => !artifacts[key]?.exists);
+  if (missing.length > 0) return options.missingStatus || "WAIVED_WITH_RISK";
+  return "PASS";
+}
+
+function cockpitCollectData(target) {
+  const paths = cockpitPaths(target);
+  const graphStatusValue = graphStatus(target);
+  const graphFreshnessValue = graphFreshness(target, graphStatusValue);
+  const graphPreview = cockpitGraphPreview(target);
+  const graphifyHtml = cockpitCopySafeGraphifyHtml(target, paths.graphifyAssetsDir);
+  const graphifyArtifacts = {
+    planningGraph: cockpitJsonArtifact(target, ".planning/graphs/graph.json"),
+    graphifyGraph: cockpitJsonArtifact(target, "graphify-out/graph.json"),
+    planningReport: cockpitArtifact(target, ".planning/graphs/GRAPH_REPORT.md"),
+    impact: cockpitArtifact(target, ".planning/graphs/GRAPH_IMPACT.md"),
+    risk: cockpitArtifact(target, ".planning/graphs/GRAPH_RISK.md"),
+    freshness: cockpitArtifact(target, ".planning/graphs/GRAPH_FRESHNESS.md"),
+  };
+  const ragArtifacts = {
+    docsSync: cockpitArtifact(target, ".planning/knowledge/DOCS_SYNC.md"),
+    docsSyncJson: cockpitJsonArtifact(target, ".planning/knowledge/DOCS_SYNC.json"),
+    ragIndex: cockpitArtifact(target, ".planning/knowledge/RAG_INDEX_RESULT.md"),
+    ragQuery: cockpitArtifact(target, ".planning/knowledge/RAG_QUERY_RESULT.md"),
+    docsQuery: cockpitArtifact(target, ".planning/knowledge/DOCS_QUERY_RESULT.md"),
+    answerAudit: cockpitArtifact(target, ".planning/quality/ANSWER_AUDIT.md"),
+    answerAuditJson: cockpitJsonArtifact(target, ".planning/quality/ANSWER_AUDIT.json"),
+    citationAudit: cockpitArtifact(target, ".planning/quality/CITATION_AUDIT.md"),
+    citationAuditJson: cockpitJsonArtifact(target, ".planning/quality/CITATION_AUDIT.json"),
+  };
+  const qualityArtifacts = {
+    qualityClosure: cockpitJsonArtifact(target, "verification/reports/quality-closure-check.json"),
+    skillsUsability: cockpitJsonArtifact(target, "verification/reports/skills-usability-check.json"),
+    workflowClosure: cockpitJsonArtifact(target, "verification/reports/workflow-closure-check.json"),
+    docsCompleteness: cockpitJsonArtifact(target, "verification/reports/docs-completeness-check.json"),
+    fullCommandSurface: cockpitJsonArtifact(target, "verification/reports/full-command-surface-check.json"),
+  };
+  const privacyArtifacts = {
+    offlineLock: cockpitJsonArtifact(target, ".planning/privacy/OFFLINE_LOCK.json"),
+    policyVerify: cockpitJsonArtifact(target, ".planning/policies/POLICY_VERIFY.json"),
+    privacyAudit: cockpitArtifact(target, ".planning/knowledge/PRIVACY_AUDIT.md"),
+  };
+  const workflowStates = fs.existsSync(path.join(target, ".planning", "workflows"))
+    ? walkFiles(path.join(target, ".planning", "workflows"), new Set([".DS_Store"]))
+      .filter((filePath) => path.basename(filePath) === "WORKFLOW_STATE.json")
+      .map((filePath) => ({
+        path: path.relative(target, filePath),
+        data: readJsonIfExists(filePath),
+      }))
+      .filter((item) => item.data)
+      .slice(-12)
+    : [];
+  const evidenceIndex = cockpitArtifact(target, ".planning/evidence/INDEX.md");
+  const issues = [];
+  if (graphifyHtml.blocked.length > 0) {
+    issues.push({
+      severity: "WARN",
+      area: "graphify",
+      message: "Graphify HTML contains external URL/CDN references; cockpit did not copy it.",
+    });
+  }
+  if (!graphPreview.available) {
+    issues.push({ severity: "WARN", area: "graphify", message: "Graphify graph.json missing; fallback graph cannot render." });
+  }
+  if (cockpitStatusFromArtifacts(ragArtifacts, { required: ["ragQuery", "docsQuery"], missingStatus: "WAIVED_WITH_RISK" }) !== "PASS") {
+    issues.push({ severity: "WARN", area: "rag", message: "RAG query/docs query evidence missing; Knowledge Evidence is WAIVED_WITH_RISK." });
+  }
+  if (!privacyArtifacts.offlineLock.exists) {
+    issues.push({ severity: "WARN", area: "privacy", message: "Offline lock report missing; cockpit can display status but cannot prove local-only lock." });
+  }
+  const status = issues.some((issue) => issue.severity === "FAIL") ? "FAIL" : issues.length > 0 ? "WARN" : "PASS";
+  return {
+    generatedAt: new Date().toISOString(),
+    status,
+    target,
+    heavyRefreshExecuted: false,
+    graphify: {
+      status: graphPreview.available ? graphFreshnessValue.state === "stale" ? "STALE_NEEDS_REFRESH" : "PASS" : "WAIVED_WITH_RISK",
+      html: graphifyHtml,
+      freshness: graphFreshnessValue,
+      stats: graphStatusValue,
+      preview: graphPreview,
+      artifacts: graphifyArtifacts,
+    },
+    rag: {
+      status: cockpitStatusFromArtifacts(ragArtifacts, { required: ["ragQuery", "docsQuery"], missingStatus: "WAIVED_WITH_RISK" }),
+      artifacts: ragArtifacts,
+    },
+    workflow: {
+      status: workflowStates.length > 0 ? "PASS" : "WAIVED_WITH_RISK",
+      states: workflowStates,
+      evidenceIndex,
+    },
+    quality: {
+      status: Object.values(qualityArtifacts).some((item) => item.exists && item.data?.status === "FAIL") ? "FAIL" : "PASS",
+      artifacts: qualityArtifacts,
+    },
+    privacy: {
+      status: privacyArtifacts.offlineLock.exists ? "PASS" : "WAIVED_WITH_RISK",
+      artifacts: privacyArtifacts,
+    },
+    issues,
+  };
+}
+
+function cockpitTemplatePath() {
+  return path.join(kitRoot, "templates", "cockpit", "index.template.html");
+}
+
+function cockpitJsonForHtmlScript(data) {
+  return JSON.stringify(data, null, 2)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
+
+function cockpitRenderHtml(data) {
+  const templateFile = cockpitTemplatePath();
+  requireFile(templateFile, "Cockpit template");
+  const template = fs.readFileSync(templateFile, "utf8");
+  const html = template.replace("__AI_PIKIT_COCKPIT_DATA__", cockpitJsonForHtmlScript(data));
+  if (html.includes("__AI_PIKIT_COCKPIT_DATA__")) {
+    throw new Error("Cockpit template placeholder was not replaced.");
+  }
+  return html;
+}
+
+function cockpitNextCommands(data) {
+  const commands = [];
+  if (!data.graphify.preview.available) commands.push('pik-graph-build --target "$PWD" --run');
+  if (data.graphify.status === "STALE_NEEDS_REFRESH") commands.push('pik-refresh-plan --target "$PWD" && pik-refresh-run --target "$PWD" --graph');
+  if (data.rag.status !== "PASS") commands.push('pik-docs-sync --target "$PWD"');
+  if (!data.rag.artifacts.answerAudit.exists) commands.push('pik-answer-audit --target "$PWD"');
+  if (!data.privacy.artifacts.offlineLock.exists) commands.push('pik-offline-lock --target "$PWD"');
+  if (commands.length === 0) commands.push("# No recovery command required.");
+  return uniqueList(commands);
+}
+
+function cockpitEvidenceStep(id, label, status, detail, artifact) {
+  return {
+    id,
+    label,
+    status,
+    detail,
+    path: artifact?.path || "",
+    exists: Boolean(artifact?.exists),
+    summary: artifact?.summary || "",
+  };
+}
+
+function cockpitArtifactGroup(id, label, artifacts) {
+  return {
+    id,
+    label,
+    rows: Object.entries(artifacts || {}).map(([key, artifact]) => ({
+      key,
+      path: artifact?.exists ? artifact.path : `${artifact?.path || "missing"} (missing)`,
+      exists: Boolean(artifact?.exists),
+      status: artifact?.exists ? artifact.status || "present" : artifact?.status || "missing",
+      summary: artifact?.summary || artifact?.data?.status || "",
+    })),
+  };
+}
+
+function cockpitViewModel(data) {
+  const graph = data.graphify.preview;
+  return {
+    version: "cockpit-viewmodel.v1",
+    summary: [
+      {
+        id: "graphify",
+        label: "Graphify Impact",
+        status: data.graphify.status,
+        detail: `${graph.totalNodes || 0} nodes / ${graph.totalEdges || 0} edges / ${graph.mode || "missing"}`,
+      },
+      {
+        id: "knowledge",
+        label: "Knowledge Evidence",
+        status: data.rag.status,
+        detail: "docs / citation / RAG / answer audit",
+      },
+      {
+        id: "workflow",
+        label: "Workflow",
+        status: data.workflow.status,
+        detail: `${data.workflow.states.length} workflow states`,
+      },
+      {
+        id: "privacy",
+        label: "Privacy",
+        status: data.privacy.status,
+        detail: "local-only / offline lock",
+      },
+    ],
+    impactGraph: graph,
+    evidenceChain: [
+      cockpitEvidenceStep("docs", "Docs", data.rag.artifacts.docsSync.exists ? "PASS" : "WAIVED_WITH_RISK", "docs sync", data.rag.artifacts.docsSync),
+      cockpitEvidenceStep("citation", "Citation", data.rag.artifacts.citationAudit.exists ? "PASS" : "WAIVED_WITH_RISK", "source check", data.rag.artifacts.citationAudit),
+      cockpitEvidenceStep("rag", "RAG Query", data.rag.artifacts.ragQuery.exists || data.rag.artifacts.docsQuery.exists ? "PASS" : "WAIVED_WITH_RISK", "retrieval", data.rag.artifacts.ragQuery.exists ? data.rag.artifacts.ragQuery : data.rag.artifacts.docsQuery),
+      cockpitEvidenceStep("answer", "Answer Audit", data.rag.artifacts.answerAudit.exists ? "PASS" : "WAIVED_WITH_RISK", "claim support", data.rag.artifacts.answerAudit),
+      cockpitEvidenceStep("evidence", "Evidence", data.workflow.evidenceIndex.exists ? "PASS" : "WAIVED_WITH_RISK", "writeback", data.workflow.evidenceIndex),
+    ],
+    workflowRows: data.workflow.states.map((item) => ({
+      id: item.data?.id || item.path || "-",
+      workflow: item.data?.workflow || "-",
+      status: item.data?.status || "UNKNOWN",
+      path: item.path,
+    })),
+    artifactGroups: [
+      cockpitArtifactGroup("graphify", "Graphify Artifacts", data.graphify.artifacts),
+      cockpitArtifactGroup("rag", "GraphRAG / RAG", data.rag.artifacts),
+      cockpitArtifactGroup("quality", "Quality Closure", data.quality.artifacts),
+      cockpitArtifactGroup("privacy", "Privacy", data.privacy.artifacts),
+    ],
+    issues: data.issues,
+    nextCommands: data.nextCommands || cockpitNextCommands(data),
+  };
+}
+
+function cockpitWriteReport(target, data) {
+  const paths = cockpitPaths(target);
+  const content = `# AI-PIKit Project Cockpit
+
+Generated: ${data.generatedAt}
+
+## Summary
+
+- Status: ${data.status}
+- Target: \`${target}\`
+- Heavy refresh executed: no
+- HTML: \`${path.relative(target, paths.indexHtml)}\`
+- Data: \`${path.relative(target, paths.dataJson)}\`
+
+## Graphify
+
+- Status: ${data.graphify.status}
+- Graph source: \`${data.graphify.preview.graphPath || "missing"}\`
+- Preview nodes: ${data.graphify.preview.nodes.length}
+- Preview edges: ${data.graphify.preview.edges.length}
+- Graphify HTML copied: ${data.graphify.html.copied.length}
+- Graphify HTML blocked: ${data.graphify.html.blocked.length}
+
+## GraphRAG / RAG
+
+- Status: ${data.rag.status}
+- Docs sync: ${data.rag.artifacts.docsSync.exists ? "present" : "missing"}
+- RAG query: ${data.rag.artifacts.ragQuery.exists ? "present" : "missing"}
+- Answer audit: ${data.rag.artifacts.answerAudit.exists ? "present" : "missing"}
+- Citation audit: ${data.rag.artifacts.citationAudit.exists ? "present" : "missing"}
+
+## Workflow / Quality / Privacy
+
+- Workflow states: ${data.workflow.states.length}
+- Quality status: ${data.quality.status}
+- Privacy status: ${data.privacy.status}
+
+## Issues
+
+${data.issues.length ? data.issues.map((issue) => `- ${issue.severity} ${issue.area}: ${issue.message}`).join("\n") : "- None"}
+
+## Next Commands
+
+${cockpitNextCommands(data).map((command) => `- \`${command}\``).join("\n")}
+`;
+  fs.writeFileSync(paths.reportMd, content);
+  return paths.reportMd;
+}
+
+function cockpitBuild(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const paths = cockpitPaths(target);
+  fs.mkdirSync(paths.cockpitDir, { recursive: true });
+  fs.mkdirSync(paths.assetsDir, { recursive: true });
+  const data = cockpitCollectData(target);
+  data.template = {
+    mode: "live",
+    source: "templates/cockpit/index.template.html",
+    sampleData: "templates/cockpit/sample-data.json",
+    sampleHtml: "templates/cockpit/sample.html",
+  };
+  data.nextCommands = cockpitNextCommands(data);
+  data.viewModel = cockpitViewModel(data);
+  writeJsonFile(paths.dataJson, data);
+  fs.writeFileSync(paths.indexHtml, cockpitRenderHtml(data));
+  cockpitWriteReport(target, data);
+  console.log(`cockpit build ${data.status}`);
+  console.log("heavy refresh executed: no");
+  console.log(`output ${path.relative(target, paths.indexHtml)}`);
+}
+
+function cockpit(args) {
+  const subcommand = args._[0];
+  if (subcommand === "build") {
+    cockpitBuild(args);
+    return;
+  }
+  usage();
+  process.exitCode = 1;
+}
+
 function tracePaths(target) {
   const traceDir = path.join(target, ".planning", "trace");
   return {
@@ -7104,6 +7761,17 @@ function runtimeInstallValues() {
   };
 }
 
+function runtimeLocalContract(values) {
+  return `\n\n## AI-PIKit Local Runtime Contract\n\n- Use the local AI-PIKit CLI: \`${values.PIK_CLI}\`.\n- Keep project data local-only by default. Do not route document content to external providers unless the project explicitly opts in.\n- Public workflow commands may run lightweight status checks, but they must not trigger hidden heavy refresh. GraphRAG index, Graphify build, and refresh-run require explicit \`--run\`, \`--index\`, or \`pik-refresh-run\` approval.\n- Preserve evidence writeback: record meaningful verification with \`pik-evidence-record\` and use \`--writeback\` when closing workflow work.\n`;
+}
+
+function renderRuntimeContent(sourcePath, text, values) {
+  const rendered = render(text, values);
+  if (!sourcePath.endsWith(".md")) return rendered;
+  if (rendered.includes("AI-PIKit Local Runtime Contract")) return rendered;
+  return `${rendered.trimEnd()}${runtimeLocalContract(values)}`;
+}
+
 function copyRuntimePack(sourceDir, destDir, values, options = {}) {
   const actions = [];
   for (const entry of fs.readdirSync(sourceDir, { withFileTypes: true })) {
@@ -7123,7 +7791,7 @@ function copyRuntimePack(sourceDir, destDir, values, options = {}) {
       continue;
     }
 
-    const content = render(fs.readFileSync(sourcePath, "utf8"), values);
+    const content = renderRuntimeContent(sourcePath, fs.readFileSync(sourcePath, "utf8"), values);
     if (!options.dryRun) {
       fs.mkdirSync(path.dirname(targetPath), { recursive: true });
       fs.writeFileSync(targetPath, content);
@@ -7346,6 +8014,8 @@ try {
     context(args);
   } else if (args.command === "workflow") {
     workflow(args);
+  } else if (args.command === "cockpit") {
+    cockpit(args);
   } else if (args.command === "codebase") {
     codebase(args);
   } else if (args.command === "verify") {

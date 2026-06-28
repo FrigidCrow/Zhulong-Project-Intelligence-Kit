@@ -1,6 +1,6 @@
 # AI-PIKit 全命令面验证
 
-生成时间: 2026-06-26T17:55:28.329Z
+生成时间: 2026-06-28T05:46:23.082Z
 
 ## 摘要
 
@@ -9,12 +9,13 @@
 
 ## 命令覆盖
 
-- Required commands: 70
-- Executed commands: 70
+- Required commands: 71
+- Executed commands: 71
 
 - PASS `pik`
 - PASS `pik-answer-audit`
 - PASS `pik-citation-audit`
+- PASS `pik-cockpit-build`
 - PASS `pik-code-review`
 - PASS `pik-codebase`
 - PASS `pik-codebase-scan`
@@ -86,98 +87,103 @@
 ## 证据
 
 - pik: exit 0
-- pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --template greenfield-app --name full_command_surface --mode new --force: exit 0
-- pik-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-map --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-codebase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-codebase-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-codebase-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --force --skip-model-check: exit 0
+- pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --template greenfield-app --name full_command_surface --mode new --force: exit 0
+- pik-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-map --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-codebase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-codebase-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-codebase-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --force --skip-model-check: exit 0
 - pik-rag-init-local: found Local GraphRAG default mode initialized
-- pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE_SENTINEL_7719: exit 0
+- pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE_SENTINEL_7719: exit 0
 - pik-docs-citations: found FULL_SURFACE_SENTINEL_7719
-- pik-citation-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
+- pik-citation-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
 - pik-docs-sync: found heavy refresh executed: no
-- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --run: exit 0
+- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --run: exit 0
 - pik-docs-index --run: found status success
-- pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE_SENTINEL_7719: exit 0
+- pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE_SENTINEL_7719: exit 0
 - pik-docs-query: found FULL_SURFACE_SENTINEL_7719
-- pik-answer-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
+- pik-answer-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
 - pik-answer-audit: found answer audit PASS
-- pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --rag FULL_SURFACE_SENTINEL_7719: exit 0
+- pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --rag FULL_SURFACE_SENTINEL_7719: exit 0
 - pik-docs-query --rag: found FULL_SURFACE_SENTINEL_7719
-- pik-rag-golden-add --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0
-- pik-rag-golden-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-rag-eval --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --run: exit 0
+- pik-rag-golden-add --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0
+- pik-rag-golden-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-rag-eval --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --run: exit 0
 - pik-graph-build --run: found status success
-- pik-graph-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-graph-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project approvalLimit: exit 0
+- pik-graph-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-graph-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project approvalLimit: exit 0
 - pik-graph-query: found approval
-- pik-graph-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-graph-impact --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --files src/approval.js: exit 0
-- pik-graph-risk --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-graph-freshness --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --strict: exit 0
-- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
+- pik-graph-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-graph-impact --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --files src/approval.js: exit 0
+- pik-graph-risk --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-graph-freshness --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --strict: exit 0
+- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
 - pik-preflight: found heavy refresh executed: no
-- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --rag --force: exit 0
-- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --graph --force: exit 0
-- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project graph-lite: exit 0
+- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --rag --force: exit 0
+- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --graph --force: exit 0
+- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project graph-lite: exit 0
 - pik-mode-set: found mode graph-lite
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project default-local-rag: exit 0
-- pik-evidence-record --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0
-- pik-evidence-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-trace-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-trace-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE: exit 0
+- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project default-local-rag: exit 0
+- pik-evidence-record --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0
+- pik-evidence-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-trace-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-trace-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE: exit 0
 - pik-trace-query: found Trace query
-- pik-trace-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-offline-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --strict: exit 0
-- pik-outbound-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-license-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-policy-list --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-policy-explain --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project trace.matrix: exit 0
-- pik-policy-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --strict: exit 0
-- pik-policy-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-policy-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-policy-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-help-skills --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project 文档更新后想确认影响面和完成前检查: exit 0
-- pik-runtime-install --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/runtime/codex --force: exit 0
-- pik-runtime-status --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/runtime/codex: exit 0
-- pik-runtime-install --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/runtime/claude-code --force: exit 0
-- pik-runtime-status --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/runtime/claude-code: exit 0
-- pik-runtime-install --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/runtime/github-copilot --force: exit 0
-- pik-runtime-status --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/runtime/github-copilot: exit 0
-- pik-context-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE debug context: exit 0
-- pik-context-execute --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE execute context: exit 0
-- pik-workflow-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project debug FULL_SURFACE workflow: exit 0
-- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --gate plan --evidence PLAN.md reviewed: exit 0
-- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --gate implementation --evidence src/approval.js verified: exit 0
-- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project --gate verification --evidence npm run verify:full-command-surface: exit 0
-- pik-workflow-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-workflow-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-gate-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-completion-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project: exit 0
-- pik-new-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-new-milestone: exit 0
-- pik-spec-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-spec-phase: exit 0
-- pik-discuss-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-discuss-phase: exit 0
-- pik-ui-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-ui-phase: exit 0
-- pik-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-debug: exit 0
-- pik-plan-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-plan-phase: exit 0
-- pik-execute-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-execute-phase: exit 0
-- pik-code-review --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-code-review: exit 0
-- pik-verify-work --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-verify-work: exit 0
-- pik-complete-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project FULL_SURFACE pik-complete-milestone: exit 0
+- pik-trace-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-offline-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --strict: exit 0
+- pik-outbound-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-license-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-policy-list --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-policy-explain --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project trace.matrix: exit 0
+- pik-policy-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --strict: exit 0
+- pik-policy-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-policy-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-policy-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-help-skills --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project 文档更新后想确认影响面和完成前检查: exit 0
+- pik-runtime-install --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/runtime/codex --force: exit 0
+- pik-runtime-status --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/runtime/codex: exit 0
+- pik-runtime-install --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/runtime/claude-code --force: exit 0
+- pik-runtime-status --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/runtime/claude-code: exit 0
+- pik-runtime-install --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/runtime/github-copilot --force: exit 0
+- pik-runtime-status --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/runtime/github-copilot: exit 0
+- pik-context-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE debug context: exit 0
+- pik-context-execute --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE execute context: exit 0
+- pik-workflow-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project debug FULL_SURFACE workflow: exit 0
+- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --gate plan --evidence PLAN.md reviewed: exit 0
+- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --gate implementation --evidence src/approval.js verified: exit 0
+- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project --gate verification --evidence npm run verify:full-command-surface: exit 0
+- pik-workflow-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-workflow-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-gate-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-completion-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-new-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-new-milestone: exit 0
+- pik-spec-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-spec-phase: exit 0
+- pik-discuss-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-discuss-phase: exit 0
+- pik-ui-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-ui-phase: exit 0
+- pik-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-debug: exit 0
+- pik-plan-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-plan-phase: exit 0
+- pik-execute-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-execute-phase: exit 0
+- pik-code-review --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-code-review: exit 0
+- pik-verify-work --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-verify-work: exit 0
+- pik-complete-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project FULL_SURFACE pik-complete-milestone: exit 0
+- pik-cockpit-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project: exit 0
+- pik-cockpit-build: found cockpit build
+- pik-cockpit-build: found heavy refresh executed: no
+- cockpit report: found Heavy refresh executed: no
+- cockpit html: found AI-PIKit 项目驾驶舱
 - policy check report: found Status: PASS
 - policy lock report: found Snapshot hash
 - policy verify report: found Status: PASS
@@ -191,8 +197,8 @@
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-MhuXCH/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-KWfXBu/project`
 - 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-full-command-surface.mjs'`
 
 ## 问题

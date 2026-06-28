@@ -5,6 +5,202 @@ Full name: **AI Project Intelligence Kit**
 Documentation abbreviation: **AI-PIKit**  
 Command namespace: **`pik-*`**
 
+## 2026-06-28: Developer Audit & Benchmark Product Artifact
+
+本阶段目标：把“AI-PIKit 可用性怎么样”做成维护者可复跑的常态审计机制，并实际执行一次命令、skills、功能 gate、AI-PIKit / GSD / Superpowers 对标、时间/token/隔离统计。
+
+新增内部机制：
+
+- `scripts/dev-audit/run-dev-audit.mjs`
+- `.pik-audit/` 已加入 `.gitignore`
+- `docs/internal/dev-audit.md`
+- `verification/reports/developer-audit-summary.md/json`
+
+新增 npm scripts：
+
+- `npm run verify:dev-audit-harness`
+- `npm run dev:audit:quick`
+- `npm run dev:audit:inventory`
+- `npm run dev:audit:commands`
+- `npm run dev:audit:skills`
+- `npm run dev:audit:features`
+- `npm run dev:audit:benchmark`
+- `npm run dev:audit:report`
+- `npm run dev:audit:full`
+- `npm run dev:audit:nightly`
+
+审计产物：
+
+- `.pik-audit/latest/AUDIT_REPORT.md/json`
+- `.pik-audit/latest/AUDIT_SCORECARD.md/json/html`
+- `.pik-audit/latest/COMMAND_SCORES.md/json`
+- `.pik-audit/latest/SKILL_SCORES.md/json`
+- `.pik-audit/latest/FEATURE_SCORES.md/json`
+- `.pik-audit/latest/BENCHMARK_COMPARISON.md/json`
+- `.pik-audit/latest/TIME_BREAKDOWN.md/json`
+- `.pik-audit/latest/TOKEN_USAGE.md/json`
+
+最近一次完整审计结果：
+
+- Run ID: `2026-06-27T19-01-06-200Z`
+- Status: PASS
+- Total score: 96 / A
+- Command surface: 100，覆盖 71 个 `pik` / `pik-*` bin
+- Runtime skills: 100，覆盖 33 个 Codex / Claude Code / GitHub Copilot skill/prompt
+- Feature gates: 100
+- Benchmark comparison: 87，表示全部 12 行对标矩阵的保守平均，不是 AI-PIKit 单体分
+- Cost / isolation observability: 85
+
+最新三方 benchmark 修正：
+
+- Run ID: `2026-06-27T19-01-06-200Z`
+- Status: PASS
+- AI-PIKit: `90 / A`，4 pass，1 `WAIVED_WITH_RISK`，1 `EXPECTED_BLOCK`，0 fail
+- GSD: `88 / B`，2 pass，1 `WAIVED_WITH_RISK`，0 fail
+- Superpowers: `82 / B`，2 pass，1 `WAIVED_WITH_RISK`，0 fail
+
+对标结论：
+
+- AI-PIKit `graph-lite` 在 `docs-complete`、`docs-missing`、`docs-partial` 三种 fixture 中都能闭环；无文档场景标记 `WAIVED_WITH_RISK`。
+- AI-PIKit full-local 在 `docs-complete` 和 `docs-partial` PASS，在 `docs-missing` 输出 `EXPECTED_BLOCK`，这是正确边界：没有文档依据时不能假装 GraphRAG/RAG 证据完整。
+- `Benchmark comparison: 87` 偏保守是预期结果：它同时平均 AI-PIKit 两种模式、GSD、Superpowers 和三种文档状态；`graph-lite` 低成本路径、full-local 的正确阻断、GSD / Superpowers 的 replay 可信度上限都会拉低横向均值。
+- GSD / Superpowers 本轮使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 instruction pack hash、指令摘录、fixture、代码改修、测试和证据文件；因为不是 repository-local CLI / live model benchmark，分数设置可信度上限。
+- 默认 benchmark 是 deterministic，不调用外部 AI；token 写 `TOKEN_USAGE_UNAVAILABLE`。本轮额外尝试真实 Codex 子进程，已使用 `AI_PIKIT_AUDIT_REAL_AI=1 AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1 AI_PIKIT_AUDIT_CODEX_TIMEOUT_MS=60000` 和 `--ephemeral --ignore-user-config --ignore-rules --json`；三个 real-codex subprocess 均因当前 ChatGPT account 不支持默认 `gpt-5.3-codex` 模型而在启动阶段失败，因此没有 usage events，token 仍为 `TOKEN_USAGE_UNAVAILABLE`。
+
+文档同步：
+
+- `README.md` 新增开发者审计入口和最近结果摘要。
+- `docs/quality-plan.md` 新增 Developer Audit / Benchmark 质量章节。
+- `docs/quality-dashboard.html` 新增 Developer Audit / Benchmark 卡片、脚本表格和命令入口。
+- `docs/technical-guide.html` 新增内部审计运行方式、token 和记忆隔离说明。
+- `docs/product.html` 新增 96 / A 审计信号和开发者审计卡片。
+- `docs/runtime-command-packs.md` 新增 33 runtime item 审计结果说明。
+- `verification/README.md` 新增 dev audit 产物说明。
+
+## 2026-06-28: Cockpit Template Extraction
+
+本阶段目标：把 cockpit 从“真实项目报告页”拆成“稳定展示模板 + 假数据样例 + 真实项目快照”，避免目标项目缺 Graphify/RAG artifact 时，页面看起来像模板本身不稳定。
+
+新增模板产物：
+
+- `templates/cockpit/index.template.html`
+- `templates/cockpit/sample-data.json`
+- `templates/cockpit/sample.html`
+- `templates/cockpit/assets/graphify/sample.html`
+
+实现变化：
+
+- `pik-cockpit-build` 不再把整页 HTML 硬编码在 `bin/pik.mjs`，而是读取 `templates/cockpit/index.template.html` 并注入真实 `cockpit-data.json`。
+- `cockpit-data.json` 新增 `template.mode` 和 `nextCommands`，页面可以区分 `sample` 和 `live`。
+- 新增 `npm run build:cockpit-sample`，用于从假数据重新生成 `templates/cockpit/sample.html`。
+- 借鉴 Graphify 的 viewer 结构，新增稳定数据契约 `cockpit-viewmodel.v1`：页面优先读取 `summary`、`impactGraph`、`evidenceChain`、`artifactGroups` 等固定字段，而不是直接拼散落报告。
+- cockpit impact graph 新增本地交互：节点搜索、点击节点详情、legend 过滤、edge confidence 样式。
+- 大图默认降级为 `aggregated-community` 预览，避免真实项目节点过多时页面不稳定。
+- `verify:cockpit-build` 新增模板样例和大图聚合验证，当前覆盖 5 个 case：template sample、安全 Graphify HTML、不安全 Graphify HTML、无 RAG fixture、大图 aggregated view。
+
+文档同步：
+
+- `README.md`：区分稳定样例 `templates/cockpit/sample.html` 与真实项目 `.planning/cockpit/index.html`。
+- `docs/commands.html`：更新 `pik-cockpit-build` 的默认行为和失败说明。
+- `docs/quality-plan.md`、`docs/quality-dashboard.html`、`docs/technical-guide.html`、`verification/README.md`：同步 cockpit template/sample 的验证边界。
+
+## 2026-06-27: MVP4.2 Project Cockpit & Runtime Skill Usability
+
+本阶段目标：新增实际项目驾驶舱，把 AI-PIKit 已有的 workflow、skills、Graphify、GraphRAG/RAG、policy、privacy、evidence 和 quality closure 状态集中到一个本地静态 HTML，方便自查和 leader 演示。
+
+新增命令：
+
+- `pik-cockpit-build`
+
+新增 runtime 入口：
+
+- `runtime/codex/skills/pik-cockpit-build/SKILL.md`
+- `runtime/claude-code/skills/pik-cockpit-build/SKILL.md`
+- `runtime/github-copilot/prompts/pik-cockpit-build.prompt.md`
+
+新增产物：
+
+- `.planning/cockpit/index.html`
+- `.planning/cockpit/cockpit-data.json`
+- `.planning/cockpit/COCKPIT_REPORT.md`
+- `.planning/cockpit/assets/`
+
+新增验证：
+
+- `npm run verify:cockpit-build`
+- `verify:quality-closure` 聚合 `verify:cockpit-build`
+- `verify:full-command-surface` 当前为 71 / 71
+- `verify:skills-usability` 当前为 33 个 runtime skill/prompt
+
+新增报告：
+
+- `verification/reports/cockpit-build-check.md/json`
+
+能力边界：
+
+- `pik-cockpit-build` 默认只读取已有本地 artifact，不执行 GraphRAG index、不执行 Graphify build、不访问外网、不需要 API key。
+- Graphify HTML 只有在不包含外部 URL/CDN/远程 script/stylesheet 时才复制到 cockpit assets；否则阻断复制并显示 WARN。
+- 无 Graphify HTML 时使用 `graph.json` fallback 网状图；无 RAG/citation/answer audit 时显示 `WAIVED_WITH_RISK`，但不让 cockpit 构建失败。
+- cockpit skill 是低频演示/可视化入口，不把所有 `npm run verify:*` 暴露成日常 skill。
+
+文档同步：
+
+- `README.md`：新增 Project Cockpit 用法、产物路径、`pik-cockpit-build` 与 `npm run verify:cockpit-build` 的区别。
+- `docs/commands.html`：重生成 71 个命令详情，包含 `pik-cockpit-build`。
+- `docs/technical-guide.html`：新增 cockpit 路由、artifact 和 troubleshooting。
+- `docs/quality-plan.md`：新增 MVP4.2 cockpit 质量计划和验收标准。
+- `docs/quality-dashboard.html`：新增 cockpit 验证报告入口。
+- `docs/runtime-command-packs.md`：新增 cockpit runtime skill/prompt 说明。
+- `docs/full-test-plan.md`、`docs/architecture.md`、`verification/README.md`：同步 71/71、33 runtime items 和 cockpit gate。
+
+## 2026-06-27: MVP4.1 Quality Closure & Documentation Completeness Freeze
+
+本阶段目标：不新增公开 `pik-*` 功能命令，先把现有能力收成可交付闭环。重点证明命令能跑、skills 能正确调用、workflow 能闭环、报告可信、默认不重刷新、不外发，并且 README 关联文档能指导新项目、既有项目、日常开发、文档更新和质量验证。
+
+MVP4.1 当时命令面：
+
+- 公开 bin 保持 70 个，不新增功能命令。MVP4.2 加入 `pik-cockpit-build` 后，当前命令面已更新为 71 / 71。
+- `docs/commands.html` 改为由 `scripts/command-catalog.mjs` + `scripts/render-commands-doc.mjs` 生成。
+- 每个 `pik-*` / `pik` 命令都有独立 `cmd-<command>` 锚点、物理名、逻辑名、用途、参数、示例、产物、失败场景、关联命令和适用场景。
+
+新增验证：
+
+- `npm run verify:skills-usability`
+- `npm run verify:workflow-closure`
+- `npm run verify:docs-completeness`
+- `npm run verify:quality-closure`
+
+新增报告：
+
+- `verification/reports/skills-usability-check.md/json`
+- `verification/reports/workflow-closure-check.md/json`
+- `verification/reports/docs-completeness-check.md/json`
+- `verification/reports/quality-closure-check.md/json`
+
+新增质量 contract：
+
+- runtime install 渲染 Markdown skill / prompt 时追加 `AI-PIKit Local Runtime Contract`，统一强调本地 CLI、local-only、no hidden heavy refresh、evidence writeback。
+- `verify:skills-usability` 临时安装 Codex / Claude Code / GitHub Copilot 三套 runtime pack，MVP4.1 当时检查 30 个核心 workflow skill/prompt；MVP4.2 加入 cockpit 后当前为 33 个。
+- `verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`graph-lite` 无文档风险放行、`full-strict` stale/privacy 阻断。
+- `verify:docs-completeness` 检查 README 关键命令跳转、命令手册独立详情和命名边界；MVP4.1 当时为 70 个，MVP4.2 当前为 71 个。
+- `verify:quality-closure` 聚合 check、quality、full command surface、integration、runtime、skills、workflow、docs completeness。
+
+文档同步：
+
+- `README.md`：新增质量闭环报告、关键命令跳转和 MVP4.1 验证说明。
+- `docs/commands.html`：重生成完整命令手册。
+- `docs/technical-guide.html`：新增 MVP4.1 验证入口。
+- `docs/quality-plan.md`：新增 MVP4.1 质量闭环计划和完成标准。
+- `docs/quality-dashboard.html`：新增 closure 报告入口和验证脚本说明。
+- `docs/runtime-command-packs.md`：新增 runtime local contract 和 skills usability 验证说明。
+- `docs/full-test-plan.md`、`docs/architecture.md`、`verification/README.md`：同步新 gate、报告路径和默认 no hidden heavy refresh 边界。
+
+边界：
+
+- 本阶段不做 MCP、复杂 RAG route、dashboard 新功能。
+- 不新增外部 LLM / API key 依赖。
+- 默认验证使用本地 fixture，不触发隐藏 GraphRAG index、Graphify build 或 refresh-run。
+
 ## 2026-06-27: MVP4.0 Knowledge Reliability Lite
 
 本阶段目标：把“文档更新后怎么同步”和“AI 回答有没有依据”做成默认简单用法。范围刻意保持轻量，不做 `pik-rag-route`，不让 workflow 自动触发重任务。
@@ -102,7 +298,7 @@ Command namespace: **`pik-*`**
 
 - `npm run verify:workflow-facade`: PASS
 - `npm run verify:policy-hardening`: PASS
-- `npm run verify:full-command-surface`: PASS, 68 / 68 commands executed
+- `npm run verify:full-command-surface`: PASS, 68 / 68 commands executed（当时命令面；MVP4.2 后当前命令面为 71 / 71）
 - `npm run verify:quality`: PASS
 - `npm run verify:integration`: PASS 132 / FAIL 0 / WARN 1
 - `npm run verify:all`: PASS
@@ -116,7 +312,7 @@ Command namespace: **`pik-*`**
 - `docs/commands.html`：新增 policy 命令用法、产物和 public workflow facade 说明。
 - `docs/technical-guide.html`：新增 policy contract、四态语义、workflow facade 和新增验证入口。
 - `docs/quality-plan.md`：新增 Loop 1.7 和质量矩阵。
-- `docs/quality-dashboard.html` / `docs/product.html`：命令面更新为 68 / 68，并接入新增报告。
+- `docs/quality-dashboard.html` / `docs/product.html`：当时命令面更新为 68 / 68，并接入新增报告；MVP4.2 后当前页面统一为 71 / 71。
 
 ## 2026-06-25: Documentation Surface Sync
 

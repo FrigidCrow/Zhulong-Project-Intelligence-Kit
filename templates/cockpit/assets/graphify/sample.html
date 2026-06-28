@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-PIKit Sample Graphify View</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    body { margin: 0; background: #08090b; color: #f6f8fb; }
+    main { width: min(960px, calc(100vw - 40px)); margin: 0 auto; padding: 36px 0; }
+    h1 { margin: 0 0 10px; font-size: 36px; }
+    p { color: #a5adba; }
+    svg { width: 100%; min-height: 420px; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; background: #0d1117; }
+    line { stroke: rgba(34, 211, 238, .5); stroke-width: 2; }
+    circle { fill: #e8edf5; stroke: #0d1117; stroke-width: 2; }
+    .main { fill: #22d3ee; }
+    .doc { fill: #4ade80; }
+    .risk { fill: #fbbf24; }
+    text { fill: #f6f8fb; font-size: 12px; paint-order: stroke; stroke: #0d1117; stroke-width: 4px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Sample Graphify Impact</h1>
+    <p>Static local sample. No external scripts, stylesheets, fonts or network calls.</p>
+    <svg viewBox="0 0 760 420" role="img" aria-label="Sample Graphify network">
+      <line x1="380" y1="210" x2="570" y2="210"></line>
+      <line x1="380" y1="210" x2="500" y2="330"></line>
+      <line x1="380" y1="210" x2="200" y2="330"></line>
+      <line x1="190" y1="210" x2="380" y2="210"></line>
+      <line x1="230" y1="90" x2="380" y2="210"></line>
+      <line x1="530" y1="90" x2="380" y2="210"></line>
+      <circle class="main" cx="380" cy="210" r="18"></circle>
+      <text x="404" y="215">ApprovalService</text>
+      <circle cx="570" cy="210" r="13"></circle>
+      <text x="592" y="215">ApprovalPolicy</text>
+      <circle cx="500" cy="330" r="13"></circle>
+      <text x="522" y="335">approvalRoutes</text>
+      <circle cx="200" cy="330" r="13"></circle>
+      <text x="222" y="335">approvalRepository</text>
+      <circle class="doc" cx="190" cy="210" r="13"></circle>
+      <text x="212" y="215">代理承認上限仕様</text>
+      <circle class="risk" cx="230" cy="90" r="13"></circle>
+      <text x="252" y="95">approvalLimit.test</text>
+      <circle cx="530" cy="90" r="13"></circle>
+      <text x="552" y="95">EvidenceWriter</text>
+    </svg>
+  </main>
+</body>
+</html>

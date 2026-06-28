@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-26T17:55:38.957Z",
+  "generated": "2026-06-28T05:44:30.494Z",
   "status": "PASS",
   "checkedFiles": [
     "README.md",
@@ -11,6 +11,7 @@
     "docs/field-notes/graphrag-local-operations-guide.md",
     "docs/field-notes/gsd-graphify-graphrag-sop.md",
     "docs/full-test-plan.md",
+    "docs/internal/dev-audit.md",
     "docs/mvp1-e2e-validation.md",
     "docs/mvp1-plan.md",
     "docs/product.html",
@@ -80,6 +81,21 @@
     },
     {
       "file": "README.md",
+      "link": "verification/reports/quality-closure-check.md",
+      "target": "verification/reports/quality-closure-check.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/internal/dev-audit.md",
+      "target": "docs/internal/dev-audit.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/developer-audit-summary.md",
+      "target": "verification/reports/developer-audit-summary.md"
+    },
+    {
+      "file": "README.md",
       "link": "verification/reports/quality-enhancement-report.md",
       "target": "verification/reports/quality-enhancement-report.md"
     },
@@ -87,6 +103,56 @@
       "file": "README.md",
       "link": "verification/reports/workflow-policy-enhancement-report.md",
       "target": "verification/reports/workflow-policy-enhancement-report.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-init",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-codebase-scan",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-docs-sync",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-rag-init-local",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-graph-build",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-new-milestone",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-debug",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-answer-audit",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-completion-check",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html#cmd-pik-cockpit-build",
+      "target": "docs/commands.html"
     },
     {
       "file": "README.md",
@@ -100,6 +166,21 @@
     },
     {
       "file": "README.md",
+      "link": "templates/cockpit/sample.html",
+      "target": "templates/cockpit/sample.html"
+    },
+    {
+      "file": "README.md",
+      "link": "templates/cockpit/sample-data.json",
+      "target": "templates/cockpit/sample-data.json"
+    },
+    {
+      "file": "README.md",
+      "link": "templates/cockpit/index.template.html",
+      "target": "templates/cockpit/index.template.html"
+    },
+    {
+      "file": "README.md",
       "link": "docs/full-test-plan.md",
       "target": "docs/full-test-plan.md"
     },
@@ -107,6 +188,21 @@
       "file": "README.md",
       "link": "verification/reports/full-command-surface-check.md",
       "target": "verification/reports/full-command-surface-check.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/commands.html",
+      "target": "docs/commands.html"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/quality-closure-check.md",
+      "target": "verification/reports/quality-closure-check.md"
+    },
+    {
+      "file": "README.md",
+      "link": "verification/reports/developer-audit-summary.md",
+      "target": "verification/reports/developer-audit-summary.md"
     },
     {
       "file": "docs/architecture.md",
@@ -325,6 +421,41 @@
     },
     {
       "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/skills-usability-check.md",
+      "target": "verification/reports/skills-usability-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/workflow-closure-check.md",
+      "target": "verification/reports/workflow-closure-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/cockpit-build-check.md",
+      "target": "verification/reports/cockpit-build-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-completeness-check.md",
+      "target": "verification/reports/docs-completeness-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/quality-closure-check.md",
+      "target": "verification/reports/quality-closure-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/developer-audit-summary.md",
+      "target": "verification/reports/developer-audit-summary.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "internal/dev-audit.md",
+      "target": "docs/internal/dev-audit.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/full-test-round-1.md",
       "target": "verification/reports/full-test-round-1.md"
     },
@@ -387,6 +518,36 @@
       "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/full-command-surface-check.md",
       "target": "verification/reports/full-command-surface-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/skills-usability-check.md",
+      "target": "verification/reports/skills-usability-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/workflow-closure-check.md",
+      "target": "verification/reports/workflow-closure-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/cockpit-build-check.md",
+      "target": "verification/reports/cockpit-build-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/docs-completeness-check.md",
+      "target": "verification/reports/docs-completeness-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/quality-closure-check.md",
+      "target": "verification/reports/quality-closure-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/developer-audit-summary.md",
+      "target": "verification/reports/developer-audit-summary.md"
     },
     {
       "file": "docs/quality-dashboard.html",

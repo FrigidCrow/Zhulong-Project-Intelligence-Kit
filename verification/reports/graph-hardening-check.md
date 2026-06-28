@@ -1,6 +1,6 @@
 # AI-PIKit Graph Impact/Risk/Freshness Verification
 
-生成时间: 2026-06-26T17:56:27.352Z
+生成时间: 2026-06-28T05:45:37.202Z
 
 ## 摘要
 
@@ -21,8 +21,8 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-2f35Mc`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-2f35Mc/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-kH6cEd`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-kH6cEd/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-graph-hardening.mjs'`
 
 ## Issues

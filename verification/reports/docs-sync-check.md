@@ -1,6 +1,6 @@
 # AI-PIKit Docs Sync Verification
 
-生成时间: 2026-06-26T17:56:25.285Z
+生成时间: 2026-06-28T05:45:35.195Z
 
 ## 摘要
 
@@ -9,32 +9,32 @@
 
 ## 证据
 
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project --template greenfield-app --name docs_sync_fixture --mode new --force: exit 0
-- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0
+- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project --template greenfield-app --name docs_sync_fixture --mode new --force: exit 0
+- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project: exit 0
 - first docs sync: found docs sync STALE_NEEDS_REFRESH
 - first docs sync heavy: found heavy refresh executed: no
 - DOCS_SYNC first: found Status: STALE_NEEDS_REFRESH
 - default docs sync no RAG index: file absent .planning/knowledge/RAG_INDEX_RESULT.md
-- pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project DOCS_SYNC_SENTINEL_4101: exit 0
-- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0
+- pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project DOCS_SYNC_SENTINEL_4101: exit 0
+- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project: exit 0
 - clean docs sync: found docs sync PASS
 - DOCS_SYNC clean: found Citation audit: PASS
-- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0
+- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project: exit 0
 - modified docs sync: found docs sync STALE_NEEDS_REFRESH
 - modified docs sync count: found modified 1
-- pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project DOCS_SYNC_SENTINEL_4102: exit 0
-- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project --index: exit 0
+- pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project DOCS_SYNC_SENTINEL_4102: exit 0
+- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project --index: exit 0
 - indexed docs sync heavy: found heavy refresh executed: yes
 - indexed docs sync status: found index success
 - RAG index result: found Status: success
-- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project: exit 0
+- pik docs sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project: exit 0
 - removed docs sync: found docs sync STALE_NEEDS_REFRESH
 - removed docs sync count: found removed 1
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-Tuu7iz/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-sync-jzlK6v/project`
 - 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-docs-sync.mjs'`
 
 ## 问题

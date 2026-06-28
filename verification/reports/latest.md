@@ -1,13 +1,13 @@
 # AI-PIKit Full Validation Report
 
-Generated: 2026-06-26T17:57:02.601Z
+Generated: 2026-06-28T05:46:29.186Z
 
 ## Summary
 
 - PASS: 132
 - FAIL: 0
 - WARN: 1
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz` (removed after run)
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq` (removed after run)
 - Live GraphRAG: not requested
 
 ## Verdict
@@ -49,133 +49,133 @@ AI-PIKit validation passed for the checked scope. AI-PIKit is the active command
   - Evidence: `.planning/context/handoffs`
   - Detail: 10 handoff files
 - [PASS] AI-PIKit native handoff marker: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] AI-PIKit native handoff marker: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Found: Workflow kernel: AI-PIKit native
 - [PASS] Workflow doc marker: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Context packet includes document RAG status
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
   - Detail: Found: Document RAG Status
 - [PASS] Context packet includes code map status
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
   - Detail: Found: Code Map Status
 - [PASS] Context packet includes Graphify output
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native/.planning/context/debug-cr-017-debug.md`
   - Detail: Found: Graph Report
 - [PASS] AI-PIKit workflow-run alias starts guarded state
   - Evidence: `pik-workflow-run`
@@ -241,7 +241,7 @@ AI-PIKit validation passed for the checked scope. AI-PIKit is the active command
   - Evidence: `pik-debug`
   - Detail: Found: WORKFLOW_STATE.json
 - [PASS] Real Graphify graph has nodes and edges/links
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/real-graphify/.planning/graphs/graph.json`
+  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/real-graphify/.planning/graphs/graph.json`
   - Detail: 269 nodes, 220 edges/links
 - [PASS] AI-PIKit graph status reads real Graphify graph
   - Evidence: `pik graph status`
@@ -416,9 +416,9 @@ AI-PIKit validation passed for the checked scope. AI-PIKit is the active command
 
 ## Artifact Roots
 
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/init-new-project`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/init-existing-project`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/fixture-pik-native`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/workflow-guard`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/workflow-alias`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-yv9Ozz/real-graphify`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/init-new-project`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/init-existing-project`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/fixture-pik-native`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/workflow-guard`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/workflow-alias`
+- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-IfvuLq/real-graphify`

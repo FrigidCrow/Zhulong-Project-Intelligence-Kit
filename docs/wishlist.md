@@ -195,35 +195,57 @@ pik-outbound-audit --target "$PWD"
 pik-policy-check --target "$PWD" --strict
 ```
 
-## 8. 未来愿望
+## 8. 已落地能力和未来愿望
 
-### MVP4: Knowledge Reliability Mode
+### 已落地：MVP4 Knowledge Reliability Lite
 
-- `pik-docs-sync`：文档更新后一键 scan / diff / extract / citation audit，只有显式 `--index` 才执行 GraphRAG index。
-- `pik-answer-audit`：第一版检查回答是否有 citation、citation 源文件是否存在、行号是否合法；命中规格和幻觉风险判断进入后续增强。
-- GraphRAG query route：local / global / drift / basic 自动选择。
+- `pik-docs-sync`：文档更新后一键 scan / diff / extract / citation audit，默认不执行 GraphRAG index，只有显式 `--index` 才重索引。
+- `pik-answer-audit`：检查最近 query 或指定回答是否有 citation、citation 源文件是否存在、行号是否合法；无 citation 时按 profile 输出 `WAIVED_WITH_RISK` 或 `FAIL`。
+- `pik-rag-golden-*`、`pik-rag-eval`、`pik-citation-audit`：让文档问答可以被 golden case 和 citation 复查。
+
+### 已落地：MVP6 Policy-as-Code Lite
+
+- `pik-policy-lock`
+- `pik-policy-verify`
+- `pik-policy-diff`
+- 四态语义：`PASS`、`FAIL`、`WAIVED_WITH_RISK`、`STALE_NEEDS_REFRESH`
+- `graph-lite`、`default-local-rag`、`full-strict` 三种 profile
+
+### 已落地：MVP4.2 Project Cockpit
+
+- `pik-cockpit-build`
+- 稳定样例：`templates/cockpit/sample.html`
+- 真实项目快照：`.planning/cockpit/index.html`
+- Graphify impact、GraphRAG/RAG evidence、workflow、quality、privacy、evidence 的本地静态可视化入口
+
+### 下一步愿望：Knowledge Reliability Deepening
+
+- GraphRAG query route：local / global / drift / basic 自动选择，先做 dry-run / plan，再考虑真实执行。
 - RAG 评估指标增强：context precision、context recall、faithfulness、answer relevancy。
+- `pik-answer-audit` 增强为更细的 answer faithfulness / contradiction 检查。
+- `pik-docs-sync` 增强文档 owner、文档类型、变更影响面分类。
 
-### MVP5: MCP Runtime Layer
+### 下一步愿望：MCP Runtime Layer
 
 - `pik-mcp-serve`
 - 通过 MCP 暴露 tools、resources、prompts。
 - Codex / Claude / Copilot 通过同一套本地 MCP server 调用 AI-PIKit。
 
-### MVP6: Policy-as-Code
+### 下一步愿望：Policy-as-Code Deepening
 
-- `pik-policy-lock`
-- `pik-policy-diff`
 - 项目级 policy 规则文件。
 - 更严格的外发、license、文档证据和 completion policy。
+- 项目级 waiver 审批和审计。
+- policy diff 的变更责任人、理由和有效期。
 
-### MVP7: QA 可视化驾驶舱
+### 下一步愿望：QA 可视化驾驶舱深化
 
 - 文档更新影响了哪些需求。
 - 仕様依据连接到哪些代码。
 - 哪些测试覆盖了哪些仕様。
 - 哪些 workflow gate 还没过。
 - 本次 AI 修改的证据链是否完整。
+- leader view 和 engineer view 的更多筛选、导出和截图证据。
 
 ## 9. North Star
 

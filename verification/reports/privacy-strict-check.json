@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-26T17:56:28.003Z",
+  "generated": "2026-06-28T05:45:37.835Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-0fTvu1",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-0fTvu1/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-3yu4Ws",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-privacy-strict-3yu4Ws/project",
   "evidence": [
     "pik privacy offline-lock: found privacy audit PASS",
     "OFFLINE_LOCK: found External tools: disabled",

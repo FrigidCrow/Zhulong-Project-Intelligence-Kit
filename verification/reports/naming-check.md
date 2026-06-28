@@ -1,6 +1,6 @@
 # AI-PIKit Naming Verification
 
-生成时间: 2026-06-26T17:56:42.405Z
+生成时间: 2026-06-28T05:45:55.645Z
 
 ## 摘要
 
@@ -71,6 +71,7 @@
 - `docs/field-notes/graphrag-local-operations-guide.md`
 - `docs/field-notes/gsd-graphify-graphrag-sop.md`
 - `docs/full-test-plan.md`
+- `docs/internal/dev-audit.md`
 - `docs/mvp1-e2e-validation.md`
 - `docs/mvp1-plan.md`
 - `docs/product.html`
@@ -99,6 +100,7 @@
 - `examples/japanese-doc-dev-fixture/src/approvalService.js`
 - `examples/japanese-doc-dev-fixture/tests/cr017_proxy_limit.test.js`
 - `examples/japanese-doc-dev-fixture/tests/current.test.js`
+- `runtime/claude-code/skills/pik-cockpit-build/SKILL.md`
 - `runtime/claude-code/skills/pik-code-review/SKILL.md`
 - `runtime/claude-code/skills/pik-complete-milestone/SKILL.md`
 - `runtime/claude-code/skills/pik-debug/SKILL.md`
@@ -109,6 +111,7 @@
 - `runtime/claude-code/skills/pik-spec-phase/SKILL.md`
 - `runtime/claude-code/skills/pik-ui-phase/SKILL.md`
 - `runtime/claude-code/skills/pik-verify-work/SKILL.md`
+- `runtime/codex/skills/pik-cockpit-build/SKILL.md`
 - `runtime/codex/skills/pik-code-review/SKILL.md`
 - `runtime/codex/skills/pik-code-review/agents/openai.yaml`
 - `runtime/codex/skills/pik-complete-milestone/SKILL.md`
@@ -124,6 +127,7 @@
 - `runtime/codex/skills/pik-ui-phase/SKILL.md`
 - `runtime/codex/skills/pik-verify-work/SKILL.md`
 - `runtime/codex/skills/pik-verify-work/agents/openai.yaml`
+- `runtime/github-copilot/prompts/pik-cockpit-build.prompt.md`
 - `runtime/github-copilot/prompts/pik-code-review.prompt.md`
 - `runtime/github-copilot/prompts/pik-complete-milestone.prompt.md`
 - `runtime/github-copilot/prompts/pik-debug.prompt.md`
@@ -137,10 +141,16 @@
 - `schemas/issue-record.schema.md`
 - `schemas/phase-record.schema.md`
 - `schemas/project.manifest.schema.json`
+- `scripts/command-catalog.mjs`
+- `scripts/dev-audit/run-dev-audit.mjs`
 - `scripts/quality-utils.mjs`
+- `scripts/render-cockpit-sample.mjs`
+- `scripts/render-commands-doc.mjs`
 - `scripts/run-full-test-plan.mjs`
 - `scripts/validate-japanese-fixture.mjs`
 - `scripts/verify-answer-audit.mjs`
+- `scripts/verify-cockpit-build.mjs`
+- `scripts/verify-docs-completeness.mjs`
 - `scripts/verify-docs-extract-citation.mjs`
 - `scripts/verify-docs-sync.mjs`
 - `scripts/verify-docs-update-fixture.mjs`
@@ -153,11 +163,14 @@
 - `scripts/verify-mvp35-refresh-control.mjs`
 - `scripts/verify-policy-hardening.mjs`
 - `scripts/verify-privacy-strict.mjs`
+- `scripts/verify-quality-closure.mjs`
 - `scripts/verify-rag-commands.mjs`
 - `scripts/verify-rag-local.mjs`
 - `scripts/verify-runtime-packs.mjs`
 - `scripts/verify-schema.mjs`
+- `scripts/verify-skills-usability.mjs`
 - `scripts/verify-visual.mjs`
+- `scripts/verify-workflow-closure.mjs`
 - `scripts/verify-workflow-facade.mjs`
 - `verification/README.md`
 - `verification/run-full-validation.mjs`

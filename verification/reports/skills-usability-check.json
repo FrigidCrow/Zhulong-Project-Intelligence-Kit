@@ -1,0 +1,238 @@
+{
+  "generated": "2026-06-28T05:46:30.311Z",
+  "status": "PASS",
+  "tempRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH",
+  "expectedRuntimeCount": 3,
+  "expectedSkillsPerRuntime": 11,
+  "expectedRenderedItems": 33,
+  "results": [
+    {
+      "runtime": "codex",
+      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex",
+      "itemCount": 11,
+      "installOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-code-review/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-debug/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-execute-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-plan-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-verify-work/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
+      "statusOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex\nok pik-cockpit-build rendered\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "installed": [
+        {
+          "skill": "pik-new-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-new-milestone/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-spec-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-spec-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-discuss-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-discuss-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-ui-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-ui-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-plan-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-plan-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-execute-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-execute-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-verify-work",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-verify-work/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-complete-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-complete-milestone/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-debug",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-debug/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-code-review",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-code-review/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-cockpit-build",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/codex/pik-cockpit-build/SKILL.md",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "runtime": "claude-code",
+      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code",
+      "itemCount": 11,
+      "installOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
+      "statusOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code\nok pik-cockpit-build rendered\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "installed": [
+        {
+          "skill": "pik-new-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-new-milestone/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-spec-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-spec-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-discuss-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-discuss-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-ui-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-ui-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-plan-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-plan-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-execute-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-execute-phase/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-verify-work",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-verify-work/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-complete-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-complete-milestone/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-debug",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-debug/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-code-review",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-code-review/SKILL.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-cockpit-build",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/claude-code/pik-cockpit-build/SKILL.md",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "runtime": "github-copilot",
+      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot",
+      "itemCount": 11,
+      "installOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-cockpit-build.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-code-review.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-complete-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-debug.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-discuss-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-execute-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-new-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-plan-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-spec-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-ui-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
+      "statusOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot\nok pik-cockpit-build rendered\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "installed": [
+        {
+          "skill": "pik-new-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-new-milestone.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-spec-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-spec-phase.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-discuss-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-discuss-phase.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-ui-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-ui-phase.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-plan-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-plan-phase.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-execute-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-execute-phase.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-verify-work",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-verify-work.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-complete-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-complete-milestone.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-debug",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-debug.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-code-review",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-code-review.prompt.md",
+          "exists": true
+        },
+        {
+          "skill": "pik-cockpit-build",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-eu1oSH/github-copilot/pik-cockpit-build.prompt.md",
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    "codex:pik-new-milestone installed and inspected",
+    "codex:pik-spec-phase installed and inspected",
+    "codex:pik-discuss-phase installed and inspected",
+    "codex:pik-ui-phase installed and inspected",
+    "codex:pik-plan-phase installed and inspected",
+    "codex:pik-execute-phase installed and inspected",
+    "codex:pik-verify-work installed and inspected",
+    "codex:pik-complete-milestone installed and inspected",
+    "codex:pik-debug installed and inspected",
+    "codex:pik-code-review installed and inspected",
+    "codex:pik-cockpit-build installed and inspected",
+    "claude-code:pik-new-milestone installed and inspected",
+    "claude-code:pik-spec-phase installed and inspected",
+    "claude-code:pik-discuss-phase installed and inspected",
+    "claude-code:pik-ui-phase installed and inspected",
+    "claude-code:pik-plan-phase installed and inspected",
+    "claude-code:pik-execute-phase installed and inspected",
+    "claude-code:pik-verify-work installed and inspected",
+    "claude-code:pik-complete-milestone installed and inspected",
+    "claude-code:pik-debug installed and inspected",
+    "claude-code:pik-code-review installed and inspected",
+    "claude-code:pik-cockpit-build installed and inspected",
+    "github-copilot:pik-new-milestone installed and inspected",
+    "github-copilot:pik-spec-phase installed and inspected",
+    "github-copilot:pik-discuss-phase installed and inspected",
+    "github-copilot:pik-ui-phase installed and inspected",
+    "github-copilot:pik-plan-phase installed and inspected",
+    "github-copilot:pik-execute-phase installed and inspected",
+    "github-copilot:pik-verify-work installed and inspected",
+    "github-copilot:pik-complete-milestone installed and inspected",
+    "github-copilot:pik-debug installed and inspected",
+    "github-copilot:pik-code-review installed and inspected",
+    "github-copilot:pik-cockpit-build installed and inspected"
+  ],
+  "issues": []
+}

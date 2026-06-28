@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-26T17:56:27.351Z",
+  "generated": "2026-06-28T05:45:37.201Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-2f35Mc",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-2f35Mc/project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-kH6cEd",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-kH6cEd/project",
   "evidence": [
     "pik graph freshness: found Freshness: fresh",
     "GRAPH_FRESHNESS: found State: fresh",

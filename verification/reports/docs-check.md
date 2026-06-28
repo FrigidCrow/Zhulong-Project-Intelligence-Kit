@@ -1,6 +1,6 @@
 # AI-PIKit Docs Verification
 
-生成时间: 2026-06-26T17:55:38.959Z
+生成时间: 2026-06-28T05:44:30.499Z
 
 ## 摘要
 
@@ -18,6 +18,7 @@
 - `docs/field-notes/graphrag-local-operations-guide.md`
 - `docs/field-notes/gsd-graphify-graphrag-sop.md`
 - `docs/full-test-plan.md`
+- `docs/internal/dev-audit.md`
 - `docs/mvp1-e2e-validation.md`
 - `docs/mvp1-plan.md`
 - `docs/product.html`

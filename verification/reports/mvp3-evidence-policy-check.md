@@ -1,6 +1,6 @@
 # AI-PIKit MVP3 证据质量与策略模式验证
 
-生成时间: 2026-06-26T17:56:35.020Z
+生成时间: 2026-06-28T05:45:48.866Z
 
 ## 摘要
 
@@ -33,8 +33,8 @@
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-bEnez6`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-bEnez6/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-MANjDi`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-MANjDi/project`
 - 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-mvp3-evidence-policy.mjs'`
 
 ## 问题

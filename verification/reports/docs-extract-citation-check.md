@@ -1,6 +1,6 @@
 # AI-PIKit Document Extraction and Citation Verification
 
-生成时间: 2026-06-26T17:56:24.466Z
+生成时间: 2026-06-28T05:45:34.394Z
 
 ## 摘要
 
@@ -25,8 +25,8 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-hBsBSh`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-hBsBSh/project`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-noPjkx`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-noPjkx/project`
 - Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-docs-extract-citation.mjs'`
 
 ## Issues
