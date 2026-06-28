@@ -10,9 +10,10 @@ Generated: 2026-06-25
 
 - 覆盖所有 `pik-*` public command。
 - 覆盖所有 public workflow。
-- 覆盖文档抽取、citation、RAG、GraphRAG、本地隐私、Graphify、workflow gate、evidence、runtime pack、license、policy、help skills。
+- 覆盖文档抽取、citation、RAG、GraphRAG、本地隐私、Graphify、workflow gate、evidence、runtime pack、license、policy、help skills、project cockpit。
 - 连续执行两轮全量测试，观察结果是否稳定。
 - 正式测试阶段如出现失败，只记录失败，不在同一测试轮内修复。
+- 维护者在大改或发布前额外运行 `npm run dev:audit:full`，生成命令/skills/feature scorecard、AI-PIKit / GSD / Superpowers 对标、时间拆分和 token 统计边界；它补充正式测试轮，不替代 Round 1 / Round 2。
 
 ## 2. 测试阶段规则
 
@@ -44,6 +45,15 @@ verification/reports/full-test-round-2.json
 ```
 
 正式测试开始后，失败不在同一轮修复。修复必须进入下一轮开发循环。
+
+维护者内部审计产物固定在：
+
+```text
+.pik-audit/latest/
+verification/reports/developer-audit-summary.md
+```
+
+`.pik-audit/` 已被 git ignore，只保留可提交摘要。最近一次完整审计为 `PASS 96 / A`，覆盖 71 个命令、33 个 runtime skill/prompt 和 feature gates；最新三方 benchmark 为 AI-PIKit `90 / A`、GSD `88 / B`、Superpowers `82 / B`，其中 GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`。`Benchmark comparison: 87` 是 12 行混合对标矩阵的平均值，不是 AI-PIKit 单体能力分。
 
 ## 3. 命令覆盖矩阵
 
@@ -142,6 +152,7 @@ verification/reports/full-test-round-2.json
 | `pik-runtime-status` | 三种 runtime pack 可检查 |
 | `pik-help-skills` | 根据提问推荐合适 `pik-*` 命令 |
 | `pik help skills` | canonical help skills 路径可用 |
+| `pik-cockpit-build` | 基于 `templates/cockpit/index.template.html` 和 `cockpit-viewmodel.v1` 生成 `.planning/cockpit/index.html`，展示 Graphify/RAG/workflow/quality/privacy 状态；支持搜索、节点详情、legend 过滤和大图聚合；稳定样例见 `templates/cockpit/sample.html` |
 
 ### Workflow
 
@@ -173,6 +184,11 @@ npm run check
 npm run verify:quality
 npm run verify:integration
 npm run verify:full-command-surface
+npm run verify:skills-usability
+npm run verify:workflow-closure
+npm run verify:cockpit-build
+npm run verify:docs-completeness
+npm run verify:quality-closure
 ```
 
 其中 `verify:quality` 必须包含：
@@ -183,6 +199,9 @@ verify:docs-update
 verify:rag
 verify:rag-local
 verify:docs-extract
+verify:docs-sync
+verify:answer-audit
+verify:knowledge-reliability
 verify:graph-hardening
 verify:privacy-strict
 verify:license
@@ -194,6 +213,10 @@ verify:schema
 verify:naming
 verify:runtime
 verify:visual
+verify:skills-usability
+verify:workflow-closure
+verify:cockpit-build
+verify:docs-completeness
 ```
 
 ## 5. 成功标准
@@ -207,6 +230,10 @@ verify:visual
 - `pik-rag-golden-run` 至少 1 条 golden PASS
 - `pik-trace-audit` 输出 PASS
 - `pik-completion-check` 对完整 fixture 输出 `completion allowed`
+- `verify:skills-usability` 证明 33 个 runtime skill/prompt 可用
+- `verify:cockpit-build` 证明 project cockpit 独立模板、假数据样例和 `cockpit-viewmodel.v1` 可用，不触发 GraphRAG/Graphify 重刷新，并能处理 Graphify HTML、fallback 图、大图聚合和 RAG 缺失风险
+- `verify:docs-completeness` 证明命令手册 71 个独立锚点和 README 跳转完整
+- `verify:quality-closure` 聚合 gate 输出 PASS
 
 两轮测试成功条件：
 
@@ -229,6 +256,11 @@ verification/reports/full-test-round-2.md
 verification/reports/mvp3-evidence-policy-check.md
 verification/reports/mvp35-refresh-control-check.md
 verification/reports/full-command-surface-check.md
+verification/reports/skills-usability-check.md
+verification/reports/workflow-closure-check.md
+verification/reports/cockpit-build-check.md
+verification/reports/docs-completeness-check.md
+verification/reports/quality-closure-check.md
 verification/reports/latest.md
 verification/reports/docs-check.md
 verification/reports/visual-check.md

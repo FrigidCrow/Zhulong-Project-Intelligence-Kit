@@ -49,6 +49,8 @@ const steps = [
   { label: "quality verification", command: "npm run verify:quality", timeout: 3600000 },
   { label: "integration verification", command: "npm run verify:integration", timeout: 3600000 },
   { label: "full command surface verification", command: "npm run verify:full-command-surface", timeout: 3600000 },
+  { label: "cockpit build verification", command: "npm run verify:cockpit-build", timeout: 240000 },
+  { label: "quality closure verification", command: "npm run verify:quality-closure", timeout: 3600000 },
 ];
 
 for (const step of steps) {

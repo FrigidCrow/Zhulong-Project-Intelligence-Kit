@@ -29,6 +29,9 @@ pik 命令
 | 完整测试计划 | 两轮全量测试的命令矩阵、流程、失败记录规则和报告路径 | [docs/full-test-plan.md](docs/full-test-plan.md) |
 | Changelog | 每个阶段做了什么、验证证据在哪里、下一阶段边界是什么 | [docs/changelog.md](docs/changelog.md) |
 | 验证报告 | 最近一次完整验证结果 | [verification/reports/latest.md](verification/reports/latest.md) |
+| 质量闭环报告 | skills、workflow、docs completeness 和最终聚合 gate | [verification/reports/quality-closure-check.md](verification/reports/quality-closure-check.md) |
+| 开发者审计 / 对标 | 维护者专用的命令、skills、功能 gate、AI-PIKit/GSD/Superpowers 对标机制 | [docs/internal/dev-audit.md](docs/internal/dev-audit.md) |
+| 开发者审计摘要 | 最近一次内部审计总分、对标表、耗时和 token 统计边界 | [verification/reports/developer-audit-summary.md](verification/reports/developer-audit-summary.md) |
 | 增强报告 | 基于质量计划的本次增强总结、证据和后续边界 | [verification/reports/quality-enhancement-report.md](verification/reports/quality-enhancement-report.md) |
 | Workflow / Policy 增强报告 | 本次无感编排层和 policy-as-code 合同的实施总结 | [verification/reports/workflow-policy-enhancement-report.md](verification/reports/workflow-policy-enhancement-report.md) |
 
@@ -46,6 +49,21 @@ AI-PIKit 是一个 **AI 工程上下文框架**，由四层组成：
 | Evidence loop | 测试输出、验证记录、风险、后续事项 | `.planning/evidence/` 和 writeback |
 
 稳定外部入口是 `pik-*`。不要把 `gsd-*` 当作 AI-PIKit 的用户命令；GSD 只作为 workflow 设计参考。
+
+## 关键命令跳转
+
+| 场景 | 命令详情 |
+| --- | --- |
+| 初始化项目 | [pik-init](docs/commands.html#cmd-pik-init) |
+| 建立代码基线 | [pik-codebase-scan](docs/commands.html#cmd-pik-codebase-scan) |
+| 文档轻量同步 | [pik-docs-sync](docs/commands.html#cmd-pik-docs-sync) |
+| 本地 GraphRAG 初始化 | [pik-rag-init-local](docs/commands.html#cmd-pik-rag-init-local) |
+| Graphify / 代码地图 | [pik-graph-build](docs/commands.html#cmd-pik-graph-build) |
+| 开启 milestone | [pik-new-milestone](docs/commands.html#cmd-pik-new-milestone) |
+| Debug 工作流 | [pik-debug](docs/commands.html#cmd-pik-debug) |
+| 回答依据审计 | [pik-answer-audit](docs/commands.html#cmd-pik-answer-audit) |
+| 完成前检查 | [pik-completion-check](docs/commands.html#cmd-pik-completion-check) |
+| 项目驾驶舱 | [pik-cockpit-build](docs/commands.html#cmd-pik-cockpit-build) |
 
 ## 快速开始
 
@@ -524,6 +542,7 @@ pik-completion-check --target "$PWD"
 | Runtime | `pik-runtime-install`, `pik-runtime-status` |
 | Workflow guard | `pik-workflow-run`, `pik-workflow-status`, `pik-workflow-continue`, `pik-workflow-audit`, `pik-gate-check`, `pik-completion-check` |
 | Public workflow | `pik-new-milestone`, `pik-spec-phase`, `pik-discuss-phase`, `pik-ui-phase`, `pik-debug`, `pik-plan-phase`, `pik-execute-phase`, `pik-code-review`, `pik-verify-work`, `pik-complete-milestone` |
+| Cockpit | `pik-cockpit-build` |
 
 ## Runtime 支持
 
@@ -531,9 +550,49 @@ AI-PIKit 当前支持把 workflow 命令安装到：
 
 | Runtime | 安装命令 | 调用方式 |
 | --- | --- | --- |
-| Codex | `pik-runtime-install --runtime codex --dest ~/.codex/skills` | `$pik-debug` |
-| Claude Code | `pik-runtime-install --runtime claude-code --dest ~/.claude/skills` | `/pik-debug` |
-| GitHub Copilot | `pik-runtime-install --runtime github-copilot --dest .github/prompts` | `/pik-debug` |
+| Codex | `pik-runtime-install --runtime codex --dest ~/.codex/skills` | `$pik-debug`, `$pik-cockpit-build` |
+| Claude Code | `pik-runtime-install --runtime claude-code --dest ~/.claude/skills` | `/pik-debug`, `/pik-cockpit-build` |
+| GitHub Copilot | `pik-runtime-install --runtime github-copilot --dest .github/prompts` | `/pik-debug`, `/pik-cockpit-build` |
+
+## Project Cockpit
+
+`pik-cockpit-build` 是给自己检查和给 leader 演示用的低频入口。它只读取已有本地 artifact，把 Graphify 影响图、GraphRAG/RAG 证据链、workflow gate、quality closure、privacy/offline lock 和 evidence 状态生成成一个静态 HTML。
+
+```bash
+pik-cockpit-build --target "$PWD"
+```
+
+Cockpit 现在分成两层：
+
+- 稳定展示模板：[templates/cockpit/sample.html](templates/cockpit/sample.html)，使用 [templates/cockpit/sample-data.json](templates/cockpit/sample-data.json) 的假数据，适合先给 leader 看“目标形态大概长什么样”。
+- 真实项目快照：`.planning/cockpit/index.html`，使用目标项目的 `.planning/`、`graphify-out/`、`verification/reports/` 现有 artifact，适合看当前项目缺口。
+
+实际模板文件在 [templates/cockpit/index.template.html](templates/cockpit/index.template.html)。`pik-cockpit-build` 会把真实 `cockpit-data.json` 注入这份模板；不会再把整页 HTML 硬编码在 CLI 里。
+
+Cockpit viewer 借鉴 Graphify 的稳定方式：先生成固定数据契约，再用固定 viewer 渲染。当前契约是 `cockpit-viewmodel.v1`，包含：
+
+```text
+summary
+impactGraph
+evidenceChain
+workflowRows
+artifactGroups
+issues
+nextCommands
+```
+
+`impactGraph` 支持搜索、节点详情、legend 过滤和边 confidence 展示。小图显示节点级影响面；大图会自动切到 `aggregated-community` 预览，避免页面被过多节点拖垮。完整 Graphify HTML 仍然优先作为独立本地页面打开，cockpit 只放稳定预览和状态总览。
+
+产物固定写入目标项目：
+
+```text
+.planning/cockpit/index.html
+.planning/cockpit/cockpit-data.json
+.planning/cockpit/COCKPIT_REPORT.md
+.planning/cockpit/assets/
+```
+
+它和 `npm run verify:cockpit-build` 不是一回事：`pik-cockpit-build` 是日常/演示命令；`npm run verify:cockpit-build` 是 AI-PIKit 自身的维护者验证脚本。cockpit 默认不会运行 GraphRAG index、不会运行 Graphify build、不会访问外网，也不需要 API key。若真实页面显示 stale 或 `WAIVED_WITH_RISK`，这不是模板坏了，而是目标项目缺少可展示证据；按 `COCKPIT_REPORT.md` 的 next commands 显式决定是否刷新。
 
 ## 本地数据边界
 
@@ -565,9 +624,18 @@ npm run verify:mvp3
 npm run verify:mvp35
 npm run verify:workflow-facade
 npm run verify:policy-hardening
+npm run verify:cockpit-build
 npm run verify:full-command-surface
+npm run verify:skills-usability
+npm run verify:workflow-closure
+npm run verify:docs-completeness
+npm run verify:quality-closure
+npm run verify:dev-audit-harness
 npm run verify:quality
 npm run verify:integration
+
+# 维护者内部审计 / 对标，不属于普通用户命令面
+npm run dev:audit:full
 ```
 
 两轮全量测试使用：
@@ -591,7 +659,15 @@ WARN 1
 
 `npm run verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`npm run verify:rag-local` 会真实运行本地 GraphRAG：Ollama + LanceDB + no external API key，并确认 query 命中 fixture 规格。最近一次 live GraphRAG fixture 验证结果为 `PASS 136 / FAIL 0 / WARN 0`，使用脱敏 fixture 文档，不使用真实项目文档。
 
-`npm run verify:docs-sync` 会测试 `pik-docs-sync` 默认不触发 GraphRAG index、文档新增/修改/删除输出 `STALE_NEEDS_REFRESH`、`--index` 才执行 configured RAG index。`npm run verify:answer-audit` 会测试默认无参数审计最近 query、显式 `--from`、调试 `--answer`、missing citation 在不同 profile 下的状态和 workflow facade 只提示不自动运行。`npm run verify:knowledge-reliability` 会测试轻量知识可靠性主路径：docs sync -> docs query -> answer audit。`npm run verify:mvp3` 会专项测试 RAG golden、citation audit、trace matrix、policy check 和 help skills。`npm run verify:mvp35` 会专项测试 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`npm run verify:workflow-facade` 会验证 public workflow 的无感编排层和 no heavy refresh 约束。`npm run verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义、profile 阻断规则和 policy 命令不触发重刷新。`npm run verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` / `pik` bin 命令，并写入 [verification/reports/full-command-surface-check.md](verification/reports/full-command-surface-check.md)。当前全命令面为 70 / 70。
+`npm run verify:docs-sync` 会测试 `pik-docs-sync` 默认不触发 GraphRAG index、文档新增/修改/删除输出 `STALE_NEEDS_REFRESH`、`--index` 才执行 configured RAG index。`npm run verify:answer-audit` 会测试默认无参数审计最近 query、显式 `--from`、调试 `--answer`、missing citation 在不同 profile 下的状态和 workflow facade 只提示不自动运行。`npm run verify:knowledge-reliability` 会测试轻量知识可靠性主路径：docs sync -> docs query -> answer audit。`npm run verify:mvp3` 会专项测试 RAG golden、citation audit、trace matrix、policy check 和 help skills。`npm run verify:mvp35` 会专项测试 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`npm run verify:workflow-facade` 会验证 public workflow 的无感编排层和 no heavy refresh 约束。`npm run verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义、profile 阻断规则和 policy 命令不触发重刷新。`npm run verify:cockpit-build` 会验证 Graphify HTML 安全复制/阻断、fallback 影响图、RAG 证据面板、`WAIVED_WITH_RISK` 和 no hidden heavy refresh。`npm run verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` / `pik` bin 命令，并写入 [verification/reports/full-command-surface-check.md](verification/reports/full-command-surface-check.md)。当前全命令面为 71 / 71。
+
+MVP4.2 质量闭环新增 cockpit gate：`npm run verify:skills-usability` 会把 Codex / Claude Code / GitHub Copilot runtime pack 安装到临时目录并检查 33 个 skill/prompt；`npm run verify:workflow-closure` 会跑新项目、既有项目、graph-lite、full-strict 四条 fixture；`npm run verify:docs-completeness` 会检查 [docs/commands.html](docs/commands.html) 是否覆盖 71 个命令的独立锚点、字段、示例和 README 跳转；`npm run verify:quality-closure` 聚合 check、quality、integration、runtime、skills、workflow、cockpit 和 docs completeness，报告写入 [verification/reports/quality-closure-check.md](verification/reports/quality-closure-check.md)。
+
+维护者内部审计使用 `npm run dev:audit:full`，不会新增公开 `pik-*` 命令，也不会进入命令手册。最新完整审计为 `96 / A`，最新三方 benchmark 为 `PASS`：AI-PIKit `90 / A`，GSD `88 / B`，Superpowers `82 / B`。AI-PIKit `graph-lite` 在完整文档、无文档、文档不全三种场景都能闭环；AI-PIKit full-local 在无文档场景输出 `EXPECTED_BLOCK`，这是正确的安全边界；GSD / Superpowers 现在使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 skill hash、指令摘录、fixture、代码改修、测试和证据文件，不再用模糊的 prompt framework 退化表述。摘要见 [verification/reports/developer-audit-summary.md](verification/reports/developer-audit-summary.md)，完整本地产物在 `.pik-audit/latest/`。
+
+`AUDIT_SCORECARD.json` 里的 `Benchmark comparison: 87` 是横向 benchmark 矩阵的保守平均分，不是 AI-PIKit 单体分。它把 AI-PIKit `graph-lite`、AI-PIKit `full-local`、GSD、Superpowers 在完整文档、无文档、文档不全三类场景中的 12 行结果一起平均；其中 `graph-lite` 故意不强制 GraphRAG/RAG，`full-local` 在无文档时正确输出 `EXPECTED_BLOCK`，GSD / Superpowers 又因为不是 repository-local CLI 或 live model benchmark 被设置可信度上限。因此 87 表示“混合对标口径偏保守”，AI-PIKit 自身产品 benchmark 应看 `90 / A`。
+
+本轮也执行了 `AI_PIKIT_AUDIT_REAL_AI=1 AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1 AI_PIKIT_AUDIT_CODEX_TIMEOUT_MS=60000 npm run dev:audit:benchmark`，真实 Codex 子进程使用 `--ephemeral --ignore-user-config --ignore-rules --json` 做记忆隔离；三个 real-codex subprocess 均因当前账号不支持默认 `gpt-5.3-codex` 模型而启动失败，fixture 代码未被修改，所以 token 仍记录为 `TOKEN_USAGE_UNAVAILABLE`，没有填 0 或估算值。
 
 需要外部 LLM live GraphRAG fixture 验证时：
 
@@ -605,6 +681,10 @@ GRAPHRAG_API_KEY=<your key> npm run verify:integration -- --live-graphrag
 bin/pik.mjs
 core/
 templates/
+  cockpit/
+    index.template.html
+    sample-data.json
+    sample.html
 runtime/
 adapters/
 schemas/
@@ -619,6 +699,10 @@ AI-PIKit 接入目标项目后，会在目标项目根目录增加：
 AGENTS.md
 project.manifest.yml
 .planning/
+  cockpit/
+    index.html
+    cockpit-data.json
+    COCKPIT_REPORT.md
 ```
 
 不会搬动原项目源码，也不会把目标项目复制进 AI-PIKit 仓库。

@@ -346,6 +346,14 @@ function runWorkflowCommands() {
   }
 }
 
+function runCockpitCommand() {
+  const result = runAlias("pik-cockpit-build", ["--target", projectRoot]);
+  assertIncludes("pik-cockpit-build", result.output, "cockpit build");
+  assertIncludes("pik-cockpit-build", result.output, "heavy refresh executed: no");
+  assertFileIncludes("cockpit report", path.join(projectRoot, ".planning", "cockpit", "COCKPIT_REPORT.md"), "Heavy refresh executed: no");
+  assertFileIncludes("cockpit html", path.join(projectRoot, ".planning", "cockpit", "index.html"), "AI-PIKit 项目驾驶舱");
+}
+
 prepareProject();
 makeAliasBins();
 runPik([]);
@@ -363,6 +371,7 @@ runRefreshModeCommands();
 runEvidenceTracePolicyAndPrivacyCommands();
 runRuntimeAndContextCommands();
 runWorkflowCommands();
+runCockpitCommand();
 
 for (const command of binCommands) {
   if (!covered.has(command)) addIssue(command, "package bin command was not executed by full command surface verification");

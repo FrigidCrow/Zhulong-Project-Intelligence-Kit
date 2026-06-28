@@ -105,18 +105,74 @@ npm run verify:mvp3
 npm run verify:mvp35
 npm run verify:workflow-facade
 npm run verify:policy-hardening
+npm run verify:cockpit-build
 npm run verify:full-command-surface
 npm run verify:schema
 npm run verify:visual
 npm run verify:naming
 npm run verify:runtime
+npm run verify:dev-audit-harness
 npm run verify:quality
 npm run verify:all
 ```
 
-其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `pik-rag-init-local`、`pik-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `pik-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
+其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `pik docs ...` 和 `pik-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `pik-rag-init-local`、`pik-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `pik-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:cockpit-build` 覆盖项目驾驶舱、Graphify HTML 安全复制/阻断、fallback 图、RAG 证据面板和 no hidden heavy refresh。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
 
 `verify:mvp3` 覆盖 Evidence Quality & Policy Mode：RAG golden、citation audit、trace matrix、policy check、help skills。`verify:full-command-surface` 会逐个执行 `package.json` 中所有 `pik-*` 和 `pik` bin 命令，确认命令入口不是只写在文档里。
+
+## 3.1 Developer Audit / Benchmark
+
+Developer Audit 是维护者专用的产品级审计产物，不属于普通用户命令面，不新增 `pik-*`。它补足普通 verifier 没覆盖的三件事：逐项打分、同题对标、时间/token/隔离统计。
+
+运行入口：
+
+```bash
+npm run verify:dev-audit-harness
+npm run dev:audit:quick
+npm run dev:audit:full
+npm run dev:audit:benchmark
+```
+
+产物：
+
+```text
+.pik-audit/latest/AUDIT_REPORT.md
+.pik-audit/latest/COMMAND_SCORES.md
+.pik-audit/latest/SKILL_SCORES.md
+.pik-audit/latest/FEATURE_SCORES.md
+.pik-audit/latest/BENCHMARK_COMPARISON.md
+.pik-audit/latest/TIME_BREAKDOWN.md
+.pik-audit/latest/TOKEN_USAGE.md
+verification/reports/developer-audit-summary.md
+```
+
+最近一次完整审计：
+
+```text
+Run ID: 2026-06-27T19-01-06-200Z
+Status: PASS
+Benchmark comparison: 87 / PASS
+Total score: 96 / A
+AI-PIKit: 90 / A
+GSD: 88 / B
+Superpowers: 82 / B
+```
+
+评分口径：
+
+- `Benchmark comparison: 87` 是 12 行 benchmark 的保守平均，不是 AI-PIKit 单体分。
+- AI-PIKit 产品分看 `AI-PIKit: 90 / A`。
+- `graph-lite` 是低成本模式，故意不强制 GraphRAG/RAG，所以不会按 full-local 满分计算。
+- `full-local` 在无文档场景输出 `EXPECTED_BLOCK`，这是正确安全边界，不能为了抬高分数假装有文档依据。
+- GSD / Superpowers 是 `skill-pack-backed-replay`，不是本仓库内的可执行 CLI，也不是 live model benchmark，所以设置可信度上限。
+- 后续如果要给 leader 展示，建议同时展示 `AI-PIKit Product Score`、`External Framework Reference Score` 和 `Live Agent Benchmark Status`，避免把保守横向均值误读为产品单体能力。
+
+对标结论：
+
+- AI-PIKit `graph-lite` 在完整文档、无文档、文档不全三种 fixture 中都能闭环；无文档场景标记 `WAIVED_WITH_RISK`。
+- AI-PIKit full-local 在完整文档和文档不全时 PASS，在无文档场景 `EXPECTED_BLOCK`，这是正确安全边界：没有文档依据时不能假装 GraphRAG/RAG 证据完整。
+- GSD / Superpowers 本轮使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 instruction pack hash、fixture、代码改修、测试和证据文件；因为不是 repository-local CLI / live model benchmark，分数设置可信度上限。
+- 默认 deterministic benchmark 不调用外部 AI，token 记为 `TOKEN_USAGE_UNAVAILABLE`；本轮已额外尝试 `AI_PIKIT_AUDIT_REAL_AI=1 AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1` 真实 Codex 子进程，并使用 `--ephemeral --ignore-user-config --ignore-rules --json`。三个 real-codex subprocess 均因当前账号不支持默认 `gpt-5.3-codex` 模型而在启动阶段失败，fixture 代码未被修改，因此没有 usage events，token 仍为 `TOKEN_USAGE_UNAVAILABLE`。
 
 ## 4. 测试矩阵
 
@@ -669,7 +725,85 @@ npm run verify:integration
 - 缺 docs、缺 graph、缺 evidence、缺 writeback 时是否都能阻断。
 - 报错是否提示 `pik-*`，而不是 `gsd-*`。
 
-## 10. 近期优先级
+## 10. MVP4.1 Quality Closure & Documentation Completeness Freeze
+
+MVP4.1 是 cockpit 加入前的质量闭环基线；当时不新增公开 `pik-*` 功能命令，命令面保持 70 个。目标是把已有能力收成可交付闭环：命令能跑、skills 能正确调用、workflow 能从接入到完成跑通、报告可信、默认不重刷新、不外发，并且 README 关联文档能指导新项目、既有项目、日常开发、文档更新和质量验证。MVP4.2 当前状态见下一节：命令面为 71 个，runtime skill/prompt 为 33 个。
+
+新增质量入口：
+
+```bash
+npm run verify:skills-usability
+npm run verify:workflow-closure
+npm run verify:docs-completeness
+npm run verify:quality-closure
+```
+
+报告路径：
+
+```text
+verification/reports/skills-usability-check.md/json
+verification/reports/workflow-closure-check.md/json
+verification/reports/docs-completeness-check.md/json
+verification/reports/quality-closure-check.md/json
+```
+
+验证范围：
+
+- `verify:skills-usability`：Codex / Claude Code / GitHub Copilot 三种 runtime 都安装到临时目录，10 个核心 workflow skill/prompt 全部存在，指向本地 `bin/pik.mjs`，不残留模板变量，不出现可执行意义的 `gsd-*` 指导，并包含 local-only、no hidden heavy refresh、evidence writeback 约束。
+- `verify:workflow-closure`：覆盖新项目第一次闭环、既有项目文档更新、`graph-lite` 无文档风险放行、`full-strict` stale / privacy 阻断；默认路径必须输出 `heavy refresh executed: no`，不得创建 `REFRESH_RUN.md`。
+- `verify:docs-completeness`：在 MVP4.1 当时检查 `docs/commands.html` 对 `package.json` 的 70 个 `pik-*` / `pik` bin 都有 `cmd-<command>` 独立锚点；MVP4.2 已随 `pik-cockpit-build` 扩展到 71 个。一览中的物理名和逻辑名都能跳转，每个详情块包含 usage、参数、示例、产物、场景等字段，README 关键命令能跳到对应详情。
+- `verify:quality-closure`：聚合 `check`、`verify:quality`、`verify:full-command-surface`、`verify:integration`、`verify:runtime`、`verify:skills-usability`、`verify:workflow-closure`、`verify:docs-completeness`。
+
+MVP4.1 的完成标准：
+
+- `npm run verify:quality-closure` PASS。
+- `npm run verify:full-command-surface` 在 MVP4.1 当时为 70 / 70；MVP4.2 当前为 71 / 71。
+- Codex / Claude Code / GitHub Copilot 在 MVP4.1 当时共 30 个 skill/prompt 全部 PASS；MVP4.2 当前为 33 个。
+- `docs/commands.html` 覆盖 100% 命令详情。
+- README 能指导新项目、既有项目、日常开发、文档更新、质量验证五个主场景。
+- 允许的 WARN 只能是外部 live GraphRAG fixture 未启用，并且必须解释原因。
+- 不新增外部 LLM / API key 依赖。
+- 不允许默认 workflow、policy、skills、docs completeness 检查偷偷触发 heavy refresh。
+
+## 10.5. MVP4.2 Project Cockpit & Runtime Skill Usability
+
+本阶段新增一个低频公开命令和一个 runtime skill：`pik-cockpit-build`。它的目标不是替代日常 workflow，而是把 Graphify 影响图、GraphRAG/RAG 证据链、workflow gate、quality closure、privacy/offline lock 和 evidence 状态做成本地静态驾驶舱，方便自查和 leader 演示。
+
+新增质量入口：
+
+```bash
+npm run verify:cockpit-build
+```
+
+新增报告：
+
+```text
+verification/reports/cockpit-build-check.md/json
+```
+
+验证范围：
+
+- cockpit 页面模板必须独立存在于 `templates/cockpit/index.template.html`，稳定样例页必须由 `templates/cockpit/sample-data.json` 生成到 `templates/cockpit/sample.html`。
+- `cockpit-data.json` 必须包含稳定 `cockpit-viewmodel.v1`，viewer 优先读取 `summary`、`impactGraph`、`evidenceChain`、`workflowRows`、`artifactGroups`、`issues`、`nextCommands`。
+- `impactGraph` 必须支持 Graphify-style 的搜索、节点详情、legend 过滤和 edge confidence 展示；大图必须自动使用 `aggregated-community` 预览。
+- `pik-cockpit-build --target <repo>` 生成 `.planning/cockpit/index.html`、`cockpit-data.json`、`COCKPIT_REPORT.md` 和 `assets/`。
+- 有安全 Graphify HTML 时复制到 cockpit assets；Graphify HTML 含外部 URL/CDN 时阻断复制并写 WARN。
+- 无 Graphify HTML 但有 `graph.json` 时，cockpit 使用内置 fallback 网状图。
+- 有 RAG/citation/answer audit 报告时展示 Knowledge Evidence；无 RAG 时显示 `WAIVED_WITH_RISK`，但不失败。
+- 默认输出必须包含 `heavy refresh executed: no`，且验证不得执行 GraphRAG index、Graphify build 或外部网络。
+- `verify:full-command-surface` 更新为 71 / 71。
+- `verify:skills-usability` 更新为 33 个 runtime skill/prompt。
+- `verify:quality-closure` 聚合 `verify:cockpit-build`。
+
+完成标准：
+
+- `npm run verify:cockpit-build` PASS。
+- `templates/cockpit/sample.html` 可直接打开，使用假数据展示 PASS 状态、Graphify 影响图、RAG 证据链、quality/privacy 状态，且不包含外部 URL。
+- `npm run verify:cockpit-build` 覆盖模板样例、viewModel v1、安全/不安全 Graphify HTML、RAG 缺失和大图聚合，当前应为 5 个 case。
+- `npm run verify:quality-closure` PASS。
+- README、commands、technical-guide、runtime-command-packs、quality-dashboard、full-test-plan、changelog 和 verification README 均同步 cockpit 命令、报告和 no hidden refresh 边界。
+
+## 11. 近期优先级
 
 P0：
 
@@ -677,12 +811,12 @@ P0：
 - `verify:integration` 保持 FAIL 0。
 - README、commands、technical-guide 与实际命令一致。
 - runtime pack 不提示用户使用 `gsd-*`。
-- `verify:quality` 和 `verify:all` 保持可复跑。
+- `verify:quality`、`verify:quality-closure` 和 `verify:all` 保持可复跑。
 
 P1：
 
-- 增加 workflow guard 负例覆盖。
-- 扩展 docs update fixture 到更多文档格式。
+- 保持 workflow closure fixture 覆盖新项目、既有项目、graph-lite、full-strict。
+- 扩展 docs completeness 到更多 README 入口和 HTML 页面一致性。
 - 将 QA dashboard 接入 future `latest.json` 历史趋势。
 
 P2：
@@ -699,7 +833,7 @@ P3：
 - 更严格的 OS-level offline mode。
 - 完整 graph-local profile：在本地 LLM 上稳定完成实体/关系抽取和 `local/global` graph search。
 
-## 11. 不达标时的处理规则
+## 12. 不达标时的处理规则
 
 - 有 FAIL：不能宣称对应能力可用。
 - 有 WARN：必须说明 WARN 的范围，以及是否影响当前结论。

@@ -398,14 +398,24 @@ npm run verify:mvp35
 npm run verify:workflow-facade
 npm run verify:policy-hardening
 npm run verify:full-command-surface
+npm run verify:skills-usability
+npm run verify:workflow-closure
+npm run verify:cockpit-build
+npm run verify:docs-completeness
+npm run verify:quality-closure
+npm run verify:dev-audit-harness
 npm run verify:integration
+
+# 维护者内部审计 / 对标
+npm run dev:audit:full
 
 node scripts/run-full-test-plan.mjs --run-id round-1
 node scripts/run-full-test-plan.mjs --run-id round-2
 
 # 外部 GraphRAG 验证，只能在允许外发脱敏 fixture 时使用
 GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
-          <p>`verify:rag-local` 会真实运行本地 GraphRAG，不需要 API key。`verify:docs-sync` 会证明默认同步不触发 heavy refresh，`--index` 才执行 RAG index。`verify:answer-audit` 会证明无参数 answer audit、`--from`、`--answer`、profile 状态语义和 workflow facade 建议。`verify:knowledge-reliability` 会覆盖 docs sync -> docs query -> answer audit 主路径。`verify:mvp3` 会验证 golden、citation、trace、policy、help skills。`verify:mvp35` 会验证刷新预算、preflight、mode 和文档同步。`verify:workflow-facade` 会验证 public workflow 写 `WORKFLOW_FACADE` 且不触发 heavy refresh。`verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义和 profile 阻断规则。`verify:full-command-surface` 会执行 `package.json` 中全部命令入口。默认 integration 未启用外部 live GraphRAG 时会保留一个 WARN；这不影响默认本地模式。</p>
+          <p>`verify:rag-local` 会真实运行本地 GraphRAG，不需要 API key。`verify:docs-sync` 会证明默认同步不触发 heavy refresh，`--index` 才执行 RAG index。`verify:answer-audit` 会证明无参数 answer audit、`--from`、`--answer`、profile 状态语义和 workflow facade 建议。`verify:knowledge-reliability` 会覆盖 docs sync -> docs query -> answer audit 主路径。`verify:mvp3` 会验证 golden、citation、trace、policy、help skills。`verify:mvp35` 会验证刷新预算、preflight、mode 和文档同步。`verify:workflow-facade` 会验证 public workflow 写 `WORKFLOW_FACADE` 且不触发 heavy refresh。`verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义和 profile 阻断规则。`verify:cockpit-build` 会验证 project cockpit 独立模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、fallback 图、大图 aggregated-community 预览、RAG 证据面板和 no hidden heavy refresh。`verify:full-command-surface` 会执行 `package.json` 中全部命令入口。`verify:skills-usability` 会验证三种 runtime 的 33 个 skill/prompt，`verify:workflow-closure` 会跑新项目、既有项目、graph-lite、full-strict 四条 fixture，`verify:docs-completeness` 会验证命令手册 71 个详情锚点和 README 跳转，`verify:quality-closure` 是最终聚合 gate。默认 integration 未启用外部 live GraphRAG 时会保留一个 WARN；这不影响默认本地模式。</p>
+          <p>`dev:audit:full` 是维护者内部机制：它在 `.pik-audit/latest/` 生成 scorecard、命令/skills/feature 分表、AI-PIKit / GSD / Superpowers 对标、时间拆分和 token 统计边界，并把可提交摘要写到 `verification/reports/developer-audit-summary.md`。`Benchmark comparison` 是所有对标行的保守平均，不是 AI-PIKit 单体分；本轮 AI-PIKit 产品平均为 90 / A，scorecard 里的 87 反映了 graph-lite 低成本路径、full-local 无文档正确阻断、GSD / Superpowers replay 可信度上限。默认 benchmark 是 deterministic，不调用外部 AI，所以 token 写 `TOKEN_USAGE_UNAVAILABLE`；GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 instruction pack hash、fixture、代码改修、测试和证据文件。真实 Codex 子进程必须显式设置 `AI_PIKIT_AUDIT_REAL_AI=1`，并使用 `--ephemeral --ignore-rules --json`；需要完全不读用户配置时再加 `AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1`。本轮真实子进程已经尝试执行，但当前账号不支持默认 `gpt-5.3-codex` 模型，三个 subprocess 均在启动阶段失败，因此没有 usage events，token 没有数字化。</p>
         </section>
 
         <section id="lifecycle" class="page-section">
@@ -486,7 +496,10 @@ pik-codebase-scan
   -> codebase scan
 
 pik-completion-check
-  -> workflow completion-check</code></pre>
+  -> workflow completion-check
+
+pik-cockpit-build
+  -> cockpit build</code></pre>
             </div>
             <div class="panel panel-pad">
               <h3>Runtime command pack</h3>
@@ -516,6 +529,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
                 <tr><td>Runtime</td><td><code>pik-runtime-install</code>, <code>pik-runtime-status</code></td><td>Codex / Claude Code / GitHub Copilot 入口统一落到 CLI。</td></tr>
                 <tr><td>Workflow guard</td><td><code>pik-workflow-run</code>, <code>pik-workflow-status</code>, <code>pik-workflow-continue</code>, <code>pik-workflow-audit</code>, <code>pik-gate-check</code>, <code>pik-completion-check</code></td><td>gate 状态可读、可阻断、可继续。</td></tr>
                 <tr><td>Public workflow</td><td><code>pik-new-milestone</code>, <code>pik-spec-phase</code>, <code>pik-discuss-phase</code>, <code>pik-ui-phase</code>, <code>pik-debug</code>, <code>pik-plan-phase</code>, <code>pik-execute-phase</code>, <code>pik-code-review</code>, <code>pik-verify-work</code>, <code>pik-complete-milestone</code></td><td>日常工作流只暴露 `pik-*`，GSD 只作参考设计。</td></tr>
+                <tr><td>Cockpit</td><td><code>pik-cockpit-build</code></td><td>生成本地静态项目驾驶舱，展示 Graphify、RAG、workflow、quality、privacy 和 evidence 状态。</td></tr>
                 <tr><td>Context</td><td><code>pik-context-debug</code>, <code>pik-context-execute</code></td><td>只生成 context packet，不启动完整 guard。</td></tr>
               </tbody>
             </table>
@@ -544,6 +558,10 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
             <div class="artifact"><code>.planning/workflows/*/WORKFLOW_STATE.json</code><p>workflow 状态机源数据。`WORKFLOW_STATE.md` 是给人看的版本。</p></div>
             <div class="artifact"><code>.planning/workflows/*/WORKFLOW_FACADE.md</code><p>public workflow 的无感编排摘要。列出轻量 checks、四态 gate 和下一步建议命令。</p></div>
             <div class="artifact"><code>.planning/evidence/INDEX.md</code><p>验证证据索引。完成 milestone 前应该能找到当前任务证据。</p></div>
+            <div class="artifact"><code>templates/cockpit/sample.html</code><p>稳定展示样例。使用假数据展示理想状态，适合先看页面目标形态。</p></div>
+            <div class="artifact"><code>templates/cockpit/index.template.html</code><p>cockpit 独立模板。真实项目和样例页都复用它，避免 HTML 写死在 CLI 中。</p></div>
+            <div class="artifact"><code>cockpit-viewmodel.v1</code><p>cockpit 的稳定视图契约。借鉴 Graphify 的 graph viewer 思路，先把散落报告归一成固定 view model，再由模板渲染搜索、节点详情、legend 过滤和聚合图。</p></div>
+            <div class="artifact"><code>.planning/cockpit/index.html</code><p>真实项目驾驶舱静态页面。只读取已有 Graphify/RAG/workflow/quality/privacy/evidence artifact，不触发 heavy refresh；缺 artifact 时显示 WARN 或 WAIVED_WITH_RISK。</p></div>
           </div>
         </section>
 
@@ -563,6 +581,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
                 <tr><td>plan/implementation/verification 失败</td><td>是否用 <code>pik-workflow-continue</code> 标记了人工 gate。</td><td><code>pik-workflow-continue --target "$PWD" --gate verification --evidence "npm test passed"</code></td></tr>
                 <tr><td>evidence 或 writeback 失败</td><td><code>.planning/evidence/</code> 和目标 issue/debug/phase 是否有 <code>AI-PIKit Evidence Writeback</code>。</td><td><code>pik-evidence-record --target "$PWD" "検証済み" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md</code></td></tr>
                 <tr><td>policy check 失败</td><td><code>POLICY_CHECK.md</code> 中失败项；常见是没有 offline lock、没有 citation、没有 golden 或 trace matrix。</td><td><code>pik-offline-lock --target "$PWD" && pik-citation-audit --target "$PWD" && pik-trace-build --target "$PWD"</code></td></tr>
+                <tr><td>cockpit 显示 <code>WAIVED_WITH_RISK</code></td><td><code>COCKPIT_REPORT.md</code> 中缺少的 Graphify/RAG/evidence artifact。</td><td><code>pik-docs-sync --target "$PWD"</code> 或显式 <code>pik-graph-build --target "$PWD" --run</code></td></tr>
                 <tr><td>Codex/Claude/Copilot 找不到命令</td><td>runtime pack 是否安装到对应目录。</td><td><code>pik-runtime-status --runtime codex --dest ~/.codex/skills</code></td></tr>
               </tbody>
             </table>
@@ -582,9 +601,9 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
           <pre class="code-block"><code>1. 在 README / docs/changelog.md / docs/commands.html / docs/quality-plan.md 定义用户入口和目标 artifact。
 2. 在 bin/pik.mjs 增加 COMMAND_ALIASES 和实际 handler。
 3. 在 handler 中只写目标项目内的文件，不把数据散落到 AI-PIKit 仓库。
-4. 如果是 workflow 命令，更新 runtime/codex、runtime/claude-code、runtime/github-copilot 的调用说明。
+4. 如果是 workflow 或 cockpit 这类 AI runtime 可直接触发的命令，更新 runtime/codex、runtime/claude-code、runtime/github-copilot 的调用说明。
 5. 增加专项 verification；命令面还要进入 verify:full-command-surface。
-6. 跑 npm run check && npm run verify:docs && npm run verify:full-command-surface && npm run verify:quality。</code></pre>
+6. 跑 npm run check && npm run verify:docs-completeness && npm run verify:full-command-surface && npm run verify:quality-closure。</code></pre>
           <h3>新增一个外部工具适配器的建议步骤</h3>
           <pre class="code-block"><code>1. 在 .planning/config.json 定义 command，例如 update_command 或 query_command。
 2. 不带 --run 时先生成 handoff，让用户能审查会执行什么。

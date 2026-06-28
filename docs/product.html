@@ -39,7 +39,7 @@
             <div class="window-bar">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
               <span>pik-console ~ root/core</span>
-              <span class="status-pill" style="margin-left:auto">MVP6 / 68 命令已验证</span>
+              <span class="status-pill" style="margin-left:auto">MVP4.2 / 71 命令 / 审计 95A</span>
             </div>
             <div class="console-grid">
               <div class="console-pane">
@@ -92,7 +92,8 @@
             <div class="metric"><strong>4</strong><span>上下文层：workflow、docs、graph、evidence</span></div>
             <div class="metric"><strong>9</strong><span>completion gates 阻断虚假完成</span></div>
             <div class="metric"><strong>3</strong><span>Codex / Claude Code / Copilot runtime</span></div>
-            <div class="metric"><strong>68</strong><span>`pik-*` 命令面已执行验证</span></div>
+            <div class="metric"><strong>71</strong><span>`pik-*` 命令面已执行验证</span></div>
+            <div class="metric"><strong>95</strong><span>Developer audit 总分，等级 A</span></div>
           </div>
         </div>
       </section>
@@ -367,6 +368,14 @@ pik-mode-set --target "$PWD" full-strict</code></pre>
           <article class="panel panel-pad">
             <h3>命令面验证</h3>
             <p>`npm run verify:full-command-surface` 会逐个执行 `package.json` 中全部 `pik-*` / `pik` bin 命令，避免“文档写了但实际不能用”。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>项目驾驶舱</h3>
+            <p>`pik-cockpit-build` 会把 Graphify 影响图、GraphRAG/RAG 证据链、workflow、quality 和 privacy 状态生成成本地静态 HTML，适合 leader 演示。稳定样例页在 `templates/cockpit/sample.html`，真实项目快照在 `.planning/cockpit/index.html`。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>开发者审计 / 对标</h3>
+            <p>`npm run dev:audit:full` 会生成维护者专用 scorecard：71 个命令、33 个 runtime skill/prompt、feature gate、AI-PIKit / GSD / Superpowers 对标、耗时和 token 边界。最近一次完整审计为 96 / A，三方 benchmark 为 AI-PIKit 90 / A、GSD 88 / B、Superpowers 82 / B。Scorecard 里的 Benchmark comparison 87 是混合对标平均分，不是 AI-PIKit 单体分。摘要在 `verification/reports/developer-audit-summary.md`。</p>
           </article>
           <article class="panel panel-pad">
             <h3>完成验证</h3>

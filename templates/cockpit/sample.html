@@ -1,0 +1,1726 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-PIKit Project Cockpit</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070809;
+      --surface: #111418;
+      --surface-2: #171b20;
+      --panel: #0d1117;
+      --line: rgba(255, 255, 255, .13);
+      --line-strong: rgba(148, 163, 184, .35);
+      --text: #f6f8fb;
+      --muted: #9aa4b2;
+      --muted-2: #6f7a89;
+      --cyan: #22d3ee;
+      --green: #4ade80;
+      --amber: #fbbf24;
+      --red: #ffb4ab;
+      --blue: #7dd3fc;
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 28% 4%, rgba(34, 211, 238, .11), transparent 34rem),
+        radial-gradient(circle at 78% 10%, rgba(74, 222, 128, .06), transparent 30rem),
+        var(--bg);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, .035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, .035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    }
+
+    main {
+      position: relative;
+      width: min(1320px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 30px 0 60px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: start;
+      padding: 24px 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 6vw, 78px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    code,
+    pre {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+
+    .subhead {
+      max-width: 860px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .status,
+    .pill,
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .05);
+      font-family: "JetBrains Mono", monospace;
+      white-space: nowrap;
+    }
+
+    .status {
+      min-height: 36px;
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+
+    .mode-badge {
+      min-height: 28px;
+      margin-top: 10px;
+      padding: 5px 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .status.PASS,
+    .pill.PASS,
+    .pill.present { color: var(--green); }
+
+    .status.WARN,
+    .pill.WARN,
+    .pill.WAIVED_WITH_RISK,
+    .pill.STALE_NEEDS_REFRESH,
+    .pill.missing,
+    .pill.stale { color: var(--amber); }
+
+    .status.FAIL,
+    .pill.FAIL,
+    .pill.invalid_json { color: var(--red); }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0 16px;
+    }
+
+    .metric,
+    section {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 19, 24, .86);
+      box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .07);
+    }
+
+    .metric {
+      min-height: 104px;
+      padding: 15px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 13px;
+      font-size: 25px;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+    }
+
+    .metric small {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted-2);
+    }
+
+    section {
+      margin-top: 14px;
+      padding: 18px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .subpanel {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .035);
+      padding: 14px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      background: rgba(255, 255, 255, .06);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+    }
+
+    .button:hover { border-color: var(--cyan); }
+
+    .muted { color: var(--muted); }
+
+    .pill {
+      min-height: 24px;
+      padding: 3px 7px;
+      font-size: 11px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    td code {
+      color: #e5edf7;
+      overflow-wrap: anywhere;
+    }
+
+    .artifact-summary {
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    .graph-shell {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background:
+        linear-gradient(180deg, rgba(125, 211, 252, .05), transparent),
+        #090d12;
+      overflow: hidden;
+    }
+
+    .graph-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .graph-search {
+      width: 100%;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .05);
+      color: var(--text);
+      padding: 8px 10px;
+      font: 12px "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      outline: none;
+    }
+
+    .graph-search:focus { border-color: var(--cyan); }
+
+    .graph-mode {
+      color: var(--muted);
+      font: 11px "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      white-space: nowrap;
+    }
+
+    .graph-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0 0;
+    }
+
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .05);
+      color: var(--muted);
+      cursor: pointer;
+      font: 11px "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    }
+
+    .legend-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--chip-color, var(--cyan));
+    }
+
+    .legend-chip.is-off {
+      opacity: .42;
+      text-decoration: line-through;
+    }
+
+    .cockpit-graph {
+      display: block;
+      width: 100%;
+      min-height: 380px;
+    }
+
+    .graph-edges line {
+      stroke: rgba(34, 211, 238, .50);
+      stroke-width: 1.7;
+    }
+
+    .graph-edges line.inferred {
+      stroke-dasharray: 6 5;
+      opacity: .55;
+    }
+
+    .graph-node circle {
+      fill: #e8edf5;
+      stroke: #090d12;
+      stroke-width: 2;
+    }
+
+    .graph-node.main circle {
+      fill: var(--cyan);
+      filter: drop-shadow(0 0 16px rgba(34, 211, 238, .50));
+    }
+
+    .graph-node.risk circle {
+      fill: var(--amber);
+      filter: drop-shadow(0 0 12px rgba(251, 191, 36, .22));
+    }
+
+    .graph-node.doc circle { fill: var(--green); }
+
+    .graph-node text {
+      fill: #eef4ff;
+      font-size: 10px;
+      paint-order: stroke;
+      stroke: #090d12;
+      stroke-width: 3px;
+    }
+
+    .graph-node {
+      cursor: pointer;
+    }
+
+    .graph-node:hover circle,
+    .graph-node.is-selected circle {
+      stroke: #fff;
+      stroke-width: 3;
+    }
+
+    .node-detail {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .node-detail strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .node-detail code {
+      display: block;
+      color: #e5edf7;
+      overflow-wrap: anywhere;
+    }
+
+    .empty-graph {
+      display: grid;
+      place-items: center;
+      min-height: 360px;
+      color: var(--muted);
+      text-align: center;
+      padding: 18px;
+    }
+
+    .evidence-chain {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .chain-node {
+      min-height: 86px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .chain-node strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .chain-node small {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted-2);
+      line-height: 1.35;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li + li { margin-top: 6px; }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: #e7eef8;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted-2);
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      header,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-grid,
+      .evidence-chain {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: min(100vw - 24px, 1320px);
+        padding: 18px 0 40px;
+      }
+
+      .summary-grid,
+      .evidence-chain {
+        grid-template-columns: 1fr;
+      }
+
+      td,
+      th {
+        display: block;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="eyebrow">AI Project Intelligence Kit / Project Cockpit</div>
+        <h1>AI-PIKit 项目驾驶舱</h1>
+        <p class="subhead" id="cockpit-subhead"></p>
+        <span class="mode-badge" id="template-mode"></span>
+      </div>
+      <div class="status" id="build-status"></div>
+    </header>
+
+    <div class="summary-grid" id="summary-grid"></div>
+
+    <section>
+      <h2>Leader View</h2>
+      <div class="split">
+        <div>
+          <h3>Graphify Impact</h3>
+          <div class="graph-toolbar">
+            <input id="graph-search" class="graph-search" type="search" placeholder="Search nodes, files, communities..." autocomplete="off">
+            <button class="button" id="graph-reset" type="button">Reset</button>
+            <span class="graph-mode" id="graph-mode"></span>
+          </div>
+          <div class="graph-shell" id="graph-shell"></div>
+          <p class="muted" id="graph-meta"></p>
+          <div class="graph-legend" id="graph-legend"></div>
+          <div class="button-row" id="graphify-links"></div>
+        </div>
+        <div class="stack">
+          <div class="subpanel">
+            <h3>Node Detail</h3>
+            <div class="node-detail" id="node-detail"></div>
+          </div>
+          <div class="subpanel">
+            <h3>Current Risks</h3>
+            <ul id="issue-list"></ul>
+          </div>
+          <div class="subpanel">
+            <h3>Knowledge Evidence Chain</h3>
+            <div class="evidence-chain" id="evidence-chain"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Engineer View</h2>
+      <div class="split">
+        <div>
+          <h3>Workflow States</h3>
+          <table>
+            <thead><tr><th>ID</th><th>Workflow</th><th>Status</th></tr></thead>
+            <tbody id="workflow-rows"></tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Graphify Artifacts</h3>
+          <table>
+            <tbody id="graph-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Knowledge / Quality / Privacy Artifacts</h2>
+      <div class="split">
+        <div>
+          <h3>GraphRAG / RAG</h3>
+          <table>
+            <tbody id="rag-rows"></tbody>
+          </table>
+        </div>
+        <div class="stack">
+          <div>
+            <h3>Quality Closure</h3>
+            <table>
+              <tbody id="quality-rows"></tbody>
+            </table>
+          </div>
+          <div>
+            <h3>Privacy</h3>
+            <table>
+              <tbody id="privacy-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Next Commands</h2>
+      <pre><code id="next-commands"></code></pre>
+    </section>
+
+    <p class="footer-note">
+      Static local snapshot. Template source: <code>templates/cockpit/index.template.html</code>.
+      Sample data source: <code>templates/cockpit/sample-data.json</code>.
+    </p>
+  </main>
+
+  <script id="cockpit-data" type="application/json">{
+  "generatedAt": "2026-06-28T09:00:00+09:00",
+  "status": "PASS",
+  "target": "/sample/japan-approval-system",
+  "heavyRefreshExecuted": false,
+  "template": {
+    "mode": "sample",
+    "source": "templates/cockpit/index.template.html",
+    "sampleData": "templates/cockpit/sample-data.json"
+  },
+  "graphify": {
+    "status": "PASS",
+    "html": {
+      "discovered": [
+        "graphify-out/index.html"
+      ],
+      "copied": [
+        {
+          "source": "graphify-out/index.html",
+          "copiedTo": "templates/cockpit/assets/graphify/sample.html",
+          "cockpitHref": "assets/graphify/sample.html"
+        }
+      ],
+      "blocked": []
+    },
+    "freshness": {
+      "state": "fresh",
+      "behindCommits": 0,
+      "reason": "sample data"
+    },
+    "stats": {
+      "status": "PASS",
+      "nodes": 12,
+      "edges": 18
+    },
+    "preview": {
+      "available": true,
+      "graphPath": "graphify-out/graph.json",
+      "totalNodes": 12,
+      "totalEdges": 18,
+      "nodes": [
+        {
+          "id": "src/approval/ApprovalService.ts",
+          "label": "ApprovalService",
+          "kind": "service",
+          "community": "approval-flow",
+          "degree": 5,
+          "summary": "中心の承認処理サービス",
+          "x": 280,
+          "y": 180
+        },
+        {
+          "id": "src/approval/ApprovalPolicy.ts",
+          "label": "ApprovalPolicy",
+          "kind": "domain",
+          "community": "approval-flow",
+          "degree": 2,
+          "summary": "承認上限と代理承認ポリシー",
+          "x": 430,
+          "y": 180
+        },
+        {
+          "id": "src/api/approvalRoutes.ts",
+          "label": "approvalRoutes",
+          "kind": "api",
+          "community": "api-entry",
+          "degree": 1,
+          "summary": "承認 API の入口",
+          "x": 386,
+          "y": 286
+        },
+        {
+          "id": "src/db/approvalRepository.ts",
+          "label": "approvalRepository",
+          "kind": "repository",
+          "community": "data-layer",
+          "degree": 1,
+          "summary": "承認データ永続化",
+          "x": 174,
+          "y": 286
+        },
+        {
+          "id": "docs/spec/代理承認上限.md",
+          "label": "代理承認上限仕様",
+          "kind": "doc",
+          "community": "spec-evidence",
+          "degree": 1,
+          "summary": "仕様根拠ドキュメント",
+          "x": 130,
+          "y": 180
+        },
+        {
+          "id": "tests/approval/approvalLimit.test.ts",
+          "label": "approvalLimit.test",
+          "kind": "test",
+          "community": "verification",
+          "degree": 1,
+          "summary": "上限値の回帰テスト",
+          "x": 174,
+          "y": 74
+        },
+        {
+          "id": "src/audit/EvidenceWriter.ts",
+          "label": "EvidenceWriter",
+          "kind": "evidence",
+          "community": "verification",
+          "degree": 1,
+          "summary": "証跡書き戻し",
+          "x": 386,
+          "y": 74
+        }
+      ],
+      "edges": [
+        {
+          "source": "docs/spec/代理承認上限.md",
+          "target": "src/approval/ApprovalService.ts",
+          "relation": "specifies",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/api/approvalRoutes.ts",
+          "target": "src/approval/ApprovalService.ts",
+          "relation": "calls",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/approval/ApprovalService.ts",
+          "target": "src/approval/ApprovalPolicy.ts",
+          "relation": "uses",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/approval/ApprovalService.ts",
+          "target": "src/db/approvalRepository.ts",
+          "relation": "writes",
+          "confidence": "INFERRED"
+        },
+        {
+          "source": "tests/approval/approvalLimit.test.ts",
+          "target": "src/approval/ApprovalService.ts",
+          "relation": "tests",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/approval/ApprovalService.ts",
+          "target": "src/audit/EvidenceWriter.ts",
+          "relation": "records",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "legend": [
+        {
+          "id": "approval-flow",
+          "label": "approval-flow",
+          "count": 2,
+          "colorIndex": 0
+        },
+        {
+          "id": "verification",
+          "label": "verification",
+          "count": 2,
+          "colorIndex": 1
+        },
+        {
+          "id": "spec-evidence",
+          "label": "spec-evidence",
+          "count": 1,
+          "colorIndex": 2
+        },
+        {
+          "id": "api-entry",
+          "label": "api-entry",
+          "count": 1,
+          "colorIndex": 3
+        },
+        {
+          "id": "data-layer",
+          "label": "data-layer",
+          "count": 1,
+          "colorIndex": 4
+        }
+      ]
+    },
+    "artifacts": {
+      "planningGraph": {
+        "path": ".planning/graphs/graph.json",
+        "exists": true,
+        "status": "present",
+        "summary": "Graphify code map snapshot with approval service, policy, route, repository, spec, test and evidence nodes."
+      },
+      "graphifyGraph": {
+        "path": "graphify-out/graph.json",
+        "exists": true,
+        "status": "present",
+        "summary": "Graphify exported graph.json."
+      },
+      "planningReport": {
+        "path": ".planning/graphs/GRAPH_REPORT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "Impact area focuses on ApprovalService and ApprovalPolicy."
+      },
+      "impact": {
+        "path": ".planning/graphs/GRAPH_IMPACT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "Modified approval limit impacts API route, policy check, repository write and approval limit tests."
+      },
+      "risk": {
+        "path": ".planning/graphs/GRAPH_RISK.md",
+        "exists": true,
+        "status": "present",
+        "summary": "Risk is medium because policy and audit writeback both depend on the changed service."
+      },
+      "freshness": {
+        "path": ".planning/graphs/GRAPH_FRESHNESS.md",
+        "exists": true,
+        "status": "present",
+        "summary": "Graphify is fresh at current HEAD."
+      }
+    }
+  },
+  "rag": {
+    "status": "PASS",
+    "artifacts": {
+      "docsSync": {
+        "path": ".planning/knowledge/DOCS_SYNC.md",
+        "exists": true,
+        "status": "present",
+        "summary": "3 docs changed, citation audit ready, heavy refresh executed: no."
+      },
+      "docsSyncJson": {
+        "path": ".planning/knowledge/DOCS_SYNC.json",
+        "exists": true,
+        "status": "present",
+        "summary": "STALE_NEEDS_REFRESH: false"
+      },
+      "ragIndex": {
+        "path": ".planning/knowledge/RAG_INDEX_RESULT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "Local GraphRAG index is available from previous explicit --index run."
+      },
+      "ragQuery": {
+        "path": ".planning/knowledge/RAG_QUERY_RESULT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "代理承認の上限は30,000円。Source: docs/spec/代理承認上限.md."
+      },
+      "docsQuery": {
+        "path": ".planning/knowledge/DOCS_QUERY_RESULT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "docs/spec/代理承認上限.md and docs/qa/QA-042.md matched."
+      },
+      "answerAudit": {
+        "path": ".planning/quality/ANSWER_AUDIT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS: answer includes citation and source file exists."
+      },
+      "answerAuditJson": {
+        "path": ".planning/quality/ANSWER_AUDIT.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS"
+      },
+      "citationAudit": {
+        "path": ".planning/quality/CITATION_AUDIT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS: all cited files exist and are local."
+      },
+      "citationAuditJson": {
+        "path": ".planning/quality/CITATION_AUDIT.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS"
+      }
+    }
+  },
+  "workflow": {
+    "status": "PASS",
+    "states": [
+      {
+        "path": ".planning/workflows/MS-042/WORKFLOW_STATE.json",
+        "data": {
+          "id": "MS-042",
+          "workflow": "approval-limit-debug",
+          "status": "PASS"
+        }
+      },
+      {
+        "path": ".planning/workflows/MS-043/WORKFLOW_STATE.json",
+        "data": {
+          "id": "MS-043",
+          "workflow": "qa-regression",
+          "status": "running"
+        }
+      }
+    ],
+    "evidenceIndex": {
+      "path": ".planning/evidence/INDEX.md",
+      "exists": true,
+      "status": "present",
+      "summary": "Milestone evidence, test output and decision notes are recorded."
+    }
+  },
+  "quality": {
+    "status": "PASS",
+    "artifacts": {
+      "qualityClosure": {
+        "path": "verification/reports/quality-closure-check.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS checks=9 issues=0"
+      },
+      "skillsUsability": {
+        "path": "verification/reports/skills-usability-check.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS rendered=33"
+      },
+      "workflowClosure": {
+        "path": "verification/reports/workflow-closure-check.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS workflow scenarios covered."
+      },
+      "docsCompleteness": {
+        "path": "verification/reports/docs-completeness-check.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS commands checked=71"
+      },
+      "fullCommandSurface": {
+        "path": "verification/reports/full-command-surface-check.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS 71/71"
+      }
+    }
+  },
+  "privacy": {
+    "status": "PASS",
+    "artifacts": {
+      "offlineLock": {
+        "path": ".planning/privacy/OFFLINE_LOCK.json",
+        "exists": true,
+        "status": "present",
+        "summary": "local_only=true, external provider disabled."
+      },
+      "policyVerify": {
+        "path": ".planning/policies/POLICY_VERIFY.json",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS: no policy drift from lock."
+      },
+      "privacyAudit": {
+        "path": ".planning/knowledge/PRIVACY_AUDIT.md",
+        "exists": true,
+        "status": "present",
+        "summary": "PASS: no external URL, API key or network command detected."
+      }
+    }
+  },
+  "issues": [],
+  "nextCommands": [
+    "pik-cockpit-build --target \"$PWD\"",
+    "# sample is stable; live project cockpit depends on existing local artifacts"
+  ],
+  "viewModel": {
+    "version": "cockpit-viewmodel.v1",
+    "summary": [
+      {
+        "id": "graphify",
+        "label": "Graphify Impact",
+        "status": "PASS",
+        "detail": "12 nodes / 18 edges / node"
+      },
+      {
+        "id": "knowledge",
+        "label": "Knowledge Evidence",
+        "status": "PASS",
+        "detail": "docs / citation / RAG / answer audit"
+      },
+      {
+        "id": "workflow",
+        "label": "Workflow",
+        "status": "PASS",
+        "detail": "2 workflow states"
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy",
+        "status": "PASS",
+        "detail": "local-only / offline lock"
+      }
+    ],
+    "impactGraph": {
+      "available": true,
+      "graphPath": "graphify-out/graph.json",
+      "totalNodes": 12,
+      "totalEdges": 18,
+      "nodes": [
+        {
+          "id": "src/approval/ApprovalService.ts",
+          "label": "ApprovalService",
+          "kind": "service",
+          "community": "approval-flow",
+          "degree": 5,
+          "summary": "中心の承認処理サービス",
+          "x": 280,
+          "y": 180
+        },
+        {
+          "id": "src/approval/ApprovalPolicy.ts",
+          "label": "ApprovalPolicy",
+          "kind": "domain",
+          "community": "approval-flow",
+          "degree": 2,
+          "summary": "承認上限と代理承認ポリシー",
+          "x": 430,
+          "y": 180
+        },
+        {
+          "id": "src/api/approvalRoutes.ts",
+          "label": "approvalRoutes",
+          "kind": "api",
+          "community": "api-entry",
+          "degree": 1,
+          "summary": "承認 API の入口",
+          "x": 386,
+          "y": 286
+        },
+        {
+          "id": "src/db/approvalRepository.ts",
+          "label": "approvalRepository",
+          "kind": "repository",
+          "community": "data-layer",
+          "degree": 1,
+          "summary": "承認データ永続化",
+          "x": 174,
+          "y": 286
+        },
+        {
+          "id": "docs/spec/代理承認上限.md",
+          "label": "代理承認上限仕様",
+          "kind": "doc",
+          "community": "spec-evidence",
+          "degree": 1,
+          "summary": "仕様根拠ドキュメント",
+          "x": 130,
+          "y": 180
+        },
+        {
+          "id": "tests/approval/approvalLimit.test.ts",
+          "label": "approvalLimit.test",
+          "kind": "test",
+          "community": "verification",
+          "degree": 1,
+          "summary": "上限値の回帰テスト",
+          "x": 174,
+          "y": 74
+        },
+        {
+          "id": "src/audit/EvidenceWriter.ts",
+          "label": "EvidenceWriter",
+          "kind": "evidence",
+          "community": "verification",
+          "degree": 1,
+          "summary": "証跡書き戻し",
+          "x": 386,
+          "y": 74
+        }
+      ],
+      "edges": [
+        {
+          "source": "docs/spec/代理承認上限.md",
+          "target": "src/approval/ApprovalService.ts",
+          "relation": "specifies",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/api/approvalRoutes.ts",
+          "target": "src/approval/ApprovalService.ts",
+          "relation": "calls",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/approval/ApprovalService.ts",
+          "target": "src/approval/ApprovalPolicy.ts",
+          "relation": "uses",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/approval/ApprovalService.ts",
+          "target": "src/db/approvalRepository.ts",
+          "relation": "writes",
+          "confidence": "INFERRED"
+        },
+        {
+          "source": "tests/approval/approvalLimit.test.ts",
+          "target": "src/approval/ApprovalService.ts",
+          "relation": "tests",
+          "confidence": "EXTRACTED"
+        },
+        {
+          "source": "src/approval/ApprovalService.ts",
+          "target": "src/audit/EvidenceWriter.ts",
+          "relation": "records",
+          "confidence": "EXTRACTED"
+        }
+      ],
+      "legend": [
+        {
+          "id": "approval-flow",
+          "label": "approval-flow",
+          "count": 2,
+          "colorIndex": 0
+        },
+        {
+          "id": "verification",
+          "label": "verification",
+          "count": 2,
+          "colorIndex": 1
+        },
+        {
+          "id": "spec-evidence",
+          "label": "spec-evidence",
+          "count": 1,
+          "colorIndex": 2
+        },
+        {
+          "id": "api-entry",
+          "label": "api-entry",
+          "count": 1,
+          "colorIndex": 3
+        },
+        {
+          "id": "data-layer",
+          "label": "data-layer",
+          "count": 1,
+          "colorIndex": 4
+        }
+      ],
+      "mode": "node"
+    },
+    "evidenceChain": [
+      {
+        "id": "docs",
+        "label": "Docs",
+        "status": "PASS",
+        "detail": "docs sync",
+        "path": ".planning/knowledge/DOCS_SYNC.md",
+        "exists": true,
+        "summary": "3 docs changed, citation audit ready, heavy refresh executed: no."
+      },
+      {
+        "id": "citation",
+        "label": "Citation",
+        "status": "PASS",
+        "detail": "source check",
+        "path": ".planning/quality/CITATION_AUDIT.md",
+        "exists": true,
+        "summary": "PASS: all cited files exist and are local."
+      },
+      {
+        "id": "rag",
+        "label": "RAG Query",
+        "status": "PASS",
+        "detail": "retrieval",
+        "path": ".planning/knowledge/RAG_QUERY_RESULT.md",
+        "exists": true,
+        "summary": "代理承認の上限は30,000円。Source: docs/spec/代理承認上限.md."
+      },
+      {
+        "id": "answer",
+        "label": "Answer Audit",
+        "status": "PASS",
+        "detail": "claim support",
+        "path": ".planning/quality/ANSWER_AUDIT.md",
+        "exists": true,
+        "summary": "PASS: answer includes citation and source file exists."
+      },
+      {
+        "id": "evidence",
+        "label": "Evidence",
+        "status": "PASS",
+        "detail": "writeback",
+        "path": ".planning/evidence/INDEX.md",
+        "exists": true,
+        "summary": "Milestone evidence, test output and decision notes are recorded."
+      }
+    ],
+    "workflowRows": [
+      {
+        "id": "MS-042",
+        "workflow": "approval-limit-debug",
+        "status": "PASS",
+        "path": ".planning/workflows/MS-042/WORKFLOW_STATE.json"
+      },
+      {
+        "id": "MS-043",
+        "workflow": "qa-regression",
+        "status": "running",
+        "path": ".planning/workflows/MS-043/WORKFLOW_STATE.json"
+      }
+    ],
+    "artifactGroups": [
+      {
+        "id": "graphify",
+        "label": "Graphify Artifacts",
+        "rows": [
+          {
+            "key": "planningGraph",
+            "path": ".planning/graphs/graph.json",
+            "exists": true,
+            "status": "present",
+            "summary": "Graphify code map snapshot with approval service, policy, route, repository, spec, test and evidence nodes."
+          },
+          {
+            "key": "graphifyGraph",
+            "path": "graphify-out/graph.json",
+            "exists": true,
+            "status": "present",
+            "summary": "Graphify exported graph.json."
+          },
+          {
+            "key": "planningReport",
+            "path": ".planning/graphs/GRAPH_REPORT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "Impact area focuses on ApprovalService and ApprovalPolicy."
+          },
+          {
+            "key": "impact",
+            "path": ".planning/graphs/GRAPH_IMPACT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "Modified approval limit impacts API route, policy check, repository write and approval limit tests."
+          },
+          {
+            "key": "risk",
+            "path": ".planning/graphs/GRAPH_RISK.md",
+            "exists": true,
+            "status": "present",
+            "summary": "Risk is medium because policy and audit writeback both depend on the changed service."
+          },
+          {
+            "key": "freshness",
+            "path": ".planning/graphs/GRAPH_FRESHNESS.md",
+            "exists": true,
+            "status": "present",
+            "summary": "Graphify is fresh at current HEAD."
+          }
+        ]
+      },
+      {
+        "id": "rag",
+        "label": "GraphRAG / RAG",
+        "rows": [
+          {
+            "key": "docsSync",
+            "path": ".planning/knowledge/DOCS_SYNC.md",
+            "exists": true,
+            "status": "present",
+            "summary": "3 docs changed, citation audit ready, heavy refresh executed: no."
+          },
+          {
+            "key": "docsSyncJson",
+            "path": ".planning/knowledge/DOCS_SYNC.json",
+            "exists": true,
+            "status": "present",
+            "summary": "STALE_NEEDS_REFRESH: false"
+          },
+          {
+            "key": "ragIndex",
+            "path": ".planning/knowledge/RAG_INDEX_RESULT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "Local GraphRAG index is available from previous explicit --index run."
+          },
+          {
+            "key": "ragQuery",
+            "path": ".planning/knowledge/RAG_QUERY_RESULT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "代理承認の上限は30,000円。Source: docs/spec/代理承認上限.md."
+          },
+          {
+            "key": "docsQuery",
+            "path": ".planning/knowledge/DOCS_QUERY_RESULT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "docs/spec/代理承認上限.md and docs/qa/QA-042.md matched."
+          },
+          {
+            "key": "answerAudit",
+            "path": ".planning/quality/ANSWER_AUDIT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS: answer includes citation and source file exists."
+          },
+          {
+            "key": "answerAuditJson",
+            "path": ".planning/quality/ANSWER_AUDIT.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS"
+          },
+          {
+            "key": "citationAudit",
+            "path": ".planning/quality/CITATION_AUDIT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS: all cited files exist and are local."
+          },
+          {
+            "key": "citationAuditJson",
+            "path": ".planning/quality/CITATION_AUDIT.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS"
+          }
+        ]
+      },
+      {
+        "id": "quality",
+        "label": "Quality Closure",
+        "rows": [
+          {
+            "key": "qualityClosure",
+            "path": "verification/reports/quality-closure-check.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS checks=9 issues=0"
+          },
+          {
+            "key": "skillsUsability",
+            "path": "verification/reports/skills-usability-check.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS rendered=33"
+          },
+          {
+            "key": "workflowClosure",
+            "path": "verification/reports/workflow-closure-check.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS workflow scenarios covered."
+          },
+          {
+            "key": "docsCompleteness",
+            "path": "verification/reports/docs-completeness-check.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS commands checked=71"
+          },
+          {
+            "key": "fullCommandSurface",
+            "path": "verification/reports/full-command-surface-check.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS 71/71"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy",
+        "rows": [
+          {
+            "key": "offlineLock",
+            "path": ".planning/privacy/OFFLINE_LOCK.json",
+            "exists": true,
+            "status": "present",
+            "summary": "local_only=true, external provider disabled."
+          },
+          {
+            "key": "policyVerify",
+            "path": ".planning/policies/POLICY_VERIFY.json",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS: no policy drift from lock."
+          },
+          {
+            "key": "privacyAudit",
+            "path": ".planning/knowledge/PRIVACY_AUDIT.md",
+            "exists": true,
+            "status": "present",
+            "summary": "PASS: no external URL, API key or network command detected."
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "nextCommands": [
+      "pik-cockpit-build --target \"$PWD\"",
+      "# sample is stable; live project cockpit depends on existing local artifacts"
+    ]
+  }
+}</script>
+  <script>
+    const data = JSON.parse(document.getElementById("cockpit-data").textContent);
+    const vm = data.viewModel || createLegacyViewModel(data);
+    let selectedNodeId = null;
+    let searchTerm = "";
+    let activeCommunities = new Set((vm.impactGraph?.legend || []).map((item) => item.id));
+
+    const byId = (id) => document.getElementById(id);
+    const text = (value) => String(value ?? "");
+    const escapeHtml = (value) => text(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+    function statusValue(value) {
+      return text(value || "UNKNOWN");
+    }
+
+    function pill(status) {
+      const value = statusValue(status);
+      return `<span class="pill ${escapeHtml(value)}">${escapeHtml(value)}</span>`;
+    }
+
+    function artifactStatus(artifact) {
+      if (!artifact) return "missing";
+      return artifact.exists ? artifact.status || "present" : artifact.status || "missing";
+    }
+
+    function artifactPath(artifact) {
+      if (!artifact) return "missing";
+      return artifact.exists ? artifact.path : `${artifact.path || "missing"} (missing)`;
+    }
+
+    function artifactRows(artifacts) {
+      const entries = Array.isArray(artifacts)
+        ? artifacts.map((item) => [item.key, item])
+        : Object.entries(artifacts || {});
+      if (!entries.length) return `<tr><td colspan="4" class="muted">No artifact records.</td></tr>`;
+      return entries.map(([key, artifact]) => {
+        const exists = artifact?.exists !== undefined ? artifact.exists : Boolean(artifact?.path);
+        const status = artifact?.status || (exists ? "present" : "missing");
+        const pathText = artifact?.path || "missing";
+        const summary = text(artifact?.summary || artifact?.data?.status || "").replace(/\s+/g, " ").slice(0, 120);
+        return `<tr>
+          <td>${escapeHtml(key)}</td>
+          <td>${pill(status)}</td>
+          <td><code>${escapeHtml(pathText)}</code></td>
+          <td class="artifact-summary">${escapeHtml(summary)}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    function renderMetric(label, value, detail) {
+      return `<div class="metric">
+        <span>${escapeHtml(label)}</span>
+        <strong>${escapeHtml(statusValue(value))}</strong>
+        <small>${escapeHtml(detail || "")}</small>
+      </div>`;
+    }
+
+    function graphColor(community, index = 0) {
+      const palette = ["#22d3ee", "#4ade80", "#fbbf24", "#7dd3fc", "#a78bfa", "#fb7185", "#34d399", "#f97316", "#c084fc", "#e5e7eb"];
+      const legend = vm.impactGraph?.legend || [];
+      const found = legend.find((item) => item.id === community);
+      return palette[(found?.colorIndex ?? index) % palette.length];
+    }
+
+    function visibleGraphNodes(graph) {
+      const query = searchTerm.trim().toLowerCase();
+      return (graph.nodes || []).filter((node) => {
+        if (activeCommunities.size && !activeCommunities.has(node.community)) return false;
+        if (!query) return true;
+        return [node.id, node.label, node.kind, node.community, node.sourceFile, node.summary]
+          .some((value) => text(value).toLowerCase().includes(query));
+      });
+    }
+
+    function graphSvg(graph) {
+      if (!graph?.available || !graph.nodes?.length) {
+        return `<div class="empty-graph">
+          <div>
+            <strong>Graphify graph.json missing.</strong><br>
+            <span>Run <code>pik-graph-build --target "$PWD" --run</code> when a fresh map is needed.</span>
+          </div>
+        </div>`;
+      }
+      const filteredNodes = visibleGraphNodes(graph);
+      if (!filteredNodes.length) {
+        return `<div class="empty-graph">
+          <div>
+            <strong>No nodes match the current filter.</strong><br>
+            <span>Reset the search or enable more communities.</span>
+          </div>
+        </div>`;
+      }
+      const nodeMap = new Map(filteredNodes.map((node) => [node.id, node]));
+      const edges = (graph.edges || []).map((edge) => {
+        const source = nodeMap.get(edge.source);
+        const target = nodeMap.get(edge.target);
+        if (!source || !target) return "";
+        const inferred = text(edge.confidence).toUpperCase() !== "EXTRACTED" && text(edge.confidence).toUpperCase() !== "AGGREGATED";
+        return `<line class="${inferred ? "inferred" : ""}" x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}">
+          <title>${escapeHtml(edge.relation || "relates")} / ${escapeHtml(edge.confidence || "")}</title>
+        </line>`;
+      }).join("");
+      const nodes = filteredNodes.map((node, index) => {
+        const kind = text(node.kind).toLowerCase();
+        const accent = index === 0 ? "main" : kind.includes("doc") ? "doc" : kind.includes("risk") ? "risk" : "normal";
+        const selected = selectedNodeId === node.id ? " is-selected" : "";
+        const radius = node.members ? Math.min(24, 9 + Math.sqrt(node.members) * 2.2) : index === 0 ? 13 : Math.max(8, Math.min(16, 8 + (Number(node.degree) || 0)));
+        const color = graphColor(node.community, index);
+        return `<g class="graph-node ${accent}${selected}" data-node-id="${escapeHtml(node.id)}" tabindex="0" role="button" transform="translate(${Number(node.x) || 0} ${Number(node.y) || 0})">
+          <circle r="${radius}" style="fill:${escapeHtml(color)}"></circle>
+          <text x="14" y="4">${escapeHtml(node.label || node.id)}</text>
+          <title>${escapeHtml(node.id)} / ${escapeHtml(node.kind || "")}</title>
+        </g>`;
+      }).join("");
+      return `<svg class="cockpit-graph" viewBox="0 0 560 360" role="img" aria-label="Graphify impact graph">
+        <g class="graph-edges">${edges}</g>
+        <g>${nodes}</g>
+      </svg>`;
+    }
+
+    function renderIssues() {
+      const issues = vm.issues || [];
+      if (!issues.length) return "<li>No cockpit warnings.</li>";
+      return issues.map((issue) => `<li><strong>${escapeHtml(issue.severity || "INFO")}</strong> ${escapeHtml(issue.area || "general")}: ${escapeHtml(issue.message || "")}</li>`).join("");
+    }
+
+    function chainNode(step) {
+      return `<div class="chain-node">
+        <strong>${escapeHtml(step.label)}</strong>
+        ${pill(step.status)}
+        <small>${escapeHtml(step.detail || step.path || "")}</small>
+      </div>`;
+    }
+
+    function renderEvidenceChain() {
+      return (vm.evidenceChain || []).map((step) => chainNode(step)).join("");
+    }
+
+    function renderWorkflowRows() {
+      const states = vm.workflowRows || [];
+      if (!states.length) return `<tr><td colspan="3" class="muted">No workflow state found.</td></tr>`;
+      return states.map((item) => `<tr>
+        <td><code>${escapeHtml(item.id || item.path || "-")}</code></td>
+        <td>${escapeHtml(item.workflow || "-")}</td>
+        <td>${pill(item.status || "UNKNOWN")}</td>
+      </tr>`).join("");
+    }
+
+    function renderGraphLinks() {
+      const copied = data.graphify?.html?.copied || [];
+      if (!copied.length) return `<span class="muted">No safe Graphify HTML copied. Fallback graph is shown.</span>`;
+      return copied.map((item) => `<a class="button" href="${escapeHtml(item.cockpitHref)}">Open Graphify HTML</a>`).join("");
+    }
+
+    function defaultNextCommands() {
+      const commands = [];
+      if (!data.graphify?.preview?.available) commands.push('pik-graph-build --target "$PWD" --run');
+      if (data.graphify?.status === "STALE_NEEDS_REFRESH") commands.push('pik-refresh-plan --target "$PWD" && pik-refresh-run --target "$PWD" --graph');
+      if (data.rag?.status !== "PASS") commands.push('pik-docs-sync --target "$PWD"');
+      if (!data.rag?.artifacts?.answerAudit?.exists) commands.push('pik-answer-audit --target "$PWD"');
+      if (!data.privacy?.artifacts?.offlineLock?.exists) commands.push('pik-offline-lock --target "$PWD"');
+      return commands.length ? commands : ["# No recovery command required."];
+    }
+
+    function renderGraphLegend() {
+      const legend = vm.impactGraph?.legend || [];
+      if (!legend.length) {
+        byId("graph-legend").innerHTML = "";
+        return;
+      }
+      byId("graph-legend").innerHTML = legend.map((item, index) => {
+        const active = activeCommunities.has(item.id);
+        return `<button class="legend-chip ${active ? "" : "is-off"}" type="button" data-community="${escapeHtml(item.id)}" style="--chip-color:${escapeHtml(graphColor(item.id, index))}">
+          ${escapeHtml(item.label)} · ${Number(item.count) || 0}
+        </button>`;
+      }).join("");
+      byId("graph-legend").querySelectorAll("[data-community]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const community = button.getAttribute("data-community");
+          if (activeCommunities.has(community)) activeCommunities.delete(community);
+          else activeCommunities.add(community);
+          if (!activeCommunities.size) activeCommunities = new Set(legend.map((item) => item.id));
+          renderGraph();
+        });
+      });
+    }
+
+    function selectedNode() {
+      const graph = vm.impactGraph || {};
+      return (graph.nodes || []).find((node) => node.id === selectedNodeId) || (graph.nodes || [])[0] || null;
+    }
+
+    function renderNodeDetail() {
+      const node = selectedNode();
+      if (!node) {
+        byId("node-detail").innerHTML = `<span class="muted">No graph node available.</span>`;
+        return;
+      }
+      byId("node-detail").innerHTML = `
+        <strong>${escapeHtml(node.label || node.id)}</strong>
+        ${pill(node.kind || "node")}
+        <code>${escapeHtml(node.id)}</code>
+        <span>Community: ${escapeHtml(node.community || "unknown")}</span>
+        <span>Degree: ${Number(node.degree) || 0}${node.members ? ` · Members: ${Number(node.members)}` : ""}</span>
+        <span>${escapeHtml(node.summary || node.sourceFile || "")}</span>
+      `;
+    }
+
+    function renderGraph() {
+      const graph = vm.impactGraph || {};
+      byId("graph-shell").innerHTML = graphSvg(graph);
+      byId("graph-mode").textContent = graph.mode || "missing";
+      byId("graph-meta").textContent = `Source: ${graph.graphPath || "missing"} / ${graph.totalNodes || 0} nodes / ${graph.totalEdges || 0} edges`;
+      byId("graph-shell").querySelectorAll("[data-node-id]").forEach((nodeEl) => {
+        nodeEl.addEventListener("click", () => {
+          selectedNodeId = nodeEl.getAttribute("data-node-id");
+          renderGraph();
+          renderNodeDetail();
+        });
+        nodeEl.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectedNodeId = nodeEl.getAttribute("data-node-id");
+            renderGraph();
+            renderNodeDetail();
+          }
+        });
+      });
+      renderGraphLegend();
+      renderNodeDetail();
+    }
+
+    function artifactGroup(id) {
+      return (vm.artifactGroups || []).find((group) => group.id === id)?.rows || [];
+    }
+
+    function createLegacyViewModel(raw) {
+      const graph = raw.graphify?.preview || { available: false, nodes: [], edges: [], legend: [] };
+      return {
+        version: "legacy-adapter",
+        summary: [
+          { label: "Graphify Impact", status: raw.graphify?.status, detail: `${graph.totalNodes || 0} nodes / ${graph.totalEdges || 0} edges` },
+          { label: "Knowledge Evidence", status: raw.rag?.status, detail: "docs / citation / RAG / answer audit" },
+          { label: "Workflow", status: raw.workflow?.status, detail: `${(raw.workflow?.states || []).length} workflow states` },
+          { label: "Privacy", status: raw.privacy?.status, detail: "local-only / offline lock" },
+        ],
+        impactGraph: {
+          ...graph,
+          mode: graph.mode || "legacy",
+          legend: graph.legend || [],
+        },
+        evidenceChain: [
+          { label: "Docs", status: raw.rag?.artifacts?.docsSync?.exists ? "PASS" : "WAIVED_WITH_RISK", detail: "docs sync" },
+          { label: "Citation", status: raw.rag?.artifacts?.citationAudit?.exists ? "PASS" : "WAIVED_WITH_RISK", detail: "source check" },
+          { label: "RAG Query", status: raw.rag?.artifacts?.ragQuery?.exists || raw.rag?.artifacts?.docsQuery?.exists ? "PASS" : "WAIVED_WITH_RISK", detail: "retrieval" },
+          { label: "Answer Audit", status: raw.rag?.artifacts?.answerAudit?.exists ? "PASS" : "WAIVED_WITH_RISK", detail: "claim support" },
+          { label: "Evidence", status: raw.workflow?.evidenceIndex?.exists ? "PASS" : "WAIVED_WITH_RISK", detail: "writeback" },
+        ],
+        workflowRows: (raw.workflow?.states || []).map((item) => ({
+          id: item.data?.id || item.path || "-",
+          workflow: item.data?.workflow || "-",
+          status: item.data?.status || "UNKNOWN",
+          path: item.path,
+        })),
+        artifactGroups: [
+          { id: "graphify", rows: raw.graphify?.artifacts || {} },
+          { id: "rag", rows: raw.rag?.artifacts || {} },
+          { id: "quality", rows: raw.quality?.artifacts || {} },
+          { id: "privacy", rows: raw.privacy?.artifacts || {} },
+        ],
+        issues: raw.issues || [],
+        nextCommands: raw.nextCommands || defaultNextCommands(),
+      };
+    }
+
+    function render() {
+      const mode = data.template?.mode || "live";
+      const status = statusValue(data.status);
+      byId("cockpit-subhead").textContent = `Generated ${data.generatedAt || "-"}. Static local snapshot. Heavy refresh executed: ${data.heavyRefreshExecuted ? "yes" : "no"}.`;
+      byId("template-mode").textContent = mode === "sample" ? "sample template data" : "live project data";
+      byId("build-status").className = `status ${status}`;
+      byId("build-status").textContent = `cockpit build ${status}`;
+      byId("summary-grid").innerHTML = (vm.summary || []).map((item) => renderMetric(item.label, item.status, item.detail)).join("");
+      byId("graphify-links").innerHTML = renderGraphLinks();
+      byId("issue-list").innerHTML = renderIssues();
+      byId("evidence-chain").innerHTML = renderEvidenceChain();
+      byId("workflow-rows").innerHTML = renderWorkflowRows();
+      byId("graph-rows").innerHTML = artifactRows(artifactGroup("graphify"));
+      byId("rag-rows").innerHTML = artifactRows(artifactGroup("rag"));
+      byId("quality-rows").innerHTML = artifactRows(artifactGroup("quality"));
+      byId("privacy-rows").innerHTML = artifactRows(artifactGroup("privacy"));
+      byId("next-commands").textContent = (vm.nextCommands || defaultNextCommands()).join("\n");
+      const graph = vm.impactGraph || {};
+      activeCommunities = new Set((graph.legend || []).map((item) => item.id));
+      selectedNodeId = graph.nodes?.[0]?.id || null;
+      byId("graph-search").addEventListener("input", (event) => {
+        searchTerm = event.target.value;
+        renderGraph();
+      });
+      byId("graph-reset").addEventListener("click", () => {
+        searchTerm = "";
+        byId("graph-search").value = "";
+        activeCommunities = new Set((graph.legend || []).map((item) => item.id));
+        selectedNodeId = graph.nodes?.[0]?.id || null;
+        renderGraph();
+      });
+      renderGraph();
+    }
+
+    render();
+  </script>
+</body>
+</html>
