@@ -332,6 +332,34 @@ pik-mode-set --target "$PWD" docs-strict</code></pre>
 
       <section class="section alt">
         <div class="section-header">
+          <h2>两条接入路线，按项目真实约束选择。</h2>
+          <p>AI-PIKit 不要求所有项目一上来就安装 RAG。文档少的项目先用 workflow + Graphify；文档严格的项目再启用本地 GraphRAG 和 citation gate。</p>
+        </div>
+        <div class="grid three">
+          <article class="panel panel-pad">
+            <h3>轻量路线</h3>
+            <pre class="code-block"><code>pik-init --target "$PWD" --doc-policy reference --rag none
+pik-codebase-scan --target "$PWD"
+pik-docs-sync --target "$PWD"</code></pre>
+            <p>适合文档少、文档不完整、先想把 AI-PIKit 和代码地图用起来的项目。缺文档时输出 `WAIVED_WITH_RISK`，由 evidence 记录风险。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>严格路线</h3>
+            <pre class="code-block"><code>pik-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
+pik-rag-init-local --target "$PWD"
+pik-docs-index --target "$PWD" --run</code></pre>
+            <p>适合对日、仕様書驱动、验收强依赖文档的项目。missing citation、RAG stale、外部 provider 会进入阻断逻辑。</p>
+          </article>
+          <article class="panel panel-pad">
+            <h3>演示路线</h3>
+            <pre class="code-block"><code>pik-cockpit-build --target "$PWD"</code></pre>
+            <p>生成本地项目驾驶舱，展示 workflow、Graphify、RAG、policy、quality 和 evidence 状态；它只读已有 artifact，不执行重刷新。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-header">
           <h2>适合的项目</h2>
           <p>AI-PIKit 的目标用户不是纯玩具项目，而是代码、文档、变更依据和交付责任同时存在的开发现场。</p>
         </div>

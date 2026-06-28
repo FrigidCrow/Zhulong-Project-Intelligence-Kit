@@ -5,6 +5,26 @@ Full name: **AI Project Intelligence Kit**
 Documentation abbreviation: **AI-PIKit**  
 Command namespace: **`pik-*`**
 
+## 2026-06-29: Scenario Playbook Documentation Sync
+
+本阶段不新增公开命令，专门补齐“不同项目场景应该怎么用 AI-PIKit”的说明书闭环，并同步 HTML 文档。
+
+文档增强：
+
+- `README.md` 新增场景路线速查和状态处理速查，明确文档少/无文档项目默认走 `reference + rag none`，对日/规格严格项目才走 `strict + rag local`。
+- `docs/commands.html` 新增场景路线和状态处理章节；新项目、既有项目接入示例改为默认轻量接入，不再把 `pik-rag-init-local` 写成所有项目必跑步骤。
+- `docs/technical-guide.html` 新增场景选择模型，补充 `RAG backend disabled`、`WAIVED_WITH_RISK`、strict 阻断等排障路径，并把 docs gate 定义收紧为“真实文档扫描结果或带本地 citation 的 query”。
+- `docs/product.html` 补充轻量路线、严格路线、演示路线，说明 AI-PIKit 不强迫所有项目默认上 RAG。
+- `docs/quality-dashboard.html` 补充场景质量覆盖表，把轻量项目、严格文档、既有项目、文档更新、runtime skills、leader 演示对应到验证脚本和报告。
+- `docs/runtime-command-packs.md` 新增 Codex / Claude Code / GitHub Copilot 的实际调用例，强调 runtime pack 只调用本地 CLI，不安装 RAG、不切外部 provider、不隐藏触发 heavy refresh。
+
+验证要求：
+
+- `npm run verify:docs-completeness`
+- `npm run verify:docs`
+- `npm run verify:visual`
+- `git diff --check`
+
 ## 2026-06-28: Long-Term Quality Control Scorecard
 
 本阶段把质量检查从“脚本集合”升级为长期可复跑的内部质量控制机制。它不新增公开 `pik-*` 用户命令，不进入 `docs/commands.html`，只新增维护者 npm scripts 和审计报告。
