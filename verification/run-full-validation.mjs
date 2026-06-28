@@ -268,7 +268,7 @@ function validateWorkflowGuard() {
 
   const start = pikAlias(projectRoot, "pik-workflow-run", `--target ${shell(projectRoot)} debug ${shell("CR-017 guard")}`);
   assertIncludes("AI-PIKit workflow-run alias starts guarded state", start.output, "workflow guard FAIL", "pik-workflow-run");
-  assertIncludes("AI-PIKit workflow-run alias fails docs gate before document scan", start.output, "FAIL docs", "pik-workflow-run");
+  assertIncludes("AI-PIKit workflow-run alias marks docs gate as risk before document scan", start.output, "WAIVED_WITH_RISK docs", "pik-workflow-run");
   assertIncludes("AI-PIKit workflow-run alias fails codebase gate before codebase scan", start.output, "FAIL codebase", "pik-workflow-run");
   assertIncludes("AI-PIKit workflow-run alias fails graph gate before graph build", start.output, "FAIL graph", "pik-workflow-run");
 

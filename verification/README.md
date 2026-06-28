@@ -6,11 +6,12 @@
 
 - incomplete workflow 必须被 `pik-completion-check` 阻断。
 - complete workflow 必须通过 codebase、docs、graph、plan、implementation、verification、evidence、writeback gate。
-- 默认 Local GraphRAG 不需要外部 API key。
+- 默认 `reference + rag none` 不需要 GraphRAG、本地模型或外部 API key；`strict + rag local` 才启用本地 GraphRAG。
 - MVP3 的 golden、citation、trace、policy、help skills 必须能在 fixture 中复跑。
 - MVP4.0 的 docs sync、docs query、answer audit 主路径必须能在 fixture 中复跑。
 - MVP4.1 的 skills usability、workflow closure、docs completeness 和 quality closure 必须能在 fixture 中复跑。
 - MVP4.2 的 project cockpit、Graphify HTML 安全策略、RAG 证据面板和 runtime cockpit skill 必须能在 fixture 中复跑；cockpit 模板样例必须能从 `templates/cockpit/sample-data.json` 生成到 `templates/cockpit/sample.html`，并且样例和 live 快照都使用稳定 `cockpit-viewmodel.v1`。
+- MVP4.3 的 init policy 必须证明 `pik-init` 可选择 reference/strict、none/local/external，真实终端/`--interactive` 有可复跑向导，且 external RAG 必须显式 opt-in。
 
 运行确定性验证：
 
@@ -26,6 +27,8 @@ npm run verify:privacy-strict
 npm run verify:license
 npm run verify:mvp3
 npm run verify:mvp35
+npm run verify:init-policy
+npm run verify:business-chain
 npm run verify:full-command-surface
 npm run verify:skills-usability
 npm run verify:workflow-closure
@@ -40,7 +43,7 @@ npm run verify:integration
 npm run dev:audit:full
 ```
 
-`verify:rag-local` 是默认保密路径验证。它运行 Ollama + LanceDB 的本地 GraphRAG，不需要外部 API key，并在 index/query 前后执行 `pik-privacy-audit`。
+`verify:rag-local` 是严格文档模式的本地 RAG smoke。它运行 Ollama + LanceDB 的本地 GraphRAG，不需要外部 API key，并在 index/query 前后执行 `pik-privacy-audit`。该脚本有明确超时边界：默认 index 300 秒、query 90 秒；超时会写入 `rag-local-check` 报告并失败，不会让质量 gate 无期限等待。
 
 `verify:docs-extract`、`verify:graph-hardening`、`verify:privacy-strict`、`verify:license` 覆盖 MVP2 hardening：本地文档抽取/citation、Graphify impact/risk/freshness、offline privacy lock/outbound blocking、license metadata review。
 
@@ -50,17 +53,21 @@ npm run dev:audit:full
 
 `verify:mvp35` 覆盖 MVP3.5 Execution Budget & Freshness Control：preflight、refresh plan、显式 refresh-run、mode 切换、相关/无关 commit 判断和文档同步要求。
 
+`verify:init-policy` 覆盖 Init Wizard & Document/RAG Policy Simplification：默认 `reference + rag none`、交互式 wizard、`strict + rag none` 硬失败、外部 RAG 需要 `--allow-external-rag`、本地 RAG 只写 setup plan 且不触发重刷新、`rag none` 阻断 `pik-docs-index --run` 和 `pik-docs-query --rag`。
+
+`verify:business-chain` 是维护者级业务断链审计。它会聚合 init policy、全命令面、skills usability、workflow closure、policy hardening 和 docs completeness，检查轻量接入链、严格文档链、runtime skills 链、文档/命令一致性链是否断开。
+
 `verify:full-command-surface` 会执行 `package.json` 中声明的每个 `pik-*` / `pik` bin 命令。当前全命令面报告以 `package.json` 的实际命令数量为准。
 
 `verify:skills-usability` 会把 Codex、Claude Code、GitHub Copilot 的 runtime pack 安装到临时目录，检查 33 个 skill/prompt 是否都能指向本地 CLI，并保留 local-only、no hidden heavy refresh、evidence writeback 约束。
 
-`verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`graph-lite` 无文档风险放行、`full-strict` stale/privacy 阻断。
+`verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`reference` 无文档风险放行、`strict` stale/privacy 阻断。
 
 `verify:cockpit-build` 检查 `pik-cockpit-build` 是否生成 `.planning/cockpit/index.html`、`cockpit-data.json` 和 `COCKPIT_REPORT.md`，并验证 cockpit 独立模板样例、`cockpit-viewmodel.v1`、Graphify HTML 外部 URL 阻断、fallback 图、大图 `aggregated-community` 预览、RAG 缺失 `WAIVED_WITH_RISK` 和 `heavy refresh executed: no`。
 
 `verify:docs-completeness` 检查 `docs/commands.html` 是否覆盖全部 71 个命令的独立锚点、详情字段、示例和 README 跳转。
 
-`verify:quality-closure` 是最终聚合 gate，会串起 check、quality、full command surface、integration、runtime、skills、workflow、cockpit 和 docs completeness。
+`verify:quality-closure` 是最终聚合 gate，会串起 check、quality、full command surface、integration、runtime、skills、workflow、cockpit、init policy 和 docs completeness。
 
 `verify:dev-audit-harness` 只验证维护者内部审计机制本身：`.pik-audit/` 是否 git ignored、`dev:audit:*` npm scripts 是否存在、三种 fixture 是否能生成。`dev:audit:full` 会进一步生成命令评分、skills 评分、feature gate 评分、AI-PIKit / GSD / Superpowers 同题对标、时间拆分和 token 统计边界。GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，真实 Codex 子进程结果单独记录，不混入 replay 分数。`Benchmark comparison` 是全部对标行的保守平均，不等于 AI-PIKit 单体分；AI-PIKit 产品分以三方总览中的 AI-PIKit 平均分为准。原始产物在 `.pik-audit/latest/`，可提交摘要在 `verification/reports/developer-audit-summary.md/json`。
 
@@ -87,6 +94,8 @@ verification/reports/rag-local-check.md
 verification/reports/docs-extract-citation-check.md
 verification/reports/graph-hardening-check.md
 verification/reports/privacy-strict-check.md
+verification/reports/init-policy-check.md
+verification/reports/business-chain-audit.md
 verification/reports/OUTBOUND_AUDIT.md
 verification/reports/license-audit.md
 verification/reports/license-audit-check.md

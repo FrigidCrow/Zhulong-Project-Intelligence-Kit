@@ -168,12 +168,12 @@ pik command
           <div class="grid two">
             <div class="panel panel-pad">
               <h3>新项目</h3>
-              <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name app --mode new
+              <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name app --mode new --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"</code></pre>
             </div>
             <div class="panel panel-pad">
               <h3>既存项目</h3>
-              <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name app --mode existing
+              <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name app --mode existing --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"
 pik-codebase-status --target "$PWD"</code></pre>
             </div>
@@ -210,27 +210,31 @@ pik-codebase-status --target "$PWD"</code></pre>
 
         <section id="docs" class="page-section">
           <h2>5. 文档 / RAG 机制</h2>
-          <p>AI-PIKit 先做本地文档扫描和归一化；默认 RAG backend 是 Local GraphRAG：Ollama + LanceDB + local-only privacy audit。外部 provider 不是默认能力，必须显式改配置才会启用。</p>
+          <p>AI-PIKit 先做本地文档扫描和归一化。真实终端中只运行 <code>pik-init --target "$PWD"</code> 会进入 init wizard，依次选择项目类型、文档策略、RAG 后端和本地/外部 RAG 风险；CI 和 runtime pack 使用显式参数，避免等待输入。默认是 <code>reference + rag none</code>：可以不安装 GraphRAG，也不会执行 GraphRAG index。对日/规格严格项目在 init 时选择 <code>--doc-policy strict --rag local</code>，再显式准备本地 GraphRAG、Ollama 和本地模型。外部 provider 不是默认能力，必须 <code>--allow-external-rag</code>。</p>
           <pre class="code-block"><code>python3 --version  # GraphRAG requires Python 3.10-3.12
 python3 -m pip install --user graphrag
 export PATH="$HOME/.local/bin:$PATH"
 
 brew install ollama
 brew services start ollama
-ollama pull qwen2.5:14b
-ollama pull nomic-embed-text</code></pre>
+ollama pull qwen2.5:7b
+ollama pull bge-m3</code></pre>
           <pre class="code-block"><code>.planning/config.json
 {
   "spec_context": {
+    "enabled": true,
     "provider": "graphrag-local",
     "source_paths": ["docs", "documents", "仕様書"],
     "index_command": "graphrag index --root graphrag-workspace --method fast",
     "query_command": "graphrag query --root graphrag-workspace --method basic {query}"
   },
   "graphrag": {
+    "enabled": true,
     "mode": "local",
     "profile": "local_basic",
     "requires_api_key": false,
+    "llm_model": "qwen2.5:7b",
+    "embedding_model": "bge-m3",
     "api_base": "http://127.0.0.1:11434",
     "vector_store": "lancedb"
   }
@@ -338,7 +342,8 @@ pik-refresh-plan --target "$PWD"
 pik-refresh-run --target "$PWD" --rag
 pik-refresh-run --target "$PWD" --graph
 pik-mode-status --target "$PWD"
-pik-mode-set --target "$PWD" graph-lite</code></pre>
+pik-mode-set --target "$PWD" docs-reference
+pik-mode-set --target "$PWD" docs-strict</code></pre>
             <p>核心产物是 `.planning/refresh/REFRESH_STATE.json`、`PREFLIGHT.md`、`REFRESH_PLAN.md`、`REFRESH_RUN.md` 和 `MODE.md`。看到 `behind-unrelated` 时，说明落后的 commit 没改到文档源或代码地图相关路径，可以先跳过刷新。</p>
           </div>
         </section>
@@ -352,15 +357,15 @@ pik-policy-check --target "$PWD" --strict
 pik-policy-lock --target "$PWD"
 pik-policy-verify --target "$PWD"
 pik-policy-diff --target "$PWD"</code></pre>
-          <div class="callout">`--strict` 和 `full-strict` 会要求 offline lock。保密项目建议先跑 `pik-offline-lock --target "$PWD"`，再用 `pik-policy-lock` 固化当前本地策略。</div>
+          <div class="callout">`--strict` 和 `docs-strict` 会要求 offline lock。保密项目建议先跑 `pik-offline-lock --target "$PWD"`，再用 `pik-policy-lock` 固化当前本地策略。</div>
           <div class="table-wrap">
             <table>
               <thead><tr><th>状态</th><th>语义</th><th>profile 行为</th></tr></thead>
               <tbody>
                 <tr><td><code>PASS</code></td><td>可以作为完成证据。</td><td>所有 profile 都允许继续。</td></tr>
                 <tr><td><code>FAIL</code></td><td>必须阻断。</td><td>隐私、外部 provider、API key、外部 URL 永远阻断。</td></tr>
-                <tr><td><code>WAIVED_WITH_RISK</code></td><td>允许继续，但必须写清风险和缺失依据。</td><td><code>graph-lite</code> 无 docs/RAG 时使用。</td></tr>
-                <tr><td><code>STALE_NEEDS_REFRESH</code></td><td>RAG/Graphify 落后相关变更。</td><td><code>default-local-rag</code> 只提醒；<code>full-strict</code> 阻断。</td></tr>
+                <tr><td><code>WAIVED_WITH_RISK</code></td><td>允许继续，但必须写清风险和缺失依据。</td><td><code>reference</code> 文档策略无 docs/RAG 时使用。</td></tr>
+                <tr><td><code>STALE_NEEDS_REFRESH</code></td><td>RAG/Graphify 落后相关变更。</td><td><code>reference</code> 只提醒；<code>strict</code> 阻断。</td></tr>
               </tbody>
             </table>
           </div>
@@ -371,7 +376,7 @@ pik-policy-diff --target "$PWD"</code></pre>
 
         <section id="privacy" class="page-section">
           <h2>11. 保密边界</h2>
-          <div class="callout">AI-PIKit CLI 本身不主动上传数据。默认 Local GraphRAG 也不需要外部 API key。风险来自你把 RAG/Graphify/runtime 配置改成外部服务。</div>
+          <div class="callout">AI-PIKit CLI 本身不主动上传数据。默认 <code>reference + rag none</code> 不需要 GraphRAG、模型或外部 API key；<code>strict + rag local</code> 也使用本地 Ollama。风险来自你把 RAG/Graphify/runtime 配置改成外部服务。</div>
           <ul>
             <li>审查 `.planning/config.json` 中的 `index_command`、`query_command`、`update_command`。</li>
             <li>默认保密项目使用 `pik-rag-init-local`、Ollama、本地 embedding 和 LanceDB。</li>
@@ -414,7 +419,7 @@ node scripts/run-full-test-plan.mjs --run-id round-2
 
 # 外部 GraphRAG 验证，只能在允许外发脱敏 fixture 时使用
 GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
-          <p>`verify:rag-local` 会真实运行本地 GraphRAG，不需要 API key。`verify:docs-sync` 会证明默认同步不触发 heavy refresh，`--index` 才执行 RAG index。`verify:answer-audit` 会证明无参数 answer audit、`--from`、`--answer`、profile 状态语义和 workflow facade 建议。`verify:knowledge-reliability` 会覆盖 docs sync -> docs query -> answer audit 主路径。`verify:mvp3` 会验证 golden、citation、trace、policy、help skills。`verify:mvp35` 会验证刷新预算、preflight、mode 和文档同步。`verify:workflow-facade` 会验证 public workflow 写 `WORKFLOW_FACADE` 且不触发 heavy refresh。`verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义和 profile 阻断规则。`verify:cockpit-build` 会验证 project cockpit 独立模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、fallback 图、大图 aggregated-community 预览、RAG 证据面板和 no hidden heavy refresh。`verify:full-command-surface` 会执行 `package.json` 中全部命令入口。`verify:skills-usability` 会验证三种 runtime 的 33 个 skill/prompt，`verify:workflow-closure` 会跑新项目、既有项目、graph-lite、full-strict 四条 fixture，`verify:docs-completeness` 会验证命令手册 71 个详情锚点和 README 跳转，`verify:quality-closure` 是最终聚合 gate。默认 integration 未启用外部 live GraphRAG 时会保留一个 WARN；这不影响默认本地模式。</p>
+          <p>`verify:init-policy` 会验证 `pik-init` 默认 <code>reference + rag none</code>、严格模式必须选择 RAG、外部 RAG 必须显式 opt-in，以及 `rag none` 会阻断 GraphRAG 执行。`verify:rag-local` 会真实运行本地 GraphRAG，不需要 API key，并用默认 300 秒 index / 90 秒 query 超时避免质量 gate 被慢模型无限卡住。`verify:docs-sync` 会证明默认同步不触发 heavy refresh，`--index` 才执行 RAG index。`verify:answer-audit` 会证明无参数 answer audit、`--from`、`--answer`、profile 状态语义和 workflow facade 建议。`verify:knowledge-reliability` 会覆盖 docs sync -> docs query -> answer audit 主路径。`verify:mvp3` 会验证 golden、citation、trace、policy、help skills。`verify:mvp35` 会验证刷新预算、preflight、mode 和文档同步。`verify:workflow-facade` 会验证 public workflow 写 `WORKFLOW_FACADE` 且不触发 heavy refresh。`verify:policy-hardening` 会验证 policy lock/verify/diff、四态状态语义和 profile 阻断规则。`verify:cockpit-build` 会验证 project cockpit 独立模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、fallback 图、大图 aggregated-community 预览、RAG 证据面板和 no hidden heavy refresh。`verify:full-command-surface` 会执行 `package.json` 中全部命令入口。`verify:skills-usability` 会验证三种 runtime 的 33 个 skill/prompt，`verify:workflow-closure` 会跑新项目、既有项目、reference 无文档风险放行、strict 阻断四条 fixture，`verify:docs-completeness` 会验证命令手册 71 个详情锚点和 README 跳转，`verify:quality-closure` 是最终聚合 gate。默认 integration 未启用外部 live GraphRAG 时会保留一个 WARN；这不影响默认本地模式。</p>
           <p>`dev:audit:full` 是维护者内部机制：它在 `.pik-audit/latest/` 生成 scorecard、命令/skills/feature 分表、AI-PIKit / GSD / Superpowers 对标、时间拆分和 token 统计边界，并把可提交摘要写到 `verification/reports/developer-audit-summary.md`。`Benchmark comparison` 是所有对标行的保守平均，不是 AI-PIKit 单体分；本轮 AI-PIKit 产品平均为 90 / A，scorecard 里的 87 反映了 graph-lite 低成本路径、full-local 无文档正确阻断、GSD / Superpowers replay 可信度上限。默认 benchmark 是 deterministic，不调用外部 AI，所以 token 写 `TOKEN_USAGE_UNAVAILABLE`；GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 instruction pack hash、fixture、代码改修、测试和证据文件。真实 Codex 子进程必须显式设置 `AI_PIKIT_AUDIT_REAL_AI=1`，并使用 `--ephemeral --ignore-rules --json`；需要完全不读用户配置时再加 `AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1`。本轮真实子进程已经尝试执行，但当前账号不支持默认 `gpt-5.3-codex` 模型，三个 subprocess 均在启动阶段失败，因此没有 usage events，token 没有数字化。</p>
         </section>
 
@@ -425,15 +430,15 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
             <div class="tutorial-step">
               <h3>新项目：先建工作台，再让代码和文档长出来</h3>
               <p>新项目可以没有大量源码，但也要从第一天开始写 `.planning/`。这样 AI 的计划、讨论、验证会自然沉淀。</p>
-              <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name order_app --mode new
+              <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name order_app --mode new --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"
-pik-docs-scan --target "$PWD"
+pik-docs-sync --target "$PWD"
 pik-new-milestone --target "$PWD" "MVP1 注文管理"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>既存项目：初始化后立刻跑 codebase scan</h3>
               <p>既存项目的风险在于 AI 对旧代码影响面不了解。`pik-init` 只叠加目录，`pik-codebase-scan` 才真正建立代码基线。</p>
-              <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name legacy_order --mode existing
+              <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name legacy_order --mode existing --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"
 pik-codebase-status --target "$PWD"</code></pre>
             </div>

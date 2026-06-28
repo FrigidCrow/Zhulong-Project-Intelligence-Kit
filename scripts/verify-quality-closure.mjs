@@ -17,6 +17,8 @@ const checks = [
   "verify:skills-usability",
   "verify:workflow-closure",
   "verify:cockpit-build",
+  "verify:init-policy",
+  "verify:business-chain",
   "verify:docs-completeness",
 ];
 const results = [];

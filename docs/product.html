@@ -324,7 +324,7 @@ sed -n '1,160p' .planning/refresh/REFRESH_PLAN.md</code></pre>
             <h3>显式刷新</h3>
             <pre class="code-block"><code>pik-refresh-run --target "$PWD" --rag
 pik-refresh-run --target "$PWD" --graph
-pik-mode-set --target "$PWD" full-strict</code></pre>
+pik-mode-set --target "$PWD" docs-strict</code></pre>
             <p>真正刷新必须由命令触发，结果写回 `REFRESH_STATE.json`。</p>
           </article>
         </div>
@@ -363,7 +363,7 @@ pik-mode-set --target "$PWD" full-strict</code></pre>
           </article>
           <article class="panel panel-pad">
             <h3>能力验证</h3>
-            <p>`npm run verify:integration` 覆盖 init、docs、Graphify、runtime pack、workflow guard 和 evidence；`npm run verify:knowledge-reliability` 覆盖 docs sync、docs query、answer audit；`npm run verify:mvp3` 覆盖 golden、citation、trace、policy、help skills；`npm run verify:mvp35` 覆盖 refresh/preflight/mode 控制；`npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 覆盖无感编排层和策略合同。</p>
+            <p>`npm run verify:integration` 覆盖 init、docs、Graphify、runtime pack、workflow guard 和 evidence；`npm run verify:init-policy` 覆盖 `reference/strict` 文档策略、`none/local/external` RAG 后端和外部 RAG opt-in；`npm run verify:knowledge-reliability` 覆盖 docs sync、docs query、answer audit；`npm run verify:mvp3` 覆盖 golden、citation、trace、policy、help skills；`npm run verify:mvp35` 覆盖 refresh/preflight/mode 控制；`npm run verify:workflow-facade` 和 `npm run verify:policy-hardening` 覆盖无感编排层和策略合同。</p>
           </article>
           <article class="panel panel-pad">
             <h3>命令面验证</h3>
@@ -392,18 +392,16 @@ pik-mode-set --target "$PWD" full-strict</code></pre>
         <div class="grid two">
           <div class="panel panel-pad">
             <h3>新项目</h3>
-            <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+            <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"
 pik-preflight --target "$PWD"
 pik-verify --target "$PWD"</code></pre>
           </div>
           <div class="panel panel-pad">
             <h3>既存项目</h3>
-            <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+            <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
 pik-codebase-scan --target "$PWD"
-pik-docs-scan --target "$PWD"
-pik-rag-init-local --target "$PWD"
-pik-offline-lock --target "$PWD"
+pik-docs-sync --target "$PWD"
 pik-graph-build --target "$PWD" --run</code></pre>
           </div>
         </div>

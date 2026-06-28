@@ -5,6 +5,93 @@ Full name: **AI Project Intelligence Kit**
 Documentation abbreviation: **AI-PIKit**  
 Command namespace: **`pik-*`**
 
+## 2026-06-28: MVP4.3 Init Wizard & Document/RAG Policy Simplification
+
+本阶段把 `pik-init` 从单纯生成 `.planning/` 的入口，升级为项目级一次性接入向导语义。
+
+新增和调整：
+
+- `pik-init` 支持 `--doc-policy reference|strict`。
+- `pik-init` 支持 `--rag none|local|external`。
+- `pik-init` 支持 `--setup-rag ask|install|skip`，默认不安装依赖、不触发 GraphRAG index。
+- `pik-init` 支持 `--allow-external-rag`，没有显式确认时外部 RAG 直接失败。
+- 真实终端中只运行 `pik-init --target "$PWD"` 会进入 init wizard；CI/非 TTY 使用显式参数或默认值，不等待输入。
+- 默认初始化从旧的 Local GraphRAG 默认口径改为 `reference + rag none + local_only`。
+- `strict + rag none` 现在是硬失败，严格文档模式必须选择 local 或 external RAG。
+- `strict + rag local` 会写 `.planning/knowledge/LOCAL_RAG_SETUP_PLAN.md`，默认推荐 `qwen2.5:7b` + `bge-m3`。
+- `strict + rag external --allow-external-rag` 会写 `.planning/privacy/EXTERNAL_RAG_RISK.md`。
+- `pik-docs-index --run` 和 `pik-docs-query --rag` 在 `rag none` 下会明确失败并提示 `RAG backend disabled`，避免误跑 GraphRAG。
+- `pik-mode-set` 新增推荐语义 `docs-reference`、`docs-strict`，同时兼容 `graph-lite`、`default-local-rag`、`full-strict`。
+- policy snapshot 纳入 `document_policy` 和 `rag_backend`，避免配置漂移漏检。
+- 本地 RAG 默认 LLM 从 `qwen3.5:4b` 调整为 `qwen2.5:7b`，原因是实际 smoke 发现 `qwen3.5:4b` 会输出较长 thinking，容易拖慢 GraphRAG query。
+- `npm run verify:rag-local` 增加明确超时边界：默认 index 300 秒、query 90 秒；慢模型或 GraphRAG query 卡住会生成失败报告，不再让质量 gate 长时间悬挂。
+- 新增质量脚本 `npm run verify:init-policy`，并纳入 `verify:quality` 与 `verify:quality-closure`。
+- 新增维护者级业务链审计 `npm run verify:business-chain`，聚合 init、全命令面、skills、workflow、policy 和 docs completeness，报告业务链是否断开。
+
+同步文档：
+
+- `README.md`
+- `docs/commands.html`
+- `docs/technical-guide.html`
+- `docs/product.html`
+- `docs/architecture.md`
+- `docs/runtime-command-packs.md`
+- `docs/quality-plan.md`
+- `docs/quality-dashboard.html`
+- `docs/full-test-plan.md`
+- `verification/README.md`
+
+验证证据：
+
+- `npm run check`
+- `npm run verify:init-policy`
+- `npm run verify:business-chain`
+- 报告：`verification/reports/init-policy-check.md`
+- 报告：`verification/reports/business-chain-audit.md`
+
+## 2026-06-28: Roadmap Added Frontend Experience Intelligence Mode
+
+本次只更新未来计划，不新增公开命令。
+
+新增未来阶段：
+
+- **Frontend Experience Intelligence Mode**
+
+目标：
+
+- 增加前置调查阶段，先研究前后端联动、前端可视化验证和 AI 前端改错问题，再决定 editor 形态。
+- 在本地提供画面迁移和 UI 状态建模能力。
+- 用可视化拖拽画布表达 screen、route、modal、tab、state、transition。
+- 把画面迁移结果保存成结构化 artifact，而不是只保存图片。
+- 让 screen flow 进入 docs sync / RAG / trace，使 AI 能理解画面之间的迁移关系。
+- 让 Graphify/代码地图可以连接 screen -> route -> component -> file -> test。
+
+前置调查课题：
+
+- screen / route / component / API / DB / permission / backend handler / test 如何建立可追踪关系。
+- AI 改前端后，如何用截图、DOM snapshot、accessibility tree、route state、视觉 diff 和交互 smoke 证明它改对了。
+- 如何识别 AI 常见前端失败：调错组件、改错 route、遗漏 loading/empty/error state、局部样式正确但整体错位、视觉正确但数据流错误。
+- 如何把视觉证据写入 evidence / trace / cockpit，而不是只保留临时截图。
+
+未来候选产物：
+
+- `.planning/ui/SCREEN_FLOW.json`
+- `.planning/ui/SCREEN_FLOW.md`
+- `.planning/ui/screen-flow.html`
+
+边界：
+
+- 默认 local-only。
+- 不默认接 Figma、外部白板或外部设计平台。
+- 当前阶段只写入 roadmap，不实现 `pik-ui-flow-*` 命令。
+
+文档同步：
+
+- `README.md`
+- `docs/wishlist.md`
+- `docs/quality-plan.md`
+- `docs/changelog.md`
+
 ## 2026-06-28: Developer Audit & Benchmark Product Artifact
 
 本阶段目标：把“AI-PIKit 可用性怎么样”做成维护者可复跑的常态审计机制，并实际执行一次命令、skills、功能 gate、AI-PIKit / GSD / Superpowers 对标、时间/token/隔离统计。
@@ -496,10 +583,11 @@ MVP4.1 当时命令面：
 
 ## 后续 Roadmap
 
-下一阶段建议叫 **MVP4 Knowledge Reliability Mode**：
+下一阶段建议叫 **MVP4.3 Knowledge Reliability Mode**：
 
 - 增强 RAG answer audit。
-- 增加 `pik-docs-sync`，把文档更新后的 scan/extract/diff/index/citation 串成一个稳定流程。
+- 继续增强已落地的 `pik-docs-sync`，把文档更新后的 scan/extract/diff/index/citation 做成更可解释的稳定流程。
 - 增加更细的 GraphRAG query route：local / global / drift / basic。
 - 增加项目级 QA Dashboard，让文档、代码图、trace、policy 和 evidence 关系可视化。
 - 继续保持默认 local-only，不把保密项目资料默认发送到外部 provider。
+- 后续单独规划 **Frontend Experience Intelligence Mode**：本地画面迁移拖拽建模、结构化 screen flow、接入 RAG/trace/Graphify/cockpit。
