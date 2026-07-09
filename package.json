@@ -1,10 +1,12 @@
 {
-  "name": "ai-project-intelligence-kit",
+  "name": "zhulong-kit",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI Project Intelligence Kit for document-heavy software development.",
+  "description": "Zhulong Project Intelligence Kit for local, evidence-grounded AI engineering.",
   "bin": {
+    "zhulong": "./bin/pik.mjs",
+    "zl": "./bin/pik.mjs",
     "pik": "./bin/pik.mjs",
     "pik-init": "./bin/pik.mjs",
     "pik-verify": "./bin/pik.mjs",
