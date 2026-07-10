@@ -7,6 +7,7 @@ Command namespace: **`zl-*`**
 
 ## 2026-07-10：工程收口、CLI 契约与可追踪 Pages
 
+- 修复首发 release gate 对维护者本机 `graphify` CLI 的隐式依赖：默认 integration 使用仓库内 fixture，真实 Graphify 改为显式 `--live-graphify`，并把 hermetic integration 纳入 `verify:ci`，保证 GitHub Hosted Runner 与每个 PR 都可复现。
 - `bin/zl.mjs` 缩为启动层，领域命令进入 `src/` 模块边界；新增 Node.js 内置测试覆盖参数、路由、策略、稳定 JSON 和验证 manifest。
 - `verify:ci`、`verify:release`、`verify:local-rag` 改由单一 DAG manifest 调度，一轮内不重复执行同一 verifier，并输出唯一汇总索引。
 - 新增统一 `--json`、`--quiet`、`--no-color`、稳定退出码、`zhulong doctor` 与 Bash/Zsh/Fish 补全生成。

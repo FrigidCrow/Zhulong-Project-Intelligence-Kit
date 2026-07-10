@@ -12,6 +12,7 @@ const reportDir = path.join(kitRoot, "verification", "reports");
 const reportPath = path.join(reportDir, "latest.md");
 const reportJsonPath = path.join(reportDir, "latest.json");
 const args = new Set(process.argv.slice(2));
+const liveGraphify = args.has("--live-graphify");
 const liveGraphRag = args.has("--live-graphrag");
 const keepWorkdir = args.has("--keep-workdir");
 const workRoot = fs.mkdtempSync(path.join(os.tmpdir(), "zl-full-validation-"));
@@ -329,6 +330,20 @@ function validateWorkflowGuard() {
 }
 
 function validateRealGraphify() {
+  if (!liveGraphify) {
+    warn(
+      "Live Graphify validation skipped",
+      "--live-graphify",
+      "Default verification uses the fixture Graphify adapter; opt in only when the real graphify CLI is installed.",
+    );
+    return null;
+  }
+  const graphifyCli = run("locate graphify CLI", "command -v graphify", { allowFailure: true });
+  if (graphifyCli.status !== 0) {
+    fail("Live Graphify validation requested", "graphify CLI", "Install graphify or omit --live-graphify.");
+    return null;
+  }
+
   const projectRoot = createFixtureProject("real-graphify");
   artifacts.push(projectRoot);
   const configPath = path.join(projectRoot, ".planning", "config.json");
@@ -542,6 +557,7 @@ function writeReport() {
     `- FAIL: ${summary.fail}`,
     `- WARN: ${summary.warn}`,
     `- Work root: \`${workRoot}\`${keepWorkdir ? "" : " (removed after run)"}`,
+    `- Live Graphify: ${liveGraphify ? "requested" : "not requested"}`,
     `- Live GraphRAG: ${liveGraphRag ? "requested" : "not requested"}`,
     "",
     "## Verdict",
@@ -576,6 +592,7 @@ function writeReport() {
     verdict: summary.fail === 0 ? "pass" : "fail",
     workRoot,
     workRootRemovedAfterRun: !keepWorkdir,
+    liveGraphify: liveGraphify ? "requested" : "not requested",
     liveGraphRag: liveGraphRag ? "requested" : "not requested",
     checks,
     artifacts,

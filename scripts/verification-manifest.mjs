@@ -37,7 +37,7 @@ export const VERIFICATION_TASKS = [
   task("public-release", "verify:public-release", SHARED_TIERS, ["pages", "license"]),
   task("ci-config", "verify:ci-config", SHARED_TIERS, ["syntax"]),
   task("full-command-surface", "verify:full-command-surface", SHARED_TIERS, ["project-profiles"]),
-  task("integration", "verify:integration", ["release"], ["project-profiles"]),
+  task("integration", "verify:integration", ["ci", "release"], ["project-profiles"]),
   task("skills-usability", "verify:skills-usability", ["release"], ["runtime"]),
   task("workflow-closure", "verify:workflow-closure", ["release"], ["project-profiles"]),
   task("cockpit-build", "verify:cockpit-build", ["release"], ["workflow-closure"]),
