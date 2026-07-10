@@ -69,6 +69,31 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.reading-progress {
+  display: none;
+}
+
+@keyframes reading-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    display: block;
+    height: 3px;
+    background: var(--ember);
+    pointer-events: none;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
 img {
   max-width: 100%;
 }
@@ -306,6 +331,10 @@ pre {
 }
 
 .hero-emblem {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --shift-x: 0px;
+  --shift-y: 0px;
   position: relative;
   margin: 0;
   justify-self: end;
@@ -332,6 +361,13 @@ pre {
   object-fit: cover;
   border-radius: 18%;
   box-shadow: 22px 26px 0 color-mix(in srgb, var(--ink) 12%, transparent);
+  transform: perspective(900px) translate3d(var(--shift-x), var(--shift-y), 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 420ms cubic-bezier(.16, 1, .3, 1), box-shadow 420ms ease;
+  will-change: transform;
+}
+
+.hero-emblem:hover img {
+  box-shadow: 26px 30px 0 color-mix(in srgb, var(--ink) 15%, transparent);
 }
 
 .proof-strip {
@@ -762,6 +798,30 @@ td,
 .stage-flow code:first-child {
   border-left: 1px solid var(--line);
 }
+
+@keyframes flow-node-in {
+  0% {
+    opacity: .42;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stage-flow.is-running code {
+  animation: flow-node-in 480ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.stage-flow.is-running code:nth-child(2) { animation-delay: 70ms; }
+.stage-flow.is-running code:nth-child(3) { animation-delay: 140ms; }
+.stage-flow.is-running code:nth-child(4) { animation-delay: 210ms; }
+.stage-flow.is-running code:nth-child(5) { animation-delay: 280ms; }
+.stage-flow.is-running code:nth-child(6) { animation-delay: 350ms; }
+.stage-flow.is-running code:nth-child(7) { animation-delay: 420ms; }
+.stage-flow.is-running code:nth-child(8) { animation-delay: 490ms; }
+.stage-flow.is-running code:nth-child(9) { animation-delay: 560ms; }
 
 .stage-flow code.active,
 .stage-flow code:first-child {
@@ -1331,6 +1391,15 @@ th {
 
   .reveal-ready {
     opacity: 1;
+    transform: none;
+  }
+
+  .reading-progress {
+    display: none;
+  }
+
+  .hero-emblem img,
+  .stage-flow code {
     transform: none;
   }
 }

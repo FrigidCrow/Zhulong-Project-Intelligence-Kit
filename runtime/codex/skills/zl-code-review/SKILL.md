@@ -1,6 +1,6 @@
 ---
 name: zl-code-review
-description: Zhulong native code review command for Codex. Use when the user invokes $zl-code-review or asks Zhulong Project Intelligence Kit to review changes against specification evidence, code-map impact, source verification, tests, risks, and evidence.
+description: Zhulong native code review command for Codex. Use when the user invokes $zl-code-review or asks Zhulong Project Intelligence Kit to review changes against task/source evidence, optional documents, code-map impact, tests, risks, and evidence.
 ---
 
 # Zhulong Code Review
@@ -26,10 +26,10 @@ This is the Codex runtime entrypoint for `$zl-code-review`.
 
 3. Read the generated review context packet and handoff under
    `.planning/context/`.
-4. Review against specification evidence, source files, code-map impact,
-   dependency direction, security, regression risk, and test coverage.
-   Use `zl-docs-query --rag` only when the configured document RAG backend is
-   approved for the project documents being reviewed.
+4. Review against the request, active records, source files, code-map impact,
+   dependency direction, security, regression risk, and test coverage. Query
+   optional documents when present; use `zl-docs-query --rag` only when
+   `rag_backend` is not `none` and the backend is approved.
 5. Follow `core/workflows/code-review.md` as the Zhulong native workflow contract.
 6. Lead with findings by severity. Cite files, source evidence, and tests.
 7. If graph artifacts changed, inspect `zl-graph-diff` before accepting the

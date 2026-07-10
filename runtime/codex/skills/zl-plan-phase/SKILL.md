@@ -1,6 +1,6 @@
 ---
 name: zl-plan-phase
-description: Zhulong native phase planning command for Codex. Use when the user invokes $zl-plan-phase or asks Zhulong Project Intelligence Kit to plan work with specification evidence, code-map context, verification expectations, and evidence writeback.
+description: Zhulong native phase planning command for Codex. Use when the user invokes $zl-plan-phase or asks Zhulong Project Intelligence Kit to plan work with task/source evidence, optional documents, code-map context, verification expectations, and evidence writeback.
 ---
 
 # Zhulong Plan Phase
@@ -26,10 +26,10 @@ This is the Codex runtime entrypoint for `$zl-plan-phase`.
 
 3. Read the generated plan context packet and handoff under
    `.planning/context/`.
-4. Confirm specification context for requirements, scope, acceptance criteria,
-   terminology, API, DB, screen, QA, and test assumptions.
-   Use `zl-docs-query` for local normalized text and `zl-docs-query --rag`
-   when the configured document RAG backend is approved.
+4. Confirm requirements, scope, acceptance criteria, API, data, UI, and test
+   assumptions from the request, active records, source, and tests. Query local
+   documents only when relevant sources exist; use `zl-docs-query --rag` only
+   when `rag_backend` is not `none` and the backend is approved.
 5. Check code-map context for likely impacted entry points, modules, coupling,
    and risky areas.
 6. Follow `core/workflows/plan-phase.md` as the Zhulong native workflow contract.

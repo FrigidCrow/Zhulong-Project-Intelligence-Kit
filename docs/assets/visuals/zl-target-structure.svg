@@ -14,7 +14,7 @@
     <text x="166" y="352" fill="#6f7f92" font-size="18">models/</text>
     <text x="136" y="394" fill="#a9b7c8" font-size="20">tests/</text>
     <text x="136" y="436" fill="#a9b7c8" font-size="20">docs/</text>
-    <text x="166" y="470" fill="#6f7f92" font-size="18">仕様書/ QA/ 議事録</text>
+      <text x="166" y="470" fill="#6f7f92" font-size="18">需求 / QA / 决策记录</text>
     <text x="136" y="522" fill="#a9b7c8" font-size="20">package.json</text>
   </g>
 

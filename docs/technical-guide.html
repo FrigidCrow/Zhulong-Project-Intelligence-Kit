@@ -130,19 +130,19 @@ zl command
 
         <section id="scenarios" class="page-section">
           <h2>场景选择模型</h2>
-          <p>Zhulong 的核心不是让所有项目都强行启用 RAG，而是把 workflow、代码地图、文档依据和 evidence 按项目约束组合起来。文档少的项目可以轻量接入；对日/仕様書驱动项目再启用严格文档和本地 GraphRAG。</p>
+          <p>Zhulong 是通用项目框架，不要求所有项目启用 RAG。它把 workflow、代码地图、可选文档依据和 evidence 按项目约束组合起来：非文档密集型项目使用专门的 <code>rag none</code> 路线，文档承担需求、验收或合规责任时再启用严格文档和本地 GraphRAG。</p>
           <div class="table-wrap">
             <table>
               <thead><tr><th>项目类型</th><th>初始化选择</th><th>知识层</th><th>阻断规则</th><th>典型命令</th></tr></thead>
               <tbody>
-                <tr><td>文档少 / 无文档</td><td><code>--doc-policy reference --rag none</code></td><td>本地文档扫描 + Graphify 代码地图</td><td>缺文档输出 <code>WAIVED_WITH_RISK</code>，不阻断日常开发</td><td><code>zl-codebase-scan</code>、<code>zl-docs-sync</code>、<code>zl-debug</code></td></tr>
+                <tr><td>非文档密集型</td><td><code>--doc-policy reference --rag none</code></td><td>workflow + codebase baseline + Graphify；少量资料可直接扫描</td><td>RAG gate 不参与阻断，代码、策略、验证和 evidence gate 保持有效</td><td><code>zl-codebase-scan</code>、<code>zl-graph-build --run</code>、<code>zl-debug</code></td></tr>
                 <tr><td>普通既有改修</td><td>先 <code>reference</code>，必要时升到 <code>strict</code></td><td>codebase baseline + Graphify 影响面</td><td>代码图缺失或 privacy 问题阻断；文档缺失按风险放行</td><td><code>zl-graph-build --run</code>、<code>zl-preflight</code>、<code>zl-graph-impact</code></td></tr>
-                <tr><td>对日 / 规格严格</td><td><code>--doc-policy strict --rag local --setup-rag skip</code></td><td>本地 GraphRAG、citation、answer audit、trace</td><td>missing citation、RAG stale、Graphify stale、外部 provider 均可阻断</td><td><code>zl-rag-init-local</code>、<code>zl-docs-index --run</code>、<code>zl-answer-audit</code></td></tr>
+                <tr><td>文档密集 / 规格严格</td><td><code>--doc-policy strict --rag local --setup-rag skip</code></td><td>本地 GraphRAG、citation、answer audit、trace</td><td>missing citation、RAG stale、Graphify stale、外部 provider 均可阻断</td><td><code>zl-rag-init-local</code>、<code>zl-docs-index --run</code>、<code>zl-answer-audit</code></td></tr>
                 <tr><td>Leader 演示</td><td>读取当前项目状态</td><td>workflow / RAG / Graphify / evidence / policy 汇总</td><td>不触发刷新，只展示已有 artifact 的可信度</td><td><code>zl-cockpit-build</code></td></tr>
               </tbody>
             </table>
           </div>
-          <div class="callout">判断规则很简单：如果文档只是辅助上下文，使用 <code>reference + rag none</code>；如果文档是验收依据，使用 <code>strict + rag local</code>。外部 RAG 永远不是默认路线。</div>
+          <div class="callout"><code>rag none</code> 是非文档密集型项目的完整模式：它只关闭 RAG 安装、索引和 RAG 查询，不关闭 workflow、代码地图、策略、evidence 或完成门禁。如果文档只是少量辅助上下文，仍可使用轻量扫描和直接查询；如果文档是正式验收依据，再使用 <code>strict + rag local</code>。外部 RAG 永远不是默认路线。</div>
         </section>
 
         <section id="repo" class="page-section">
@@ -213,7 +213,7 @@ zl-codebase-status --target "$PWD"</code></pre>
               <tbody>
                 <tr><td><code>context</code></td><td>context packet 和 handoff 是否存在。</td><td>证明 workflow 已启动并留下执行上下文。</td></tr>
                 <tr><td><code>codebase</code></td><td><code>CODEBASE_STATUS.md</code>；既存项目源码数量大于 0。</td><td>避免对未知代码库直接下结论。</td></tr>
-                <tr><td><code>docs</code></td><td>真实文档扫描结果，或带有本地源文件 citation 的成功 RAG/docs query。</td><td>业务规则必须有仕様/QA/議事録依据，不能只靠聊天记忆。</td></tr>
+                <tr><td><code>docs</code></td><td>真实文档扫描结果，或带有本地源文件 citation 的成功 RAG/docs query；<code>rag none</code> 项目按 reference 策略处理。</td><td>存在正式业务资料时必须给出来源；非文档密集型项目不虚构文档要求。</td></tr>
                 <tr><td><code>graph</code></td><td>Graphify graph/report 存在且不 stale。</td><td>改修前要知道代码影响面。</td></tr>
                 <tr><td><code>plan</code></td><td>手动标记计划 gate。</td><td>确认方案已形成。</td></tr>
                 <tr><td><code>implementation</code></td><td>手动标记实现 gate。</td><td>确认改动已实施。</td></tr>
@@ -227,7 +227,7 @@ zl-codebase-status --target "$PWD"</code></pre>
 
         <section id="docs" class="page-section">
           <h2>5. 文档 / RAG 机制</h2>
-          <p>Zhulong 先做本地文档扫描和归一化。真实终端中只运行 <code>zl-init --target "$PWD"</code> 会进入 init wizard，依次选择项目类型、文档策略、RAG 后端和本地/外部 RAG 风险；CI 和 runtime pack 使用显式参数，避免等待输入。默认是 <code>reference + rag none</code>：可以不安装 GraphRAG，也不会执行 GraphRAG index。对日/规格严格项目在 init 时选择 <code>--doc-policy strict --rag local</code>，再显式准备本地 GraphRAG、Ollama 和本地模型。外部 provider 不是默认能力，必须 <code>--allow-external-rag</code>。</p>
+          <p>真实终端中只运行 <code>zl-init --target "$PWD"</code> 会进入 init wizard，依次选择项目类型、文档策略、RAG 后端和本地/外部 RAG 风险；CI 和 runtime pack 使用显式参数，避免等待输入。默认的 <code>reference + rag none</code> 专门适配非文档密集型项目：不安装 GraphRAG，不执行 index，也不要求 RAG 参与日常 workflow。文档密集或规格严格项目在 init 时选择 <code>--doc-policy strict --rag local</code>，再显式准备本地 GraphRAG、Ollama 和本地模型。外部 provider 不是默认能力，必须 <code>--allow-external-rag</code>。</p>
           <pre class="code-block"><code>python3 --version  # GraphRAG requires Python 3.10-3.12
 python3 -m pip install --user graphrag
 export PATH="$HOME/.local/bin:$PATH"
@@ -339,7 +339,7 @@ zl-trace-query --target "$PWD" "代理承認"
 zl-trace-audit --target "$PWD"</code></pre>
             </div>
           </div>
-          <p>核心产物是 <code>.planning/quality/</code> 和 <code>.planning/trace/</code>。以后接可视化 QA 时，这两类文件会成为“仕様依据 -> 代码影响面 -> 测试 -> evidence”的数据源。</p>
+          <p>核心产物是 <code>.planning/quality/</code> 和 <code>.planning/trace/</code>。以后接可视化 QA 时，这两类文件会成为“需求或决策依据 -> 代码影响面 -> 测试 -> evidence”的数据源。</p>
           <div class="panel panel-pad">
             <h3>MVP4.0 Knowledge Reliability Lite</h3>
             <p>Knowledge Reliability Lite 把文档更新和回答依据做成默认轻量流程。它不会每次都重建 GraphRAG，也不会在 public workflow 里自动审计，只会在有最近 query 且缺少 answer audit 时提示下一条命令。</p>
@@ -461,15 +461,15 @@ zl-codebase-status --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>第一次导入文档：sync、query、audit</h3>
-              <p>把 仕様書、QA、議事録、画面设计放到项目文档目录后，优先用 <code>zl-docs-sync</code> 建立文档索引，再查询并审计回答依据。</p>
+              <p>把 PRD、ADR、QA、会议记录、设计或运行手册放到项目文档目录后，优先用 <code>zl-docs-sync</code> 建立轻量目录，再查询并审计回答依据。只有 <code>rag local</code> 项目才需要建立 RAG 索引。</p>
               <pre class="code-block"><code>zl-docs-scan --target "$PWD"
 zl-docs-sync --target "$PWD"
-zl-docs-query --target "$PWD" "承認 上限 仕様"
+zl-docs-query --target "$PWD" "退款上限依据"
 zl-answer-audit --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>文档更新：不要只改文件，要刷新 Zhulong 的知识层</h3>
-              <p>新增 QA、更新議事録、替换仕様書后，先做 lightweight sync。默认只标记 <code>STALE_NEEDS_REFRESH</code>，不自动重建 GraphRAG；只有明确需要新索引时才加 <code>--index</code>。</p>
+              <p>新增 QA、更新 ADR、会议记录或规范后，先做 lightweight sync。默认只标记 <code>STALE_NEEDS_REFRESH</code>，不自动重建 GraphRAG；只有 <code>rag local</code> 项目明确需要新索引时才加 <code>--index</code>。</p>
               <pre class="code-block"><code>zl-preflight --target "$PWD"
 zl-refresh-plan --target "$PWD"
 zl-docs-sync --target "$PWD"
@@ -491,12 +491,12 @@ zl-graph-risk --target "$PWD"</code></pre>
             <div class="tutorial-step">
               <h3>任务闭环：workflow、人工 gate、evidence、completion</h3>
               <p>Zhulong 严格流程不是靠一句 prompt，而是靠状态文件和 gate 检查。public workflow 会自动写 <code>WORKFLOW_FACADE.md</code>，把 preflight、policy、docs、graph、evidence 和下一步命令汇总给 AI，但不会自动重建 RAG 或 Graphify。实现后必须写 evidence 并回写工作记录。</p>
-              <pre class="code-block"><code>zl-debug --target "$PWD" "代理承認上限が仕様と違う"
+              <pre class="code-block"><code>zl-debug --target "$PWD" "退款上限与业务规则不一致"
 zl-workflow-audit --target "$PWD"
 zl-workflow-continue --target "$PWD" --gate plan --evidence "PLAN.md reviewed"
 zl-workflow-continue --target "$PWD" --gate implementation --evidence "approval policy updated"
 zl-workflow-continue --target "$PWD" --gate verification --evidence "npm test passed"
-zl-evidence-record --target "$PWD" "検証済み" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md
+zl-evidence-record --target "$PWD" "退款规则已验证" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md
 zl-evidence-status --target "$PWD"
 zl-gate-check --target "$PWD"
 zl-completion-check --target "$PWD"</code></pre>

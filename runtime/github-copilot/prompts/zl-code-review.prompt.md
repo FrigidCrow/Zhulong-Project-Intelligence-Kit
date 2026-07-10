@@ -12,8 +12,8 @@ Use the text typed after `/zl-code-review` as the review scope.
 1. Run `{{ZL_CLI}} workflow run code-review --target . "<review scope>"`.
 2. Read the generated `.planning/context/` packet and handoff.
 3. Inspect the diff and affected source files directly.
-4. Check whether behavior claims match specification, QA, minutes, design, API,
-   DB, or test documents.
+4. Check whether behavior claims match the request, active records, source,
+   tests, or optional project documents when present.
 5. Use `{{ZL_CLI}} graph status --target .` and `{{ZL_CLI}} graph query
    --target . "<changed symbol or module>"` for impact checks.
 6. Lead with findings ordered by severity. Include file and line references.

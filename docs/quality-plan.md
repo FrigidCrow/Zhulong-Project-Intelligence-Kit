@@ -8,7 +8,7 @@ Skill and command namespace: **`zl-*`**
 
 ## 1. 质量目标
 
-Zhulong 的质量目标不是“命令能跑起来”这么低，而是证明它真的能让 AI 在项目上下文、仕様依据、代码影响面和验证闭环里工作。
+Zhulong 的质量目标不是“命令能跑起来”这么低，而是证明它真的能让 AI 在项目状态、代码影响面、按需文档依据和验证闭环里工作。
 
 目标能力可以拆成 6 条：
 
@@ -86,7 +86,7 @@ Result: PASS 136 / FAIL 0 / WARN 0
 Evidence: verification/reports/latest.md, verification/reports/latest.json
 ```
 
-当前默认初始化已经改为 `reference + rag none + local_only`：普通项目可以不安装 GraphRAG，也不会误触发 GraphRAG index。真实终端的 `zl-init --target "$PWD"` 会进入 init wizard；CI/非 TTY 验证使用显式参数，不等待输入。对日/规格严格项目在 `zl-init` 时选择 `--doc-policy strict --rag local --setup-rag skip`，再显式准备本地 GraphRAG / Ollama / 模型。外部 LLM live GraphRAG 只作为显式 opt-in smoke，用脱敏 fixture 验证外部接入能力。
+当前默认初始化已经改为 `reference + rag none + local_only`：这是非文档密集型项目的完整路线，不安装 GraphRAG，也不会误触发 GraphRAG index，同时保留 workflow、codebase、graph、policy、evidence 和 completion gate。真实终端的 `zl-init --target "$PWD"` 会进入 init wizard；CI/非 TTY 验证使用显式参数，不等待输入。文档密集或规格严格项目在 `zl-init` 时选择 `--doc-policy strict --rag local --setup-rag skip`，再显式准备本地 GraphRAG / Ollama / 模型。外部 LLM live GraphRAG 只作为显式 opt-in smoke，用脱敏 fixture 验证外部接入能力。
 
 当前已经固化：
 
@@ -259,7 +259,7 @@ Superpowers: 82 / B
 | 文档扫描/抽取 | `zl-docs-scan` 生成来源清单，`zl-docs-extract` 抽取 pdf/docx/xlsx 并生成 citation 索引 | `docs-extract-citation-check.md` | 增加页码/Sheet 名和更强 chunk citation |
 | 文档归一化 | `zl-docs-normalize` 写 normalized 文档 | `.planning/knowledge/normalized/` | 增加编码、日文文件名、重复文件测试 |
 | 文档轻量同步 | `zl-docs-sync` 默认 diff/extract/citation audit，不触发 GraphRAG index；`--index` 才重索引 | `docs-sync-check.md` | 增加更细的 doc owner、文档类型和变更影响面分类 |
-| 本地文档查询 | `zl-docs-query` 可命中 QA/仕様依据，并写 `DOCS_QUERY_RESULT.md/json` | `knowledge-reliability-check.md` | 增加 terminology/glossary 查询 |
+| 本地文档查询 | `zl-docs-query` 可命中 QA/需求或决策依据，并写 `DOCS_QUERY_RESULT.md/json` | `knowledge-reliability-check.md` | 增加 terminology/glossary 查询 |
 | 回答依据审计 | `zl-answer-audit` 默认审最近 query；坏 citation FAIL；缺 citation 按 profile 输出 `WAIVED_WITH_RISK` 或 `FAIL` | `answer-audit-check.md` + `knowledge-reliability-check.md` | 增加 answer faithfulness / context recall / contradiction 检查 |
 | RAG/GraphRAG | 默认不启用 RAG；`strict + rag local` 才配置本地 GraphRAG；`rag none` 必须阻断 `--run` / `--rag` | `init-policy-check.md` + `rag-local-check.md` + `rag-command-check.md` + live GraphRAG smoke | 增加完整 graph-local profile 和 enterprise RAG provider matrix |
 | RAG 可信度 | golden case、citation audit、RAG eval | `mvp3-evidence-policy-check.md` | 增加更细的 answer faithfulness / context recall 指标 |
@@ -285,7 +285,7 @@ Zhulong 的核心质量要靠场景证明。建议把下面 6 个场景做成 fi
 
 ### 5.1 Japanese CR-017 改修场景
 
-目的：证明对日文档密集型改修闭环可用。
+目的：用日文资料 fixture 证明多语言文档密集型改修闭环可用；该 fixture 是语言覆盖，不是产品地域边界。
 
 步骤：
 
@@ -648,7 +648,7 @@ Status: implemented
 
 ### Loop 4: 加强文档/RAG 能力
 
-目标：更贴近对日项目的资料形态。
+目标：覆盖真实多语言项目资料形态，日文资料只是其中一组回归样例。
 
 要做：
 
