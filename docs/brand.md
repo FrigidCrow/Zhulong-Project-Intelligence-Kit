@@ -74,7 +74,7 @@
 ### 3.5 本地边界：项目资料默认留在本机
 
 - 用户问题：规格、源码和客户资料可能被误发到外部 provider 或网络工具。
-- 工作机制：默认 `local-only`，提供 offline lock、privacy audit、outbound audit 和 Claude Code deny 模板。
+- 工作机制：默认 `local-only`，提供 offline lock、privacy audit、outbound audit 和不改写用户权限的 Claude Code 中性模板。
 - 关键产物：`.planning/privacy/`、`.planning/policies/`、`runtime/claude-code/settings.template.json`。
 - 验证证据：`verify:privacy-strict`、`verify:security-governance`、`verify:guardrails`。
 - 能力边界：外部 RAG 需要显式确认；runtime 自身的网络行为由对应平台和组织策略管理。

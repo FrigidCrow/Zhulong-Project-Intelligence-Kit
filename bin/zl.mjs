@@ -4264,7 +4264,7 @@ function outboundAudit(target, options = {}) {
     checked.push(relativePath);
     const fileIssues = [];
     auditTextForExternalRisk(relativePath, fs.readFileSync(filePath, "utf8"), { allowedHosts }, fileIssues);
-    const isKitSourceFalsePositive = target === kitRoot && /bin\/zl\.mjs|scripts\/verify-rag-local\.mjs|core\/planning\/config\.template\.json|verification\/run-full-validation\.mjs|README\.md|docs\//.test(relativePath);
+    const isKitSourceFalsePositive = target === kitRoot && /bin\/zl\.mjs|scripts\/verify-rag-local\.mjs|core\/planning\/config\.template\.json|verification\/run-full-validation\.mjs|package\.json|README\.md|docs\//.test(relativePath);
     if (fileIssues.length > 0 && isKitSourceFalsePositive) {
       for (const issue of fileIssues) {
         warnings.push({ file: issue.file, detail: `non-default implementation, detection rule, negative fixture, or explicit opt-in surface: ${issue.detail}` });

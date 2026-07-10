@@ -19,11 +19,12 @@ function assert(condition, caseName, detail) {
 
 const settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
 const deny = settings.permissions?.deny || [];
-for (const expected of ["WebFetch", "Bash(curl *)", "Bash(wget *)", "Read(./.env)", "Write(./docs/**)"]) {
-  assert(deny.includes(expected), "deny template", `contains ${expected}`);
+assert(Array.isArray(settings.permissions?.allow) && settings.permissions.allow.length === 0, "neutral permissions", "allow list is explicit and empty by default");
+assert(Array.isArray(settings.permissions?.ask) && settings.permissions.ask.length === 0, "neutral permissions", "ask list is explicit and empty by default");
+assert(Array.isArray(deny) && deny.length === 0, "neutral permissions", "deny list is empty by default");
+for (const key of ["disableAllHooks", "disableBypassPermissionsMode", "disableAutoMode"]) {
+  assert(!(key in settings), "platform defaults", `${key} is not overridden by the kit`);
 }
-assert(settings.disableAllHooks === true, "hook boundary", "disableAllHooks enabled");
-assert(settings.disableBypassPermissionsMode === "disable", "permission bypass", "bypass mode disabled");
 const context = fs.readFileSync(contextPath, "utf8");
 for (const expected of ["B1 稳定前缀", "B2 引用优先", "B3 制品交接", "B6 Token 用量槽位", "TOKEN_USAGE.json", "重命令边界"]) {
   assert(context.includes(expected), "context efficiency", `contains ${expected}`);
@@ -31,7 +32,7 @@ for (const expected of ["B1 稳定前缀", "B2 引用优先", "B3 制品交接",
 
 const data = { generated: new Date().toISOString(), status: issues.length ? "FAIL" : "PASS", evidence, issues };
 writeJsonReport("guardrails-check.json", data);
-writeMarkdownReport("guardrails-check.md", "Zhulong Guardrails Verification", summarizeIssues(issues), [
+writeMarkdownReport("guardrails-check.md", "Zhulong Runtime Boundary Verification", summarizeIssues(issues), [
   { title: "证据", body: evidence.map((item) => `- ${item}`) },
   { title: "问题", body: issues.length ? issues.map((item) => `- ${item.case}: ${item.detail}`) : ["未发现问题。"] },
 ]);

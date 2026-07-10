@@ -197,7 +197,6 @@ npm run verify:quality-closure
 verify:docs
 verify:docs-update
 verify:rag
-verify:rag-local
 verify:docs-extract
 verify:docs-sync
 verify:answer-audit
@@ -213,6 +212,18 @@ verify:schema
 verify:naming
 verify:runtime
 verify:visual
+verify:ci
+```
+
+本地 GraphRAG / Ollama 是环境集成层，不是 GitHub Actions 的确定性前置：
+
+```text
+verify:quality:local-rag
+```
+
+`verify:quality-closure` 再聚合：
+
+```text
 verify:skills-usability
 verify:workflow-closure
 verify:cockpit-build

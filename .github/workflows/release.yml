@@ -1,0 +1,87 @@
+name: Publish Zhulong Kit
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: npm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Pin npm 11
+        run: npm install --global npm@11.12.1
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify release readiness
+        env:
+          ZL_RELEASE_REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+        run: npm run verify:release-readiness
+
+      - name: Run release gates
+        run: |
+          npm run verify:quality
+          npm run verify:full-command-surface
+
+      - name: Build and audit tarball
+        run: |
+          mkdir -p dist
+          npm pack --json --pack-destination dist > dist/npm-pack.json
+          npm run verify:pack-report -- dist/npm-pack.json
+          npm run release:metadata -- dist
+
+      - name: Attest tarball
+        if: ${{ github.event.repository.private == false }}
+        uses: actions/attest@a1948c3f048ba23858d222213b7c278aabede763 # v4
+        with:
+          subject-path: dist/*.tgz
+
+      - name: Publish with npm trusted publishing
+        run: npm publish dist/*.tgz --access public
+
+      - name: Append release metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${GITHUB_REF_NAME}" --jq .body > dist/existing-release-notes.md
+          printf '\n\n' >> dist/existing-release-notes.md
+          cat dist/release-metadata.md >> dist/existing-release-notes.md
+          gh release edit "${GITHUB_REF_NAME}" --notes-file dist/existing-release-notes.md
+          gh release upload "${GITHUB_REF_NAME}" dist/*.tgz dist/release-metadata.json --clobber
+
+      - name: Upload release evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: zhulong-release-${{ github.ref_name }}
+          path: |
+            dist/*.tgz
+            dist/npm-pack.json
+            dist/release-metadata.json
+            dist/release-metadata.md
+          if-no-files-found: error
+          retention-days: 14

@@ -22,6 +22,10 @@ const viewports = [
 ];
 const issues = [];
 const results = [];
+const screenshotRoot = path.resolve(
+  process.env.ZL_VISUAL_OUTPUT_DIR || path.join(kitRoot, ".zl-tmp", "visual"),
+);
+fs.mkdirSync(screenshotRoot, { recursive: true });
 
 function loadPlaywright() {
   try {
@@ -83,7 +87,7 @@ try {
           clientWidth: doc.clientWidth,
         };
       });
-      const screenshot = path.join(kitRoot, "verification", "reports", `${item.name}-${viewport.label}.png`);
+      const screenshot = path.join(screenshotRoot, `${item.name}-${viewport.label}.png`);
       await page.screenshot({ path: screenshot, fullPage: true });
       const bytes = fs.statSync(screenshot).size;
 

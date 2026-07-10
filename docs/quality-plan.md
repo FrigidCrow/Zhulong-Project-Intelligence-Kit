@@ -116,10 +116,11 @@ npm run verify:naming
 npm run verify:runtime
 npm run verify:dev-audit-harness
 npm run verify:quality
+npm run verify:quality:local-rag
 npm run verify:all
 ```
 
-其中 `verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `zl docs ...` 和 `zl-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `zl-rag-init-local`、`zl-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key；默认 index 超时 300 秒、query 超时 90 秒，慢模型或 GraphRAG query 卡住会报告失败而不是无限等待。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `zl-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:security-governance` 覆盖默认 local-only、外部 RAG opt-in、风险报告和 Codex / Claude Code / GitHub Copilot runtime 例外边界。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:init-policy` 覆盖 `zl-init` 文档策略/RAG 后端选择、strict 强制 RAG、外部 RAG opt-in、rag none 阻断 GraphRAG 执行。`verify:cockpit-build` 覆盖项目驾驶舱、Graphify HTML 安全复制/阻断、fallback 图、RAG 证据面板和 no hidden heavy refresh。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
+其中 `verify:quality` 是不依赖 Ollama、GraphRAG CLI 或外部网络的可重现 CI gate；`verify:quality:local-rag` 在其后追加真实本地 RAG 集成验证。`verify:docs-update` 是文档更新 fixture：先扫描初始文档，再新增一份議事録，重跑 scan/normalize/query，并证明新内容被本地知识层命中。`verify:rag` 会专项测试 `zl docs ...` 和 `zl-docs-*` 的 RAG 命令矩阵。`verify:rag-local` 会真实运行 `zl-rag-init-local`、`zl-privacy-audit`、本地 GraphRAG index/query，并证明不需要外部 key；默认 index 超时 300 秒、query 超时 90 秒，慢模型或 GraphRAG query 卡住会报告失败而不是无限等待。`verify:docs-extract` 覆盖 md/txt/csv/pdf/docx/xlsx 抽取、citation 和 docs diff。`verify:docs-sync` 覆盖 `zl-docs-sync` 默认轻量同步、文档新增/修改/删除 stale 标记和 `--index` 显式重索引。`verify:answer-audit` 覆盖无参数 answer audit、`--from`、`--answer`、坏 citation、missing citation profile 状态和 workflow facade 只提示不自动运行。`verify:knowledge-reliability` 覆盖 docs sync -> docs query -> answer audit 主路径。`verify:graph-hardening` 覆盖 Graph impact/risk/freshness 和 stale graph 负例。`verify:privacy-strict` 覆盖 offline lock、outbound audit 和危险外部命令阻断。`verify:security-governance` 覆盖默认 local-only、外部 RAG opt-in、风险报告和 Codex / Claude Code / GitHub Copilot runtime 例外边界。`verify:license` 输出 license 元数据和商用风险摘要。`verify:mvp35` 覆盖 refresh/preflight/mode 控制、相关/无关 commit 判断、显式刷新账本和文档同步要求。`verify:workflow-facade` 覆盖 public workflow 的无感编排层和 no heavy refresh 约束。`verify:policy-hardening` 覆盖 policy lock/verify/diff、四态状态语义、profile 阻断和 no heavy refresh 约束。`verify:init-policy` 覆盖 `zl-init` 文档策略/RAG 后端选择、strict 强制 RAG、外部 RAG opt-in、rag none 阻断 GraphRAG 执行。`verify:cockpit-build` 覆盖项目驾驶舱、Graphify HTML 安全复制/阻断、fallback 图、RAG 证据面板和 no hidden heavy refresh。`verify:schema` 会创建临时项目并真实生成 manifest、workflow state、handoff、evidence record/writeback，再检查这些核心产物的必要结构。
 
 `verify:mvp3` 覆盖 Evidence Quality & Policy Mode：RAG golden、citation audit、trace matrix、policy check、help skills。`verify:full-command-surface` 会逐个执行 `package.json` 中所有 `zl-*` 和 `zl` bin 命令，确认命令入口不是只写在文档里。
 
@@ -870,7 +871,7 @@ verification/reports/cockpit-build-check.md/json
 - `verify:ambiguity`：中英日命中、规范性词不误报、项目词表扩展、默认告警和 strict 阻断。
 - `verify:structure`：五类关键 JSON 制品的 mini-schema、缺失/损坏负例和合规率。
 - `verify:answer-audit`：引用解析率、数值漂移、无依据句比例、docs query 自动审计和配置关闭。
-- `verify:guardrails`：Claude Code deny、禁 hooks/权限绕过和上下文效率约定。
+- `verify:guardrails`：Claude Code 中性权限模板、平台默认保留和上下文效率约定。
 - `verify:cockpit-build`：Quality & Token Metrics 槽位、可选 token 数据和大图聚合。
 - 上述检查均不得联网、下载模型或执行隐藏重刷新。
 

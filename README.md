@@ -178,6 +178,7 @@ zl-completion-check --target "$PWD"
 | [命令手册](docs/commands.html) | 全部命令、参数、输出和失败示例 |
 | [技术指南](docs/technical-guide.html) | 架构、工作流、RAG、Graphify 和运行环境说明 |
 | [质量计划](docs/quality-plan.md) | 测试矩阵、质量门禁和证据标准 |
+| [CI 与发布治理](docs/ci-and-release.md) | GitHub Actions、ruleset、trusted publishing 与制品元数据 |
 | [运行环境包说明](docs/runtime-command-packs.md) | Codex、Claude Code 和 GitHub Copilot 安装方式 |
 | [提取与本地计划](docs/zhulong-extraction-and-local-plan.md) | 截图提取、工程基线和后续优化路线 |
 | [最新验证报告](verification/reports/latest.md) | 最近一次本地验证结果 |
@@ -205,6 +206,8 @@ npm run verify:quality-closure
 npm run verify:business-chain
 ```
 
+`verify:quality` 只包含 GitHub Actions 可重现的确定性检查。需要 Ollama 和本地 GraphRAG 的真实集成验证使用 `npm run verify:quality:local-rag`。
+
 ## 发布边界
 
 npm 包通过 `files` 白名单只包含 CLI、模板、运行环境包、schema、adapter 和主图标。验证截图、图标候选集、历史报告与本地审计目录不会进入发布包。
@@ -215,4 +218,4 @@ npm 包通过 `files` 白名单只包含 CLI、模板、运行环境包、schema
 
 ## 许可证
 
-项目当前设置为私有包，许可证状态为 `UNLICENSED`。公开发布前需要先确定许可证，并补齐第三方许可、贡献指南和安全报告流程。
+项目当前设置为私有包，许可证状态为 `UNLICENSED`。公开发布前需要先确定许可证，并在 npm 配置 `zhulong-kit` 的 trusted publisher。发布工作流会在这些条件未满足时主动阻断。

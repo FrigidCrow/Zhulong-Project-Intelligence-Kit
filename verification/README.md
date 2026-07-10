@@ -55,9 +55,11 @@ npm run dev:audit:full
 
 `verify:rag-local` 是严格文档模式的本地 RAG smoke。它运行 Ollama + LanceDB 的本地 GraphRAG，不需要外部 API key，并在 index/query 前后执行 `zl-privacy-audit`。该脚本有明确超时边界：默认 index 300 秒、query 90 秒；超时会写入 `rag-local-check` 报告并失败，不会让质量 gate 无期限等待。
 
+GitHub Actions 使用 `verify:quality` 运行不依赖本地服务的可重现 gate。完整本地 RAG 验证使用 `npm run verify:quality:local-rag`。
+
 `verify:docs-extract`、`verify:graph-hardening`、`verify:privacy-strict`、`verify:security-governance`、`verify:license` 覆盖 hardening：本地文档抽取/citation、Graphify impact/risk/freshness、offline privacy lock/outbound blocking、外部 RAG opt-in、安全治理、license metadata review。
 
-`verify:docs-sync`、`verify:ambiguity`、`verify:structure`、`verify:answer-audit`、`verify:guardrails`、`verify:knowledge-reliability` 覆盖知识可靠性与机械质量审计：文档轻量同步、三语暧昧词表、关键制品 mini-schema、引用解析率、数值漂移、无依据句比例、自动审计开关、deny 与上下文效率边界。
+`verify:docs-sync`、`verify:ambiguity`、`verify:structure`、`verify:answer-audit`、`verify:guardrails`、`verify:knowledge-reliability` 覆盖知识可靠性与机械质量审计：文档轻量同步、三语暧昧词表、关键制品 mini-schema、引用解析率、数值漂移、无依据句比例、自动审计开关、中性运行时权限与上下文效率边界。
 
 `verify:mvp3` 覆盖 MVP3 Evidence Quality & Policy Mode：RAG golden cases、citation audit、trace matrix、policy check、help skills。
 

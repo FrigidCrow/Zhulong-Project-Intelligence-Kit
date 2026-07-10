@@ -284,7 +284,7 @@ package.json
 | docs query 折叠 answer audit | 查询命中后自动生成报告；`knowledge.auto_answer_audit=false` 可关闭 | `verify:answer-audit` |
 | completion-check 折叠 structure | 完成检查同时刷新结构审计报告；strict 可阻断 | `verify:structure`、workflow 验证 |
 | 重命令显式 | `docs-index --run`、`graph-build --run`、`refresh-run` 不被普通门面暗中调用 | `verify:mvp35`、`verify:workflow-facade` |
-| deny 与 token 约定 | Claude Code deny 模板、禁 hooks/绕过模式、B1/B2/B3/B6 上下文约定 | `verify:guardrails` |
+| 运行时边界与 token 约定 | Claude Code 模板保留平台默认，不强制 deny、hooks、bypass 或 auto；继续验证 B1/B2/B3/B6 上下文约定 | `verify:guardrails` |
 
 ### Phase C：Discovery 与 cockpit（已完成）
 
@@ -295,12 +295,12 @@ package.json
 | Quality & Token Metrics | cockpit 展示引用解析率、漂移、无依据句、暧昧、结构与可选 token 槽位 | `verify:cockpit-build` |
 | HTML 瘦身 | cockpit 只保存节点/边计数和有限预览；大图切换聚合社区视图 | 大图 fixture 与 pack 体积检查 |
 
-### Phase D：发布治理（待所有者决策）
+### Phase D：发布治理（基础设施已完成，发布决策待所有者确认）
 
-- 先选择公开许可证，再移除 `private: true` 和 `UNLICENSED`。
-- 公开仓库增加 `LICENSE`、`CONTRIBUTING.md`、`SECURITY.md`、issue / PR 模板。
-- 建立 Node.js 24 持续集成、仓库 ruleset、受保护发布环境和 npm trusted publishing。
-- 发布制品增加 provenance 与 artifact attestation；attestation 证明来源，不等同于证明软件安全。
+- Node.js 24 / npm 11 持续集成、pack 审计、短期 verifier artifacts 和发布工作流已实现。
+- ruleset 配置已进入仓库；当前 GitHub Free 私有仓库无法远程强制，需升级套餐或经所有者明确同意后公开。
+- npm trusted publishing、release environment、tarball SHA-256 和 attestation 流程已就绪；未选许可证、`private: true` 或 tag 不匹配时会主动阻断。
+- 所有者还需决定 Apache-2.0 / MIT / 继续私有，并用 npm 账户确认 `zhulong-kit` 的包所有权。
 
 ## 6. 验收矩阵
 
@@ -356,7 +356,7 @@ npm run verify:business-chain
 - npm 的 `bin`、`files`、`engines`、`private` 和 `license` 字段共同定义 CLI 与发布边界：[package.json](https://docs.npmjs.com/files/package.json/)
 - npm 推荐使用 `files` 白名单限制 tarball；trusted publishing 可避免维护长期 npm token：[Trusted publishing](https://docs.npmjs.com/trusted-publishers/)
 - Node.js 生产环境应使用仍受支持的 LTS 版本，本工程固定到 24 LTS：[Node.js Releases](https://nodejs.org/en/about/previous-releases)
-- Claude Code 的 deny 规则优先于 ask/allow；`disableAllHooks` 和禁用 bypass/auto 模式适合作为保密项目模板边界：[Settings](https://code.claude.com/docs/en/settings)、[Permissions](https://code.claude.com/docs/en/permissions)
+- Claude Code 的 deny 规则优先于 ask/allow，但是否禁用 hooks、bypass 或 auto 应由用户或组织策略决定；kit 默认不改写这些平台能力：[Settings](https://code.claude.com/docs/en/settings)、[Permissions](https://code.claude.com/docs/en/permissions)
 - 发布制品后可使用 artifact attestation 证明制品的构建来源：[Artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations)
 - 品牌文档采用“定位、受众、支柱、交付物、边界和成功指标”的结构，参考 agency-agents 的 [Brand Guardian](https://github.com/msitarzewski/agency-agents/blob/main/design/design-brand-guardian.md)、[Product Manager](https://github.com/msitarzewski/agency-agents/blob/main/product/product-manager.md) 与 [Technical Writer](https://github.com/msitarzewski/agency-agents/blob/main/engineering/engineering-technical-writer.md) 角色模板。
 
@@ -377,7 +377,10 @@ npm run verify:business-chain
 | 质量聚合 | `verify:quality` PASS |
 | 质量收口 | `verify:quality-closure` PASS，12 项检查 |
 | 业务链 | `verify:business-chain` PASS，6 个 gate |
-| npm 包 | 2,145,021 bytes，解包 2,554,840 bytes，共 101 个文件 |
+| 远程 CI | Node.js 24 / npm 11.12.1 workflow 与 7 天 verifier artifacts 已建立 |
+| 发布环境 | GitHub `npm` environment 已创建，只允许 `v*` tag |
+| ruleset | 配置已入库；GitHub Free 私有仓库 API 返回 403，尚未远程强制 |
+| npm 包 | 2,145,243 bytes，解包 2,555,440 bytes，共 101 个文件 |
 | 包安装 smoke | Node.js 24 下 `zhulong --help` 与 `zl --help` PASS |
 | 新能力打包 | 根词表、`bin/quality-audits.mjs` 与三个新 bin 均可从 tarball 安装运行 |
 | 发布排除 | 验证截图、验证报告、图标候选集均未进入 npm 包 |
@@ -390,27 +393,30 @@ npm run verify:business-chain
 
 - 品牌、CLI、runtime skills、npm 发布路径和本地目录只使用 Zhulong / ZL。
 - README 为中文正文，必要品牌名、命令、状态词和技术缩写保持原样。
-- 机械审计、低心智门面、discovery、cockpit 和 deny/context 约定均有实现与独立 verifier。
+- 机械审计、低心智门面、discovery、cockpit 和中性 runtime/context 约定均有实现与独立 verifier。
 - 公开命令由 71 增至 74，命令目录、HTML 手册、full-command-surface 同步。
 - 验证截图、历史报告和图标候选不在 npm 白名单内。
 
-### 下一步 P0：建立远端持续集成
+### P0：远端持续集成（代码已完成）
 
-1. 在 GitHub Actions 固定 Node.js 24 和 npm 11，运行 `npm ci`、`verify:quality`、`verify:full-command-surface` 与 `npm pack --dry-run --json`。
-2. 给默认分支配置 ruleset，要求质量 gate、review 和无未解决会话后才能合并。
-3. CI 上传 verifier 报告作为短期 artifact，但不把截图和报告装进 npm 包。
+1. `.github/workflows/ci.yml` 固定 Node.js 24 和 npm 11.12.1，运行 `npm ci`、`verify:quality`、`verify:full-command-surface` 与 `npm pack --dry-run --json`。
+2. `.github/rulesets/main.json` 要求质量 gate、review 和无未解决会话后才能合并；远程强制受当前 GitHub 私有仓库套餐限制。
+3. CI 仅上传当次 Markdown / JSON verifier 报告并保留 7 天；视觉截图写入 `.zl-tmp/visual/`，pack verifier 禁止报告、截图和图标候选进包。
 
-### 下一步 P1：发布与供应链
+### P1：发布与供应链（工作流已完成，所有者决策待办）
 
-1. 决定许可证和 npm scope，确认 `zhulong-kit` 名称所有权。
-2. 使用 npm trusted publishing 和最小权限 GitHub 环境，不保存长期发布 token。
-3. 为 tarball 生成 provenance / attestation，并在 release notes 记录 SHA-256、Node/npm 版本和命令面数量。
+1. 暂定继续使用无 scope 名称 `zhulong-kit`；2026-07-10 查询未发现同名公开包，但必须用实际 npm 账户占位才算确认所有权。
+2. 开源默认建议 Apache-2.0，也可选 MIT；在所有者确认前继续保持 `private: true` / `UNLICENSED`。
+3. `.github/workflows/release.yml` 使用 npm trusted publishing 和 `npm` GitHub environment，不保存长期发布 token。
+4. tarball 会生成 attestation 和 release metadata，release notes 记录 SHA-256、Node/npm 版本、commit 和命令面数量；GitHub Free 私有仓库的 attestation 受平台限制。
 
-### 下一步 P2：真实项目校准
+### 下一步 P2：Kit 本体工程化
 
-1. 在至少三个不同语言和规模的真实项目上收集 ambiguity 误报、USR 分布和数值漂移样本。
-2. 阈值在拥有基线前继续默认不阻断；每次阈值变化都增加 fixture 和 changelog。
-3. 为 `zl-next` 记录推荐命中率：用户是否采用首条建议、是否仍需查询命令手册。
+1. 拆分约 8,800 行的 `bin/zl.mjs`，先分离 CLI router 与 docs / graph / policy / workflow / cockpit 域模块。
+2. 将验证报告改成确定性摘要，消除时间戳、临时绝对路径和全量 stdout 带来的 Git diff 噪声。
+3. 停止跟踪新的生成截图；对已进入历史的大图另立可回滚的 Git LFS / 历史改写任务。
+4. 为纯函数域模块增加 `node:test` 单元测试、覆盖率基线和快速 pre-commit gate。
+5. 给 `.planning` 制品增加 schema version 和向前迁移器。
 
 ### 下一步 P3：品牌与产品可观测性
 

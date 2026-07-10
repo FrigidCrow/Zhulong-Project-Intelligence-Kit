@@ -70,21 +70,21 @@ map, and writes evidence back to the seeded issue record.
 Inside a copied fixture project:
 
 ```bash
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs init --target . --template backend-service --name ja_approval_fixture --force
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs init --target . --template backend-service --name ja_approval_fixture --force
 cp zl.fixture.config.json .planning/config.json
 cp -R zl-seed/issues/* .planning/issues/
 cp -R zl-seed/phases/* .planning/phases/
 
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs normalize --target .
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs index --target . --run
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs query --target . "代理承認 30,000"
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs query --target . --rag "代理承認の上限金額"
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs docs normalize --target .
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs docs index --target . --run
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs docs query --target . "代理承認 30,000"
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs docs query --target . --rag "代理承認の上限金額"
 
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs graph build --target . --run
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs graph query --target . "PROXY_APPROVAL_LIMIT"
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs graph build --target . --run
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs graph query --target . "PROXY_APPROVAL_LIMIT"
 
 npm run test:task
-node /path/to/Project-Intelligence-Kit/bin/zl.mjs evidence record --target . "CR-017 proxy approval limit verified" --writeback .planning/issues/CR-017_proxy_approval_limit.md
+node /path/to/Zhulong-Project-Intelligence-Kit/bin/zl.mjs evidence record --target . "CR-017 proxy approval limit verified" --writeback .planning/issues/CR-017_proxy_approval_limit.md
 ```
 
 The user-facing command layer stays `zl-*`; fixture adapters only stand in for

@@ -217,6 +217,6 @@ verification/reports/skills-usability-check.json
 
 Runtime command pack 本身不上传项目数据。它只是把本地 CLI 路径渲染进 skill 或 prompt 文件。
 
-Claude Code 还提供 `runtime/claude-code/settings.template.json` 作为保密项目参考模板。它使用 `permissions.deny` 阻断 WebFetch、常见外发 CLI、敏感文件读取和需求源目录写入，并关闭 hooks、bypass 与 auto 模式。该模板不会由 runtime installer 自动覆盖项目设置，采用前应由项目负责人审查并放到合适的 managed、project 或 local scope。
+Claude Code 还提供 `runtime/claude-code/settings.template.json` 作为中性起点。它不内置 `permissions.deny` 规则，也不改写 hooks、bypass 或 auto 模式，因此保留 Claude Code 的平台默认和用户自主配置。如果组织有保密、出网或变更控制要求，应在 managed、project 或 local scope 单独添加组织策略，而不由 kit 对所有用户一刀切。runtime installer 不会自动覆盖现有项目设置。
 
 需要注意的是：当你在 Codex、Claude Code、GitHub Copilot 中粘贴或暴露项目内容时，数据会按照对应产品的策略处理。Zhulong 只能保证自己的默认命令面是 local-first，并通过 `zl-privacy-audit`、`zl-offline-lock`、`zl-policy-check --strict` 检查本地配置。
