@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T00:45:02.367Z",
+  "generated": "2026-07-10T03:49:36.894Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn/project",
+  "workRoot": "<tmp>/zhulong-docs-update-iLDKuf",
+  "projectRoot": "<tmp>/zhulong-docs-update-iLDKuf/project",
   "evidence": [
     "initial local docs query: found INITIAL_APPROVAL_RULE",
     "RAG_SOURCES after update: found 2026-06-25_update.md",

@@ -5,7 +5,7 @@
 > 当前结论：Zhulong 品牌基线已经统一。npm、CLI、runtime skills、文档、验证器、资源路径与生成报告统一使用 Zhulong / ZL 命名，Node.js 基线为 24，npm 发布内容由白名单控制。
 
 > 来源：用户提供的 9 张截图，原截图顶部显示源文档为
-> `/Users/di.l.wu/Downloads/cross-tech-wukong-kit/docs/session-2026-07-09-changes-and-rationale.md`。
+> `<legacy-kit-root>/docs/session-2026-07-09-changes-and-rationale.md`。
 >
 > 说明：以下内容按截图可见文本去重、重排并人工校对。被截图裁切或遮挡、无法可靠恢复的极少量文字不做臆造；截图里的 `ct-wk-*` 是另一份 kit 的命令名，本地仓库使用 `zhulong` / `zl` 根入口与 `zl-*` 直接命令。
 
@@ -366,7 +366,7 @@ npm run verify:business-chain
 
 | 项目 | 结果 |
 | --- | --- |
-| 本地目录 | `/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit` |
+| 本地目录 | `<kit-root>` |
 | Node.js 验证 | Node.js 24.14.0 / npm 11.12.1（当前复核环境） |
 | CLI | `zhulong`、`zl`、`zl-*`，共 75 个 npm bin |
 | 全命令面 | 74 / 74 PASS |

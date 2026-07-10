@@ -1,6 +1,6 @@
 # Zhulong RAG Command Verification
 
-生成时间: 2026-07-10T00:45:03.251Z
+生成时间: 2026-07-10T03:49:37.644Z
 
 ## 摘要
 
@@ -57,9 +57,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-commands-K9Vh6m`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-commands-K9Vh6m/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-rag-commands.mjs'`
+- Work root: `<tmp>/zhulong-rag-commands-QFlaON`
+- Project root: `<tmp>/zhulong-rag-commands-QFlaON/project`
+- Reproduce command: `node '<kit-root>/scripts/verify-rag-commands.mjs'`
 
 ## Issues
 

@@ -4398,7 +4398,7 @@ function licenseAudit(target) {
     items.push({
       name: tool,
       version,
-      source: pipMeta.name ? "python package metadata" : `CLI at ${cliPath}`,
+      source: pipMeta.name ? "python package metadata" : "CLI available locally",
       license: pipMeta.license || "UNKNOWN",
     });
   }

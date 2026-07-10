@@ -60,9 +60,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-rag-local.mjs'`
+- Work root: `<tmp>/zhulong-rag-local-cmwrFQ`
+- Project root: `<tmp>/zhulong-rag-local-cmwrFQ/project`
+- Reproduce command: `node '<kit-root>/scripts/verify-rag-local.mjs'`
 
 ## Issues
 

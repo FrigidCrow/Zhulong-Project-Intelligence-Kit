@@ -1,0 +1,57 @@
+name: 缺陷报告
+description: 报告可复现的 Zhulong 行为问题
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: 请先删除日志中的密钥、客户资料和内部项目内容。安全漏洞请使用私密漏洞报告。
+  - type: textarea
+    id: summary
+    attributes:
+      label: 问题描述
+      description: 实际发生了什么？
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 最小复现步骤
+      placeholder: |
+        1. 运行...
+        2. 使用配置...
+        3. 观察到...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Zhulong 版本或 commit
+      placeholder: 0.1.0 或 commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      description: 操作系统、Node.js、npm、runtime 与相关可选工具版本。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 脱敏证据
+      description: 可附上已经脱敏的错误输出、报告路径或截图。
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: 数据确认
+      options:
+        - label: 我已经删除密钥、客户资料、内部源码和其他敏感信息。
+          required: true

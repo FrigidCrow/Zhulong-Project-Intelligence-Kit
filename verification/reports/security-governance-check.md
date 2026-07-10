@@ -1,6 +1,6 @@
 # Zhulong Security Governance Verification
 
-生成时间: 2026-07-10T00:46:14.610Z
+生成时间: 2026-07-10T03:50:51.385Z
 
 ## 摘要
 
@@ -45,4 +45,4 @@ No security governance issues found.
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-security-governance.mjs'`
+- `node '<kit-root>/scripts/verify-security-governance.mjs'`

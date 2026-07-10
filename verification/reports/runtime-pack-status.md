@@ -1,6 +1,6 @@
 # Zhulong Runtime Pack Verification
 
-生成时间: 2026-07-10T00:46:13.980Z
+生成时间: 2026-07-10T03:50:50.801Z
 
 ## 摘要
 
@@ -9,12 +9,12 @@
 
 ## Runtime Installs
 
-- codex: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex`
+- codex: 11 items installed to `<tmp>/zhulong-runtime-3oH8J8/codex`
 
 ```text
 runtime codex
-source /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/codex/skills
-dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex
+source <kit-root>/runtime/codex/skills
+dest <tmp>/zhulong-runtime-3oH8J8/codex
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -27,12 +27,12 @@ ok zl-spec-phase rendered
 ok zl-ui-phase rendered
 ok zl-verify-work rendered
 ```
-- claude-code: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code`
+- claude-code: 11 items installed to `<tmp>/zhulong-runtime-3oH8J8/claude-code`
 
 ```text
 runtime claude-code
-source /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/claude-code/skills
-dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code
+source <kit-root>/runtime/claude-code/skills
+dest <tmp>/zhulong-runtime-3oH8J8/claude-code
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -45,12 +45,12 @@ ok zl-spec-phase rendered
 ok zl-ui-phase rendered
 ok zl-verify-work rendered
 ```
-- github-copilot: 11 items installed to `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot`
+- github-copilot: 11 items installed to `<tmp>/zhulong-runtime-3oH8J8/github-copilot`
 
 ```text
 runtime github-copilot
-source /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/github-copilot/prompts
-dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot
+source <kit-root>/runtime/github-copilot/prompts
+dest <tmp>/zhulong-runtime-3oH8J8/github-copilot
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -70,4 +70,4 @@ No runtime pack issues found.
 
 ## Rendered CLI
 
-Expected local command path: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/bin/zl.mjs'`
+Expected local command path: `node '<kit-root>/bin/zl.mjs'`

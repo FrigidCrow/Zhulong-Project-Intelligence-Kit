@@ -1,6 +1,6 @@
 # Zhulong Quality Closure Verification
 
-生成时间: 2026-07-10T00:46:31.233Z
+生成时间: 2026-07-10T03:51:05.308Z
 
 ## 摘要
 
@@ -21,6 +21,7 @@
 - PASS `npm run verify:init-policy`
 - PASS `npm run verify:business-chain`
 - PASS `npm run verify:docs-completeness`
+- PASS `npm run verify:public-release`
 
 ## 边界
 
@@ -35,4 +36,4 @@
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-quality-closure.mjs'`
+- `node '<kit-root>/scripts/verify-quality-closure.mjs'`

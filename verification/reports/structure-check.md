@@ -1,6 +1,6 @@
 # Zhulong Structure Audit Verification
 
-生成时间: 2026-07-10T00:45:28.480Z
+生成时间: 2026-07-10T03:49:38.829Z
 
 ## 摘要
 
@@ -9,10 +9,10 @@
 
 ## 证据
 
-- structure audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-structure-5j1T73/project: exit 0
+- structure audit --target <tmp>/zhulong-structure-2wV3PE/project: exit 0
 - advisory: missing artifacts do not block default mode
-- structure audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-structure-5j1T73/project --strict: exit 1
-- structure audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-structure-5j1T73/project --strict: exit 0
+- structure audit --target <tmp>/zhulong-structure-2wV3PE/project --strict: exit 1
+- structure audit --target <tmp>/zhulong-structure-2wV3PE/project --strict: exit 0
 - strict pass: all mini-schema contracts pass
 - compliance rate: rate is 1 for valid fixture
 - contract count: five key artifacts checked

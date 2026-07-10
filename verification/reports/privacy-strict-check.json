@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T00:45:30.736Z",
+  "generated": "2026-07-10T03:49:40.351Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-privacy-strict-2lk0S3",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-privacy-strict-2lk0S3/project",
+  "workRoot": "<tmp>/zhulong-privacy-strict-qxe53P",
+  "projectRoot": "<tmp>/zhulong-privacy-strict-qxe53P/project",
   "evidence": [
     "zl privacy offline-lock: found privacy audit PASS",
     "OFFLINE_LOCK: found External tools: disabled",

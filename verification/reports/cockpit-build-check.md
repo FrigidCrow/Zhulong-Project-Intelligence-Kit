@@ -1,6 +1,6 @@
 # Zhulong Cockpit Build Verification
 
-生成时间: 2026-07-10T00:46:16.836Z
+生成时间: 2026-07-10T03:50:53.377Z
 
 ## 摘要
 
@@ -55,4 +55,4 @@ output .planning/cockpit/index.html
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-cockpit-build.mjs'`
+- `node '<kit-root>/scripts/verify-cockpit-build.mjs'`

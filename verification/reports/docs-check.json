@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-10T00:45:02.005Z",
+  "generated": "2026-07-10T03:49:36.580Z",
   "status": "PASS",
   "checkedFiles": [
     "README.md",
@@ -8,8 +8,10 @@
     "docs/assets/zhulong-selected-variants/README.md",
     "docs/brand.md",
     "docs/changelog.md",
+    "docs/ci-and-release.md",
     "docs/commands.html",
     "docs/context-efficiency.md",
+    "docs/design-review-log.md",
     "docs/extraction-map.md",
     "docs/field-notes/README.md",
     "docs/field-notes/graphrag-local-operations-guide.md",
@@ -18,6 +20,7 @@
     "docs/internal/dev-audit.md",
     "docs/mvp1-e2e-validation.md",
     "docs/mvp1-plan.md",
+    "docs/open-source-release-review.md",
     "docs/product.html",
     "docs/quality-dashboard.html",
     "docs/quality-plan.md",
@@ -36,118 +39,23 @@
     },
     {
       "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-init",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-codebase-scan",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-docs-sync",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-rag-init-local",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-graph-build",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-new-milestone",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-debug",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-answer-audit",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-ambiguity-audit",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-structure-audit",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-next",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-completion-check",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-cockpit-build",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-preflight",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-refresh-plan",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-refresh-run",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-mode-status",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/commands.html#cmd-zl-mode-set",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/product.html",
-      "target": "docs/product.html"
-    },
-    {
-      "file": "README.md",
       "link": "docs/brand.md",
       "target": "docs/brand.md"
     },
     {
       "file": "README.md",
-      "link": "docs/commands.html",
-      "target": "docs/commands.html"
-    },
-    {
-      "file": "README.md",
-      "link": "docs/technical-guide.html",
-      "target": "docs/technical-guide.html"
-    },
-    {
-      "file": "README.md",
       "link": "docs/quality-plan.md",
       "target": "docs/quality-plan.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/ci-and-release.md",
+      "target": "docs/ci-and-release.md"
+    },
+    {
+      "file": "README.md",
+      "link": "docs/open-source-release-review.md",
+      "target": "docs/open-source-release-review.md"
     },
     {
       "file": "README.md",
@@ -168,6 +76,36 @@
       "file": "README.md",
       "link": "docs/assets/zhulong-icon.png",
       "target": "docs/assets/zhulong-icon.png"
+    },
+    {
+      "file": "README.md",
+      "link": "LICENSE",
+      "target": "LICENSE"
+    },
+    {
+      "file": "README.md",
+      "link": "THIRD_PARTY_LICENSES.md",
+      "target": "THIRD_PARTY_LICENSES.md"
+    },
+    {
+      "file": "README.md",
+      "link": "CONTRIBUTING.md",
+      "target": "CONTRIBUTING.md"
+    },
+    {
+      "file": "README.md",
+      "link": "CODE_OF_CONDUCT.md",
+      "target": "CODE_OF_CONDUCT.md"
+    },
+    {
+      "file": "README.md",
+      "link": "SECURITY.md",
+      "target": "SECURITY.md"
+    },
+    {
+      "file": "README.md",
+      "link": "SUPPORT.md",
+      "target": "SUPPORT.md"
     },
     {
       "file": "docs/architecture.md",
@@ -266,8 +204,8 @@
     },
     {
       "file": "docs/commands.html",
-      "link": "../README.md",
-      "target": "README.md"
+      "link": "product.html",
+      "target": "docs/product.html"
     },
     {
       "file": "docs/commands.html",
@@ -293,6 +231,11 @@
       "file": "docs/commands.html",
       "link": "../verification/reports/latest.md",
       "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/commands.html",
+      "link": "assets/zl-site.js",
+      "target": "docs/assets/zl-site.js"
     },
     {
       "file": "docs/product.html",
@@ -301,8 +244,8 @@
     },
     {
       "file": "docs/product.html",
-      "link": "../README.md",
-      "target": "README.md"
+      "link": "product.html",
+      "target": "docs/product.html"
     },
     {
       "file": "docs/product.html",
@@ -338,6 +281,11 @@
       "file": "docs/product.html",
       "link": "technical-guide.html",
       "target": "docs/technical-guide.html"
+    },
+    {
+      "file": "docs/product.html",
+      "link": "assets/zhulong-icon.png",
+      "target": "docs/assets/zhulong-icon.png"
     },
     {
       "file": "docs/product.html",
@@ -356,8 +304,8 @@
     },
     {
       "file": "docs/quality-dashboard.html",
-      "link": "../README.md",
-      "target": "README.md"
+      "link": "product.html",
+      "target": "docs/product.html"
     },
     {
       "file": "docs/quality-dashboard.html",
@@ -443,6 +391,21 @@
       "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/visual-check.md",
       "target": "verification/reports/visual-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/design-quality-check.md",
+      "target": "verification/reports/design-quality-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/pages-site-check.md",
+      "target": "verification/reports/pages-site-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/public-release-check.md",
+      "target": "verification/reports/public-release-check.md"
     },
     {
       "file": "docs/quality-dashboard.html",
@@ -606,6 +569,16 @@
     },
     {
       "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/pages-site-check.md",
+      "target": "verification/reports/pages-site-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
+      "link": "../verification/reports/public-release-check.md",
+      "target": "verification/reports/public-release-check.md"
+    },
+    {
+      "file": "docs/quality-dashboard.html",
       "link": "../verification/reports/business-chain-audit.md",
       "target": "verification/reports/business-chain-audit.md"
     },
@@ -655,14 +628,19 @@
       "target": "verification/reports/technical-guide-desktop.png"
     },
     {
+      "file": "docs/quality-dashboard.html",
+      "link": "assets/zl-site.js",
+      "target": "docs/assets/zl-site.js"
+    },
+    {
       "file": "docs/technical-guide.html",
       "link": "assets/zl-site.css",
       "target": "docs/assets/zl-site.css"
     },
     {
       "file": "docs/technical-guide.html",
-      "link": "../README.md",
-      "target": "README.md"
+      "link": "product.html",
+      "target": "docs/product.html"
     },
     {
       "file": "docs/technical-guide.html",
@@ -688,6 +666,11 @@
       "file": "docs/technical-guide.html",
       "link": "../verification/reports/latest.md",
       "target": "verification/reports/latest.md"
+    },
+    {
+      "file": "docs/technical-guide.html",
+      "link": "assets/zl-site.js",
+      "target": "docs/assets/zl-site.js"
     }
   ],
   "issues": []

@@ -1,13 +1,13 @@
 # Zhulong Full Validation Report
 
-Generated: 2026-07-10T00:46:13.625Z
+Generated: 2026-07-10T03:50:50.473Z
 
 ## Summary
 
 - PASS: 132
 - FAIL: 0
 - WARN: 1
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6` (removed after run)
+- Work root: `<tmp>/zl-full-validation-114kgF` (removed after run)
 - Live GraphRAG: not requested
 
 ## Verdict
@@ -49,133 +49,133 @@ Zhulong validation passed for the checked scope. Zhulong is the active command/w
   - Evidence: `.planning/context/handoffs`
   - Detail: 10 handoff files
 - [PASS] Zhulong native handoff marker: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: code-review-cr-017-code-review-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: complete-milestone-cr-017-complete-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: debug-cr-017-debug-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: discuss-phase-cr-017-discuss-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: execute-phase-cr-017-execute-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: new-milestone-cr-017-new-milestone-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: plan-phase-cr-017-plan-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: spec-phase-cr-017-spec-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: ui-phase-cr-017-ui-phase-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Zhulong native handoff marker: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Found: Workflow kernel: Zhulong native
 - [PASS] Workflow doc marker: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Found: Workflow doc:
 - [PASS] No active GSD backend wording: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Absent: Current backend
 - [PASS] No internal backend invocation title: verify-work-cr-017-verify-work-HANDOFF.md
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md`
   - Detail: Absent: Internal Backend Invocation
 - [PASS] Context packet includes document RAG status
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/debug-cr-017-debug.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/debug-cr-017-debug.md`
   - Detail: Found: Document RAG Status
 - [PASS] Context packet includes code map status
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/debug-cr-017-debug.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/debug-cr-017-debug.md`
   - Detail: Found: Code Map Status
 - [PASS] Context packet includes Graphify output
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/debug-cr-017-debug.md`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/fixture-zl-native/.planning/context/debug-cr-017-debug.md`
   - Detail: Found: Graph Report
 - [PASS] Zhulong workflow-run alias starts guarded state
   - Evidence: `zl-workflow-run`
@@ -241,7 +241,7 @@ Zhulong validation passed for the checked scope. Zhulong is the active command/w
   - Evidence: `zl-debug`
   - Detail: Found: WORKFLOW_STATE.json
 - [PASS] Real Graphify graph has nodes and edges/links
-  - Evidence: `../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/real-graphify/.planning/graphs/graph.json`
+  - Evidence: `../../../..<tmp>/zl-full-validation-114kgF/real-graphify/.planning/graphs/graph.json`
   - Detail: 270 nodes, 221 edges/links
 - [PASS] Zhulong graph status reads real Graphify graph
   - Evidence: `zl graph status`
@@ -416,9 +416,9 @@ Zhulong validation passed for the checked scope. Zhulong is the active command/w
 
 ## Artifact Roots
 
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/init-new-project`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/init-existing-project`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/workflow-guard`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/workflow-alias`
-- `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/real-graphify`
+- `<tmp>/zl-full-validation-114kgF/init-new-project`
+- `<tmp>/zl-full-validation-114kgF/init-existing-project`
+- `<tmp>/zl-full-validation-114kgF/fixture-zl-native`
+- `<tmp>/zl-full-validation-114kgF/workflow-guard`
+- `<tmp>/zl-full-validation-114kgF/workflow-alias`
+- `<tmp>/zl-full-validation-114kgF/real-graphify`

@@ -1,6 +1,6 @@
-# Zhulong Guardrails Verification
+# Zhulong Runtime Boundary Verification
 
-生成时间: 2026-07-10T00:45:29.398Z
+生成时间: 2026-07-10T03:49:39.587Z
 
 ## 摘要
 
@@ -9,13 +9,12 @@
 
 ## 证据
 
-- deny template: contains WebFetch
-- deny template: contains Bash(curl *)
-- deny template: contains Bash(wget *)
-- deny template: contains Read(./.env)
-- deny template: contains Write(./docs/**)
-- hook boundary: disableAllHooks enabled
-- permission bypass: bypass mode disabled
+- neutral permissions: allow list is explicit and empty by default
+- neutral permissions: ask list is explicit and empty by default
+- neutral permissions: deny list is empty by default
+- platform defaults: disableAllHooks is not overridden by the kit
+- platform defaults: disableBypassPermissionsMode is not overridden by the kit
+- platform defaults: disableAutoMode is not overridden by the kit
 - context efficiency: contains B1 稳定前缀
 - context efficiency: contains B2 引用优先
 - context efficiency: contains B3 制品交接

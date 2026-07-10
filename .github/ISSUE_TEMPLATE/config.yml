@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 私密安全报告
+    url: https://github.com/FrigidCrow/Zhulong-Project-Intelligence-Kit/security/advisories
+    about: 请通过 Security Advisories 私密报告漏洞。
+  - name: 在线文档
+    url: https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/
+    about: 查看渲染后的产品、命令和技术文档。

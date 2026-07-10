@@ -1,229 +1,229 @@
 {
-  "generated": "2026-07-10T00:46:13.979Z",
+  "generated": "2026-07-10T03:50:50.800Z",
   "status": "PASS",
-  "tempRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x",
+  "tempRoot": "<tmp>/zhulong-runtime-3oH8J8",
   "results": [
     {
       "runtime": "codex",
-      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex",
+      "dest": "<tmp>/zhulong-runtime-3oH8J8/codex",
       "itemCount": 11,
-      "installOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-code-review/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-debug/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-execute-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-plan-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-verify-work/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
-      "statusOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
+      "installOutput": "runtime codex\nsource <kit-root>/runtime/codex/skills\ndest <tmp>/zhulong-runtime-3oH8J8/codex\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-cockpit-build/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-code-review/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-code-review/agents/openai.yaml\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-complete-milestone/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-debug/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-debug/agents/openai.yaml\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-discuss-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-execute-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-execute-phase/agents/openai.yaml\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-new-milestone/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-plan-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-plan-phase/agents/openai.yaml\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-spec-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-ui-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-verify-work/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/codex/zl-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
+      "statusOutput": "runtime codex\nsource <kit-root>/runtime/codex/skills\ndest <tmp>/zhulong-runtime-3oH8J8/codex\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
           "name": "zl-cockpit-build",
           "relativePath": "zl-cockpit-build/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-cockpit-build/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-cockpit-build/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-code-review",
           "relativePath": "zl-code-review/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-code-review/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-code-review/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-complete-milestone",
           "relativePath": "zl-complete-milestone/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-complete-milestone/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-complete-milestone/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-debug",
           "relativePath": "zl-debug/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-debug/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-debug/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-discuss-phase",
           "relativePath": "zl-discuss-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-discuss-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-discuss-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-execute-phase",
           "relativePath": "zl-execute-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-execute-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-execute-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-new-milestone",
           "relativePath": "zl-new-milestone/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-new-milestone/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-new-milestone/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-plan-phase",
           "relativePath": "zl-plan-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-plan-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-plan-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-spec-phase",
           "relativePath": "zl-spec-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-spec-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-spec-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-ui-phase",
           "relativePath": "zl-ui-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-ui-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-ui-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-verify-work",
           "relativePath": "zl-verify-work/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/codex/zl-verify-work/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/codex/zl-verify-work/SKILL.md",
           "exists": true
         }
       ]
     },
     {
       "runtime": "claude-code",
-      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code",
+      "dest": "<tmp>/zhulong-runtime-3oH8J8/claude-code",
       "itemCount": 11,
-      "installOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
-      "statusOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
+      "installOutput": "runtime claude-code\nsource <kit-root>/runtime/claude-code/skills\ndest <tmp>/zhulong-runtime-3oH8J8/claude-code\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-cockpit-build/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-code-review/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-complete-milestone/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-debug/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-discuss-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-execute-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-new-milestone/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-plan-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-spec-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-ui-phase/SKILL.md\nwrite <tmp>/zhulong-runtime-3oH8J8/claude-code/zl-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
+      "statusOutput": "runtime claude-code\nsource <kit-root>/runtime/claude-code/skills\ndest <tmp>/zhulong-runtime-3oH8J8/claude-code\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
           "name": "zl-cockpit-build",
           "relativePath": "zl-cockpit-build/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-cockpit-build/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-cockpit-build/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-code-review",
           "relativePath": "zl-code-review/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-code-review/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-code-review/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-complete-milestone",
           "relativePath": "zl-complete-milestone/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-complete-milestone/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-complete-milestone/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-debug",
           "relativePath": "zl-debug/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-debug/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-debug/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-discuss-phase",
           "relativePath": "zl-discuss-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-discuss-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-discuss-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-execute-phase",
           "relativePath": "zl-execute-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-execute-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-execute-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-new-milestone",
           "relativePath": "zl-new-milestone/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-new-milestone/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-new-milestone/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-plan-phase",
           "relativePath": "zl-plan-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-plan-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-plan-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-spec-phase",
           "relativePath": "zl-spec-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-spec-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-spec-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-ui-phase",
           "relativePath": "zl-ui-phase/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-ui-phase/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-ui-phase/SKILL.md",
           "exists": true
         },
         {
           "name": "zl-verify-work",
           "relativePath": "zl-verify-work/SKILL.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/claude-code/zl-verify-work/SKILL.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/claude-code/zl-verify-work/SKILL.md",
           "exists": true
         }
       ]
     },
     {
       "runtime": "github-copilot",
-      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot",
+      "dest": "<tmp>/zhulong-runtime-3oH8J8/github-copilot",
       "itemCount": 11,
-      "installOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-cockpit-build.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-code-review.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-complete-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-debug.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-discuss-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-execute-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-new-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-plan-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-spec-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-ui-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
-      "statusOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
+      "installOutput": "runtime github-copilot\nsource <kit-root>/runtime/github-copilot/prompts\ndest <tmp>/zhulong-runtime-3oH8J8/github-copilot\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-cockpit-build.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-code-review.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-complete-milestone.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-debug.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-discuss-phase.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-execute-phase.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-new-milestone.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-plan-phase.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-spec-phase.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-ui-phase.prompt.md\nwrite <tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
+      "statusOutput": "runtime github-copilot\nsource <kit-root>/runtime/github-copilot/prompts\ndest <tmp>/zhulong-runtime-3oH8J8/github-copilot\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
           "name": "zl-cockpit-build",
           "relativePath": "zl-cockpit-build.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-cockpit-build.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-cockpit-build.prompt.md",
           "exists": true
         },
         {
           "name": "zl-code-review",
           "relativePath": "zl-code-review.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-code-review.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-code-review.prompt.md",
           "exists": true
         },
         {
           "name": "zl-complete-milestone",
           "relativePath": "zl-complete-milestone.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-complete-milestone.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-complete-milestone.prompt.md",
           "exists": true
         },
         {
           "name": "zl-debug",
           "relativePath": "zl-debug.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-debug.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-debug.prompt.md",
           "exists": true
         },
         {
           "name": "zl-discuss-phase",
           "relativePath": "zl-discuss-phase.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-discuss-phase.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-discuss-phase.prompt.md",
           "exists": true
         },
         {
           "name": "zl-execute-phase",
           "relativePath": "zl-execute-phase.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-execute-phase.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-execute-phase.prompt.md",
           "exists": true
         },
         {
           "name": "zl-new-milestone",
           "relativePath": "zl-new-milestone.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-new-milestone.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-new-milestone.prompt.md",
           "exists": true
         },
         {
           "name": "zl-plan-phase",
           "relativePath": "zl-plan-phase.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-plan-phase.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-plan-phase.prompt.md",
           "exists": true
         },
         {
           "name": "zl-spec-phase",
           "relativePath": "zl-spec-phase.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-spec-phase.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-spec-phase.prompt.md",
           "exists": true
         },
         {
           "name": "zl-ui-phase",
           "relativePath": "zl-ui-phase.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-ui-phase.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-ui-phase.prompt.md",
           "exists": true
         },
         {
           "name": "zl-verify-work",
           "relativePath": "zl-verify-work.prompt.md",
-          "path": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-runtime-Yadb1x/github-copilot/zl-verify-work.prompt.md",
+          "path": "<tmp>/zhulong-runtime-3oH8J8/github-copilot/zl-verify-work.prompt.md",
           "exists": true
         }
       ]

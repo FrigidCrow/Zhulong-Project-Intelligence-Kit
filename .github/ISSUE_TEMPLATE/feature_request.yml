@@ -1,0 +1,30 @@
+name: 功能建议
+description: 提议改进 Zhulong Kit 本体
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 要解决的问题
+      description: 请先描述用户问题，不要只描述期望实现。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 验收证据
+      description: 什么测试、制品或行为能够证明它完成？
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: 边界与替代方案
+      description: 是否影响 local-only、heavy refresh、runtime pack、兼容性或供应链？

@@ -1,6 +1,6 @@
 # Zhulong Docs Verification
 
-生成时间: 2026-07-10T00:45:02.006Z
+生成时间: 2026-07-10T03:49:36.581Z
 
 ## 摘要
 
@@ -15,8 +15,10 @@
 - `docs/assets/zhulong-selected-variants/README.md`
 - `docs/brand.md`
 - `docs/changelog.md`
+- `docs/ci-and-release.md`
 - `docs/commands.html`
 - `docs/context-efficiency.md`
+- `docs/design-review-log.md`
 - `docs/extraction-map.md`
 - `docs/field-notes/README.md`
 - `docs/field-notes/graphrag-local-operations-guide.md`
@@ -25,6 +27,7 @@
 - `docs/internal/dev-audit.md`
 - `docs/mvp1-e2e-validation.md`
 - `docs/mvp1-plan.md`
+- `docs/open-source-release-review.md`
 - `docs/product.html`
 - `docs/quality-dashboard.html`
 - `docs/quality-plan.md`

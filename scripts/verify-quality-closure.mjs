@@ -21,6 +21,7 @@ const checks = [
   "verify:init-policy",
   "verify:business-chain",
   "verify:docs-completeness",
+  "verify:public-release",
 ];
 const results = [];
 const issues = [];

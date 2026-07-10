@@ -2,6 +2,6 @@
   "generated": "2026-06-28T13:56:09.783Z",
   "status": "PASS",
   "issues": [],
-  "fixture_root": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /.zl-audit/runs/2026-06-28T13-56-09-779Z-80049-f17562/fixtures/harness-docs-complete",
-  "run_root": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /.zl-audit/runs/2026-06-28T13-56-09-779Z-80049-f17562"
+  "fixture_root": "<legacy-kit-root>/.zl-audit/runs/2026-06-28T13-56-09-779Z-80049-f17562/fixtures/harness-docs-complete",
+  "run_root": "<legacy-kit-root>/.zl-audit/runs/2026-06-28T13-56-09-779Z-80049-f17562"
 }

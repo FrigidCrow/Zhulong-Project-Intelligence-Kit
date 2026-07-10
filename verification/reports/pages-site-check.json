@@ -1,0 +1,32 @@
+{
+  "generated": "2026-07-10T03:50:37.659Z",
+  "status": "PASS",
+  "output": ".zl-tmp/pages-site",
+  "files": 131,
+  "evidence": [
+    "site artifact: includes index.html",
+    "site artifact: includes docs/product.html",
+    "site artifact: includes docs/commands.html",
+    "site artifact: includes docs/technical-guide.html",
+    "site artifact: includes docs/quality-dashboard.html",
+    "site artifact: includes docs/assets/zl-site.css",
+    "site artifact: includes docs/assets/zl-site.js",
+    "site artifact: includes docs/assets/zhulong-icon.png",
+    "site artifact: includes templates/cockpit/sample.html",
+    "site artifact: includes verification/reports/latest.md",
+    "site artifact: includes LICENSE",
+    "site boundary: excludes bin/",
+    "site boundary: excludes core/",
+    "site boundary: excludes runtime/",
+    "site boundary: excludes scripts/",
+    "site boundary: excludes node_modules/",
+    "site boundary: excludes .git/",
+    "site boundary: excludes icon candidates",
+    "site boundary: contains no symbolic links",
+    "site entry: redirects to the rendered product page",
+    "README: links to rendered product.html",
+    "README: links to rendered commands.html",
+    "README: links to rendered technical-guide.html"
+  ],
+  "issues": []
+}

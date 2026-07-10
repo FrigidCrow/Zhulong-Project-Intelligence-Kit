@@ -1,6 +1,6 @@
 # Zhulong Docs Update Fixture
 
-生成时间: 2026-07-10T00:45:02.368Z
+生成时间: 2026-07-10T03:49:36.895Z
 
 ## 摘要
 
@@ -17,10 +17,10 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn/project`
-- New document: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn/project/docs/minutes/2026-06-25_update.md`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-docs-update-fixture.mjs'`
+- Work root: `<tmp>/zhulong-docs-update-iLDKuf`
+- Project root: `<tmp>/zhulong-docs-update-iLDKuf/project`
+- New document: `<tmp>/zhulong-docs-update-iLDKuf/project/docs/minutes/2026-06-25_update.md`
+- Reproduce command: `node '<kit-root>/scripts/verify-docs-update-fixture.mjs'`
 
 ## Issues
 

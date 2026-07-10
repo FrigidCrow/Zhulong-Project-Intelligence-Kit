@@ -28,7 +28,7 @@
       "status": 0,
       "startedAt": "2026-06-25T11:20:58.068Z",
       "finishedAt": "2026-06-25T11:21:06.336Z",
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:integration\n> node verification/run-full-validation.mjs\n\nreport /Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/latest.md\nPASS 132 FAIL 0 WARN 1",
+      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:integration\n> node verification/run-full-validation.mjs\n\nreport <legacy-kit-root>/verification/reports/latest.md\nPASS 132 FAIL 0 WARN 1",
       "stderr": ""
     },
     {

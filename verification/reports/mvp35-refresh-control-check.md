@@ -1,6 +1,6 @@
 # Zhulong MVP3.5 Refresh Control Verification
 
-生成时间: 2026-07-10T00:45:39.506Z
+生成时间: 2026-07-10T03:49:47.639Z
 
 ## 摘要
 
@@ -22,51 +22,51 @@
 - git config user.name Zhulong Test: exit 0
 - git add .: exit 0
 - git commit -m initial docs and source: exit 0
-- zl-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project --template greenfield-app --name mvp35_refresh_fixture --mode new --force: exit 0
-- zl-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
-- zl-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project --run: exit 0
-- zl-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project --run: exit 0
-- zl-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-init --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project --template greenfield-app --name mvp35_refresh_fixture --mode new --force: exit 0
+- zl-docs-extract --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
+- zl-docs-index --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project --run: exit 0
+- zl-graph-build --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project --run: exit 0
+- zl-preflight --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - fresh baseline preflight: found preflight PASS
 - fresh baseline preflight: found heavy refresh executed: no
 - refresh state after initial runs: found "rag"
 - refresh state after initial runs: found "graph"
 - git add .: exit 0
 - git commit -m unrelated root note: exit 0
-- zl-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-preflight --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - unrelated commit preflight: found preflight PASS
 - unrelated commit preflight: found behind-unrelated
 - unrelated commit preflight: found action: skip
 - git add .: exit 0
 - git commit -m doc update: exit 0
-- zl-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-refresh-plan --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - doc update refresh plan: found refresh plan WARN
 - doc update refresh plan: found rag refresh
 - doc update refresh plan: found recommend differential refresh
-- zl-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project --rag: exit 0
+- zl-refresh-run --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project --rag: exit 0
 - rag refresh run: found rag refresh PASS
 - rag refresh report: found RAG diff/extract/index completed
-- zl-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-preflight --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - post rag refresh preflight: found preflight PASS
 - git add .: exit 0
 - git commit -m source update: exit 0
-- zl-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-refresh-plan --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - source update refresh plan: found refresh plan WARN
 - source update refresh plan: found graph refresh
-- zl-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project --graph: exit 0
+- zl-refresh-run --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project --graph: exit 0
 - graph refresh run: found graph refresh PASS
 - graph refresh report: found Graphify build completed
-- zl-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project --strict: exit 0
+- zl-preflight --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project --strict: exit 0
 - post graph refresh strict preflight: found preflight PASS
-- zl-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project graph-lite: exit 0
+- zl-mode-set --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project graph-lite: exit 0
 - mode set graph-lite: found mode graph-lite
-- zl-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-mode-status --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - mode status graph-lite: found RAG required: no
-- zl-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project full-strict: exit 0
+- zl-mode-set --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project full-strict: exit 0
 - mode set full-strict: found mode full-strict
-- zl-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project: exit 0
+- zl-mode-status --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project: exit 0
 - mode status full-strict: found Strict: yes
-- zl-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project default-local-rag: exit 0
+- zl-mode-set --target <tmp>/zhulong-mvp35-refresh-CdxiMk/project default-local-rag: exit 0
 - README documents zl-preflight: found zl-preflight
 - commands.html documents zl-preflight: found zl-preflight
 - changelog documents zl-preflight: found zl-preflight
@@ -91,9 +91,9 @@
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp35-refresh-RLaY1S/project`
-- 复现命令: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-mvp35-refresh-control.mjs'`
+- Work root: `<tmp>/zhulong-mvp35-refresh-CdxiMk`
+- Project root: `<tmp>/zhulong-mvp35-refresh-CdxiMk/project`
+- 复现命令: `node '<kit-root>/scripts/verify-mvp35-refresh-control.mjs'`
 
 ## 问题
 

@@ -1,7 +1,7 @@
 {
   "name": "zhulong-kit",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "module",
   "description": "Zhulong Project Intelligence Kit for local, evidence-grounded AI engineering.",
   "keywords": [
@@ -11,12 +11,23 @@
     "project-intelligence",
     "workflow-automation"
   ],
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
+  "author": "FrigidCrow",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FrigidCrow/Zhulong-Project-Intelligence-Kit.git"
   },
+  "homepage": "https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/",
+  "bugs": {
+    "url": "https://github.com/FrigidCrow/Zhulong-Project-Intelligence-Kit/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "files": [
+    "LICENSE",
+    "THIRD_PARTY_LICENSES.md",
     "adapters/",
     "ambiguity-wordlists.json",
     "bin/zl.mjs",
@@ -157,16 +168,18 @@
     "verify:runtime": "node scripts/verify-runtime-packs.mjs",
     "verify:visual": "node scripts/verify-visual.mjs",
     "verify:design": "node scripts/verify-design-quality.mjs",
+    "verify:pages": "node scripts/verify-pages-site.mjs",
+    "verify:public-release": "node scripts/verify-public-release.mjs",
     "verify:ci": "node scripts/verify-ci-config.mjs",
     "verify:pack-report": "node scripts/verify-pack-report.mjs",
     "verify:release-readiness": "node scripts/verify-release-readiness.mjs",
     "release:metadata": "node scripts/write-release-metadata.mjs",
     "ci:collect-artifacts": "node scripts/collect-ci-artifacts.mjs",
     "github:ruleset": "node scripts/apply-github-ruleset.mjs",
-    "verify:quality": "npm run verify:docs && npm run verify:docs-update && npm run verify:rag && npm run verify:docs-extract && npm run verify:docs-sync && npm run verify:ambiguity && npm run verify:structure && npm run verify:answer-audit && npm run verify:guardrails && npm run verify:knowledge-reliability && npm run verify:graph-hardening && npm run verify:privacy-strict && npm run verify:security-governance && npm run verify:license && npm run verify:mvp3 && npm run verify:mvp35 && npm run verify:workflow-facade && npm run verify:policy-hardening && npm run verify:init-policy && npm run verify:schema && npm run verify:naming && npm run verify:runtime && npm run verify:visual && npm run verify:design && npm run verify:ci",
+    "verify:quality": "npm run verify:docs && npm run verify:docs-update && npm run verify:rag && npm run verify:docs-extract && npm run verify:docs-sync && npm run verify:ambiguity && npm run verify:structure && npm run verify:answer-audit && npm run verify:guardrails && npm run verify:knowledge-reliability && npm run verify:graph-hardening && npm run verify:privacy-strict && npm run verify:security-governance && npm run verify:license && npm run verify:mvp3 && npm run verify:mvp35 && npm run verify:workflow-facade && npm run verify:policy-hardening && npm run verify:init-policy && npm run verify:schema && npm run verify:naming && npm run verify:runtime && npm run verify:visual && npm run verify:design && npm run verify:pages && npm run verify:public-release && npm run verify:ci",
     "verify:quality:local-rag": "npm run verify:quality && npm run verify:rag-local",
     "verify:quality:daily": "npm run check && npm run verify:skills-usability && npm run verify:privacy-strict && npm run verify:security-governance && npm run verify:quality-closure && npm run dev:audit:skill-behavior",
-    "verify:quality:release": "npm run verify:all && npm run verify:business-chain && npm run verify:full-command-surface && npm run verify:security-governance && npm run dev:audit:full",
+    "verify:quality:release": "npm run verify:all && npm run verify:business-chain && npm run verify:full-command-surface && npm run verify:security-governance && npm run dev:audit:full && npm run verify:public-release",
     "verify:all": "npm run check && npm run verify:quality && npm run verify:integration",
     "fixture:japanese": "node scripts/validate-japanese-fixture.mjs",
     "verify:integration": "node verification/run-full-validation.mjs"

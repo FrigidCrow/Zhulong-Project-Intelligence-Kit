@@ -1,7 +1,7 @@
 {
-  "generated": "2026-07-10T00:46:16.835Z",
+  "generated": "2026-07-10T03:50:53.376Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-cockpit-build-FNvPsx",
+  "workRoot": "<tmp>/zhulong-cockpit-build-h5PomK",
   "results": [
     {
       "caseName": "template sample render",

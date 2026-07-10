@@ -1,6 +1,6 @@
 # Zhulong Document Extraction and Citation Verification
 
-生成时间: 2026-07-10T00:45:27.527Z
+生成时间: 2026-07-10T03:49:38.039Z
 
 ## 摘要
 
@@ -25,9 +25,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-extract-AiV8DO`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-extract-AiV8DO/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-docs-extract-citation.mjs'`
+- Work root: `<tmp>/zhulong-docs-extract-TWI6PI`
+- Project root: `<tmp>/zhulong-docs-extract-TWI6PI/project`
+- Reproduce command: `node '<kit-root>/scripts/verify-docs-extract-citation.mjs'`
 
 ## Issues
 

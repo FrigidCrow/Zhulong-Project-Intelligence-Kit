@@ -76,7 +76,7 @@ const html = `<!doctype html>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <header class="topbar">
-    <a class="brand-mark" href="../README.md">Zhulong Project Intelligence Kit</a>
+    <a class="brand-mark" href="product.html">Zhulong Project Intelligence Kit</a>
     <nav class="nav" aria-label="主导航">
       <a href="product.html">产品</a>
       <a href="commands.html" aria-current="page">命令</a>

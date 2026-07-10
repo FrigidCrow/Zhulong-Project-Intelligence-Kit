@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T00:45:37.015Z",
+  "generated": "2026-07-10T03:49:45.463Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp3-Is4B31",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp3-Is4B31/project",
+  "workRoot": "<tmp>/zhulong-mvp3-Sp4MA6",
+  "projectRoot": "<tmp>/zhulong-mvp3-Sp4MA6/project",
   "evidence": [
     "zl docs index --run: found status success",
     "zl graph build --run: found status success",

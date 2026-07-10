@@ -131,7 +131,7 @@ stdout 尾部:
 > ai-project-intelligence-kit@0.1.0 verify:integration
 > node verification/run-full-validation.mjs
 
-report /Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/latest.md
+report <legacy-kit-root>/verification/reports/latest.md
 PASS 132 FAIL 0 WARN 1
 ```
 
@@ -168,4 +168,4 @@ stderr 尾部:
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/run-full-test-plan.mjs' --run-id round-2`
+- `node '<legacy-kit-root>/scripts/run-full-test-plan.mjs' --run-id round-2`

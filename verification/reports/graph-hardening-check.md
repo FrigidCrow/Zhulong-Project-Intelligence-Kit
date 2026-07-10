@@ -1,6 +1,6 @@
 # Zhulong Graph Impact/Risk/Freshness Verification
 
-生成时间: 2026-07-10T00:45:30.335Z
+生成时间: 2026-07-10T03:49:40.051Z
 
 ## 摘要
 
@@ -21,9 +21,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-graph-hardening-CTZnFE`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-graph-hardening-CTZnFE/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-graph-hardening.mjs'`
+- Work root: `<tmp>/zhulong-graph-hardening-KypxQw`
+- Project root: `<tmp>/zhulong-graph-hardening-KypxQw/project`
+- Reproduce command: `node '<kit-root>/scripts/verify-graph-hardening.mjs'`
 
 ## Issues
 

@@ -23,7 +23,7 @@ API keys must be stored only in `graphrag-workspace/.env`, referenced as `${GRAP
 Repository root:
 
 ```bash
-/Users/frigidcrow/Documents/social_credit
+/path/to/project
 ```
 
 GraphRAG workspace:
@@ -749,7 +749,7 @@ kill <pid>
 Inspect output tables:
 
 ```bash
-/Users/frigidcrow/.local/share/uv/tools/graphrag/bin/python - <<'PY'
+<home>/.local/share/uv/tools/graphrag/bin/python - <<'PY'
 import pandas as pd
 from pathlib import Path
 

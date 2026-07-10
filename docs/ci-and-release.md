@@ -31,19 +31,26 @@
 GH_TOKEN="$(gh auth token -u FrigidCrow)" npm run github:ruleset
 ```
 
-当前仓库是 GitHub Free 下的私有仓库，GitHub API 会拒绝启用该 ruleset。保持私有时需升级到 GitHub Pro / Team；或者在所有者明确同意后改为公开仓库。配置文件可先随代码审查，但在 API 成功前不宣称远程已强制。
+仓库公开后使用 `npm run github:ruleset` 应用该配置。远端 API 返回成功且再次读取到 active ruleset 后，才可以宣称默认分支已经强制执行这些规则。
+
+## GitHub Pages 文档站
+
+`.github/workflows/pages.yml` 在 `main` 的文档相关文件变化后发布静态站。工作流固定 GitHub Actions 到完整 commit SHA，并通过 `verify:pages` 组装允许列表：
+
+- `docs/` 产品、命令、技术与质量页面。
+- `templates/cockpit/sample.html` 驾驶舱样例。
+- `verification/reports/` 公开验证证据。
+- Apache 2.0 `LICENSE`。
+
+站点不会包含 `bin/`、`core/`、`runtime/`、`scripts/`、`node_modules/`、`.git/`、图标候选或符号链接。README 中的 HTML 链接使用 `https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/`，因此在 GitHub 点击会打开渲染网页，而不是 blob 源码视图。
 
 ## npm 发布决策
 
 截至 2026-07-10，npm registry 查询中 `zhulong-kit` 返回 404，表示当时未查到同名公开包；这不等于已获得名称所有权。当前建议保留无 scope 包名 `zhulong-kit`，并在首次发布前用实际 npm 账户完成占位和 trusted publisher 绑定。
 
-许可证仍需所有者决策：
+项目已经选择 Apache License 2.0。`package.json` 使用 SPDX 标识 `Apache-2.0`、`private: false`、公开 `publishConfig` 和 provenance；标准文本保存在根目录 `LICENSE`，第三方边界记录在 `THIRD_PARTY_LICENSES.md`。
 
-- 如果开源，本项目默认建议 Apache-2.0，它对工程工具提供明确的专利授权条款。
-- 如果追求最简授权文本，可选 MIT。
-- 如果继续私有，保持 `private: true` 和 `UNLICENSED`，不执行 npm 公开发布。
-
-`verify:release-readiness` 会在 `private` 未关闭、许可证未选定、repository URL 不一致、发布 tag 不匹配版本，或当前仓库状态无法生成所要求的 attestation 时阻断。
+`verify:release-readiness` 会在包仍为 private、许可证不是 Apache-2.0、缺少许可证/第三方说明、公开发布/provenance 未启用、repository URL 不一致、发布 tag 不匹配版本，或当前仓库状态无法生成所要求的 attestation 时阻断。
 
 ## Trusted Publishing
 
@@ -65,7 +72,17 @@ GH_TOKEN="$(gh auth token -u FrigidCrow)" npm run github:ruleset
 - SHA-256、Node.js / npm 版本、commit、74 条逻辑命令和 75 个 npm bin 入口。
 - 公开仓库上的 GitHub artifact attestation。
 
-元数据会追加到 release notes，并与 tarball 一起上传。GitHub Free 不支持为私有仓库生成 artifact attestation；发布就绪检查会在当前私有状态下直接阻断，而不跳过证据后继续发包。
+元数据会追加到 release notes，并与 tarball 一起上传。公开仓库使用 GitHub artifact attestation；发布就绪检查不会为了继续发包而跳过证据。
+
+## 公开仓库治理
+
+- `CONTRIBUTING.md` 定义开发和验证流程。
+- `SECURITY.md` 要求通过 GitHub Private Vulnerability Reporting 报告漏洞。
+- `CODE_OF_CONDUCT.md`、`SUPPORT.md`、Issue Form 和 Pull Request 模板提供社区入口。
+- `.github/dependabot.yml` 每周检查 npm 与 GitHub Actions 更新。
+- `verify:public-release` 检查许可证、公开包元数据、Pages 链接、社区文件和常见密钥模式。
+
+`verify:quality:release` 与 `verify:quality-closure` 都把 `verify:public-release` 放在最后，确保前面步骤刚生成的报告也经过路径和密钥扫描。
 
 ## Kit 本体的后续优化
 

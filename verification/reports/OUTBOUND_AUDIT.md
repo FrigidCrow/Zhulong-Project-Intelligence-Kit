@@ -1,13 +1,13 @@
 # Zhulong Outbound Audit
 
-Generated: 2026-07-10T00:45:30.731Z
+Generated: 2026-07-10T03:49:40.348Z
 
 ## Summary
 
 - Status: PASS
 - Checked files/commands: 7
 - Issues: 0
-- Warnings: 18
+- Warnings: 21
 - Allowed coding runtimes outside Zhulong boundary: Codex, Claude Code, GitHub Copilot
 
 ## Checked Surface
@@ -26,6 +26,9 @@ No default outbound behavior found outside localhost/local commands.
 
 ## Warnings
 
+- `package.json`: non-default implementation, detection rule, negative fixture, or explicit opt-in surface: external URL is not allowed in local-only mode: https://github.com
+- `package.json`: non-default implementation, detection rule, negative fixture, or explicit opt-in surface: external URL is not allowed in local-only mode: https://frigidcrow.github.io
+- `package.json`: non-default implementation, detection rule, negative fixture, or explicit opt-in surface: external URL is not allowed in local-only mode: https://github.com
 - `bin/zl.mjs`: non-default implementation, detection rule, negative fixture, or explicit opt-in surface: network-capable command is not allowed in local-only mode: curl
 - `bin/zl.mjs`: non-default implementation, detection rule, negative fixture, or explicit opt-in surface: network-capable command is not allowed in local-only mode: wget
 - `bin/zl.mjs`: non-default implementation, detection rule, negative fixture, or explicit opt-in surface: network-capable command is not allowed in local-only mode: scp

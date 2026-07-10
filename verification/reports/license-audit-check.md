@@ -1,6 +1,6 @@
 # Zhulong License Audit Verification
 
-生成时间: 2026-07-10T00:45:33.643Z
+生成时间: 2026-07-10T03:49:42.879Z
 
 ## 摘要
 
@@ -21,7 +21,7 @@
 
 ## Reproduce
 
-- Command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/bin/zl.mjs' license audit --target '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit'`
+- Command: `node '<kit-root>/bin/zl.mjs' license audit --target '<kit-root>'`
 
 ## Issues
 

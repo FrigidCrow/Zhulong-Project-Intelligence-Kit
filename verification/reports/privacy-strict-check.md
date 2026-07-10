@@ -1,6 +1,6 @@
 # Zhulong Privacy Strict / Offline Lock Verification
 
-生成时间: 2026-07-10T00:45:30.736Z
+生成时间: 2026-07-10T03:49:40.352Z
 
 ## 摘要
 
@@ -24,9 +24,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-privacy-strict-2lk0S3`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-privacy-strict-2lk0S3/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-privacy-strict.mjs'`
+- Work root: `<tmp>/zhulong-privacy-strict-qxe53P`
+- Project root: `<tmp>/zhulong-privacy-strict-qxe53P/project`
+- Reproduce command: `node '<kit-root>/scripts/verify-privacy-strict.mjs'`
 
 ## Issues
 

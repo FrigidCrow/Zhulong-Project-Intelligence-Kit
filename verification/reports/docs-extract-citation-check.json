@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T00:45:27.526Z",
+  "generated": "2026-07-10T03:49:38.038Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-extract-AiV8DO",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-extract-AiV8DO/project",
+  "workRoot": "<tmp>/zhulong-docs-extract-TWI6PI",
+  "projectRoot": "<tmp>/zhulong-docs-extract-TWI6PI/project",
   "evidence": [
     "zl docs extract: found extracted 6",
     "DOCUMENT_EXTRACT_REPORT: found docx-zip-xml",

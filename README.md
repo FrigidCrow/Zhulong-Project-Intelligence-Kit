@@ -10,10 +10,18 @@
 </p>
 
 <p align="center">
-  <a href="docs/product.html">产品介绍</a>
+  <a href="https://github.com/FrigidCrow/Zhulong-Project-Intelligence-Kit/actions/workflows/ci.yml"><img src="https://github.com/FrigidCrow/Zhulong-Project-Intelligence-Kit/actions/workflows/ci.yml/badge.svg" alt="Zhulong CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-d94714" alt="Apache License 2.0"></a>
+  <a href="https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-167b81" alt="GitHub Pages 文档"></a>
+</p>
+
+> 在线文档通过 GitHub Pages 发布。README 中的产品、命令和技术指南链接会打开渲染后的网页，而不是 GitHub 的 HTML 源码视图。文档站首页：[Zhulong 在线文档](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/)。
+
+<p align="center">
+  <a href="https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/product.html">产品介绍</a>
   · <a href="docs/brand.md">品牌与特色</a>
-  · <a href="docs/commands.html">命令手册</a>
-  · <a href="docs/technical-guide.html">技术指南</a>
+  · <a href="https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html">命令手册</a>
+  · <a href="https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/technical-guide.html">技术指南</a>
   · <a href="docs/quality-plan.md">质量计划</a>
   · <a href="verification/reports/latest.md">最新验证报告</a>
 </p>
@@ -116,19 +124,19 @@ zl-completion-check --target "$PWD"
 
 | 能力 | 作用 | 常用入口 |
 | --- | --- | --- |
-| 项目接入 | 建立项目清单、规划目录和运行基线 | [`zhulong init`](docs/commands.html#cmd-zl-init) |
-| 代码地图 | 扫描技术栈、目录、测试和架构 | [`zhulong codebase scan`](docs/commands.html#cmd-zl-codebase-scan) |
-| 文档智能 | 抽取、规范化、同步并查询本地文档 | [`zhulong docs sync`](docs/commands.html#cmd-zl-docs-sync) |
-| 本地检索 | 显式初始化本地 RAG，不在日常命令中执行隐藏重建 | [`zhulong rag init-local`](docs/commands.html#cmd-zl-rag-init-local) |
-| 影响分析 | 构建代码图并分析变更影响和风险 | [`zhulong graph build`](docs/commands.html#cmd-zl-graph-build) |
-| 里程碑工作流 | 从需求、计划、实现到验证组织完整闭环 | [`zhulong workflow run new-milestone`](docs/commands.html#cmd-zl-new-milestone) |
-| 缺陷调查 | 结合规格证据和代码地图定位问题 | [`zhulong workflow run debug`](docs/commands.html#cmd-zl-debug) |
-| 回答审计 | 检查引用、数值漂移和答案接地情况 | [`zhulong answer audit`](docs/commands.html#cmd-zl-answer-audit) |
-| 暧昧审计 | 检查中英日规格中的不可验收表达 | [`zhulong ambiguity audit`](docs/commands.html#cmd-zl-ambiguity-audit) |
-| 结构审计 | 校验关键 `.planning/` 制品的 mini-schema | [`zhulong structure audit`](docs/commands.html#cmd-zl-structure-audit) |
-| 下一步发现 | 根据项目状态推荐 2-3 条命令 | [`zhulong next`](docs/commands.html#cmd-zl-next) |
-| 完成门禁 | 在任务完成前检查证据、风险和工作流状态 | [`zhulong workflow completion-check`](docs/commands.html#cmd-zl-completion-check) |
-| 项目驾驶舱 | 生成本地静态项目状态与证据页面 | [`zhulong cockpit build`](docs/commands.html#cmd-zl-cockpit-build) |
+| 项目接入 | 建立项目清单、规划目录和运行基线 | [`zhulong init`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-init) |
+| 代码地图 | 扫描技术栈、目录、测试和架构 | [`zhulong codebase scan`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-codebase-scan) |
+| 文档智能 | 抽取、规范化、同步并查询本地文档 | [`zhulong docs sync`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-docs-sync) |
+| 本地检索 | 显式初始化本地 RAG，不在日常命令中执行隐藏重建 | [`zhulong rag init-local`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-rag-init-local) |
+| 影响分析 | 构建代码图并分析变更影响和风险 | [`zhulong graph build`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-graph-build) |
+| 里程碑工作流 | 从需求、计划、实现到验证组织完整闭环 | [`zhulong workflow run new-milestone`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-new-milestone) |
+| 缺陷调查 | 结合规格证据和代码地图定位问题 | [`zhulong workflow run debug`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-debug) |
+| 回答审计 | 检查引用、数值漂移和答案接地情况 | [`zhulong answer audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-answer-audit) |
+| 暧昧审计 | 检查中英日规格中的不可验收表达 | [`zhulong ambiguity audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-ambiguity-audit) |
+| 结构审计 | 校验关键 `.planning/` 制品的 mini-schema | [`zhulong structure audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-structure-audit) |
+| 下一步发现 | 根据项目状态推荐 2-3 条命令 | [`zhulong next`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-next) |
+| 完成门禁 | 在任务完成前检查证据、风险和工作流状态 | [`zhulong workflow completion-check`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-completion-check) |
+| 项目驾驶舱 | 生成本地静态项目状态与证据页面 | [`zhulong cockpit build`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-cockpit-build) |
 
 ## 工作模式
 
@@ -155,11 +163,11 @@ zl-completion-check --target "$PWD"
 
 | 命令 | 作用 |
 | --- | --- |
-| [`zl-preflight`](docs/commands.html#cmd-zl-preflight) | 只检查当前状态，不执行重型刷新 |
-| [`zl-refresh-plan`](docs/commands.html#cmd-zl-refresh-plan) | 根据文档和代码变更生成刷新建议 |
-| [`zl-refresh-run`](docs/commands.html#cmd-zl-refresh-run) | 在用户明确指定后执行 RAG 或代码图刷新 |
-| [`zl-mode-status`](docs/commands.html#cmd-zl-mode-status) | 查看当前文档、RAG、代码图和严格模式状态 |
-| [`zl-mode-set`](docs/commands.html#cmd-zl-mode-set) | 切换 `graph-lite`、`full-strict` 等运行模式 |
+| [`zl-preflight`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-preflight) | 只检查当前状态，不执行重型刷新 |
+| [`zl-refresh-plan`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-refresh-plan) | 根据文档和代码变更生成刷新建议 |
+| [`zl-refresh-run`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-refresh-run) | 在用户明确指定后执行 RAG 或代码图刷新 |
+| [`zl-mode-status`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-mode-status) | 查看当前文档、RAG、代码图和严格模式状态 |
+| [`zl-mode-set`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-mode-set) | 切换 `graph-lite`、`full-strict` 等运行模式 |
 
 ## 运行环境包
 
@@ -173,12 +181,14 @@ zl-completion-check --target "$PWD"
 
 | 文档 | 内容 |
 | --- | --- |
-| [产品介绍](docs/product.html) | 产品定位、能力和常见疑问 |
+| [产品介绍](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/product.html) | 产品定位、能力和常见疑问 |
 | [品牌与特色能力规范](docs/brand.md) | 品牌基础、定位、特色支柱、语言与视觉规范 |
-| [命令手册](docs/commands.html) | 全部命令、参数、输出和失败示例 |
-| [技术指南](docs/technical-guide.html) | 架构、工作流、RAG、Graphify 和运行环境说明 |
+| [命令手册](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html) | 全部命令、参数、输出和失败示例 |
+| [技术指南](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/technical-guide.html) | 架构、工作流、RAG、Graphify 和运行环境说明 |
+| [Cockpit 样例](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/templates/cockpit/sample.html) | 本地项目驾驶舱的静态样例 |
 | [质量计划](docs/quality-plan.md) | 测试矩阵、质量门禁和证据标准 |
 | [CI 与发布治理](docs/ci-and-release.md) | GitHub Actions、ruleset、trusted publishing 与制品元数据 |
+| [开源发布五轮复核](docs/open-source-release-review.md) | Apache 2.0、Pages、治理、安全与发布证据 |
 | [运行环境包说明](docs/runtime-command-packs.md) | Codex、Claude Code 和 GitHub Copilot 安装方式 |
 | [提取与本地计划](docs/zhulong-extraction-and-local-plan.md) | 截图提取、工程基线和后续优化路线 |
 | [最新验证报告](verification/reports/latest.md) | 最近一次本地验证结果 |
@@ -198,6 +208,8 @@ npm run verify:structure
 npm run verify:guardrails
 npm run verify:visual
 npm run verify:design
+npm run verify:pages
+npm run verify:public-release
 ```
 
 发布级检查：
@@ -222,4 +234,13 @@ npm 包通过 `files` 白名单只包含 CLI、模板、运行环境包、schema
 
 ## 许可证
 
-项目当前设置为私有包，许可证状态为 `UNLICENSED`。公开发布前需要先确定许可证，并在 npm 配置 `zhulong-kit` 的 trusted publisher。发布工作流会在这些条件未满足时主动阻断。
+本项目使用 [Apache License 2.0](LICENSE)。该许可证包含明确的版权授权、专利授权、再分发条件和免责声明。外部工具与非内嵌材料的许可边界见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。
+
+npm 发布使用 GitHub OIDC trusted publishing，不保存长期 npm token。首次发布前仍需在 npm 为 `zhulong-kit` 配置 Trusted Publisher。
+
+## 参与和安全
+
+- 贡献流程：[CONTRIBUTING.md](CONTRIBUTING.md)
+- 社区行为规范：[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- 安全漏洞私密报告：[SECURITY.md](SECURITY.md)
+- 使用支持：[SUPPORT.md](SUPPORT.md)

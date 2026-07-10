@@ -1,22 +1,23 @@
 # Zhulong License Audit
 
-Generated: 2026-07-10T00:45:33.637Z
+Generated: 2026-07-10T03:49:42.874Z
 
 ## Summary
 
 - Status: PASS
-- Items checked: 4
+- Items checked: 5
 - Restricted / commercial-review licenses: 0
-- Non-MIT or unknown items: 3
+- Non-MIT or unknown items: 4
 - Unknown license metadata: 2
 
 ## Items
 
 | Name | Version | Source | License | Risk |
 | --- | --- | --- | --- | --- |
-| `zhulong-kit` | 0.1.0 | package.json | UNLICENSED | non-mit-permissive-or-review |
-| `graphrag` | installed | CLI at /Users/frigidcrow/.local/bin/graphrag | UNKNOWN | unknown |
-| `graphify` | graphify 0.8.40 | CLI at /Users/frigidcrow/.local/bin/graphify | UNKNOWN | unknown |
+| `zhulong-kit` | 0.1.0 | package.json | Apache-2.0 | non-mit-permissive-or-review |
+| `playwright` | 1.61.1 | npm dependency | Apache-2.0 | non-mit-permissive-or-review |
+| `graphrag` | installed | CLI available locally | UNKNOWN | unknown |
+| `graphify` | graphify 0.8.40 | CLI available locally | UNKNOWN | unknown |
 | `ollama` | ollama version is 0.21.0 | Homebrew metadata / CLI | MIT | mit |
 
 ## Commercial Use Reading

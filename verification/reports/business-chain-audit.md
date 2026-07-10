@@ -1,6 +1,6 @@
 # Zhulong Business Chain Audit
 
-生成时间: 2026-07-10T00:46:31.119Z
+生成时间: 2026-07-10T03:51:05.083Z
 
 ## 摘要
 
@@ -54,4 +54,4 @@
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-business-chain.mjs'`
+- `node '<kit-root>/scripts/verify-business-chain.mjs'`
