@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { portableText, portableValue } from "../scripts/quality-utils.mjs";
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const zlCli = path.join(kitRoot, "bin", "zl.mjs");
@@ -568,8 +569,8 @@ function writeReport() {
   lines.push("| Hard enforcement | Mostly agent instruction based | `zl-workflow-run`, `zl-gate-check`, `zl-completion-check` verified with block/pass behavior | Zhulong adds artifact-level enforcement beyond prompt guidance |");
   lines.push("", "## Artifact Roots", "");
   for (const artifact of artifacts) lines.push(`- \`${artifact}\``);
-  fs.writeFileSync(reportPath, `${lines.join("\n")}\n`);
-  fs.writeFileSync(reportJsonPath, `${JSON.stringify({
+  fs.writeFileSync(reportPath, `${portableText(lines.join("\n"))}\n`);
+  fs.writeFileSync(reportJsonPath, `${JSON.stringify(portableValue({
     generated,
     summary,
     verdict: summary.fail === 0 ? "pass" : "fail",
@@ -610,7 +611,7 @@ function writeReport() {
         assessment: "Zhulong adds artifact-level enforcement beyond prompt guidance",
       },
     ],
-  }, null, 2)}\n`);
+  }), null, 2)}\n`);
 }
 
 try {

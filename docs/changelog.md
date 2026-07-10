@@ -5,6 +5,15 @@ Full name: **Zhulong Project Intelligence Kit**
 Documentation abbreviation: **Zhulong**
 Command namespace: **`zl-*`**
 
+## 2026-07-10：Apache 2.0、GitHub Pages 与公开仓库治理
+
+- 项目许可证切换为 Apache-2.0，npm 包设置为公开发布并启用 provenance。
+- 新增 GitHub Pages 工作流，README 的 HTML 文档入口改为渲染站点 URL。
+- Pages 允许列表只发布文档、cockpit 样例、验证报告和许可证，不发布源码与 runtime 目录。
+- 新增贡献指南、安全政策、行为规范、支持说明、Issue Form、Pull Request 模板和 Dependabot。
+- 新增 `verify:pages` 与 `verify:public-release`，并纳入 `verify:quality`。
+- npm registry 查询 `zhulong-kit` 仍返回 404；名称可用性需以首次发布时为准。
+
 ## 2026-07-10：文档站与 cockpit 视觉系统重构
 
 - 文档站改为冷色技术档案视觉，使用烛龙主图标、炭黑文字、余烬橙主色和克制的青色状态色。

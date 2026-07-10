@@ -3,12 +3,16 @@ import fs from "node:fs";
 const issues = [];
 const ci = fs.readFileSync(".github/workflows/ci.yml", "utf8");
 const release = fs.readFileSync(".github/workflows/release.yml", "utf8");
+const pages = fs.readFileSync(".github/workflows/pages.yml", "utf8");
 const ruleset = JSON.parse(fs.readFileSync(".github/rulesets/main.json", "utf8"));
 const actionPins = {
   "actions/checkout": "df4cb1c069e1874edd31b4311f1884172cec0e10",
   "actions/setup-node": "48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
   "actions/upload-artifact": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
   "actions/attest": "a1948c3f048ba23858d222213b7c278aabede763",
+  "actions/configure-pages": "983d7736d9b0ae728b81ab479565c72886d7745b",
+  "actions/upload-pages-artifact": "7b1f4a764d45c48632c6b24a0339c27f5614fb0b",
+  "actions/deploy-pages": "d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e",
 };
 
 function expect(condition, detail) {
@@ -34,6 +38,13 @@ expect(release.includes("environment: npm"), "release must use the npm environme
 expect(release.includes(`actions/attest@${actionPins["actions/attest"]}`), "release must pin attest v4 by SHA");
 expect(release.includes("ZL_RELEASE_REPOSITORY_PRIVATE"), "release must block when the current plan cannot attest a private repository");
 expect(!release.includes("NODE_AUTH_TOKEN"), "release must not depend on a long-lived npm token");
+expect(pages.includes(`actions/checkout@${actionPins["actions/checkout"]}`), "Pages must pin actions/checkout v6 by SHA");
+expect(pages.includes(`actions/setup-node@${actionPins["actions/setup-node"]}`), "Pages must pin actions/setup-node v6 by SHA");
+expect(pages.includes(`actions/configure-pages@${actionPins["actions/configure-pages"]}`), "Pages must pin configure-pages v5 by SHA");
+expect(pages.includes(`actions/upload-pages-artifact@${actionPins["actions/upload-pages-artifact"]}`), "Pages must pin upload-pages-artifact v4 by SHA");
+expect(pages.includes(`actions/deploy-pages@${actionPins["actions/deploy-pages"]}`), "Pages must pin deploy-pages v4 by SHA");
+expect(pages.includes("pages: write") && pages.includes("id-token: write"), "Pages must request deployment permissions");
+expect(pages.includes("npm run verify:pages"), "Pages must assemble the allowlisted static site through verify:pages");
 expect(fs.existsSync("package-lock.json"), "package-lock.json must be committed");
 
 const pullRequest = ruleset.rules.find((rule) => rule.type === "pull_request")?.parameters;

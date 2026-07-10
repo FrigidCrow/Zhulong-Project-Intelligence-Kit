@@ -78,7 +78,7 @@ verification evidence, and Claude Code / Copilot / Codex usage.
 
 - `core/AGENTS.template.md`
 - `docs/wishlist.md`
-- `/Users/frigidcrow/.codex/skills/gsd-debug/SKILL.md`
+- `<home>/.codex/skills/gsd-debug/SKILL.md`
 
 </read_first>
 

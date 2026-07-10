@@ -23,10 +23,28 @@ export function readText(filePath) {
   return fs.readFileSync(filePath, "utf8");
 }
 
+export function portableText(value) {
+  return String(value)
+    .split(kitRoot).join("<kit-root>")
+    .split(os.tmpdir()).join("<tmp>")
+    .split(os.homedir()).join("<home>")
+    .replace(/\/var\/folders\/[^\s]+$/g, "<tmp>")
+    .replace(/\/(?:Users|home)\/[^\s]+$/g, "<local-path>");
+}
+
+export function portableValue(value) {
+  if (typeof value === "string") return portableText(value);
+  if (Array.isArray(value)) return value.map(portableValue);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, portableValue(item)]));
+  }
+  return value;
+}
+
 export function writeJsonReport(name, data) {
   ensureReportDir();
   const outPath = path.join(reportDir, name);
-  fs.writeFileSync(outPath, `${JSON.stringify(data, null, 2)}\n`);
+  fs.writeFileSync(outPath, `${JSON.stringify(portableValue(data), null, 2)}\n`);
   return outPath;
 }
 
@@ -40,7 +58,7 @@ export function writeMarkdownReport(name, title, summary, sections = []) {
     else for (const line of section.body) lines.push(line);
   }
   const outPath = path.join(reportDir, name);
-  fs.writeFileSync(outPath, `${lines.join("\n")}\n`);
+  fs.writeFileSync(outPath, `${portableText(lines.join("\n"))}\n`);
   return outPath;
 }
 

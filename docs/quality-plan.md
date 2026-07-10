@@ -113,6 +113,8 @@ npm run verify:full-command-surface
 npm run verify:schema
 npm run verify:visual
 npm run verify:design
+npm run verify:pages
+npm run verify:public-release
 npm run verify:naming
 npm run verify:runtime
 npm run verify:dev-audit-harness
@@ -434,6 +436,8 @@ MVP2 应增加：
 - `verify:docs`：检查文档链接、命令覆盖、命名一致性。
 - `verify:visual`：Playwright 渲染 product、commands、technical-guide、quality-dashboard 和 cockpit，覆盖桌面、移动端与桌面暗色主题并保存截图。
 - `verify:design`：检查真实品牌素材、单一 H1、共享视觉系统、可访问性、动效边界和反模板化约束。
+- `verify:pages`：组装 GitHub Pages 允许列表并阻止源码、runtime、依赖目录和符号链接进入静态站。
+- `verify:public-release`：检查 Apache-2.0、npm 公开元数据、Pages 链接、社区治理文件和常见密钥模式。
 - `verify:naming`：禁止旧品牌名和 `gsd-*` 用户入口混入对外文档。
 - `verify:runtime`：临时目录安装三种 runtime pack，并检查 `{{ZL_CLI}}` 渲染。
 - `verify:schema`：检查 manifest、issue/phase schema 文档、workflow state、context handoff、evidence record/writeback 的必要结构。
@@ -766,6 +770,8 @@ npm run verify:docs
 npm run verify:naming
 npm run verify:visual
 npm run verify:design
+npm run verify:pages
+npm run verify:public-release
 ```
 
 涉及 runtime pack：

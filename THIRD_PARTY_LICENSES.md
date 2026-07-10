@@ -1,8 +1,8 @@
 # Third-Party Notices
 
-Zhulong Project Intelligence Kit is currently a private, `UNLICENSED` package.
-This file records third-party material that is copied into the repository, as
-distinct from tools that users install and run separately.
+Zhulong Project Intelligence Kit is licensed under Apache-2.0. This file
+records third-party material that is copied into the repository, as distinct
+from tools that users install and run separately.
 
 ## Vendored ambiguity wordlists
 

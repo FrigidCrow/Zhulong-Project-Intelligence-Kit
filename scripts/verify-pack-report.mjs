@@ -12,6 +12,8 @@ const pack = Array.isArray(parsed) ? parsed[0] : parsed;
 const files = Array.isArray(pack?.files) ? pack.files.map((file) => file.path) : [];
 const required = [
   "package.json",
+  "LICENSE",
+  "THIRD_PARTY_LICENSES.md",
   "bin/zl.mjs",
   "bin/quality-audits.mjs",
   "ambiguity-wordlists.json",

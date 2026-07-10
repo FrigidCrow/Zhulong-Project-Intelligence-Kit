@@ -10,7 +10,7 @@
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <header class="topbar">
-    <a class="brand-mark" href="../README.md">Zhulong Project Intelligence Kit</a>
+    <a class="brand-mark" href="product.html">Zhulong Project Intelligence Kit</a>
     <nav class="nav" aria-label="主导航">
       <a href="product.html">产品</a>
       <a href="commands.html">命令</a>
@@ -44,9 +44,9 @@
           <p><a class="button" href="../verification/reports/docs-check.md">Docs</a> <a class="button" href="../verification/reports/docs-update-fixture.md">Docs Update</a> <a class="button" href="../verification/reports/docs-sync-check.md">Docs Sync</a> <a class="button" href="../verification/reports/answer-audit-check.md">Answer Audit</a> <a class="button" href="../verification/reports/knowledge-reliability-check.md">Knowledge</a> <a class="button" href="../verification/reports/rag-command-check.md">RAG Matrix</a> <a class="button" href="../verification/reports/rag-local-check.md">Local RAG</a> <a class="button" href="../verification/reports/schema-check.md">Schema</a> <a class="button" href="../verification/reports/naming-check.md">Naming</a></p>
         </article>
         <article class="panel panel-pad">
-          <h3>Runtime / Visual / Design</h3>
-          <p id="runtime-summary">读取 runtime/visual 报告中...</p>
-          <p><a class="button" href="../verification/reports/runtime-pack-status.md">Runtime</a> <a class="button" href="../verification/reports/visual-check.md">Visual</a> <a class="button" href="../verification/reports/design-quality-check.md">Design</a></p>
+          <h3>Runtime / Visual / Release</h3>
+          <p id="runtime-summary">读取 runtime、visual 和 release 报告中...</p>
+          <p><a class="button" href="../verification/reports/runtime-pack-status.md">Runtime</a> <a class="button" href="../verification/reports/visual-check.md">Visual</a> <a class="button" href="../verification/reports/design-quality-check.md">Design</a> <a class="button" href="../verification/reports/pages-site-check.md">Pages</a> <a class="button" href="../verification/reports/public-release-check.md">Public Release</a></p>
         </article>
         <article class="panel panel-pad">
           <h3>MVP3 / MVP3.5 / MVP6 / Full Surface</h3>
@@ -115,6 +115,8 @@
             <tr><td><code>npm run verify:workflow-closure</code></td><td>新项目、既有项目、reference 无文档风险放行、strict stale/privacy 阻断四条 workflow closure fixture。</td><td><a href="../verification/reports/workflow-closure-check.md">workflow-closure-check.md</a></td></tr>
             <tr><td><code>npm run verify:cockpit-build</code></td><td><code>zl-cockpit-build</code>、独立 cockpit 模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、搜索/详情/legend、本地图聚合、RAG 证据面板和 no hidden heavy refresh。</td><td><a href="../verification/reports/cockpit-build-check.md">cockpit-build-check.md</a></td></tr>
             <tr><td><code>npm run verify:docs-completeness</code></td><td>命令手册 74 个独立锚点、详情字段、README 跳转和命名边界。</td><td><a href="../verification/reports/docs-completeness-check.md">docs-completeness-check.md</a></td></tr>
+            <tr><td><code>npm run verify:pages</code></td><td>GitHub Pages 允许列表、渲染入口、无源码目录和无符号链接。</td><td><a href="../verification/reports/pages-site-check.md">pages-site-check.md</a></td></tr>
+            <tr><td><code>npm run verify:public-release</code></td><td>Apache-2.0、npm 公开元数据、社区治理、安全报告和常见密钥模式。</td><td><a href="../verification/reports/public-release-check.md">public-release-check.md</a></td></tr>
             <tr><td><code>npm run verify:business-chain</code></td><td>维护者级业务断链审计：init、全命令面、skills、workflow、policy、docs completeness 聚合。</td><td><a href="../verification/reports/business-chain-audit.md">business-chain-audit.md</a></td></tr>
             <tr><td><code>npm run verify:quality-closure</code></td><td>聚合 check、quality、integration、runtime、skills、workflow、cockpit、docs completeness。</td><td><a href="../verification/reports/quality-closure-check.md">quality-closure-check.md</a></td></tr>
             <tr><td><code>npm run verify:dev-audit-harness</code><br><code>npm run dev:audit:full</code></td><td>维护者内部审计：命令评分、skills 评分、feature gate、Zhulong / GSD / Superpowers 对标、时间拆分、token 统计边界和记忆隔离。</td><td><a href="../verification/reports/developer-audit-summary.md">developer-audit-summary.md</a></td></tr>
@@ -242,6 +244,8 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
       readJson("../verification/reports/runtime-pack-status.json"),
       readJson("../verification/reports/visual-check.json"),
       readJson("../verification/reports/design-quality-check.json"),
+      readJson("../verification/reports/pages-site-check.json"),
+      readJson("../verification/reports/public-release-check.json"),
       readJson("../verification/reports/mvp3-evidence-policy-check.json"),
       readJson("../verification/reports/mvp35-refresh-control-check.json"),
       readJson("../verification/reports/workflow-facade-check.json"),
@@ -254,9 +258,9 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
       const values = results.map((item) => item.status === "fulfilled" ? item.value : null);
       document.getElementById("integration-summary").textContent = statusText(values[0]);
       document.getElementById("docs-summary").textContent = `Docs ${statusText(values[1])}; Docs Update ${statusText(values[2])}; Docs Sync ${statusText(values[3])}; Answer Audit ${statusText(values[4])}; Knowledge ${statusText(values[5])}; RAG Matrix ${statusText(values[6])}; Local RAG ${statusText(values[7])}; Schema ${statusText(values[8])}; Naming ${statusText(values[9])}`;
-      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[10])}; Visual ${statusText(values[11])}; Design ${statusText(values[12])}`;
-      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[13])}; MVP3.5 ${statusText(values[14])}; Facade ${statusText(values[15])}; Policy ${statusText(values[16])}; Full Surface ${statusText(values[17])}; Cockpit ${statusText(values[18])}`;
-      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[19])}; Round 2 ${statusText(values[20])}`;
+      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[10])}; Visual ${statusText(values[11])}; Design ${statusText(values[12])}; Pages ${statusText(values[13])}; Public Release ${statusText(values[14])}`;
+      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[15])}; MVP3.5 ${statusText(values[16])}; Facade ${statusText(values[17])}; Policy ${statusText(values[18])}; Full Surface ${statusText(values[19])}; Cockpit ${statusText(values[20])}`;
+      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[21])}; Round 2 ${statusText(values[22])}`;
     }).catch(() => {
       document.getElementById("integration-summary").textContent = "浏览器阻止本地 JSON 读取，请打开 Markdown 报告。";
     });
