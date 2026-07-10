@@ -8,7 +8,7 @@
 2. 用 `npm ci --ignore-scripts` 按 `package-lock.json` 安装。
 3. 执行 `verify:quality` 和 `verify:full-command-surface`。
 4. 执行 `npm pack --dry-run --json` 并用 `verify:pack-report` 检查发布边界。
-5. 仅上传当次变更的 Markdown / JSON verifier 报告，保留 7 天。
+5. 仅上传当次变更的 Markdown / JSON verifier 报告，保留 7 天；中转目录使用非隐藏的 `ci-artifacts/`，避免 upload action 默认忽略。
 
 所有 GitHub Actions 依赖均固定到完整 commit SHA，版本号仅作为行尾注释，避免可移动 tag 在未审查时改变构建内容。
 

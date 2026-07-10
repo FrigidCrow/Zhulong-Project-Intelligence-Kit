@@ -434,4 +434,7 @@ writeMarkdownReport("full-command-surface-check.md", "Zhulong 全命令面验证
 ]);
 
 console.log(`full command surface check ${data.status} commands=${data.commandsCovered.length}/${data.commandsRequired.length} issues=${issues.length}`);
-if (issues.length > 0) process.exitCode = 1;
+if (issues.length > 0) {
+  for (const issue of issues) console.error(`- ${issue.command}: ${issue.detail}`);
+  process.exitCode = 1;
+}

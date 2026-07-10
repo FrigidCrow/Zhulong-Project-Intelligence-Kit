@@ -27,6 +27,7 @@ expect(ci.includes("npm run verify:full-command-surface"), "CI must run verify:f
 expect(ci.includes("npm pack --dry-run --json"), "CI must run npm pack --dry-run --json");
 expect(ci.includes(`actions/upload-artifact@${actionPins["actions/upload-artifact"]}`), "CI must pin upload-artifact v7 by SHA");
 expect(ci.includes("retention-days: 7"), "CI report retention must be seven days");
+expect(ci.includes("path: ci-artifacts/"), "CI artifacts must use a non-hidden upload directory");
 expect(!ci.includes("verification/reports/*.png"), "CI artifacts must not include screenshots");
 expect(release.includes("id-token: write"), "release must request OIDC id-token permission");
 expect(release.includes("environment: npm"), "release must use the npm environment");
