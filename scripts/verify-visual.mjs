@@ -11,14 +11,16 @@ import {
 
 const require = createRequire(import.meta.url);
 const pages = [
-  { file: "docs/product.html", name: "product" },
-  { file: "docs/commands.html", name: "commands" },
-  { file: "docs/technical-guide.html", name: "technical-guide" },
-  { file: "docs/quality-dashboard.html", name: "quality-dashboard" },
+  { file: "docs/product.html", name: "product", checkBrand: true },
+  { file: "docs/commands.html", name: "commands", checkBrand: true },
+  { file: "docs/technical-guide.html", name: "technical-guide", checkBrand: true },
+  { file: "docs/quality-dashboard.html", name: "quality-dashboard", checkBrand: true },
+  { file: "templates/cockpit/sample.html", name: "cockpit-sample", checkBrand: false },
 ];
 const viewports = [
-  { label: "desktop", width: 1440, height: 1100 },
-  { label: "mobile", width: 390, height: 1200 },
+  { label: "desktop", width: 1440, height: 1100, colorScheme: "light" },
+  { label: "mobile", width: 390, height: 1200, colorScheme: "light" },
+  { label: "desktop-dark", width: 1440, height: 1100, colorScheme: "dark" },
 ];
 const issues = [];
 const results = [];
@@ -60,12 +62,25 @@ try {
     const context = await browser.newContext({
       viewport: { width: viewport.width, height: viewport.height },
       deviceScaleFactor: 1,
+      colorScheme: viewport.colorScheme,
     });
-    const page = await context.newPage();
     for (const item of pages) {
+      const page = await context.newPage();
       const url = `file://${path.join(kitRoot, item.file)}`;
       await page.goto(url, { waitUntil: "networkidle" });
       await page.waitForTimeout(350);
+      const foldScreenshot = path.join(screenshotRoot, `${item.name}-${viewport.label}-fold.png`);
+      await page.screenshot({ path: foldScreenshot, fullPage: false });
+      const documentHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+      for (let y = 0; y < documentHeight; y += Math.max(900, viewport.height)) {
+        await page.evaluate((top) => window.scrollTo({ top, behavior: "instant" }), y);
+        await page.waitForTimeout(20);
+      }
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+      await page.evaluate(() => {
+        document.querySelectorAll(".reveal-ready").forEach((element) => element.classList.add("is-visible"));
+      });
+      await page.waitForTimeout(620);
       const metrics = await page.evaluate(() => {
         const body = document.body;
         const doc = document.documentElement;
@@ -76,37 +91,53 @@ try {
         return {
           h1: document.querySelector("h1")?.textContent?.trim() || "",
           brand: document.querySelector(".brand-mark")?.textContent?.trim() || "",
+          brandVisible: (() => {
+            const element = document.querySelector(".brand-mark");
+            if (!element) return false;
+            const style = getComputedStyle(element);
+            const rect = element.getBoundingClientRect();
+            return style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity) > 0 && rect.width > 20 && rect.height > 20;
+          })(),
+          navLinks: document.querySelectorAll(".nav a").length,
           overflow: Math.max(body.scrollWidth, doc.scrollWidth) - doc.clientWidth,
           emptyCards: [...document.querySelectorAll(".control-card, .command-card, .panel")]
             .filter((el) => !el.textContent.trim()).length,
           badTextBoxes: [...document.querySelectorAll("a, button, .tag, .status-pill")]
             .filter((el) => el.scrollWidth - el.clientWidth > 2).length,
           networkNodes: document.querySelectorAll(".network-node").length,
+          heroAssetWidth: document.querySelector(".hero-emblem img")?.naturalWidth || 0,
+          cockpitGraph: document.querySelectorAll(".cockpit-graph .graph-node").length,
           unequalStageRows,
           scrollWidth: Math.max(body.scrollWidth, doc.scrollWidth),
           clientWidth: doc.clientWidth,
         };
       });
       const screenshot = path.join(screenshotRoot, `${item.name}-${viewport.label}.png`);
+      await page.evaluate(() => document.documentElement.classList.add("visual-capture"));
       await page.screenshot({ path: screenshot, fullPage: true });
       const bytes = fs.statSync(screenshot).size;
 
       if (!metrics.h1) addIssue(item.file, viewport.label, "Missing visible H1.");
-      if (metrics.brand !== "Zhulong Project Intelligence Kit") addIssue(item.file, viewport.label, `Unexpected brand text: ${metrics.brand}`);
+      if (item.checkBrand && metrics.brand !== "Zhulong Project Intelligence Kit") addIssue(item.file, viewport.label, `Unexpected brand text: ${metrics.brand}`);
+      if (item.checkBrand && !metrics.brandVisible) addIssue(item.file, viewport.label, "Brand mark is not visibly rendered.");
+      if (item.checkBrand && metrics.navLinks !== 5) addIssue(item.file, viewport.label, `Unexpected navigation link count: ${metrics.navLinks}.`);
       if (metrics.overflow > 2) addIssue(item.file, viewport.label, `Horizontal overflow: ${metrics.overflow}px.`);
       if (metrics.emptyCards > 0) addIssue(item.file, viewport.label, `Empty cards found: ${metrics.emptyCards}.`);
       if (metrics.badTextBoxes > 0) addIssue(item.file, viewport.label, `Text boxes with clipped content: ${metrics.badTextBoxes}.`);
       if (metrics.unequalStageRows > 0) addIssue(item.file, viewport.label, `Stage flow rows have uneven node widths: ${metrics.unequalStageRows}.`);
-      if (item.name === "product" && metrics.networkNodes < 5) addIssue(item.file, viewport.label, "Product graph visual has too few network nodes.");
+      if (item.name === "product" && metrics.heroAssetWidth < 256) addIssue(item.file, viewport.label, "Product hero asset is missing or too small.");
+      if (item.name === "cockpit-sample" && metrics.cockpitGraph < 5) addIssue(item.file, viewport.label, "Cockpit graph did not render enough nodes.");
       if (bytes < 10000) addIssue(item.file, viewport.label, `Screenshot looks too small: ${bytes} bytes.`);
 
       results.push({
         page: item.file,
         viewport: viewport.label,
         screenshot,
+        foldScreenshot,
         bytes,
         metrics,
       });
+      await page.close();
     }
     await context.close();
   }

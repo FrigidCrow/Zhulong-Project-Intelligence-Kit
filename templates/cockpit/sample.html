@@ -7,132 +7,120 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg: #070809;
-      --surface: #111418;
-      --surface-2: #171b20;
-      --panel: #0d1117;
-      --line: rgba(255, 255, 255, .13);
-      --line-strong: rgba(148, 163, 184, .35);
-      --text: #f6f8fb;
-      --muted: #9aa4b2;
-      --muted-2: #6f7a89;
-      --cyan: #22d3ee;
-      --green: #4ade80;
-      --amber: #fbbf24;
-      --red: #ffb4ab;
-      --blue: #7dd3fc;
-      --radius: 8px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #111311;
+      --surface: #181b18;
+      --surface-2: #20241f;
+      --panel: #141614;
+      --line: #343a34;
+      --line-strong: #697269;
+      --text: #edf1ed;
+      --muted: #9aa49b;
+      --muted-2: #727c73;
+      --cyan: #52a6aa;
+      --green: #58ae7c;
+      --amber: #d9a052;
+      --red: #df776d;
+      --blue: #70a9bf;
+      --ember: #f05a24;
+      --radius: 3px;
+      font-family: "Avenir Next", "Noto Sans SC", "Hiragino Sans GB", system-ui, sans-serif;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
 
     body {
       margin: 0;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(circle at 28% 4%, rgba(34, 211, 238, .11), transparent 34rem),
-        radial-gradient(circle at 78% 10%, rgba(74, 222, 128, .06), transparent 30rem),
-        var(--bg);
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.58;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(to right, rgba(255, 255, 255, .035) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, .035) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    body::before { display: none; }
+
+    button,
+    input { font: inherit; }
+
+    :focus-visible {
+      outline: 3px solid rgba(240, 90, 36, .5);
+      outline-offset: 3px;
     }
 
     main {
       position: relative;
-      width: min(1320px, calc(100vw - 40px));
+      width: min(1440px, calc(100vw - 44px));
       margin: 0 auto;
-      padding: 30px 0 60px;
+      padding: 0 0 56px;
     }
 
     header {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 20px;
-      align-items: start;
-      padding: 24px 0 22px;
+      align-items: center;
+      min-height: 132px;
+      padding: 28px 0 24px 20px;
       border-bottom: 1px solid var(--line);
+      border-left: 5px solid var(--ember);
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(40px, 6vw, 78px);
+      font-family: "Arial Narrow", "Avenir Next Condensed", "Noto Sans SC", system-ui, sans-serif;
+      font-size: clamp(34px, 4vw, 54px);
+      font-weight: 800;
       line-height: 1;
-      letter-spacing: 0;
     }
 
     h2 {
-      margin: 0 0 14px;
-      font-size: 20px;
-      letter-spacing: 0;
+      margin: 0 0 18px;
+      font-family: "Arial Narrow", "Avenir Next Condensed", "Noto Sans SC", system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 760;
     }
 
     h3 {
-      margin: 0 0 10px;
-      font-size: 13px;
+      margin: 0 0 11px;
       color: var(--muted);
-      letter-spacing: .04em;
-      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 750;
+      text-transform: none;
     }
 
     code,
     pre {
-      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font-family: "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
     }
 
     .eyebrow {
-      color: var(--cyan);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      color: var(--ember);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
+      text-transform: none;
     }
 
     .subhead {
-      max-width: 860px;
-      margin: 16px 0 0;
+      max-width: 80ch;
+      margin: 13px 0 0;
+      font-size: 13px;
       color: var(--muted);
-      font-size: 15px;
     }
 
     .status,
     .pill,
-    .mode-badge {
+    .mode-badge,
+    .legend-chip {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .05);
-      font-family: "JetBrains Mono", monospace;
+      border-radius: 2px;
+      background: transparent;
+      font-family: "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
       white-space: nowrap;
-    }
-
-    .status {
-      min-height: 36px;
-      padding: 7px 12px;
-      font-size: 13px;
-    }
-
-    .mode-badge {
-      min-height: 28px;
-      margin-top: 10px;
-      padding: 5px 8px;
-      color: var(--muted);
-      font-size: 11px;
     }
 
     .status.PASS,
@@ -150,68 +138,107 @@
     .pill.FAIL,
     .pill.invalid_json { color: var(--red); }
 
+    .status {
+      min-height: 38px;
+      padding: 8px 12px;
+      border-left: 3px solid currentColor;
+      font-size: 12px;
+    }
+
+    .mode-badge {
+      border: 0;
+      padding: 0;
+      color: var(--muted-2);
+    }
+
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin: 22px 0 16px;
+      gap: 0;
+      margin: 0;
+      border-bottom: 1px solid var(--line);
     }
 
     .metric,
     section {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(16, 19, 24, .86);
-      box-shadow: inset 0 .5px 0 rgba(255, 255, 255, .07);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .metric {
-      min-height: 104px;
-      padding: 15px;
+      min-height: 118px;
+      padding: 20px;
+      border: 0;
+      border-right: 1px solid var(--line);
     }
+
+    .metric:first-child { border-left: 1px solid var(--line); }
+    .metric:last-child { border-right: 1px solid var(--line); }
 
     .metric span {
       display: block;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .metric strong {
       display: block;
-      margin-top: 13px;
-      font-size: 25px;
-      line-height: 1.05;
-      overflow-wrap: anywhere;
+      margin-top: 10px;
+      font-family: "Arial Narrow", "Avenir Next Condensed", system-ui, sans-serif;
+      font-size: 28px;
+      font-weight: 780;
     }
 
     .metric small {
       display: block;
-      margin-top: 9px;
-      color: var(--muted-2);
+      margin-top: 8px;
+      font-size: 11px;
     }
 
     section {
-      margin-top: 14px;
-      padding: 18px;
+      margin-top: 0;
+      padding: 28px 20px 34px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section > h2::after {
+      content: "";
+      display: block;
+      width: 42px;
+      height: 3px;
+      margin-top: 10px;
+      background: var(--ember);
     }
 
     .split {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
-      gap: 14px;
+      grid-template-columns: minmax(0, 1.35fr) minmax(330px, .65fr);
+      gap: 24px;
       align-items: start;
+    }
+
+    .artifact-split {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .artifact-split > div {
+      min-width: 0;
+      overflow-x: auto;
     }
 
     .stack {
       display: grid;
-      gap: 14px;
+      gap: 18px;
     }
 
     .subpanel {
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: rgba(255, 255, 255, .035);
-      padding: 14px;
+      padding: 16px 0 4px;
+      border: 0;
+      border-top: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: transparent;
     }
 
     .button-row {
@@ -227,60 +254,67 @@
       justify-content: center;
       min-height: 36px;
       padding: 8px 11px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      border-radius: 2px;
+      background: transparent;
       color: var(--text);
+      font-size: 11px;
       text-decoration: none;
-      background: rgba(255, 255, 255, .06);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 12px;
+      cursor: pointer;
+      transition: color 150ms ease, border-color 150ms ease, background 150ms ease, transform 150ms ease;
     }
 
-    .button:hover { border-color: var(--cyan); }
+    .button:hover {
+      border-color: var(--ember);
+      background: rgba(240, 90, 36, .12);
+      color: var(--text);
+    }
 
-    .muted { color: var(--muted); }
+    .button:active { transform: translateY(1px); }
 
     .pill {
-      min-height: 24px;
+      min-height: 23px;
       padding: 3px 7px;
-      font-size: 11px;
+      border-left: 3px solid currentColor;
+      font-size: 10px;
     }
+
+    .muted { color: var(--muted); }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      border-top: 1px solid var(--line-strong);
     }
 
     td,
     th {
-      padding: 9px 8px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
+      padding: 10px 9px;
+      border-bottom-color: var(--line);
     }
 
     th {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
+      text-align: left;
     }
 
+    td { vertical-align: top; }
+
     td code {
-      color: #e5edf7;
+      color: var(--text);
       overflow-wrap: anywhere;
     }
 
     .artifact-summary {
-      color: var(--muted);
       max-width: 52ch;
+      color: var(--muted);
     }
 
     .graph-shell {
       border: 1px solid var(--line);
-      border-radius: 7px;
-      background:
-        linear-gradient(180deg, rgba(125, 211, 252, .05), transparent),
-        #090d12;
+      border-radius: 2px;
+      background: var(--panel);
       overflow: hidden;
     }
 
@@ -288,56 +322,45 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto auto;
       gap: 8px;
-      align-items: center;
-      margin-bottom: 10px;
     }
 
     .graph-search {
       width: 100%;
-      min-height: 36px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .05);
+      min-height: 38px;
+      border-radius: 2px;
+      background: var(--surface);
       color: var(--text);
       padding: 8px 10px;
-      font: 12px "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
       outline: none;
     }
 
-    .graph-search:focus { border-color: var(--cyan); }
+    .graph-search:focus { border-color: var(--ember); }
 
     .graph-mode {
       color: var(--muted);
-      font: 11px "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font: 11px "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
       white-space: nowrap;
     }
 
     .graph-legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin: 10px 0 0;
+      gap: 7px;
+      margin-top: 12px;
     }
 
     .legend-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
       min-height: 28px;
       padding: 5px 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .05);
-      color: var(--muted);
       cursor: pointer;
-      font: 11px "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      color: var(--muted);
     }
 
     .legend-chip::before {
       content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      width: 3px;
+      height: 14px;
+      border-radius: 0;
       background: var(--chip-color, var(--cyan));
     }
 
@@ -353,49 +376,64 @@
     }
 
     .graph-edges line {
-      stroke: rgba(34, 211, 238, .50);
-      stroke-width: 1.7;
-    }
-
-    .graph-edges line.inferred {
-      stroke-dasharray: 6 5;
-      opacity: .55;
+      stroke: rgba(82, 166, 170, .58);
+      stroke-width: 1.4;
     }
 
     .graph-node circle {
-      fill: #e8edf5;
-      stroke: #090d12;
-      stroke-width: 2;
+      fill: #dfe6e1;
+      stroke: var(--panel);
+      filter: none !important;
     }
 
-    .graph-node.main circle {
-      fill: var(--cyan);
-      filter: drop-shadow(0 0 16px rgba(34, 211, 238, .50));
-    }
-
-    .graph-node.risk circle {
-      fill: var(--amber);
-      filter: drop-shadow(0 0 12px rgba(251, 191, 36, .22));
-    }
-
+    .graph-node.main circle { fill: var(--ember); }
+    .graph-node.risk circle { fill: var(--amber); }
     .graph-node.doc circle { fill: var(--green); }
 
     .graph-node text {
-      fill: #eef4ff;
+      fill: var(--text);
+      stroke: var(--panel);
       font-size: 10px;
       paint-order: stroke;
-      stroke: #090d12;
       stroke-width: 3px;
     }
 
-    .graph-node {
-      cursor: pointer;
-    }
+    .graph-node { cursor: pointer; }
 
     .graph-node:hover circle,
     .graph-node.is-selected circle {
-      stroke: #fff;
-      stroke-width: 3;
+      stroke: var(--text);
+    }
+
+    .evidence-chain {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .chain-node {
+      display: grid;
+      grid-template-columns: minmax(90px, .7fr) auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      min-height: 54px;
+      padding: 9px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .chain-node strong,
+    .chain-node small { margin: 0; }
+
+    .chain-node strong,
+    .chain-node small { display: block; }
+
+    .chain-node small {
+      color: var(--muted-2);
+      line-height: 1.35;
     }
 
     .node-detail {
@@ -411,7 +449,7 @@
 
     .node-detail code {
       display: block;
-      color: #e5edf7;
+      color: var(--text);
       overflow-wrap: anywhere;
     }
 
@@ -419,35 +457,9 @@
       display: grid;
       place-items: center;
       min-height: 360px;
+      padding: 18px;
       color: var(--muted);
       text-align: center;
-      padding: 18px;
-    }
-
-    .evidence-chain {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .chain-node {
-      min-height: 86px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .05);
-    }
-
-    .chain-node strong {
-      display: block;
-      margin-bottom: 7px;
-    }
-
-    .chain-node small {
-      display: block;
-      margin-top: 7px;
-      color: var(--muted-2);
-      line-height: 1.35;
     }
 
     ul {
@@ -461,37 +473,57 @@
       margin: 0;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
-      color: #e7eef8;
+      padding: 16px;
+      border-left: 4px solid var(--ember);
+      background: var(--panel);
     }
 
     .footer-note {
-      margin-top: 18px;
+      margin: 24px 20px 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
       color: var(--muted-2);
       font-size: 12px;
     }
 
     @media (max-width: 980px) {
       header,
-      .split {
-        grid-template-columns: 1fr;
-      }
+      .split { grid-template-columns: 1fr; }
 
-      .summary-grid,
-      .evidence-chain {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      header { align-items: start; }
+
+      .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      #quality-metrics-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+      .metric:nth-child(2) { border-right: 1px solid var(--line); }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       main {
-        width: min(100vw - 24px, 1320px);
-        padding: 18px 0 40px;
+        width: min(100vw - 24px, 1440px);
+        padding-bottom: 36px;
       }
 
+      header { padding: 22px 0 20px 14px; }
+
       .summary-grid,
-      .evidence-chain {
-        grid-template-columns: 1fr;
+      #quality-metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .metric,
+      .metric:first-child,
+      .metric:last-child {
+        border-left: 1px solid var(--line);
+        border-right: 1px solid var(--line);
       }
+
+      section { padding: 24px 10px 30px; }
+
+      .graph-toolbar { grid-template-columns: 1fr auto; }
+      .graph-mode { grid-column: 1 / -1; }
+
+      .chain-node { grid-template-columns: 1fr auto; }
+      .chain-node small { grid-column: 1 / -1; }
 
       td,
       th {
@@ -499,13 +531,19 @@
         width: 100%;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after { transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
   <main>
     <header>
       <div>
-        <div class="eyebrow">Zhulong Project Intelligence Kit / Project Cockpit</div>
+        <div class="eyebrow">Zhulong Project Intelligence Kit / 本地快照</div>
         <h1>Zhulong 项目驾驶舱</h1>
         <p class="subhead" id="cockpit-subhead"></p>
         <span class="mode-badge" id="template-mode"></span>
@@ -516,18 +554,18 @@
     <div class="summary-grid" id="summary-grid"></div>
 
     <section>
-      <h2>Quality &amp; Token Metrics</h2>
+      <h2>质量与 Token</h2>
       <div class="summary-grid" id="quality-metrics-grid"></div>
     </section>
 
     <section>
-      <h2>Leader View</h2>
-      <div class="split">
+      <h2>负责人视图</h2>
+      <div class="split leader-split">
         <div>
-          <h3>Graphify Impact</h3>
+          <h3>Graphify 影响面</h3>
           <div class="graph-toolbar">
-            <input id="graph-search" class="graph-search" type="search" placeholder="Search nodes, files, communities..." autocomplete="off">
-            <button class="button" id="graph-reset" type="button">Reset</button>
+            <input id="graph-search" class="graph-search" type="search" placeholder="搜索节点、文件或社区" autocomplete="off">
+            <button class="button" id="graph-reset" type="button">重置</button>
             <span class="graph-mode" id="graph-mode"></span>
           </div>
           <div class="graph-shell" id="graph-shell"></div>
@@ -537,15 +575,15 @@
         </div>
         <div class="stack">
           <div class="subpanel">
-            <h3>Node Detail</h3>
+            <h3>节点详情</h3>
             <div class="node-detail" id="node-detail"></div>
           </div>
           <div class="subpanel">
-            <h3>Current Risks</h3>
+            <h3>当前风险</h3>
             <ul id="issue-list"></ul>
           </div>
           <div class="subpanel">
-            <h3>Knowledge Evidence Chain</h3>
+            <h3>知识证据链</h3>
             <div class="evidence-chain" id="evidence-chain"></div>
           </div>
         </div>
@@ -553,17 +591,17 @@
     </section>
 
     <section>
-      <h2>Engineer View</h2>
-      <div class="split">
+      <h2>工程视图</h2>
+      <div class="split artifact-split">
         <div>
-          <h3>Workflow States</h3>
+          <h3>Workflow 状态</h3>
           <table>
             <thead><tr><th>ID</th><th>Workflow</th><th>Status</th></tr></thead>
             <tbody id="workflow-rows"></tbody>
           </table>
         </div>
         <div>
-          <h3>Graphify Artifacts</h3>
+          <h3>Graphify 制品</h3>
           <table>
             <tbody id="graph-rows"></tbody>
           </table>
@@ -572,8 +610,8 @@
     </section>
 
     <section>
-      <h2>Knowledge / Quality / Privacy Artifacts</h2>
-      <div class="split">
+      <h2>知识、质量与隐私制品</h2>
+      <div class="split artifact-split">
         <div>
           <h3>GraphRAG / RAG</h3>
           <table>
@@ -582,13 +620,13 @@
         </div>
         <div class="stack">
           <div>
-            <h3>Quality Closure</h3>
+            <h3>质量收口</h3>
             <table>
               <tbody id="quality-rows"></tbody>
             </table>
           </div>
           <div>
-            <h3>Privacy</h3>
+            <h3>隐私</h3>
             <table>
               <tbody id="privacy-rows"></tbody>
             </table>
@@ -598,13 +636,13 @@
     </section>
 
     <section>
-      <h2>Next Commands</h2>
+      <h2>下一步命令</h2>
       <pre><code id="next-commands"></code></pre>
     </section>
 
     <p class="footer-note">
-      Static local snapshot. Template source: <code>templates/cockpit/index.template.html</code>.
-      Sample data source: <code>templates/cockpit/sample-data.json</code>.
+      静态本地快照。模板：<code>templates/cockpit/index.template.html</code>。
+      样例数据：<code>templates/cockpit/sample-data.json</code>。
     </p>
   </main>
 
@@ -1497,7 +1535,7 @@
       const entries = Array.isArray(artifacts)
         ? artifacts.map((item) => [item.key, item])
         : Object.entries(artifacts || {});
-      if (!entries.length) return `<tr><td colspan="4" class="muted">No artifact records.</td></tr>`;
+      if (!entries.length) return `<tr><td colspan="4" class="muted">暂无制品记录。</td></tr>`;
       return entries.map(([key, artifact]) => {
         const exists = artifact?.exists !== undefined ? artifact.exists : Boolean(artifact?.path);
         const status = artifact?.status || (exists ? "present" : "missing");
@@ -1541,8 +1579,8 @@
       if (!graph?.available || !graph.nodes?.length) {
         return `<div class="empty-graph">
           <div>
-            <strong>Graphify graph.json missing.</strong><br>
-            <span>Run <code>zl-graph-build --target "$PWD" --run</code> when a fresh map is needed.</span>
+            <strong>未找到 Graphify graph.json。</strong><br>
+            <span>需要新影响图时运行 <code>zl-graph-build --target "$PWD" --run</code>。</span>
           </div>
         </div>`;
       }
@@ -1550,8 +1588,8 @@
       if (!filteredNodes.length) {
         return `<div class="empty-graph">
           <div>
-            <strong>No nodes match the current filter.</strong><br>
-            <span>Reset the search or enable more communities.</span>
+            <strong>当前条件没有匹配节点。</strong><br>
+            <span>请重置搜索或启用更多社区。</span>
           </div>
         </div>`;
       }
@@ -1585,7 +1623,7 @@
 
     function renderIssues() {
       const issues = vm.issues || [];
-      if (!issues.length) return "<li>No cockpit warnings.</li>";
+      if (!issues.length) return "<li>未发现 cockpit 警告。</li>";
       return issues.map((issue) => `<li><strong>${escapeHtml(issue.severity || "INFO")}</strong> ${escapeHtml(issue.area || "general")}: ${escapeHtml(issue.message || "")}</li>`).join("");
     }
 
@@ -1603,7 +1641,7 @@
 
     function renderWorkflowRows() {
       const states = vm.workflowRows || [];
-      if (!states.length) return `<tr><td colspan="3" class="muted">No workflow state found.</td></tr>`;
+      if (!states.length) return `<tr><td colspan="3" class="muted">未找到 workflow 状态。</td></tr>`;
       return states.map((item) => `<tr>
         <td><code>${escapeHtml(item.id || item.path || "-")}</code></td>
         <td>${escapeHtml(item.workflow || "-")}</td>
@@ -1613,8 +1651,8 @@
 
     function renderGraphLinks() {
       const copied = data.graphify?.html?.copied || [];
-      if (!copied.length) return `<span class="muted">No safe Graphify HTML copied. Fallback graph is shown.</span>`;
-      return copied.map((item) => `<a class="button" href="${escapeHtml(item.cockpitHref)}">Open Graphify HTML</a>`).join("");
+      if (!copied.length) return `<span class="muted">未复制可安全打开的 Graphify HTML，当前显示后备图。</span>`;
+      return copied.map((item) => `<a class="button" href="${escapeHtml(item.cockpitHref)}">打开 Graphify HTML</a>`).join("");
     }
 
     function defaultNextCommands() {
@@ -1658,15 +1696,15 @@
     function renderNodeDetail() {
       const node = selectedNode();
       if (!node) {
-        byId("node-detail").innerHTML = `<span class="muted">No graph node available.</span>`;
+        byId("node-detail").innerHTML = `<span class="muted">暂无可用图节点。</span>`;
         return;
       }
       byId("node-detail").innerHTML = `
         <strong>${escapeHtml(node.label || node.id)}</strong>
         ${pill(node.kind || "node")}
         <code>${escapeHtml(node.id)}</code>
-        <span>Community: ${escapeHtml(node.community || "unknown")}</span>
-        <span>Degree: ${Number(node.degree) || 0}${node.members ? ` · Members: ${Number(node.members)}` : ""}</span>
+        <span>社区：${escapeHtml(node.community || "unknown")}</span>
+        <span>连接度：${Number(node.degree) || 0}${node.members ? ` · 成员：${Number(node.members)}` : ""}</span>
         <span>${escapeHtml(node.summary || node.sourceFile || "")}</span>
       `;
     }
@@ -1675,7 +1713,7 @@
       const graph = vm.impactGraph || {};
       byId("graph-shell").innerHTML = graphSvg(graph);
       byId("graph-mode").textContent = graph.mode || "missing";
-      byId("graph-meta").textContent = `Source: ${graph.graphPath || "missing"} / ${graph.totalNodes || 0} nodes / ${graph.totalEdges || 0} edges`;
+      byId("graph-meta").textContent = `来源：${graph.graphPath || "missing"} / ${graph.totalNodes || 0} 节点 / ${graph.totalEdges || 0} 连线`;
       byId("graph-shell").querySelectorAll("[data-node-id]").forEach((nodeEl) => {
         nodeEl.addEventListener("click", () => {
           selectedNodeId = nodeEl.getAttribute("data-node-id");
@@ -1741,12 +1779,12 @@
     function render() {
       const mode = data.template?.mode || "live";
       const status = statusValue(data.status);
-      byId("cockpit-subhead").textContent = `Generated ${data.generatedAt || "-"}. Static local snapshot. Heavy refresh executed: ${data.heavyRefreshExecuted ? "yes" : "no"}.`;
-      byId("template-mode").textContent = mode === "sample" ? "sample template data" : "live project data";
+      byId("cockpit-subhead").textContent = `生成时间 ${data.generatedAt || "-"}。静态本地快照。执行重刷新：${data.heavyRefreshExecuted ? "是" : "否"}。`;
+      byId("template-mode").textContent = mode === "sample" ? "模板样例数据" : "实时项目数据";
       byId("build-status").className = `status ${status}`;
-      byId("build-status").textContent = `cockpit build ${status}`;
+      byId("build-status").textContent = `cockpit 构建 ${status}`;
       byId("summary-grid").innerHTML = (vm.summary || []).map((item) => renderMetric(item.label, item.status, item.detail)).join("");
-      byId("quality-metrics-grid").innerHTML = (vm.qualityMetrics || []).map((item) => renderMetric(item.label, item.value, item.detail)).join("") || '<p class="muted">No quality metrics available.</p>';
+      byId("quality-metrics-grid").innerHTML = (vm.qualityMetrics || []).map((item) => renderMetric(item.label, item.value, item.detail)).join("") || '<p class="muted">暂无质量指标。</p>';
       byId("graphify-links").innerHTML = renderGraphLinks();
       byId("issue-list").innerHTML = renderIssues();
       byId("evidence-chain").innerHTML = renderEvidenceChain();

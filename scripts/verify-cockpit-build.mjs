@@ -73,12 +73,12 @@ function runCockpitSample() {
   assert(fs.existsSync(cockpitSampleHtml), "template sample render", "templates/cockpit/sample.html generated");
   const html = readText(cockpitSampleHtml);
   assert(!html.includes("__ZHULONG_COCKPIT_DATA__"), "template sample render", "sample placeholder replaced");
-  assert(html.includes("sample template data"), "template sample render", "sample page exposes sample mode");
+  assert(html.includes("模板样例数据"), "template sample render", "sample page exposes sample mode");
   assert(html.includes("代理承認上限仕様"), "template sample render", "sample page contains fake Japanese project data");
   assert(html.includes("graph-search"), "template sample render", "sample includes interactive graph search");
   assert(html.includes("approval-flow"), "template sample render", "sample includes stable graph legend data");
   assert(html.includes("cockpit-viewmodel.v1"), "template sample render", "sample includes stable viewModel v1");
-  assert(html.includes("Quality &amp; Token Metrics"), "template sample render", "sample includes quality and token metrics panel");
+  assert(html.includes("质量与 Token"), "template sample render", "sample includes quality and token metrics panel");
   assert(!/https?:\/\//i.test(html), "template sample render", "sample page contains no external URL");
 }
 
@@ -196,7 +196,7 @@ const safe = assertCommonArtifacts("safe graphify html", safeRoot);
 assert(safe.data.quality.metrics.citationResolveRate === 1, "safe graphify html", "quality metrics read citation resolve rate");
 assert(safe.data.quality.metrics.tokenUsage.available === true, "safe graphify html", "quality metrics read optional token usage");
 assert(fs.existsSync(path.join(safeRoot, ".planning", "cockpit", "assets", "graphify", "index.html")), "safe graphify html", "safe Graphify HTML copied");
-assert(safe.html.includes("Knowledge Evidence Chain"), "safe graphify html", "Knowledge Evidence panel rendered");
+assert(safe.html.includes("知识证据链"), "safe graphify html", "Knowledge Evidence panel rendered");
 assert(safe.data.graphify.html.copied.length === 1, "safe graphify html", "data records copied Graphify HTML");
 
 const unsafeRoot = path.join(workRoot, "unsafe-graphify-html");

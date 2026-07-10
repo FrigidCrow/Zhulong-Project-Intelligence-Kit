@@ -22,20 +22,20 @@
 
   <main id="main">
     <section class="page-title">
-      <p class="eyebrow">Quality Evidence</p>
-      <h1>Zhulong QA Dashboard。</h1>
-      <p>这里集中查看 integration、docs、RAG、MVP3、workflow facade、policy hardening、cockpit、全命令面、skills usability、workflow closure、docs completeness、schema、naming、runtime、visual 和两轮正式测试的本地证据。绿色状态必须能追到具体报告或截图。</p>
+      <p class="eyebrow">质量证据</p>
+      <h1>每个 PASS 都有来源。</h1>
+      <p>集中查看 integration、docs、RAG、workflow、policy、cockpit、runtime 与全命令面报告。状态必须能追回具体制品。</p>
     </section>
 
     <section class="section">
       <div class="section-header">
         <h2>质量状态</h2>
-        <p>日常先跑 `npm run verify:quality`、`npm run verify:full-command-surface`；收口时跑 `npm run verify:quality-closure`。当前命令面以 `package.json` 为准，最近一次全命令面为 71 / 71。</p>
+        <p>日常先跑 <code>npm run verify:quality</code>、<code>npm run verify:full-command-surface</code>；收口时跑 <code>npm run verify:quality-closure</code>。当前命令面以 <code>package.json</code> 为准，最近一次全命令面为 74 / 74。</p>
       </div>
       <div class="grid">
         <article class="panel panel-pad">
           <h3>Integration</h3>
-          <p id="integration-summary">读取 `latest.json` 中...</p>
+          <p id="integration-summary">读取 <code>latest.json</code> 中...</p>
           <p><a class="button" href="../verification/reports/latest.md">打开 Markdown 报告</a></p>
         </article>
         <article class="panel panel-pad">
@@ -44,9 +44,9 @@
           <p><a class="button" href="../verification/reports/docs-check.md">Docs</a> <a class="button" href="../verification/reports/docs-update-fixture.md">Docs Update</a> <a class="button" href="../verification/reports/docs-sync-check.md">Docs Sync</a> <a class="button" href="../verification/reports/answer-audit-check.md">Answer Audit</a> <a class="button" href="../verification/reports/knowledge-reliability-check.md">Knowledge</a> <a class="button" href="../verification/reports/rag-command-check.md">RAG Matrix</a> <a class="button" href="../verification/reports/rag-local-check.md">Local RAG</a> <a class="button" href="../verification/reports/schema-check.md">Schema</a> <a class="button" href="../verification/reports/naming-check.md">Naming</a></p>
         </article>
         <article class="panel panel-pad">
-          <h3>Runtime / Visual</h3>
+          <h3>Runtime / Visual / Design</h3>
           <p id="runtime-summary">读取 runtime/visual 报告中...</p>
-          <p><a class="button" href="../verification/reports/runtime-pack-status.md">Runtime</a> <a class="button" href="../verification/reports/visual-check.md">Visual</a></p>
+          <p><a class="button" href="../verification/reports/runtime-pack-status.md">Runtime</a> <a class="button" href="../verification/reports/visual-check.md">Visual</a> <a class="button" href="../verification/reports/design-quality-check.md">Design</a></p>
         </article>
         <article class="panel panel-pad">
           <h3>MVP3 / MVP3.5 / MVP6 / Full Surface</h3>
@@ -153,7 +153,7 @@
     <section class="section alt">
       <div class="section-header">
         <h2>截图证据</h2>
-        <p>这些截图由 `npm run verify:visual` 生成，用来确认页面没有空白、错位、横向溢出或命令块不齐。</p>
+        <p>这些截图由 <code>npm run verify:visual</code> 生成，用来确认页面没有空白、错位、横向溢出或命令块不齐。</p>
       </div>
       <div class="grid">
         <article class="panel panel-pad">
@@ -211,9 +211,10 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
   </main>
 
   <footer class="footer">
-    <p>QA dashboard 读取 `verification/reports/` 中的本地报告。file:// 打开时如果浏览器限制 JSON 读取，请直接打开对应 Markdown 报告。</p>
+    <p>QA dashboard 读取 <code>verification/reports/</code> 中的本地报告。使用 <code>file://</code> 打开时如果浏览器限制 JSON 读取，请直接打开对应 Markdown 报告。</p>
   </footer>
 
+  <script src="assets/zl-site.js"></script>
   <script>
     async function readJson(path) {
       const response = await fetch(path);
@@ -222,7 +223,7 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
     }
 
     function statusText(data) {
-      if (!data) return "报告未生成";
+      if (!data) return "当前浏览器未读取 JSON，请打开链接报告";
       if (data.summary) return `PASS ${data.summary.pass} / FAIL ${data.summary.fail} / WARN ${data.summary.warn}`;
       return `${data.status || "UNKNOWN"} / issues ${Array.isArray(data.issues) ? data.issues.length : "?"}`;
     }
@@ -240,6 +241,7 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
       readJson("../verification/reports/naming-check.json"),
       readJson("../verification/reports/runtime-pack-status.json"),
       readJson("../verification/reports/visual-check.json"),
+      readJson("../verification/reports/design-quality-check.json"),
       readJson("../verification/reports/mvp3-evidence-policy-check.json"),
       readJson("../verification/reports/mvp35-refresh-control-check.json"),
       readJson("../verification/reports/workflow-facade-check.json"),
@@ -252,9 +254,9 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
       const values = results.map((item) => item.status === "fulfilled" ? item.value : null);
       document.getElementById("integration-summary").textContent = statusText(values[0]);
       document.getElementById("docs-summary").textContent = `Docs ${statusText(values[1])}; Docs Update ${statusText(values[2])}; Docs Sync ${statusText(values[3])}; Answer Audit ${statusText(values[4])}; Knowledge ${statusText(values[5])}; RAG Matrix ${statusText(values[6])}; Local RAG ${statusText(values[7])}; Schema ${statusText(values[8])}; Naming ${statusText(values[9])}`;
-      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[10])}; Visual ${statusText(values[11])}`;
-      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[12])}; MVP3.5 ${statusText(values[13])}; Facade ${statusText(values[14])}; Policy ${statusText(values[15])}; Full Surface ${statusText(values[16])}; Cockpit ${statusText(values[17])}`;
-      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[18])}; Round 2 ${statusText(values[19])}`;
+      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[10])}; Visual ${statusText(values[11])}; Design ${statusText(values[12])}`;
+      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[13])}; MVP3.5 ${statusText(values[14])}; Facade ${statusText(values[15])}; Policy ${statusText(values[16])}; Full Surface ${statusText(values[17])}; Cockpit ${statusText(values[18])}`;
+      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[19])}; Round 2 ${statusText(values[20])}`;
     }).catch(() => {
       document.getElementById("integration-summary").textContent = "浏览器阻止本地 JSON 读取，请打开 Markdown 报告。";
     });

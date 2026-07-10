@@ -39,6 +39,8 @@ npm run verify:skills-usability
 npm run verify:workflow-closure
 npm run verify:cockpit-build
 npm run verify:docs-completeness
+npm run verify:visual
+npm run verify:design
 npm run verify:quality-closure
 npm run verify:dev-audit-harness
 npm run verify:quality
@@ -76,6 +78,8 @@ GitHub Actions 使用 `verify:quality` 运行不依赖本地服务的可重现 g
 `verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`reference` 无文档风险放行、`strict` stale/privacy 阻断。
 
 `verify:cockpit-build` 检查 `zl-cockpit-build` 是否生成 `.planning/cockpit/index.html`、`cockpit-data.json` 和 `COCKPIT_REPORT.md`，并验证 cockpit 独立模板样例、`cockpit-viewmodel.v1`、Quality & Token Metrics、Graphify HTML 外部 URL 阻断、fallback 图、大图 `aggregated-community` 预览、RAG 缺失 `WAIVED_WITH_RISK` 和 `heavy refresh executed: no`。
+
+`verify:visual` 使用 Playwright 渲染四个文档页面和 cockpit 样例，覆盖桌面、移动端与桌面暗色主题，并检查横向溢出、文字裁切、真实品牌素材和图谱节点。`verify:design` 执行静态设计契约，阻止假控制台、随机装饰 canvas、通用径向光晕、负字距、重复 cockpit 样式和缺失可访问性边界重新进入发布面。
 
 `verify:docs-completeness` 检查 `docs/commands.html` 是否覆盖全部 74 个公开逻辑命令的独立锚点、详情字段、示例和 README 跳转。
 
@@ -136,6 +140,7 @@ verification/reports/developer-audit-summary.json
 verification/reports/quality-control-summary.md
 verification/reports/quality-control-summary.json
 verification/reports/visual-check.md
+verification/reports/design-quality-check.md
 verification/reports/quality-enhancement-report.md
 ```
 

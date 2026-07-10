@@ -1,83 +1,98 @@
-function initGraphCanvas(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const colors = ["#66e8ff", "#87f7b5", "#ffd166", "#84a7ff", "#ff6b6b"];
-  let points = [];
-  let width = 0;
-  let height = 0;
+function installCopyControls() {
+  document.querySelectorAll("pre.code-block").forEach((block) => {
+    if (block.querySelector(".copy-control")) return;
+    const code = block.querySelector("code");
+    if (!code) return;
 
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    width = Math.max(320, rect.width);
-    height = Math.max(420, rect.height);
-    canvas.width = Math.floor(width * window.devicePixelRatio);
-    canvas.height = Math.floor(height * window.devicePixelRatio);
-    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-    const count = Math.min(92, Math.max(38, Math.floor(width / 18)));
-    points = Array.from({ length: count }, (_, i) => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.46,
-      vy: (Math.random() - 0.5) * 0.46,
-      r: 1.4 + Math.random() * 2.7,
-      color: colors[i % colors.length],
-    }));
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, width, height);
-    const bg = ctx.createLinearGradient(0, 0, width, height);
-    bg.addColorStop(0, "#080a0f");
-    bg.addColorStop(0.52, "#111723");
-    bg.addColorStop(1, "#080a0f");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, width, height);
-
-    for (let i = 0; i < points.length; i += 1) {
-      const a = points[i];
-      if (!reduced) {
-        a.x += a.vx;
-        a.y += a.vy;
-        if (a.x < -20) a.x = width + 20;
-        if (a.x > width + 20) a.x = -20;
-        if (a.y < -20) a.y = height + 20;
-        if (a.y > height + 20) a.y = -20;
-      }
-      for (let j = i + 1; j < points.length; j += 1) {
-        const b = points[j];
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 132) {
-          ctx.globalAlpha = (132 - dist) / 420;
-          ctx.strokeStyle = a.color;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+    const button = document.createElement("button");
+    button.className = "copy-control";
+    button.type = "button";
+    button.textContent = "⧉";
+    button.title = "复制代码";
+    button.setAttribute("aria-label", "复制代码");
+    button.addEventListener("click", async () => {
+      try {
+        const value = code.textContent || "";
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(value);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = value;
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.append(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
         }
+        button.textContent = "✓";
+        button.title = "已复制";
+        window.setTimeout(() => {
+          button.textContent = "⧉";
+          button.title = "复制代码";
+        }, 1400);
+      } catch {
+        button.textContent = "!";
+        button.title = "复制失败";
       }
-    }
+    });
+    block.append(button);
+  });
+}
 
-    ctx.globalAlpha = 1;
-    for (const p of points) {
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
+function installReveals() {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const elements = document.querySelectorAll([
+    ".hero-content",
+    ".hero-emblem",
+    ".section-header",
+    ".page-section",
+    ".control-card",
+    ".metric",
+  ].join(","));
 
-    if (!reduced) requestAnimationFrame(draw);
+  if (reduced || !("IntersectionObserver" in window)) {
+    elements.forEach((element) => element.classList.add("is-visible"));
+    return;
   }
 
-  resize();
-  draw();
-  window.addEventListener("resize", resize);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+
+  elements.forEach((element, index) => {
+    element.classList.add("reveal-ready");
+    element.style.transitionDelay = `${Math.min(index % 5, 3) * 45}ms`;
+    observer.observe(element);
+  });
+}
+
+function installTocTracking() {
+  const links = [...document.querySelectorAll(".toc a[href^='#']")];
+  if (!links.length || !("IntersectionObserver" in window)) return;
+
+  const sections = links
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+  const linkById = new Map(links.map((link) => [link.getAttribute("href").slice(1), link]));
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (!visible) return;
+    links.forEach((link) => link.classList.remove("is-active"));
+    linkById.get(visible.target.id)?.classList.add("is-active");
+  }, { rootMargin: "-18% 0px -68%", threshold: 0 });
+
+  sections.forEach((section) => observer.observe(section));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  initGraphCanvas("hero-canvas");
+  installCopyControls();
+  installReveals();
+  installTocTracking();
 });
