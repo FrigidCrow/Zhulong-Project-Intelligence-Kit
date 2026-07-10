@@ -96,10 +96,22 @@ GitHub Actions 使用 `verify:quality` 运行不依赖本地服务的可重现 g
 
 质量评价方法论链接已在 2026-06-29 复核：OpenAI [Agent Skills docs](https://developers.openai.com/codex/skills) 和 [skill evals](https://developers.openai.com/blog/eval-skills) 用于 skill 结构与行为评估；[SkillsBench](https://arxiv.org/abs/2602.12670) / [SkillsBench 1.1](https://www.skillsbench.ai/blogs/skillsbench-1-1) 用于 with_skill / without_skill delta；[Anthropic agent evals](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) 用于 trajectory + outcome 分层；[Ragas agent metrics](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/agents/) 和 [Promptfoo Agent Skills](https://www.promptfoo.dev/docs/integrations/agent-skill/) 只做本地代理指标；[OWASP Agentic Top 10 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) 与 [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) / [NIST AI 600-1](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) 用于治理 checklist 和 release gate。默认不接外部 SaaS，不调用外部模型，不外发内部资料。
 
+默认 integration 使用仓库内 `fake-graphify.mjs` 验证 Graphify adapter，不要求机器安装 Graphify。只有本机已安装真实 `graphify` CLI 时，才运行 live Graphify：
+
+```bash
+npm run verify:integration -- --live-graphify
+```
+
 只有在 fixture 数据允许离开本机时，才运行外部 live GraphRAG 验证：
 
 ```bash
 GRAPHRAG_API_KEY=<your key> npm run verify:integration -- --live-graphrag
+```
+
+两个真实后端都需要验证时：
+
+```bash
+GRAPHRAG_API_KEY=<your key> npm run verify:integration -- --live-graphify --live-graphrag
 ```
 
 live GraphRAG 模式只把 key 写入临时 `graphrag-workspace/.env`，结束前会删除。不要提交临时工作目录，也不要提交保密项目生成的 GraphRAG artifact。
@@ -155,7 +167,7 @@ verification/reports/quality-enhancement-report.md
 
 上述文件由 verifier 自动创建，并被 `.gitignore` 排除。CI 通过 `ci:collect-artifacts` 收集 Markdown/JSON，保留 7 天；稳定、无时间戳的发布摘要另存到 `verification/baselines/`。
 
-默认验证不启用 live GraphRAG，除非显式传入 `--live-graphrag`。因此默认 WARN 可以接受；任何 FAIL 都不能接受。
+默认验证不启用 live Graphify 或 live GraphRAG，除非显式传入对应开关。两个 fixture 外后端会各产生一条明确 WARN；任何 FAIL 都不能接受。
 
 正式两轮全量测试命令：
 
