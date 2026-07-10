@@ -1,6 +1,6 @@
 # zl-verify-work
 
-Purpose: verify that implementation, specification evidence, code impact, and
+Purpose: verify that implementation, project evidence, code impact, and
 recorded decisions line up before closing work.
 
 Reference design: `$gsd-verify-work`
@@ -8,7 +8,8 @@ Reference design: `$gsd-verify-work`
 Required flow:
 
 1. Read the active phase/issue/debug record and context packet.
-2. Confirm acceptance criteria and source documents.
+2. Confirm acceptance criteria from the request, active records, source, tests,
+   and optional documents when present.
 3. Inspect changed files and relevant Graphify/code-map output.
 4. Run or review focused tests, build, lint, typecheck, API checks, screenshots,
    logs, or manual verification as appropriate.
@@ -22,4 +23,3 @@ Outputs:
 - Updated active record.
 - Next command recommendation: `zl-complete-milestone` if complete, otherwise
   `zl-execute-phase` or `zl-debug`.
-

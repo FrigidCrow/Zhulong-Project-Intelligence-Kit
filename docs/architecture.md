@@ -1,6 +1,6 @@
 # Zhulong 架构说明
 
-Zhulong Project Intelligence Kit，文档缩写 **Zhulong**，把 AI coding runtime 和目标项目的工程上下文分开。Codex、Claude Code、GitHub Copilot 负责执行；Zhulong 负责把项目状态、仕様依据、代码影响面、验证证据和完成前 gate 组织成可检查的本地制品。
+Zhulong Project Intelligence Kit，文档缩写 **Zhulong**，把 AI coding runtime 和目标项目的工程上下文分开。Codex、Claude Code、GitHub Copilot 负责执行；Zhulong 负责把项目状态、代码影响面、按需启用的文档依据、验证证据和完成前 gate 组织成可检查的本地制品。
 
 ```mermaid
 flowchart LR
@@ -46,14 +46,13 @@ Workflow guard 会检查：
 
 ## 2. Document Policy / RAG Backend Layer
 
-文档层用于对日文档密集型项目：
+文档层是按需能力，用于任何把资料作为需求、验收、合规或运行依据的项目，例如：
 
-- 仕様書
-- QA
-- 議事録
-- 画面設計書
-- API / DB / 测试规格
-- 运行手顺和交付说明
+- PRD 与需求规范
+- QA 与验收标准
+- ADR 与会议决策
+- 设计文档与 API / DB 约定
+- 测试规格、运行手册和交付说明
 
 Zhulong 现在把“文档严格程度”和“RAG 后端”分开配置。`zl-init` 默认是轻量模式：
 
@@ -64,9 +63,9 @@ execution_budget.profile: graph-lite
 privacy.network_policy: local_only
 ```
 
-这意味着普通项目可以先不安装 GraphRAG，也不需要本地模型。文档仍然可以被 `zl-docs-sync` 扫描、抽取、查询和引用审计；只是 `zl-docs-index --run` 和 `zl-docs-query --rag` 会在 `rag none` 下明确失败，避免误触发 GraphRAG。
+这意味着非文档密集型项目可以使用完整的 `rag none` 路线，不安装 GraphRAG，也不需要本地模型。workflow、codebase、Graphify、policy、evidence 和 completion gate 保持有效；少量文档仍然可以被 `zl-docs-sync` 扫描、抽取、直接查询和引用审计。只有 `zl-docs-index --run` 和 `zl-docs-query --rag` 会明确失败，避免误触发 GraphRAG。
 
-对日/规格严格项目推荐在初始化时选择本地 RAG：
+文档密集或规格严格项目推荐在初始化时选择本地 RAG：
 
 ```bash
 zl-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
@@ -88,14 +87,14 @@ zl-docs-scan --target "$PWD"
 zl-docs-extract --target "$PWD"
 zl-rag-init-local --target "$PWD"
 zl-docs-index --target "$PWD" --run
-zl-docs-query --target "$PWD" --rag "仕様根拠は？"
+zl-docs-query --target "$PWD" --rag "退款规则的依据是什么？"
 ```
 
 文档更新后应重跑：
 
 ```bash
 zl-docs-sync --target "$PWD"
-zl-docs-query --target "$PWD" "仕様根拠は？"
+zl-docs-query --target "$PWD" "退款规则依据"
 zl-answer-audit --target "$PWD"
 ```
 

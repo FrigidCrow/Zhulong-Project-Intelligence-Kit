@@ -20,8 +20,8 @@ Treat the user text after `/zl-code-review` as the review scope.
 
 2. Read the generated review packet and handoff.
 3. Inspect the diff and affected source files directly.
-4. Check whether behavior claims match specification, QA, minutes, design, API,
-   DB, or test documents.
+4. Check whether behavior claims match the request, active records, source,
+   tests, or optional project documents when present.
 5. Use the code map for impact and dependency checks:
 
    ```bash

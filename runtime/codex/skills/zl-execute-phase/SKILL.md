@@ -1,6 +1,6 @@
 ---
 name: zl-execute-phase
-description: Zhulong public phase execution command for Codex. Use when the user invokes $zl-execute-phase or asks Zhulong Project Intelligence Kit to execute planned work with project state, specification evidence, code-map impact checks, verification, and evidence writeback.
+description: Zhulong public phase execution command for Codex. Use when the user invokes $zl-execute-phase or asks Zhulong Project Intelligence Kit to execute planned work with project state, task/source evidence, optional documents, code-map impact checks, verification, and evidence writeback.
 ---
 
 # Zhulong Execute Phase
@@ -26,9 +26,10 @@ This is the Codex runtime entrypoint for `$zl-execute-phase`.
 
 3. Read the generated execute context packet and handoff under
    `.planning/context/`.
-4. Confirm specification evidence before implementing business behavior. Use
-   `zl-docs-query` for local normalized text and `zl-docs-query --rag` when
-   the configured document RAG backend is approved.
+4. Confirm expected behavior from the plan, active records, source, and tests.
+   Query local documents only when relevant sources exist; use
+   `zl-docs-query --rag` only when `rag_backend` is not `none` and the backend
+   is approved.
 5. Check code-map status/query output before editing risky or shared modules.
 6. Follow `core/workflows/execute-phase.md` as the Zhulong native workflow contract.
 7. Implement in small, verifiable steps.

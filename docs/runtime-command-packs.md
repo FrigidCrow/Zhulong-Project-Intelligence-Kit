@@ -13,10 +13,10 @@ Zhulong 的 runtime command pack 用来让 Codex、Claude Code、GitHub Copilot 
 推荐接入顺序：
 
 ```bash
-# 文档少 / 无文档 / 先轻量接入
+# 非文档密集型项目的完整路线
 zl-init --target "$PWD" --doc-policy reference --rag none
 
-# 对日 / 规格严格 / 本地知识后端
+# 文档密集 / 规格严格 / 本地知识后端
 zl-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
 
 # 明确允许外部 RAG 的项目才使用
@@ -173,13 +173,13 @@ Runtime pack 的使用方式是“在 AI 工具里叫 skill / prompt，skill 再
 Codex 中可以这样说：
 
 ```text
-$zl-debug 代理承認上限が仕様と違う。先查文档和影响面，再给我修复计划。
+$zl-debug 退款上限与业务规则不一致。先查可用依据和影响面，再给我修复计划。
 ```
 
 Claude Code / GitHub Copilot 中可以这样说：
 
 ```text
-/zl-plan-phase CR-017 代理承認上限修正。需要先确认仕様依据和 Graphify 影响面。
+/zl-plan-phase CR-017 退款上限修复。需要先确认需求依据和 Graphify 影响面。
 ```
 
 本地 CLI 最终会读取目标项目 `.planning/`，并把 context、workflow、evidence、policy 报告写回目标项目。runtime skill 默认不会安装 RAG、不会切换外部 provider、不会隐藏触发 GraphRAG index 或 Graphify build。需要刷新时必须显式使用 `--run`、`--index` 或 `zl-refresh-run`。

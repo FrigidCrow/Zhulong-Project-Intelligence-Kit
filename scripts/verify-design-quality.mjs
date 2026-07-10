@@ -50,6 +50,18 @@ for (const file of pageFiles) {
 const product = read("docs/product.html");
 assert(product.includes('class="hero-emblem"'), "product hero", "uses the selected Zhulong visual asset");
 assert(product.includes('src="assets/zhulong-icon.png"'), "product hero", "references the canonical icon");
+assert(product.includes("文档密集型与非文档密集型"), "product positioning", "states both supported project modes");
+assert(product.includes("rag none") && product.includes("非文档密集型路线"), "product positioning", "presents RAG none as a first-class route");
+
+const readme = read("README.md");
+const technicalGuide = read("docs/technical-guide.html");
+const brand = read("docs/brand.md");
+assert(readme.includes("文档密集型与非文档密集型"), "README positioning", "states both supported project modes");
+assert(readme.includes("不是功能不完整的降级模式"), "README positioning", "defines RAG none as a complete mode");
+assert(technicalGuide.includes("rag none") && technicalGuide.includes("非文档密集型项目的完整模式"), "technical guide positioning", "documents the no-RAG operating boundary");
+for (const [file, text] of [["README.md", readme], ["docs/product.html", product], ["docs/technical-guide.html", technicalGuide], ["docs/brand.md", brand]]) {
+  assert(!text.includes("对日"), file, "contains no region-specific product positioning");
+}
 
 const css = read(cssPath);
 for (const [pattern, label] of [
@@ -64,11 +76,16 @@ for (const [pattern, label] of [
 assert(css.includes("prefers-color-scheme: dark"), cssPath, "defines a dark color scheme");
 assert(css.includes("prefers-reduced-motion: reduce"), cssPath, "honors reduced motion");
 assert(css.includes(":focus-visible"), cssPath, "defines visible keyboard focus");
+assert(css.includes("animation-timeline: scroll(root block)"), cssPath, "adds progressive reading progress motion");
+assert(css.includes("flow-node-in"), cssPath, "animates execution flow in sequence");
 
 const js = read(jsPath);
 assert(!/addEventListener\(["']scroll["']/.test(js), jsPath, "uses no scroll event listener");
 assert(js.includes("IntersectionObserver"), jsPath, "uses IntersectionObserver for reveals and TOC state");
 assert(js.includes("navigator.clipboard") && js.includes("execCommand"), jsPath, "supports modern and file URL copy flows");
+assert(js.includes("installMetricCounters"), jsPath, "animates numeric evidence without changing layout");
+assert(js.includes("installHeroMotion"), jsPath, "adds pointer-aware hero feedback");
+assert(js.includes("requestAnimationFrame"), jsPath, "batches continuous visual updates");
 
 const cockpit = read(cockpitPath);
 assert(!/\bInter\b/i.test(cockpit), cockpitPath, "contains no Inter font dependency");

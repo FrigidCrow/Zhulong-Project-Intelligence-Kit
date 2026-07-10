@@ -11,8 +11,9 @@ Required flow:
    `.planning/phases/`, `.planning/issues/`, and recent `.planning/evidence/`.
 2. Clarify the milestone goal, acceptance boundary, risks, and expected delivery
    artifacts.
-3. Check document evidence in `.planning/knowledge/` and source documents. Use
-   GraphRAG/document RAG only when approved for the project data.
+3. Check task, issue, source, and test evidence. Check `.planning/knowledge/`
+   only when project documents exist, and use GraphRAG only when `rag_backend`
+   is not `none` and the backend is approved for the project data.
 4. Check Graphify/code-map context when the milestone touches existing code,
    shared modules, interfaces, or risky impact surfaces.
 5. Create or update a milestone/phase record under `.planning/phases/`.

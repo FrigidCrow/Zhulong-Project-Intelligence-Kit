@@ -30,7 +30,7 @@ const LOGICAL_NAMES = {
   "zl-docs-index": "GraphRAG 索引入口",
   "zl-docs-query": "本地文档查询",
   "zl-docs-sync": "文档轻量同步",
-  "zl-ambiguity-audit": "三语暧昧表达审计",
+  "zl-ambiguity-audit": "多语言暧昧表达审计",
   "zl-structure-audit": "关键制品结构审计",
   "zl-answer-audit": "回答依据审计",
   "zl-rag-init-local": "本地 GraphRAG 初始化",
@@ -43,7 +43,7 @@ const LOGICAL_NAMES = {
   "zl-mode-status": "执行模式查看",
   "zl-mode-set": "执行模式切换",
   "zl-citation-audit": "引用证据审计",
-  "zl-trace-build": "仕様-代码-测试追踪矩阵",
+  "zl-trace-build": "需求-代码-测试追踪矩阵",
   "zl-trace-query": "追踪矩阵查询",
   "zl-trace-audit": "追踪矩阵审计",
   "zl-policy-list": "策略列表",
@@ -72,7 +72,7 @@ const LOGICAL_NAMES = {
   "zl-context-debug": "Debug 上下文包",
   "zl-context-execute": "实施上下文包",
   "zl-new-milestone": "开启里程碑循环",
-  "zl-spec-phase": "仕様整理阶段",
+  "zl-spec-phase": "需求整理阶段",
   "zl-discuss-phase": "讨论决策阶段",
   "zl-ui-phase": "UI 范围阶段",
   "zl-debug": "缺陷调查工作流",
@@ -215,15 +215,15 @@ zl-init ${target} --doc-policy strict --rag external --allow-external-rag`,
     "zl-docs-normalize": `zl-docs-normalize ${target}`,
     "zl-docs-extract": `zl-docs-extract ${target}`,
     "zl-docs-diff": `zl-docs-diff ${target}`,
-    "zl-docs-citations": `zl-docs-citations ${target} "代理承認 上限"`,
+    "zl-docs-citations": `zl-docs-citations ${target} "退款 上限"`,
     "zl-docs-index": `zl-docs-index ${target}\nzl-docs-index ${target} --run`,
-    "zl-docs-query": `zl-docs-query ${target} "代理承認 上限"\nzl-docs-query ${target} --rag "代理承認の仕様根拠は？"`,
+    "zl-docs-query": `zl-docs-query ${target} "退款 上限"\nzl-docs-query ${target} --rag "退款规则的正式依据是什么？"`,
     "zl-docs-sync": `zl-docs-sync ${target}\nzl-docs-sync ${target} --index`,
     "zl-ambiguity-audit": `zl-ambiguity-audit ${target}\nzl-ambiguity-audit ${target} --strict`,
     "zl-structure-audit": `zl-structure-audit ${target}\nzl-structure-audit ${target} --strict`,
     "zl-answer-audit": `zl-answer-audit ${target}\nzl-answer-audit ${target} --from .planning/knowledge/DOCS_QUERY_RESULT.md`,
     "zl-rag-init-local": `zl-rag-init-local ${target}`,
-    "zl-rag-golden-add": `zl-rag-golden-add ${target} --question "代理承認の上限は？" --expect "30,000" --citation "docs/spec.md:12"`,
+    "zl-rag-golden-add": `zl-rag-golden-add ${target} --question "退款审批上限是多少？" --expect "30,000" --citation "docs/policy.md:12"`,
     "zl-rag-golden-run": `zl-rag-golden-run ${target}`,
     "zl-rag-eval": `zl-rag-eval ${target}`,
     "zl-preflight": `zl-preflight ${target}`,
@@ -235,7 +235,7 @@ zl-mode-set ${target} docs-strict
 zl-mode-set ${target} graph-lite`,
     "zl-citation-audit": `zl-citation-audit ${target}`,
     "zl-trace-build": `zl-trace-build ${target}`,
-    "zl-trace-query": `zl-trace-query ${target} "代理承認"`,
+    "zl-trace-query": `zl-trace-query ${target} "退款审批"`,
     "zl-trace-audit": `zl-trace-audit ${target}`,
     "zl-policy-list": `zl-policy-list ${target}`,
     "zl-policy-check": `zl-policy-check ${target}`,
@@ -256,12 +256,12 @@ zl-mode-set ${target} graph-lite`,
     "zl-graph-impact": `zl-graph-impact ${target} --files "src/approval.js"`,
     "zl-graph-risk": `zl-graph-risk ${target}`,
     "zl-graph-freshness": `zl-graph-freshness ${target} --strict`,
-    "zl-evidence-record": `zl-evidence-record ${target} "代理承認上限修正を検証済み" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md`,
+    "zl-evidence-record": `zl-evidence-record ${target} "退款审批上限修复已验证" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md`,
     "zl-evidence-status": `zl-evidence-status ${target}`,
     "zl-runtime-install": `zl-runtime-install --runtime codex --dest ~/.codex/skills`,
     "zl-runtime-status": `zl-runtime-status --runtime codex --dest ~/.codex/skills`,
-    "zl-context-debug": `zl-context-debug ${target} "代理承認上限が仕様と違う"`,
-    "zl-context-execute": `zl-context-execute ${target} "承認上限チェックを実装"`,
+    "zl-context-debug": `zl-context-debug ${target} "退款上限与业务规则不一致"`,
+    "zl-context-execute": `zl-context-execute ${target} "实现退款上限检查"`,
     "zl-workflow-run": `zl-workflow-run ${target} debug "生产审批金额异常"`,
     "zl-workflow-status": `zl-workflow-status ${target}`,
     "zl-workflow-continue": `zl-workflow-continue ${target} --gate plan --evidence "PLAN.md reviewed"`,
@@ -308,10 +308,10 @@ function purposeFor(command) {
   const category = categoryFor(command);
   if (category === "接入 / 初始化") return "把 Zhulong 本地 intelligence layer 接入项目，或检查接入状态是否完整。";
   if (category === "Codebase") return "建立或读取代码基线，让后续 AI 修改先知道项目结构、技术栈、测试入口和源码数量。";
-  if (category === "文档 / RAG") return "把 仕様書、QA、議事録、设计文档转成本地可查、可引用、可审计的知识证据。";
+  if (category === "文档 / RAG") return "按需把需求、ADR、QA、会议记录、设计和运行文档转成本地可查、可引用、可审计的知识证据；`rag none` 项目无需建立 RAG 索引。";
   if (category === "Graphify / 代码地图") return "读取或更新 Graphify/code map，帮助判断改修影响面、风险模块和 stale 状态。";
   if (category === "Refresh / Mode") return "控制刷新预算和 profile，避免每个任务都重跑 GraphRAG 或 Graphify。";
-  if (category === "Evidence / Trace") return "把验证结果、仕様依据、代码影响和测试覆盖写成可追踪证据。";
+  if (category === "Evidence / Trace") return "把验证结果、需求或决策依据、代码影响和测试覆盖写成可追踪证据。";
   if (category === "Policy / Privacy") return "锁定并验证 local-only、offline、policy 和 license 风险边界。";
   if (category === "Runtime / Skills") return "让 Codex、Claude Code、GitHub Copilot 能通过同一套 Zhulong 命令工作。";
   if (category === "Workflow 主循环") return "面向日常开发的公开工作流入口，内部会写 context、handoff、workflow facade 和 gate 状态。";
@@ -321,7 +321,7 @@ function purposeFor(command) {
 }
 
 function whenFor(command) {
-  if (command === "zl-docs-sync") return "文档第一次导入、仕様/QA/議事録更新、或文档 gate 需要重新确认时。";
+  if (command === "zl-docs-sync") return "文档第一次导入、需求/ADR/QA/运行资料更新，或文档 gate 需要重新确认时。";
   if (command === "zl-answer-audit") return "做完 docs/RAG query 后，或 AI 给出带规格结论的回答后。";
   if (command === "zl-ambiguity-audit") return "规格、验收条件、QA 或会议结论更新后。";
   if (command === "zl-structure-audit") return "需要确认关键 planning 制品完整，或任务准备完成时。";

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zhulong Project Intelligence Kit - AI 工程上下文框架</title>
-  <meta name="description" content="Zhulong Project Intelligence Kit 是面向文档密集型软件开发的本地 AI 工程上下文框架。">
+  <title>Zhulong Project Intelligence Kit - 通用 AI 项目智能框架</title>
+  <meta name="description" content="Zhulong Project Intelligence Kit 是同时适配文档密集型与非文档密集型项目的通用本地 AI 工程情报框架。">
   <link rel="stylesheet" href="assets/zl-site.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
         <div class="hero-content">
           <p class="eyebrow">烛龙 / 本地项目智能工具</p>
           <h1>Zhulong Project Intelligence Kit</h1>
-          <p>让 AI 先看见项目事实、文档依据、代码影响面和完成条件，再动手改代码。</p>
+          <p>让 AI 先看见项目事实、代码影响面和完成条件，再按项目需要接入文档依据。</p>
           <div class="hero-actions">
             <a class="button primary" href="commands.html">命令手册</a>
             <a class="button" href="technical-guide.html">技术架构</a>
@@ -43,7 +43,7 @@
           <div class="metric"><strong>9</strong><span>completion gates 检查完成条件</span></div>
           <div class="metric"><strong>3</strong><span>Codex、Claude Code、Copilot runtime</span></div>
           <div class="metric"><strong>74</strong><span><code>zl-*</code> 逻辑命令已执行验证</span></div>
-          <div class="metric"><strong>12</strong><span>质量收口检查已通过</span></div>
+          <div class="metric"><strong>13</strong><span>质量收口检查已通过</span></div>
         </div>
       </section>
 
@@ -100,8 +100,8 @@
           </article>
           <article class="control-card">
             <div class="pane-label">knowledge</div>
-            <h3>仕様 / QA / 議事録</h3>
-            <p>文档来源、RAG 查询和引用结果统一落到 <code>.planning/knowledge/</code>。</p>
+            <h3>需求 / 决策 / 运行资料</h3>
+            <p>需要文档智能时，来源、RAG 查询和引用结果统一落到 <code>.planning/knowledge/</code>；<code>rag none</code> 项目无需建立索引。</p>
           </article>
           <article class="control-card">
             <div class="pane-label">impact</div>
@@ -130,8 +130,8 @@
         <div class="section-header">
           <h2>不是更会写代码，而是更知道为什么改。</h2>
           <p>
-            普通 AI coding 只看到 prompt 和当前文件。Zhulong 让 AI 先读项目状态、仕様依据、QA、議事録、
-            代码影响面和验证要求，再进入实现。
+            普通 AI coding 只看到 prompt 和当前文件。Zhulong 让 AI 先读项目状态、代码影响面和验证要求，
+            再根据项目模式决定是否接入需求、决策记录和其他文档证据。
           </p>
         </div>
         <div class="comparison" aria-label="普通 AI coding 和 Zhulong 对比">
@@ -143,7 +143,7 @@
           <div class="comparison-row">
             <div>输入</div>
             <div>一段 prompt、当前打开文件、聊天上下文。</div>
-            <div>项目状态、仕様/QA/議事録、代码地图、测试策略、历史 evidence。</div>
+            <div>项目状态、代码地图、测试策略、历史 evidence，以及按需启用的文档知识层。</div>
           </div>
           <div class="comparison-row">
             <div>改修前</div>
@@ -175,7 +175,7 @@
           </article>
           <article class="panel panel-pad">
             <h3>Document intelligence</h3>
-            <p>面向对日文档密集型项目，把 仕様書、QA、議事録、设计文档变成可扫描、可查询、可引用的本地知识层。</p>
+            <p>按需把需求、ADR、QA、会议记录、设计与运行手册变成可扫描、可查询、可引用的本地知识层；非文档密集型项目可关闭 RAG。</p>
           </article>
           <article class="panel panel-pad">
             <h3>Code map</h3>
@@ -183,25 +183,25 @@
           </article>
           <article class="panel panel-pad">
             <h3>Evidence loop</h3>
-            <p>测试命令、验证结果、风险判断、仕様引用都写回 evidence。最后由 <code>zl-completion-check</code> 判断能不能收口。</p>
+            <p>测试命令、验证结果、风险判断和可选来源引用都写回 evidence。最后由 <code>zl-completion-check</code> 判断能不能收口。</p>
           </article>
         </div>
       </section>
 
       <section class="section alt">
         <div class="section-header">
-          <h2>面向对日开发现场的真实摩擦。</h2>
-          <p>Zhulong 优先解决“文档很多、旧代码复杂、交付要讲依据”的场景，而不是做一个空泛的聊天外壳。</p>
+          <h2>面向各种项目现场的真实摩擦。</h2>
+          <p>Zhulong 处理的是项目状态不透明、代码影响面不清、完成条件不可靠，以及文档存在时依据难追踪的问题，不绑定国家、语言或行业。</p>
         </div>
         <div class="split-feature">
           <div class="story-stack">
             <div class="story-row">
-              <strong>仕様变更</strong>
-              <p>先把变更点进入 <code>zl-spec-phase</code>，查询文档依据，记录未决点，再生成计划。</p>
+              <strong>需求变更</strong>
+              <p>先把变更点进入 <code>zl-spec-phase</code>，记录未决点；存在正式依据时再查询和引用文档，然后生成计划。</p>
             </div>
             <div class="story-row">
               <strong>缺陷调查</strong>
-              <p><code>zl-debug</code> 会写 context packet，把 QA、議事録、Graphify 影响面和验证 gate 串起来。</p>
+              <p><code>zl-debug</code> 会写 context packet，把问题证据、Graphify 影响面和验证 gate 串起来。</p>
             </div>
             <div class="story-row">
               <strong>既存改修</strong>
@@ -218,16 +218,16 @@
           </div>
           <div class="panel panel-pad">
             <h3>开发者每天真正会用到的入口</h3>
-            <pre class="code-block"><code>zl-debug --target "$PWD" "障害内容"
+            <pre class="code-block"><code>zl-debug --target "$PWD" "支付状态更新异常"
 zl-preflight --target "$PWD"
 zl-refresh-plan --target "$PWD"
 zl-docs-sync --target "$PWD"
-zl-docs-query --target "$PWD" "仕様根拠"
+zl-docs-query --target "$PWD" "退款规则依据"
 zl-answer-audit --target "$PWD"
-zl-graph-query --target "$PWD" "変更対象"
+zl-graph-query --target "$PWD" "PaymentService"
 zl-plan-phase --target "$PWD" "MVP1"
-zl-execute-phase --target "$PWD" "実装"
-zl-verify-work --target "$PWD" "検証"
+zl-execute-phase --target "$PWD" "实现状态修复"
+zl-verify-work --target "$PWD" "验证支付流程"
 zl-completion-check --target "$PWD"</code></pre>
             <p>Codex、Claude Code、Copilot 只是不同入口。真正稳定的能力边界是本地 <code>zl-*</code> 命令和 <code>.planning/</code> artifact。</p>
           </div>
@@ -315,23 +315,23 @@ zl-mode-set --target "$PWD" docs-strict</code></pre>
 
       <section class="section alt">
         <div class="section-header">
-          <h2>两条接入路线，按项目真实约束选择。</h2>
-          <p>Zhulong 不要求所有项目一上来就安装 RAG。文档少的项目先用 workflow + Graphify；文档严格的项目再启用本地 GraphRAG 和 citation gate。</p>
+          <h2>两条正式路线，按项目真实约束选择。</h2>
+          <p>Zhulong 同等支持文档密集型与非文档密集型项目。<code>rag none</code> 专门服务非文档密集型路线；只有文档承担需求、验收或合规责任时，才启用本地 GraphRAG 和 citation gate。</p>
         </div>
         <div class="grid three">
           <article class="panel panel-pad">
-            <h3>轻量路线</h3>
+            <h3>非文档密集型路线</h3>
             <pre class="code-block"><code>zl-init --target "$PWD" --doc-policy reference --rag none
 zl-codebase-scan --target "$PWD"
-zl-docs-sync --target "$PWD"</code></pre>
-            <p>适合文档少、文档不完整、先想把 Zhulong 和代码地图用起来的项目。缺文档时输出 <code>WAIVED_WITH_RISK</code>，由 evidence 记录风险。</p>
+zl-preflight --target "$PWD"</code></pre>
+            <p><code>rag none</code> 不安装、不索引也不查询 RAG，workflow、codebase、Graphify、policy、evidence 和 completion gate 仍完整工作。少量文档仍可轻量扫描和直接引用。</p>
           </article>
           <article class="panel panel-pad">
-            <h3>严格路线</h3>
+            <h3>文档密集型路线</h3>
             <pre class="code-block"><code>zl-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
 zl-rag-init-local --target "$PWD"
 zl-docs-index --target "$PWD" --run</code></pre>
-            <p>适合对日、仕様書驱动、验收强依赖文档的项目。missing citation、RAG stale、外部 provider 会进入阻断逻辑。</p>
+            <p>适合以 PRD、合同、规范、ADR、运行手册或合规资料作为交付依据的项目。missing citation、RAG stale、外部 provider 会进入阻断逻辑。</p>
           </article>
           <article class="panel panel-pad">
             <h3>演示路线</h3>
@@ -344,20 +344,20 @@ zl-docs-index --target "$PWD" --run</code></pre>
       <section class="section alt">
         <div class="section-header">
           <h2>适合的项目</h2>
-          <p>Zhulong 的目标用户不是纯玩具项目，而是代码、文档、变更依据和交付责任同时存在的开发现场。</p>
+          <p>Zhulong 是通用项目智能框架，从无文档原型到规范密集型交付都可接入；差别只是启用哪些上下文层和门禁。</p>
         </div>
         <div class="grid">
           <article class="panel panel-pad">
-            <h3>对日开发</h3>
-            <p>仕様書、QA、議事録、画面设计、测试规格书都能成为 AI 开发依据。</p>
+            <h3>新项目与轻量项目</h3>
+            <p>使用 <code>rag none</code>，先建立 workflow、代码基线和 evidence，不为不存在的文档制造负担。</p>
           </article>
           <article class="panel panel-pad">
-            <h3>既有系统改修</h3>
+            <h3>既有系统维护</h3>
             <p>先建立 codebase baseline，再用 Graphify 看影响面，避免凭感觉改旧系统。</p>
           </article>
           <article class="panel panel-pad">
-            <h3>长周期交付</h3>
-            <p>用 evidence 和 writeback 记录每次判断、验证、风险和后续事项。</p>
+            <h3>文档与合规密集交付</h3>
+            <p>启用本地 RAG、citation、trace、evidence 和 writeback，记录每次判断、验证、风险和后续事项。</p>
           </article>
         </div>
       </section>
@@ -412,7 +412,7 @@ zl-verify --target "$PWD"</code></pre>
             <h3>既存项目</h3>
             <pre class="code-block"><code>zl-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
 zl-codebase-scan --target "$PWD"
-zl-docs-sync --target "$PWD"
+zl-preflight --target "$PWD"
 zl-graph-build --target "$PWD" --run</code></pre>
           </div>
         </div>
@@ -420,7 +420,7 @@ zl-graph-build --target "$PWD" --run</code></pre>
     </main>
 
     <footer class="footer">
-      <p>Zhulong Project Intelligence Kit：让 AI 在项目上下文、仕様依据、代码影响面和验证闭环里工作。</p>
+      <p>Zhulong Project Intelligence Kit：让 AI 在项目状态、代码影响面、按需文档依据和验证闭环里工作。</p>
     </footer>
   </div>
   <script src="assets/zl-site.js"></script>

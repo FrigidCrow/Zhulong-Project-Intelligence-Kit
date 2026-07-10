@@ -1,6 +1,6 @@
 ---
 name: zl-debug
-description: Zhulong native debug command for Codex. Use when the user invokes $zl-debug or asks to debug a defect through Zhulong Project Intelligence Kit with project state, specification evidence, code-map context, verification, and evidence writeback.
+description: Zhulong native debug command for Codex. Use when the user invokes $zl-debug or asks to debug a defect through Zhulong Project Intelligence Kit with project state, task/source evidence, optional documents, code-map context, verification, and evidence writeback.
 ---
 
 # Zhulong Debug
@@ -26,9 +26,9 @@ This is the Codex runtime entrypoint for `$zl-debug`.
 
 3. Read the generated `.planning/context/*debug*.md` packet and matching
    `.planning/context/handoffs/*debug*-HANDOFF.md`.
-4. Check specification context before business-rule claims:
-   `.planning/knowledge/`, `zl-docs-query`, `zl-docs-query --rag`, or the
-   configured document RAG.
+4. Establish expected behavior from the request, active records, source, and
+   tests. Query `.planning/knowledge/` or local documents only when relevant
+   sources exist; use RAG only when `rag_backend` is not `none` and approved.
 5. Check code-map context before risky edits:
    `zl-graph-status`, `zl-graph-query`, `.planning/graphs/`, and source reads.
 6. Follow `core/workflows/debug.md` as the Zhulong native workflow contract.

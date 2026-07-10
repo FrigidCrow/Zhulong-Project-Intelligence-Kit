@@ -8,8 +8,8 @@ Reference design: `$gsd-plan-phase`
 Required flow:
 
 1. Read active phase/issue records and the generated context packet.
-2. Confirm requirements through `.planning/knowledge/`, local docs, or approved
-   RAG query.
+2. Confirm requirements through the request, active records, source and tests.
+   Use `.planning/knowledge/`, local docs, or approved RAG only when available.
 3. Confirm code impact through `.planning/graphs/`, `zl-graph-query`, and
    direct source reads.
 4. Break work into ordered steps with dependencies and verification after each
@@ -24,4 +24,3 @@ Outputs:
 - Impact surface.
 - Verification checklist.
 - Next command recommendation: `zl-execute-phase`.
-
