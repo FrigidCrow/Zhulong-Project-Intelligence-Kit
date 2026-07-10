@@ -10,19 +10,19 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-mvp35-refresh-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-mvp35-refresh-");
 const projectRoot = path.join(workRoot, "project");
 const aliasBin = path.join(workRoot, "bin");
 const issues = [];
 const evidence = [];
 const commandResults = [];
 const newCommands = [
-  "pik-preflight",
-  "pik-refresh-plan",
-  "pik-refresh-run",
-  "pik-mode-status",
-  "pik-mode-set",
+  "zl-preflight",
+  "zl-refresh-plan",
+  "zl-refresh-run",
+  "zl-mode-status",
+  "zl-mode-set",
 ];
 
 function write(filePath, text) {
@@ -54,10 +54,10 @@ function record(command, result, expectedStatus = 0) {
 function makeAliasBins() {
   fs.mkdirSync(aliasBin, { recursive: true });
   const pkg = JSON.parse(read(path.join(kitRoot, "package.json")));
-  for (const command of Object.keys(pkg.bin).filter((name) => name === "pik" || name.startsWith("pik-"))) {
+  for (const command of Object.keys(pkg.bin).filter((name) => name === "zl" || name.startsWith("zl-"))) {
     const aliasPath = path.join(aliasBin, command);
     if (fs.existsSync(aliasPath)) fs.rmSync(aliasPath);
-    fs.symlinkSync(pikCli, aliasPath);
+    fs.symlinkSync(zlCli, aliasPath);
   }
 }
 
@@ -174,8 +174,8 @@ function configureFakeBackends() {
 function setupProject() {
   fs.mkdirSync(projectRoot, { recursive: true });
   git(["init"]);
-  git(["config", "user.email", "aipikit@example.local"]);
-  git(["config", "user.name", "AI-PIKit Test"]);
+  git(["config", "user.email", "zhulong@example.local"]);
+  git(["config", "user.name", "Zhulong Test"]);
   write(path.join(projectRoot, "src", "approval.js"), [
     "export const approvalLimit = 30000;",
     "export function canApprove(value) { return value <= approvalLimit; }",
@@ -188,15 +188,15 @@ function setupProject() {
     "",
   ].join("\n"));
   commit("initial docs and source");
-  runAlias("pik-init", ["--target", projectRoot, "--template", "greenfield-app", "--name", "mvp35_refresh_fixture", "--mode", "new", "--force"]);
+  runAlias("zl-init", ["--target", projectRoot, "--template", "greenfield-app", "--name", "mvp35_refresh_fixture", "--mode", "new", "--force"]);
   configureFakeBackends();
-  runAlias("pik-docs-extract", ["--target", projectRoot]);
-  runAlias("pik-docs-index", ["--target", projectRoot, "--run"]);
-  runAlias("pik-graph-build", ["--target", projectRoot, "--run"]);
+  runAlias("zl-docs-extract", ["--target", projectRoot]);
+  runAlias("zl-docs-index", ["--target", projectRoot, "--run"]);
+  runAlias("zl-graph-build", ["--target", projectRoot, "--run"]);
 }
 
 function validateFreshBaseline() {
-  const result = runAlias("pik-preflight", ["--target", projectRoot]);
+  const result = runAlias("zl-preflight", ["--target", projectRoot]);
   assertIncludes("fresh baseline preflight", result.output, "preflight PASS");
   assertIncludes("fresh baseline preflight", result.output, "heavy refresh executed: no");
   assertFileIncludes("refresh state after initial runs", path.join(projectRoot, ".planning", "refresh", "REFRESH_STATE.json"), "\"rag\"");
@@ -206,7 +206,7 @@ function validateFreshBaseline() {
 function validateUnrelatedCommitIsIgnored() {
   write(path.join(projectRoot, "README.md"), "# Project notes\n\nThis root note is unrelated to docs source paths and code graph.\n");
   commit("unrelated root note");
-  const result = runAlias("pik-preflight", ["--target", projectRoot]);
+  const result = runAlias("zl-preflight", ["--target", projectRoot]);
   assertIncludes("unrelated commit preflight", result.output, "preflight PASS");
   assertIncludes("unrelated commit preflight", result.output, "behind-unrelated");
   assertIncludes("unrelated commit preflight", result.output, "action: skip");
@@ -215,44 +215,44 @@ function validateUnrelatedCommitIsIgnored() {
 function validateRagRelevantCommit() {
   fs.appendFileSync(path.join(projectRoot, "docs", "specs", "approval.md"), "MVP35_DOC_SENTINEL updated approval spec.\n");
   commit("doc update");
-  const plan = runAlias("pik-refresh-plan", ["--target", projectRoot]);
+  const plan = runAlias("zl-refresh-plan", ["--target", projectRoot]);
   assertIncludes("doc update refresh plan", plan.output, "refresh plan WARN");
   assertIncludes("doc update refresh plan", plan.output, "rag refresh");
   assertIncludes("doc update refresh plan", read(path.join(projectRoot, ".planning", "refresh", "REFRESH_PLAN.md")), "recommend differential refresh");
 
-  const refresh = runAlias("pik-refresh-run", ["--target", projectRoot, "--rag"]);
+  const refresh = runAlias("zl-refresh-run", ["--target", projectRoot, "--rag"]);
   assertIncludes("rag refresh run", refresh.output, "rag refresh PASS");
   assertFileIncludes("rag refresh report", path.join(projectRoot, ".planning", "refresh", "REFRESH_RUN.md"), "RAG diff/extract/index completed");
-  const post = runAlias("pik-preflight", ["--target", projectRoot]);
+  const post = runAlias("zl-preflight", ["--target", projectRoot]);
   assertIncludes("post rag refresh preflight", post.output, "preflight PASS");
 }
 
 function validateGraphRelevantCommit() {
   fs.appendFileSync(path.join(projectRoot, "src", "approval.js"), "export const mvp35GraphSentinel = true;\n");
   commit("source update");
-  const plan = runAlias("pik-refresh-plan", ["--target", projectRoot]);
+  const plan = runAlias("zl-refresh-plan", ["--target", projectRoot]);
   assertIncludes("source update refresh plan", plan.output, "refresh plan WARN");
   assertIncludes("source update refresh plan", plan.output, "graph refresh");
 
-  const refresh = runAlias("pik-refresh-run", ["--target", projectRoot, "--graph"]);
+  const refresh = runAlias("zl-refresh-run", ["--target", projectRoot, "--graph"]);
   assertIncludes("graph refresh run", refresh.output, "graph refresh PASS");
   assertFileIncludes("graph refresh report", path.join(projectRoot, ".planning", "refresh", "REFRESH_RUN.md"), "Graphify build completed");
-  const post = runAlias("pik-preflight", ["--target", projectRoot, "--strict"]);
+  const post = runAlias("zl-preflight", ["--target", projectRoot, "--strict"]);
   assertIncludes("post graph refresh strict preflight", post.output, "preflight PASS");
 }
 
 function validateModes() {
-  const setLite = runAlias("pik-mode-set", ["--target", projectRoot, "graph-lite"]);
+  const setLite = runAlias("zl-mode-set", ["--target", projectRoot, "graph-lite"]);
   assertIncludes("mode set graph-lite", setLite.output, "mode graph-lite");
-  const statusLite = runAlias("pik-mode-status", ["--target", projectRoot]);
+  const statusLite = runAlias("zl-mode-status", ["--target", projectRoot]);
   assertIncludes("mode status graph-lite", statusLite.output, "RAG required: no");
 
-  const setStrict = runAlias("pik-mode-set", ["--target", projectRoot, "full-strict"]);
+  const setStrict = runAlias("zl-mode-set", ["--target", projectRoot, "full-strict"]);
   assertIncludes("mode set full-strict", setStrict.output, "mode full-strict");
-  const statusStrict = runAlias("pik-mode-status", ["--target", projectRoot]);
+  const statusStrict = runAlias("zl-mode-status", ["--target", projectRoot]);
   assertIncludes("mode status full-strict", statusStrict.output, "Strict: yes");
 
-  runAlias("pik-mode-set", ["--target", projectRoot, "default-local-rag"]);
+  runAlias("zl-mode-set", ["--target", projectRoot, "default-local-rag"]);
 }
 
 function validateDocsSynchronized() {
@@ -285,14 +285,14 @@ const data = {
 };
 
 writeJsonReport("mvp35-refresh-control-check.json", data);
-writeMarkdownReport("mvp35-refresh-control-check.md", "AI-PIKit MVP3.5 Refresh Control Verification", summarizeIssues(issues), [
+writeMarkdownReport("mvp35-refresh-control-check.md", "Zhulong MVP3.5 Refresh Control Verification", summarizeIssues(issues), [
   {
     title: "验证范围",
     body: [
-      "- `pik-preflight`：轻量检查，不执行重刷新。",
-      "- `pik-refresh-plan`：根据 commit 距离和相关变更生成刷新建议。",
-      "- `pik-refresh-run`：只有显式命令才执行 RAG/Graphify refresh。",
-      "- `pik-mode-status` / `pik-mode-set`：切换 default-local-rag、graph-lite、full-strict。",
+      "- `zl-preflight`：轻量检查，不执行重刷新。",
+      "- `zl-refresh-plan`：根据 commit 距离和相关变更生成刷新建议。",
+      "- `zl-refresh-run`：只有显式命令才执行 RAG/Graphify refresh。",
+      "- `zl-mode-status` / `zl-mode-set`：切换 default-local-rag、graph-lite、full-strict。",
       "- 文档同步：README、changelog、commands、quality-plan 必须记录新增命令。",
     ],
   },

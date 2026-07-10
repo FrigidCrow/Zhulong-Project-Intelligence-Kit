@@ -8,10 +8,10 @@ import { fileURLToPath } from "node:url";
 import { buildCommandCatalog } from "../command-catalog.mjs";
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
-const auditRoot = path.join(kitRoot, ".pik-audit");
+const auditRoot = path.join(kitRoot, ".zl-audit");
 const verificationReportDir = path.join(kitRoot, "verification", "reports");
 const defaultRunId = `${new Date().toISOString().replace(/[:.]/g, "-")}-${process.pid}-${crypto.randomBytes(3).toString("hex")}`;
-const runId = process.env.AI_PIKIT_AUDIT_RUN_ID || defaultRunId;
+const runId = process.env.ZHULONG_AUDIT_RUN_ID || defaultRunId;
 const runRoot = path.join(auditRoot, "runs", runId);
 const latestRoot = path.join(auditRoot, "latest");
 const rawDir = path.join(runRoot, "raw");
@@ -19,7 +19,7 @@ const reportsDir = path.join(runRoot, "reports");
 const fixturesDir = path.join(runRoot, "fixtures");
 const benchmarkDir = path.join(runRoot, "benchmarks");
 const toolsDir = path.join(runRoot, "tools");
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
 const mode = process.argv[2] || "full";
 
 const BENCHMARK_TASK =
@@ -202,7 +202,7 @@ function listFiles(root, predicate = () => true, out = []) {
 
 function packageCommands() {
   const pkg = readPackage();
-  return Object.keys(pkg.bin || {}).filter((name) => name === "pik" || name.startsWith("pik-")).sort();
+  return Object.keys(pkg.bin || {}).filter((name) => name === "zl" || name.startsWith("zl-")).sort();
 }
 
 function runtimeItems() {
@@ -256,8 +256,8 @@ function cloneSuperpowersIfRequested() {
     copyDirSafe(local, dest);
     return { root: dest, source: "local-cache-copy", command: null };
   }
-  if (process.env.AI_PIKIT_AUDIT_CLONE_SUPERPOWERS !== "1") {
-    return { root: "", source: "not-cloned-set-AI_PIKIT_AUDIT_CLONE_SUPERPOWERS=1", command: null };
+  if (process.env.ZHULONG_AUDIT_CLONE_SUPERPOWERS !== "1") {
+    return { root: "", source: "not-cloned-set-ZHULONG_AUDIT_CLONE_SUPERPOWERS=1", command: null };
   }
   ensureDir(toolsDir);
   const cmd = runTimed("clone-superpowers", "git", ["clone", "--depth", "1", "https://github.com/obra/Superpowers", dest], {
@@ -423,24 +423,24 @@ function emitVerificationSummary(auditData) {
     ? byTool.map((item) => `${item.tool}=${item.average_score}/${item.grade}`).join(", ")
     : "n/a";
   const reportEntries = [
-    ".pik-audit/latest/AUDIT_REPORT.md",
-    ".pik-audit/latest/COMMAND_SCORES.md",
-    ".pik-audit/latest/SKILL_SCORES.md",
-    ".pik-audit/latest/SKILL_BEHAVIOR_SCORES.md",
-    ".pik-audit/latest/FEATURE_SCORES.md",
-    ".pik-audit/latest/SECURITY_GOVERNANCE_CHECK.md",
-    ".pik-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.md",
-    ".pik-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.md",
-    ".pik-audit/latest/QUALITY_CONTROL_SCORECARD.md",
-    ".pik-audit/latest/BENCHMARK_COMPARISON.md",
-    ".pik-audit/latest/TIME_BREAKDOWN.md",
-    ".pik-audit/latest/TOKEN_USAGE.md",
+    ".zl-audit/latest/AUDIT_REPORT.md",
+    ".zl-audit/latest/COMMAND_SCORES.md",
+    ".zl-audit/latest/SKILL_SCORES.md",
+    ".zl-audit/latest/SKILL_BEHAVIOR_SCORES.md",
+    ".zl-audit/latest/FEATURE_SCORES.md",
+    ".zl-audit/latest/SECURITY_GOVERNANCE_CHECK.md",
+    ".zl-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.md",
+    ".zl-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.md",
+    ".zl-audit/latest/QUALITY_CONTROL_SCORECARD.md",
+    ".zl-audit/latest/BENCHMARK_COMPARISON.md",
+    ".zl-audit/latest/TIME_BREAKDOWN.md",
+    ".zl-audit/latest/TOKEN_USAGE.md",
   ];
   writeJson(jsonPath, {
     generated,
     run_id: auditData.run_id || runId,
     status: auditData.status,
-    artifact_root: ".pik-audit/latest/",
+    artifact_root: ".zl-audit/latest/",
     counts: {
       commands: commandCount,
       runtime_skill_prompts: skillCount,
@@ -460,19 +460,19 @@ function emitVerificationSummary(auditData) {
     report_entries: reportEntries,
     findings: auditData.summary?.findings || [],
     boundaries: [
-      "Full scoring details are stored in .pik-audit/latest/ and .pik-audit/runs/<run_id>/.",
+      "Full scoring details are stored in .zl-audit/latest/ and .zl-audit/runs/<run_id>/.",
       "Ragas-style and Promptfoo-style reports are local proxy metrics; they do not call external SaaS or external models.",
-      "Default AI-PIKit command boundary is local-only unless --allow-external-rag is explicitly used.",
+      "Default Zhulong command boundary is local-only unless --allow-external-rag is explicitly used.",
     ],
   });
-  const md = `# AI-PIKit Developer Audit Summary
+  const md = `# Zhulong Developer Audit Summary
 
 生成时间: ${generated}
 
 ## 摘要
 
 - Run ID: \`${runId}\`
-- 原始产物目录: \`.pik-audit/latest/\`
+- 原始产物目录: \`.zl-audit/latest/\`
 - 命令覆盖: ${commandCount}
 - Runtime skill/prompt 覆盖: ${skillCount}
 - Skill behavior score: ${skillBehaviorScore ?? "n/a"}
@@ -484,16 +484,16 @@ function emitVerificationSummary(auditData) {
 - Quality release decision: ${qualityControl?.release_decision ?? "n/a"}
 - Benchmark comparison score: ${benchmarkScore ?? "n/a"}
 - Token 规则: 只有真实 Codex JSONL 中存在 usage 时才统计；缺失时写 \`TOKEN_USAGE_UNAVAILABLE\`。
-- 记忆隔离规则: 每轮使用 fresh fixture；真实 Codex 对标必须使用 \`--ephemeral --ignore-rules\`，需要完全不读用户配置时额外启用 \`AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1\`。
+- 记忆隔离规则: 每轮使用 fresh fixture；真实 Codex 对标必须使用 \`--ephemeral --ignore-rules\`，需要完全不读用户配置时额外启用 \`ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG=1\`。
 
 ## 评分怎么读
 
-- \`Benchmark comparison\` 是所有 benchmark 行的保守平均分，不是 AI-PIKit 单体分。
+- \`Benchmark comparison\` 是所有 benchmark 行的保守平均分，不是 Zhulong 单体分。
 - \`SKILL_SCORES\` 是结构质量分，\`SKILL_BEHAVIOR_SCORES\` 是 deterministic 行为契约分。
 - \`RAGAS_STYLE_KNOWLEDGE_SCORES\` 和 \`PROMPTFOO_STYLE_REDTEAM_SCORES\` 是本地代理指标，不调用外部 SaaS 或外部模型。
 - 本轮工具平均分: ${byToolText}。
-- AI-PIKit \`graph-lite\` 是低成本模式，故意不强制 GraphRAG/RAG，评分不会按 full-local 满分计算。
-- AI-PIKit \`full-local\` 在无文档场景输出 \`EXPECTED_BLOCK\`，这是正确安全边界，但会拉低横向平均。
+- Zhulong \`graph-lite\` 是低成本模式，故意不强制 GraphRAG/RAG，评分不会按 full-local 满分计算。
+- Zhulong \`full-local\` 在无文档场景输出 \`EXPECTED_BLOCK\`，这是正确安全边界，但会拉低横向平均。
 - GSD / Superpowers 是 \`skill-pack-backed-replay\`，不是 repository-local CLI 或 live model benchmark，因此设置可信度上限。
 - Real Codex subprocess 只单独记录环境可用性和 token usage，不成功时不混入 replay 分数。
 
@@ -511,7 +511,7 @@ ${reportEntries.map((item) => `- \`${item}\``).join("\n")}
 `;
   writeText(mdPath, md);
   writeJson(path.join(verificationReportDir, "quality-control-summary.json"), qualityControl || {});
-  writeText(path.join(verificationReportDir, "quality-control-summary.md"), `# AI-PIKit Quality Control Summary
+  writeText(path.join(verificationReportDir, "quality-control-summary.md"), `# Zhulong Quality Control Summary
 
 生成时间: ${now()}
 
@@ -538,11 +538,11 @@ ${qualityControl?.methodology_sources ? markdownTable(["方法论 / 来源", "�
 
 ## 边界
 
-- 默认 local-only，除显式 \`--allow-external-rag\` 外不允许 AI-PIKit 命令外发项目资料。
-- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 AI-PIKit 命令默认本地边界。
+- 默认 local-only，除显式 \`--allow-external-rag\` 外不允许 Zhulong 命令外发项目资料。
+- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 Zhulong 命令默认本地边界。
 - Ragas-style / Promptfoo-style 是本地代理评分，不接外部 SaaS，也不调用外部模型。
 - OWASP / NIST 是治理 checklist，不是外部认证。
-- 本摘要来自 \`.pik-audit/latest/QUALITY_CONTROL_SCORECARD.md\`。
+- 本摘要来自 \`.zl-audit/latest/QUALITY_CONTROL_SCORECARD.md\`。
 `);
 }
 
@@ -566,7 +566,7 @@ function auditInventory() {
     gsd_skills: gsd.map((item) => ({ name: item.name, file: item.file, hash: item.hash })),
     gsd_skill_count: gsd.length,
     superpowers_local_root: spRoot,
-    gitignore_has_pik_audit: readText(path.join(kitRoot, ".gitignore")).split(/\r?\n/).includes(".pik-audit/"),
+    gitignore_has_zl_audit: readText(path.join(kitRoot, ".gitignore")).split(/\r?\n/).includes(".zl-audit/"),
     node: process.version,
     platform: `${process.platform}-${process.arch}`,
   };
@@ -575,12 +575,12 @@ function auditInventory() {
 生成时间: ${inventory.generated}
 
 ${markdownTable(["项目", "数量 / 状态"], [
-    ["pik/pik-* commands", inventory.command_count],
+    ["zl/zl-* commands", inventory.command_count],
     ["npm scripts", inventory.npm_script_count],
     ["runtime skill/prompt", inventory.runtime_item_count],
     ["local GSD skills", inventory.gsd_skill_count],
     ["Superpowers local cache", inventory.superpowers_local_root || "not found"],
-    [".pik-audit gitignored", inventory.gitignore_has_pik_audit ? "PASS" : "FAIL"],
+    [".zl-audit gitignored", inventory.gitignore_has_zl_audit ? "PASS" : "FAIL"],
   ])}
 `;
   writeReportPair("INVENTORY", inventory, md);
@@ -602,17 +602,17 @@ function auditCommands(options = {}) {
   const commandResults = report?.commandResults || [];
   const docs = readText(path.join(kitRoot, "docs", "commands.html"));
   const crashPattern = /(ReferenceError|TypeError|SyntaxError|UnhandledPromiseRejection|ERR_MODULE_NOT_FOUND|command not found|Traceback)/i;
-  const explicitHeavyRefreshCommands = new Set(["pik-refresh-run"]);
+  const explicitHeavyRefreshCommands = new Set(["zl-refresh-run"]);
   const artifactCommands = new Set([
-    "pik-docs-index",
-    "pik-docs-sync",
-    "pik-graph-build",
-    "pik-refresh-run",
+    "zl-docs-index",
+    "zl-docs-sync",
+    "zl-graph-build",
+    "zl-refresh-run",
   ]);
   const commandScores = catalog.map((item) => {
     const relatedResults = commandResults.filter((result) => {
       const first = String(result.command || "").split(/\s+/)[0];
-      return first === item.command || (item.command === "pik" && first === "pik");
+      return first === item.command || (item.command === "zl" && first === "zl");
     });
     const executable = relatedResults.length > 0 && relatedResults.every((result) => result.status === result.expectedStatus);
     const docCovered = docs.includes(`id="cmd-${item.command}"`) && docs.includes(item.logicalName);
@@ -693,7 +693,7 @@ function auditCommands(options = {}) {
 
 - 执行可用性: smoke 命令必须按预期退出，且输出不能出现明显运行时崩溃。
 - 输出规范: 命令必须在 catalog 中声明 stdout 或落盘 artifact，并由全命令面验证覆盖。
-- 设计预期: 不能隐藏触发 heavy refresh；显式刷新只能来自 \`--run\`、\`--index\` 或 \`pik-refresh-run\` 等明确入口。
+- 设计预期: 不能隐藏触发 heavy refresh；显式刷新只能来自 \`--run\`、\`--index\` 或 \`zl-refresh-run\` 等明确入口。
 - 文档闭环: \`docs/commands.html\` 必须有该命令独立锚点、参数、示例和产物说明。
 
 ${markdownTable(["命令", "逻辑名", "分类", "分数", "等级", "可执行", "输出规范", "设计预期", "文档", "原因"], commandScores.map((item) => [
@@ -746,8 +746,8 @@ function auditSkills(options = {}) {
     const renderedText = renderedFile ? readText(renderedFile) : "";
     const text = renderedText || sourceText;
     const escapedName = item.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const callsPik = text.includes(item.name) && text.includes("bin/pik.mjs");
-    const invocationExample = callsPik && (
+    const callsZl = text.includes(item.name) && text.includes("bin/zl.mjs");
+    const invocationExample = callsZl && (
       new RegExp(`\\$?/?${escapedName}`, "i").test(text) ||
       /workflow run|cockpit build|docs query|graph status|evidence\s+record/i.test(text)
     );
@@ -755,10 +755,10 @@ function auditSkills(options = {}) {
     const noHeavy = /heavy refresh/i.test(text);
     const evidence = /evidence|writeback/i.test(text);
     const noUnsafeGsd = !hasUnsafeGsdLine(text);
-    const noUnrenderedTemplate = !/{{PIK_CLI}}|{{PIK_KIT_ROOT}}|{{PIK_GENERATED_AT}}|__PIK_/i.test(text);
+    const noUnrenderedTemplate = !/{{ZL_CLI}}|{{ZL_KIT_ROOT}}|{{ZL_GENERATED_AT}}|__ZL_/i.test(text);
     const outputContract = {
       runtime_pack_install_pass: renderedInstallPass,
-      local_cli_reference: callsPik,
+      local_cli_reference: callsZl,
       invocation_example_present: invocationExample,
       no_unrendered_template: noUnrenderedTemplate,
       no_unsafe_gsd_instruction: noUnsafeGsd,
@@ -767,7 +767,7 @@ function auditSkills(options = {}) {
       local_only_guard_visible: localOnly,
       no_hidden_heavy_refresh_visible: noHeavy,
       evidence_or_report_writeback_visible: evidence,
-      points_to_repository_cli: callsPik,
+      points_to_repository_cli: callsZl,
       command_name_matches_skill: text.includes(item.name),
     };
     const score =
@@ -781,8 +781,8 @@ function auditSkills(options = {}) {
       (designExpectation.evidence_or_report_writeback_visible ? 5 : 1);
     const reasons = [
       renderedInstallPass ? "runtime pack 临时安装和 status 验证通过" : "runtime pack 安装/status 验证未通过",
-      callsPik ? "skill/prompt 指向本仓库 bin/pik.mjs" : "未明确指向本地 bin/pik.mjs",
-      invocationExample ? "包含对应 pik-* 调用示例" : "缺少对应 pik-* 调用示例",
+      callsZl ? "skill/prompt 指向本仓库 bin/zl.mjs" : "未明确指向本地 bin/zl.mjs",
+      invocationExample ? "包含对应 zl-* 调用示例" : "缺少对应 zl-* 调用示例",
       localOnly ? "包含 local-only/privacy 约束" : "缺少 local-only/privacy 约束",
       noHeavy ? "包含 no hidden heavy refresh 约束" : "缺少 no hidden heavy refresh 约束",
       evidence ? "包含 evidence/report writeback 约束" : "缺少 evidence/report writeback 约束",
@@ -796,7 +796,7 @@ function auditSkills(options = {}) {
       score: Math.min(100, score),
       grade: grade(Math.min(100, score)),
       rendered_install_pass: renderedInstallPass,
-      calls_pik: callsPik,
+      calls_zl: callsZl,
       invocation_example_present: invocationExample,
       local_only: localOnly,
       no_hidden_heavy_refresh: noHeavy,
@@ -805,7 +805,7 @@ function auditSkills(options = {}) {
       output_contract: outputContract,
       design_expectation: designExpectation,
       source_static_checks: {
-        template_contains_pik_cli_placeholder: sourceText.includes("{{PIK_CLI}}"),
+        template_contains_zl_cli_placeholder: sourceText.includes("{{ZL_CLI}}"),
         command_name_matches_skill: sourceText.includes(item.name),
         no_unsafe_gsd: !hasUnsafeGsdLine(sourceText),
       },
@@ -815,7 +815,7 @@ function auditSkills(options = {}) {
   const average = Math.round(scores.reduce((sum, item) => sum + item.score, 0) / Math.max(1, scores.length));
   const data = {
     generated: now(),
-    status: scores.every((item) => item.calls_pik && item.local_only && item.no_hidden_heavy_refresh && item.no_unsafe_gsd) ? "PASS" : "WARN",
+    status: scores.every((item) => item.calls_zl && item.local_only && item.no_hidden_heavy_refresh && item.no_unsafe_gsd) ? "PASS" : "WARN",
     runtime_item_count: scores.length,
     average_score: average,
     verifier_status: report?.status || "UNKNOWN",
@@ -834,17 +834,17 @@ function auditSkills(options = {}) {
 ## 评分规则
 
 - 安装可用性: runtime pack 必须能安装到临时目录，并通过 status 检查。
-- 输出规范: skill/prompt 不能有未渲染模板变量，必须包含对应 \`pik-*\` 调用示例。
-- 设计预期: 必须指向本地 \`bin/pik.mjs\`，说明 local-only、no hidden heavy refresh 和 evidence/report writeback。
+- 输出规范: skill/prompt 不能有未渲染模板变量，必须包含对应 \`zl-*\` 调用示例。
+- 设计预期: 必须指向本地 \`bin/zl.mjs\`，说明 local-only、no hidden heavy refresh 和 evidence/report writeback。
 - 安全边界: 不允许出现可执行意义上的 \`gsd-*\` 指令。
 
-${markdownTable(["Runtime", "Skill/Prompt", "分数", "等级", "安装", "pik 调用", "示例", "local-only", "no heavy", "evidence", "原因"], scores.map((item) => [
+${markdownTable(["Runtime", "Skill/Prompt", "分数", "等级", "安装", "zl 调用", "示例", "local-only", "no heavy", "evidence", "原因"], scores.map((item) => [
     item.runtime,
     `\`${item.name}\``,
     item.score,
     item.grade,
     item.rendered_install_pass ? "PASS" : "FAIL",
-    item.calls_pik ? "PASS" : "FAIL",
+    item.calls_zl ? "PASS" : "FAIL",
     item.invocation_example_present ? "PASS" : "WARN",
     item.local_only ? "PASS" : "FAIL",
     item.no_hidden_heavy_refresh ? "PASS" : "FAIL",
@@ -859,11 +859,11 @@ ${markdownTable(["Runtime", "Skill/Prompt", "分数", "等级", "安装", "pik �
 const SKILL_BEHAVIOR_CASE_TYPES = [
   {
     kind: "explicit",
-    promptFor: (skill) => `$${skill} を実行して、この作業を AI-PIKit の流れで進めて。`,
+    promptFor: (skill) => `$${skill} を実行して、この作業を Zhulong の流れで進めて。`,
   },
   {
     kind: "implicit",
-    promptFor: (skill) => `AI-PIKit で ${skill.replace(/^pik-/, "").replace(/-/g, " ")} 相当の作業を、証拠と検証つきで進めて。`,
+    promptFor: (skill) => `Zhulong で ${skill.replace(/^zl-/, "").replace(/-/g, " ")} 相当の作業を、証拠と検証つきで進めて。`,
   },
   {
     kind: "near_miss",
@@ -871,7 +871,7 @@ const SKILL_BEHAVIOR_CASE_TYPES = [
   },
   {
     kind: "negative",
-    promptFor: (skill) => `この会話は ${skill} とは無関係な一般質問。AI-PIKit workflow を勝手に開始しないで。`,
+    promptFor: (skill) => `この会話は ${skill} とは無関係な一般質問。Zhulong workflow を勝手に開始しないで。`,
   },
   {
     kind: "adversarial",
@@ -880,17 +880,17 @@ const SKILL_BEHAVIOR_CASE_TYPES = [
 ];
 
 function commandAliasesForSkill(skill) {
-  return [skill, skill.replace(/^pik-/, "pik ")];
+  return [skill, skill.replace(/^zl-/, "zl ")];
 }
 
 function workflowPresentCommands(text) {
-  return /workflow run|pik-workflow-run/i.test(text) ? ["pik-workflow-run"] : [];
+  return /workflow run|zl-workflow-run/i.test(text) ? ["zl-workflow-run"] : [];
 }
 
 function skillBehaviorScoreForText(text, behaviorCase) {
   const aliases = commandAliasesForSkill(behaviorCase.expectedCommand);
   const commandPresent = aliases.some((alias) => text.includes(alias));
-  const workflowPresent = /workflow run|pik-workflow-run/i.test(text);
+  const workflowPresent = /workflow run|zl-workflow-run/i.test(text);
   const canRouteCommand = commandPresent || workflowPresent;
   const localOnly = /local-only|local_only|privacy audit|privacy/i.test(text);
   const evidence = /evidence|writeback|report/i.test(text);
@@ -931,7 +931,7 @@ function auditSkillBehavior() {
   const renderedByRuntimeAndName = new Map();
   for (const runtime of ["codex", "claude-code", "github-copilot"]) {
     const dest = path.join(renderedRoot, runtime);
-    runTimed(`skill-behavior-runtime-install-${runtime}`, "node", [pikCli, "runtime", "install", "--runtime", runtime, "--dest", dest, "--force"], {
+    runTimed(`skill-behavior-runtime-install-${runtime}`, "node", [zlCli, "runtime", "install", "--runtime", runtime, "--dest", dest, "--force"], {
       cwd: kitRoot,
       timeout: 120000,
     });
@@ -978,7 +978,7 @@ function auditSkillBehavior() {
         grade: grade(result.score),
         ...result,
         reason: [
-          result.command_present ? "routes to expected pik command/workflow" : "missing expected pik command/workflow",
+          result.command_present ? "routes to expected zl command/workflow" : "missing expected zl command/workflow",
           result.local_only_guard ? "local-only/privacy guard visible" : "missing local-only/privacy guard",
           result.evidence_writeback ? "evidence/writeback visible" : "missing evidence/writeback",
           result.no_hidden_heavy_refresh ? "no hidden heavy refresh visible" : "missing no hidden heavy refresh rule",
@@ -1335,7 +1335,7 @@ function createBenchmarkFixture(root, scenario) {
   if (fs.existsSync(root)) fs.rmSync(root, { recursive: true, force: true });
   ensureDir(root);
   writeText(path.join(root, "package.json"), JSON.stringify({
-    name: `aipikit-audit-${scenario}`,
+    name: `zhulong-audit-${scenario}`,
     version: "0.0.0",
     private: true,
     type: "module",
@@ -1469,60 +1469,60 @@ function configureFakeIntelligence(root) {
   writeText(configPath, `${JSON.stringify(config, null, 2)}\n`);
 }
 
-function runPik(root, label, args, bucket, commands) {
-  const result = runTimed(label, "node", [pikCli, ...args], { cwd: root, timeout: 360000 });
+function runZl(root, label, args, bucket, commands) {
+  const result = runTimed(label, "node", [zlCli, ...args], { cwd: root, timeout: 360000 });
   commands.push({ ...result, bucket });
   return result;
 }
 
 function completeWorkflow(root, commands) {
-  runPik(root, "pik-workflow-continue-plan", ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", "audit plan accepted"], "pik_dev_workflow_ms", commands);
-  runPik(root, "pik-workflow-continue-implementation", ["workflow", "continue", "--target", root, "--gate", "implementation", "--evidence", "code changed to 50000"], "pik_dev_workflow_ms", commands);
-  runPik(root, "pik-workflow-continue-verification", ["workflow", "continue", "--target", root, "--gate", "verification", "--evidence", "npm test passed"], "pik_dev_workflow_ms", commands);
-  runPik(root, "pik-evidence-record", ["evidence", "record", "--target", root, "代理承認上限を50,000円へ変更", "--command", "npm test", "--result", "passed", "--source", "docs/specs/01_proxy_approval.md", "--writeback", ".planning/issues/CR-017_proxy_limit.md"], "pik_guard_ms", commands);
-  runPik(root, "pik-completion-check", ["workflow", "completion-check", "--target", root], "pik_guard_ms", commands);
+  runZl(root, "zl-workflow-continue-plan", ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", "audit plan accepted"], "zl_dev_workflow_ms", commands);
+  runZl(root, "zl-workflow-continue-implementation", ["workflow", "continue", "--target", root, "--gate", "implementation", "--evidence", "code changed to 50000"], "zl_dev_workflow_ms", commands);
+  runZl(root, "zl-workflow-continue-verification", ["workflow", "continue", "--target", root, "--gate", "verification", "--evidence", "npm test passed"], "zl_dev_workflow_ms", commands);
+  runZl(root, "zl-evidence-record", ["evidence", "record", "--target", root, "代理承認上限を50,000円へ変更", "--command", "npm test", "--result", "passed", "--source", "docs/specs/01_proxy_approval.md", "--writeback", ".planning/issues/CR-017_proxy_limit.md"], "zl_guard_ms", commands);
+  runZl(root, "zl-completion-check", ["workflow", "completion-check", "--target", root], "zl_guard_ms", commands);
 }
 
-function benchmarkPikScenario(root, scenario, withIntelligence) {
+function benchmarkZlScenario(root, scenario, withIntelligence) {
   const commands = [];
   createBenchmarkFixture(root, scenario);
   const memoryIsolation = !fs.existsSync(path.join(root, ".planning")) && !fs.existsSync(path.join(root, "graphify-out")) ? "PASS" : "FAIL";
-  runPik(root, "pik-init", ["init", "--target", root, "--template", "brownfield-monorepo", "--name", `audit_${scenario}`, "--mode", "existing", "--force"], "pik_setup_ms", commands);
-  runPik(root, "pik-codebase-scan", ["codebase", "scan", "--target", root], "pik_setup_ms", commands);
+  runZl(root, "zl-init", ["init", "--target", root, "--template", "brownfield-monorepo", "--name", `audit_${scenario}`, "--mode", "existing", "--force"], "zl_setup_ms", commands);
+  runZl(root, "zl-codebase-scan", ["codebase", "scan", "--target", root], "zl_setup_ms", commands);
   configureFakeIntelligence(root);
   if (withIntelligence) {
-    runPik(root, "pik-mode-set-full-strict", ["mode", "set", "--target", root, "full-strict"], "pik_guard_ms", commands);
-    runPik(root, "pik-offline-lock-full-strict", ["privacy", "offline-lock", "--target", root], "pik_guard_ms", commands);
-    runPik(root, "pik-docs-sync", ["docs", "sync", "--target", root], "pik_graphrag_ms", commands);
-    runPik(root, "pik-rag-init-local", ["rag", "init-local", "--target", root, "--force", "--skip-model-check"], "pik_graphrag_ms", commands);
-    runPik(root, "pik-graph-build-run", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
-    runPik(root, "pik-docs-query", ["docs", "query", "--target", root, "代理承認 上限"], "pik_graphrag_ms", commands);
-    runPik(root, "pik-answer-audit", ["answer", "audit", "--target", root], "pik_graphrag_ms", commands);
-    runPik(root, "pik-graph-impact", ["graph", "impact", "--target", root, "--files", "src/approvalPolicy.js"], "pik_graphify_ms", commands);
+    runZl(root, "zl-mode-set-full-strict", ["mode", "set", "--target", root, "full-strict"], "zl_guard_ms", commands);
+    runZl(root, "zl-offline-lock-full-strict", ["privacy", "offline-lock", "--target", root], "zl_guard_ms", commands);
+    runZl(root, "zl-docs-sync", ["docs", "sync", "--target", root], "zl_graphrag_ms", commands);
+    runZl(root, "zl-rag-init-local", ["rag", "init-local", "--target", root, "--force", "--skip-model-check"], "zl_graphrag_ms", commands);
+    runZl(root, "zl-graph-build-run", ["graph", "build", "--target", root, "--run"], "zl_graphify_ms", commands);
+    runZl(root, "zl-docs-query", ["docs", "query", "--target", root, "代理承認 上限"], "zl_graphrag_ms", commands);
+    runZl(root, "zl-answer-audit", ["answer", "audit", "--target", root], "zl_graphrag_ms", commands);
+    runZl(root, "zl-graph-impact", ["graph", "impact", "--target", root, "--files", "src/approvalPolicy.js"], "zl_graphify_ms", commands);
   } else {
-    runPik(root, "pik-mode-set-graph-lite", ["mode", "set", "--target", root, "graph-lite"], "pik_guard_ms", commands);
-    runPik(root, "pik-graph-build-run-lite", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
-    runPik(root, "pik-graph-impact-lite", ["graph", "impact", "--target", root, "--files", "src/approvalPolicy.js"], "pik_graphify_ms", commands);
+    runZl(root, "zl-mode-set-graph-lite", ["mode", "set", "--target", root, "graph-lite"], "zl_guard_ms", commands);
+    runZl(root, "zl-graph-build-run-lite", ["graph", "build", "--target", root, "--run"], "zl_graphify_ms", commands);
+    runZl(root, "zl-graph-impact-lite", ["graph", "impact", "--target", root, "--files", "src/approvalPolicy.js"], "zl_graphify_ms", commands);
   }
-  runPik(root, "pik-new-milestone", ["workflow", "run", "--target", root, "new-milestone", "CR-017 proxy approval limit"], "pik_dev_workflow_ms", commands);
-  runPik(root, "pik-spec-phase", ["workflow", "run", "--target", root, "spec-phase", "CR-017 proxy approval limit"], "pik_dev_workflow_ms", commands);
-  runPik(root, "pik-plan-phase", ["workflow", "run", "--target", root, "plan-phase", "CR-017 proxy approval limit"], "pik_dev_workflow_ms", commands);
+  runZl(root, "zl-new-milestone", ["workflow", "run", "--target", root, "new-milestone", "CR-017 proxy approval limit"], "zl_dev_workflow_ms", commands);
+  runZl(root, "zl-spec-phase", ["workflow", "run", "--target", root, "spec-phase", "CR-017 proxy approval limit"], "zl_dev_workflow_ms", commands);
+  runZl(root, "zl-plan-phase", ["workflow", "run", "--target", root, "plan-phase", "CR-017 proxy approval limit"], "zl_dev_workflow_ms", commands);
   applyBenchmarkCodeChange(root);
   const test = runTimed(`npm-test-${scenario}-${withIntelligence ? "full" : "lite"}`, "npm", ["test"], { cwd: root, timeout: 240000 });
-  commands.push({ ...test, bucket: "pik_dev_workflow_ms" });
+  commands.push({ ...test, bucket: "zl_dev_workflow_ms" });
   if (!withIntelligence) {
-    runPik(root, "pik-graph-build-run-lite-after-change", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
+    runZl(root, "zl-graph-build-run-lite-after-change", ["graph", "build", "--target", root, "--run"], "zl_graphify_ms", commands);
   } else {
-    runPik(root, "pik-graph-build-run-full-after-change", ["graph", "build", "--target", root, "--run"], "pik_graphify_ms", commands);
+    runZl(root, "zl-graph-build-run-full-after-change", ["graph", "build", "--target", root, "--run"], "zl_graphify_ms", commands);
   }
   completeWorkflow(root, commands);
   if (withIntelligence) {
-    runPik(root, "pik-cockpit-build", ["cockpit", "build", "--target", root], "pik_cockpit_ms", commands);
+    runZl(root, "zl-cockpit-build", ["cockpit", "build", "--target", root], "zl_cockpit_ms", commands);
   }
   const buckets = {};
   for (const command of commands) buckets[command.bucket] = (buckets[command.bucket] || 0) + command.duration_ms;
-  buckets.pik_intelligence_layer_ms = (buckets.pik_graphify_ms || 0) + (buckets.pik_graphrag_ms || 0);
-  buckets.pik_total_ms = commands.reduce((sum, item) => sum + item.duration_ms, 0);
+  buckets.zl_intelligence_layer_ms = (buckets.zl_graphify_ms || 0) + (buckets.zl_graphrag_ms || 0);
+  buckets.zl_total_ms = commands.reduce((sum, item) => sum + item.duration_ms, 0);
   const completionOk = commands.some((item) => /completion allowed/.test(`${item.stdout_sample}\n${item.stderr_sample}`));
   const testOk = test.status === 0;
   const evidenceOk = fs.existsSync(path.join(root, ".planning", "evidence", "INDEX.md"));
@@ -1531,13 +1531,13 @@ function benchmarkPikScenario(root, scenario, withIntelligence) {
   if (withIntelligence && scenario === "docs-missing" && testOk && !completionOk) status = "EXPECTED_BLOCK";
   const score = (testOk ? 25 : 0) + (completionOk ? 25 : 0) + (evidenceOk ? 20 : 0) + (withIntelligence ? 20 : 8) + (memoryIsolation === "PASS" ? 10 : 0);
   return {
-    tool: "AI-PIKit",
+    tool: "Zhulong",
     mode: withIntelligence ? "full-local-graphify-graphrag" : "graph-lite-dev-loop",
     scenario,
     status,
     score,
     grade: grade(score),
-    time_ms: buckets.pik_total_ms,
+    time_ms: buckets.zl_total_ms,
     buckets,
     token_usage: { status: "TOKEN_USAGE_UNAVAILABLE", reason: "deterministic shell benchmark, no AI subprocess" },
     memory_isolation: memoryIsolation,
@@ -1744,8 +1744,8 @@ function benchmarkFrameworkReplay(root, framework, scenario, pack) {
     limitations: [
       `${framework} was replayed from its local skill/plugin instructions; this is not a live model quality benchmark.`,
       `Score capped at ${confidenceCap} because this mode is not a repository-local executable CLI benchmark.`,
-      pack.capabilities?.repository_cli ? "" : `${framework} has no repository-local AI-PIKit-style CLI in this fixture.`,
-      pack.capabilities?.local_rag ? "" : `${framework} does not provide AI-PIKit local GraphRAG default mode in this replay.`,
+      pack.capabilities?.repository_cli ? "" : `${framework} has no repository-local Zhulong-style CLI in this fixture.`,
+      pack.capabilities?.local_rag ? "" : `${framework} does not provide Zhulong local GraphRAG default mode in this replay.`,
     ].filter(Boolean),
     commands,
   };
@@ -1814,8 +1814,8 @@ function extractCodexFailure(jsonl, stderr, fallback) {
 }
 
 function maybeRunRealCodexBenchmark(root, toolName, instructionBundle) {
-  if (process.env.AI_PIKIT_AUDIT_REAL_AI !== "1") {
-    return { status: "SKIPPED", reason: "set AI_PIKIT_AUDIT_REAL_AI=1 to run real Codex subprocess benchmark" };
+  if (process.env.ZHULONG_AUDIT_REAL_AI !== "1") {
+    return { status: "SKIPPED", reason: "set ZHULONG_AUDIT_REAL_AI=1 to run real Codex subprocess benchmark" };
   }
   createBenchmarkFixture(root, "docs-complete");
   const outputFile = path.join(root, "codex-final-message.md");
@@ -1840,18 +1840,18 @@ function maybeRunRealCodexBenchmark(root, toolName, instructionBundle) {
     "-c",
     "approval_policy=\"never\"",
   ];
-  if (process.env.AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG === "1") args.push("--ignore-user-config");
-  if (process.env.AI_PIKIT_AUDIT_CODEX_SERVICE_TIER) args.push("-c", `service_tier="${process.env.AI_PIKIT_AUDIT_CODEX_SERVICE_TIER}"`);
-  if (process.env.AI_PIKIT_AUDIT_CODEX_MODEL_PROVIDER) args.push("-c", `model_provider="${process.env.AI_PIKIT_AUDIT_CODEX_MODEL_PROVIDER}"`);
-  if (process.env.AI_PIKIT_AUDIT_CODEX_OSS === "1") args.push("--oss");
-  if (process.env.AI_PIKIT_AUDIT_CODEX_LOCAL_PROVIDER) args.push("--local-provider", process.env.AI_PIKIT_AUDIT_CODEX_LOCAL_PROVIDER);
-  if (process.env.AI_PIKIT_AUDIT_CODEX_MODEL) args.push("-m", process.env.AI_PIKIT_AUDIT_CODEX_MODEL);
+  if (process.env.ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG === "1") args.push("--ignore-user-config");
+  if (process.env.ZHULONG_AUDIT_CODEX_SERVICE_TIER) args.push("-c", `service_tier="${process.env.ZHULONG_AUDIT_CODEX_SERVICE_TIER}"`);
+  if (process.env.ZHULONG_AUDIT_CODEX_MODEL_PROVIDER) args.push("-c", `model_provider="${process.env.ZHULONG_AUDIT_CODEX_MODEL_PROVIDER}"`);
+  if (process.env.ZHULONG_AUDIT_CODEX_OSS === "1") args.push("--oss");
+  if (process.env.ZHULONG_AUDIT_CODEX_LOCAL_PROVIDER) args.push("--local-provider", process.env.ZHULONG_AUDIT_CODEX_LOCAL_PROVIDER);
+  if (process.env.ZHULONG_AUDIT_CODEX_MODEL) args.push("-m", process.env.ZHULONG_AUDIT_CODEX_MODEL);
   args.push(
     "-C",
     root,
     prompt,
   );
-  const timeout = Number(process.env.AI_PIKIT_AUDIT_CODEX_TIMEOUT_MS || 180000);
+  const timeout = Number(process.env.ZHULONG_AUDIT_CODEX_TIMEOUT_MS || 180000);
   const result = runTimed(`real-codex-${safeName(toolName)}`, "codex", args, { cwd: root, timeout });
   const jsonlPath = path.join(root, "codex-events.jsonl");
   const stdoutPath = path.join(rawDir, `${safeName(`real-codex-${safeName(toolName)}`)}.stdout.txt`);
@@ -1867,31 +1867,31 @@ function maybeRunRealCodexBenchmark(root, toolName, instructionBundle) {
     event_log: jsonlPath,
     stderr_log: stderrPath,
     failure_summary: result.status === 0 ? "" : extractCodexFailure(jsonl, stderr, result.error || result.stderr_sample || result.stdout_sample),
-    memory_flags: ["--ephemeral", "--ignore-rules", process.env.AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG === "1" ? "--ignore-user-config" : "user-config-loaded-for-provider"],
+    memory_flags: ["--ephemeral", "--ignore-rules", process.env.ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG === "1" ? "--ignore-user-config" : "user-config-loaded-for-provider"],
   };
 }
 
 function buildBenchmarkConclusions(data) {
   const byTool = Object.fromEntries((data.by_tool || []).map((item) => [item.tool, item]));
-  const aipikit = byTool["AI-PIKit"];
+  const zhulong = byTool["Zhulong"];
   const gsd = byTool.GSD;
   const sp = byTool.Superpowers;
   const conclusions = [];
-  if (aipikit) {
-    conclusions.push(`AI-PIKit 当前优势是本地可执行面最完整：\`pik-*\` CLI、runtime skills、\`.planning/\` evidence、Graphify/RAG 耗时拆分和 local-only guard 都能在同一 fixture 中落地。平均分 ${aipikit.average_score}/${aipikit.grade}。`);
-    conclusions.push("AI-PIKit 当前弱点是 full-local 路径比 graph-lite 更重，命令面也明显更大；日常开发需要继续靠 profile/policy 控制何时刷新 Graphify/RAG。");
+  if (zhulong) {
+    conclusions.push(`Zhulong 当前优势是本地可执行面最完整：\`zl-*\` CLI、runtime skills、\`.planning/\` evidence、Graphify/RAG 耗时拆分和 local-only guard 都能在同一 fixture 中落地。平均分 ${zhulong.average_score}/${zhulong.grade}。`);
+    conclusions.push("Zhulong 当前弱点是 full-local 路径比 graph-lite 更重，命令面也明显更大；日常开发需要继续靠 profile/policy 控制何时刷新 Graphify/RAG。");
   }
   if (gsd) {
     conclusions.push(`GSD 的优势是 workflow 设计成熟，plan/execute/verify、UAT、subagent 编排和文档流程经验很强；本轮 replay 平均分 ${gsd.average_score}/${gsd.grade}。`);
-  conclusions.push("GSD 的短板是它不是当前项目的 repository-local AI-PIKit CLI，Codex typed-agent 能力和本地 RAG/Graphify/policy 默认融合都不是它的原生闭环。");
+  conclusions.push("GSD 的短板是它不是当前项目的 repository-local Zhulong CLI，Codex typed-agent 能力和本地 RAG/Graphify/policy 默认融合都不是它的原生闭环。");
   }
   if (sp) {
     conclusions.push(`Superpowers 的优势是轻量、通用、TDD 和 verification-before-completion 思路清晰；本轮 replay 平均分 ${sp.average_score}/${sp.grade}。`);
     conclusions.push("Superpowers 的短板是缺少面向文档密集型开发的项目知识层、代码影响图、citation/evidence/policy 本地闭环；更像开发纪律增强包，不是项目 intelligence layer。");
   }
-  const realStatuses = (data.real_ai || []).map((item, index) => `${["AI-PIKit", "GSD", "Superpowers"][index]}=${item.status}`).join(", ");
+  const realStatuses = (data.real_ai || []).map((item, index) => `${["Zhulong", "GSD", "Superpowers"][index]}=${item.status}`).join(", ");
   conclusions.push(`真实 agent subprocess 状态单独统计为：${realStatuses || "not run"}。它不成功时不能证明模型执行质量，只能证明当前环境的 live-agent benchmark 条件不足。`);
-  conclusions.push("因此本轮可信结论是：AI-PIKit 在“本地项目知识中枢 + 工作流 + evidence/policy + Graphify/RAG 集成”上领先；GSD 在 workflow 设计参考价值上更成熟；Superpowers 在轻量开发纪律上更简洁。");
+  conclusions.push("因此本轮可信结论是：Zhulong 在“本地项目知识中枢 + 工作流 + evidence/policy + Graphify/RAG 集成”上领先；GSD 在 workflow 设计参考价值上更成熟；Superpowers 在轻量开发纪律上更简洁。");
   return conclusions;
 }
 
@@ -1903,14 +1903,14 @@ function auditBenchmark() {
   const superpowersPack = superpowersInstructionPack(superpowersClone.root);
   const comparison = [];
   for (const scenario of ["docs-complete", "docs-missing", "docs-partial"]) {
-    comparison.push(benchmarkPikScenario(path.join(benchmarkDir, scenario, "aipikit-lite"), scenario, false));
-    comparison.push(benchmarkPikScenario(path.join(benchmarkDir, scenario, "aipikit-full"), scenario, true));
+    comparison.push(benchmarkZlScenario(path.join(benchmarkDir, scenario, "zhulong-lite"), scenario, false));
+    comparison.push(benchmarkZlScenario(path.join(benchmarkDir, scenario, "zhulong-full"), scenario, true));
     comparison.push(benchmarkFrameworkReplay(path.join(benchmarkDir, scenario, "gsd"), "GSD", scenario, gsdPack));
     comparison.push(benchmarkFrameworkReplay(path.join(benchmarkDir, scenario, "superpowers"), "Superpowers", scenario, superpowersPack));
   }
   const realAi = [
-    maybeRunRealCodexBenchmark(path.join(benchmarkDir, "real-ai", "aipikit"), "AI-PIKit", [
-      "Use AI-PIKit semantics and the repository-local pik CLI where useful.",
+    maybeRunRealCodexBenchmark(path.join(benchmarkDir, "real-ai", "zhulong"), "Zhulong", [
+      "Use Zhulong semantics and the repository-local zl CLI where useful.",
       "Required properties: local-only, no hidden heavy refresh, evidence writeback, workflow artifacts, Graphify/RAG awareness.",
     ].join("\n")),
     maybeRunRealCodexBenchmark(path.join(benchmarkDir, "real-ai", "gsd"), "GSD", [
@@ -1937,14 +1937,14 @@ function auditBenchmark() {
     scenario: item.scenario,
     token_usage: item.token_usage,
   })).concat(realAi.map((item, index) => ({
-    tool: ["AI-PIKit-real-codex", "GSD-real-codex", "Superpowers-real-codex"][index],
+    tool: ["Zhulong-real-codex", "GSD-real-codex", "Superpowers-real-codex"][index],
     mode: "real-codex-subprocess",
     scenario: "docs-complete",
     token_usage: item.token_usage || { status: item.status, reason: item.reason },
   })));
   const best = [...comparison].sort((a, b) => b.score - a.score)[0];
   const skillDelta = ["docs-complete", "docs-missing", "docs-partial"].map((scenario) => {
-    const withSkillRows = comparison.filter((item) => item.tool === "AI-PIKit" && item.scenario === scenario);
+    const withSkillRows = comparison.filter((item) => item.tool === "Zhulong" && item.scenario === scenario);
     const withSkillPassRate = Math.round(withSkillRows.filter((item) => item.status !== "FAIL").length * 100 / Math.max(1, withSkillRows.length));
     const withSkillAverage = Math.round(withSkillRows.reduce((sum, item) => sum + item.score, 0) / Math.max(1, withSkillRows.length));
     const withoutSkillPassRate = 0;
@@ -1957,7 +1957,7 @@ function auditBenchmark() {
       without_skill_score: withoutSkillAverage,
       with_skill_score: withSkillAverage,
       score_delta: withSkillAverage - withoutSkillAverage,
-      rationale: "Bare fixture has failing test and no AI-PIKit workflow/evidence/knowledge loop; AI-PIKit replay applies the change and records guard/evidence outcomes.",
+      rationale: "Bare fixture has failing test and no Zhulong workflow/evidence/knowledge loop; Zhulong replay applies the change and records guard/evidence outcomes.",
     };
   });
   const data = {
@@ -1988,7 +1988,7 @@ function auditBenchmark() {
     token_usage: tokenUsage,
     memory_isolation: comparison.every((item) => item.memory_isolation === "PASS") ? "PASS" : "FAIL",
   };
-  const byTool = ["AI-PIKit", "GSD", "Superpowers"].map((tool) => {
+  const byTool = ["Zhulong", "GSD", "Superpowers"].map((tool) => {
     const rows = comparison.filter((item) => item.tool === tool);
     const avg = Math.round(rows.reduce((sum, item) => sum + item.score, 0) / Math.max(1, rows.length));
     const totalMs = rows.reduce((sum, item) => sum + item.time_ms, 0);
@@ -2007,7 +2007,7 @@ function auditBenchmark() {
   data.by_tool = byTool;
   data.conclusions = buildBenchmarkConclusions(data);
   const realRows = realAi.map((item, index) => {
-    const tool = ["AI-PIKit", "GSD", "Superpowers"][index];
+    const tool = ["Zhulong", "GSD", "Superpowers"][index];
     return [
       tool,
       item.status,
@@ -2063,26 +2063,26 @@ ${markdownTable(["场景", "without_skill pass", "with_skill pass", "pass delta"
 
 ${markdownTable(["工具", "状态", "耗时", "Token", "原因 / 摘要"], realRows)}
 
-## AI-PIKit 时间拆分
+## Zhulong 时间拆分
 
-${markdownTable(["场景", "模式", "setup", "dev workflow", "Graphify", "GraphRAG/RAG", "intelligence layer", "guard", "cockpit", "total"], comparison.filter((item) => item.tool === "AI-PIKit").map((item) => [
+${markdownTable(["场景", "模式", "setup", "dev workflow", "Graphify", "GraphRAG/RAG", "intelligence layer", "guard", "cockpit", "total"], comparison.filter((item) => item.tool === "Zhulong").map((item) => [
     item.scenario,
     item.mode,
-    item.buckets.pik_setup_ms || 0,
-    item.buckets.pik_dev_workflow_ms || 0,
-    item.buckets.pik_graphify_ms || 0,
-    item.buckets.pik_graphrag_ms || 0,
-    item.buckets.pik_intelligence_layer_ms || 0,
-    item.buckets.pik_guard_ms || 0,
-    item.buckets.pik_cockpit_ms || 0,
-    item.buckets.pik_total_ms || item.time_ms,
+    item.buckets.zl_setup_ms || 0,
+    item.buckets.zl_dev_workflow_ms || 0,
+    item.buckets.zl_graphify_ms || 0,
+    item.buckets.zl_graphrag_ms || 0,
+    item.buckets.zl_intelligence_layer_ms || 0,
+    item.buckets.zl_guard_ms || 0,
+    item.buckets.zl_cockpit_ms || 0,
+    item.buckets.zl_total_ms || item.time_ms,
   ]))}
 
 ## 解释
 
-- AI-PIKit full-local 模式会显式计入 Graphify 和 GraphRAG/RAG 耗时。
-- AI-PIKit graph-lite 模式证明无文档/轻量场景可以先跑开发闭环，但 evidence 必须记录风险。
-- GSD / Superpowers 本轮使用本机真实 skill/plugin 文件做 \`skill-pack-backed-replay\`：报告记录 skill hash、指令摘录、fixture、代码改修、测试、证据文件。它不是 live model 能力评分，也不会假装它们拥有 AI-PIKit 的 repository-local \`pik-*\` CLI。
+- Zhulong full-local 模式会显式计入 Graphify 和 GraphRAG/RAG 耗时。
+- Zhulong graph-lite 模式证明无文档/轻量场景可以先跑开发闭环，但 evidence 必须记录风险。
+- GSD / Superpowers 本轮使用本机真实 skill/plugin 文件做 \`skill-pack-backed-replay\`：报告记录 skill hash、指令摘录、fixture、代码改修、测试、证据文件。它不是 live model 能力评分，也不会假装它们拥有 Zhulong 的 repository-local \`zl-*\` CLI。
 - Real agent attempts 单独列出。当前环境如果没有可用 Codex 模型/provider，会明确 FAIL/SKIPPED，不混入 replay 分数。
 - Token 只有真实 Codex subprocess 暴露 usage 事件时才统计；否则标为 \`TOKEN_USAGE_UNAVAILABLE\`。
 
@@ -2233,7 +2233,7 @@ ${markdownTable(["方法论 / 来源", "采用方式"], data.methodology_sources
 `;
   writeReportPair("QUALITY_CONTROL_SCORECARD", data, md);
   const htmlRows = dimensions.map((item) => `<tr><td>${item.label}</td><td>${item.weight}%</td><td>${item.score}</td></tr>`).join("");
-  writeText(path.join(reportsDir, "QUALITY_CONTROL_SCORECARD.html"), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>AI-PIKit Quality Control Scorecard</title><style>body{font-family:Inter,system-ui,sans-serif;margin:40px;background:#09100f;color:#ecf8f3}table{border-collapse:collapse;width:100%;margin-top:20px}td,th{border:1px solid #24443b;padding:10px;text-align:left}.score{font-size:64px;font-weight:800;color:#4fd18b}.card{border:1px solid #24443b;border-radius:8px;padding:20px;background:#111d1a}</style><body><h1>AI-PIKit Quality Control</h1><div class="card"><div class="score">${data.total_score}</div><p>Grade ${data.grade} / ${data.release_decision}</p></div><table><tr><th>Dimension</th><th>Weight</th><th>Score</th></tr>${htmlRows}</table></body></html>`);
+  writeText(path.join(reportsDir, "QUALITY_CONTROL_SCORECARD.html"), `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Zhulong Quality Control Scorecard</title><style>body{font-family:Inter,system-ui,sans-serif;margin:40px;background:#09100f;color:#ecf8f3}table{border-collapse:collapse;width:100%;margin-top:20px}td,th{border:1px solid #24443b;padding:10px;text-align:left}.score{font-size:64px;font-weight:800;color:#4fd18b}.card{border:1px solid #24443b;border-radius:8px;padding:20px;background:#111d1a}</style><body><h1>Zhulong Quality Control</h1><div class="card"><div class="score">${data.total_score}</div><p>Grade ${data.grade} / ${data.release_decision}</p></div><table><tr><th>Dimension</th><th>Weight</th><th>Score</th></tr>${htmlRows}</table></body></html>`);
   return data;
 }
 
@@ -2272,7 +2272,7 @@ function buildAuditReport(parts) {
     ? parts.benchmark.skill_delta.map((item) => `${item.scenario}: pass +${item.pass_rate_delta}pp, score +${item.score_delta}`).join("; ")
     : "not generated";
   const findings = [
-    `本轮命令面覆盖 ${parts.inventory.command_count} 个 \`pik\` / \`pik-*\` bin，命令平均分 ${scorecard.command_score}。`,
+    `本轮命令面覆盖 ${parts.inventory.command_count} 个 \`zl\` / \`zl-*\` bin，命令平均分 ${scorecard.command_score}。`,
     `Runtime pack 覆盖 ${parts.inventory.runtime_item_count} 个 Codex / Claude Code / GitHub Copilot skill/prompt，平均分 ${scorecard.skill_score}。`,
     `Skill behavior 契约分 ${scorecard.skill_behavior_score}，用于补足静态 skill 分无法证明真实触发和行为的问题。`,
     `功能 gate 加权分 ${scorecard.feature_score}，用于证明 workflow、policy、RAG、Graphify、cockpit 和 docs completeness 的闭环。`,
@@ -2281,8 +2281,8 @@ function buildAuditReport(parts) {
     `SkillsBench-style with/without skill delta: ${skillDeltaText}。`,
     `Security governance 状态 ${parts.securityGovernance?.status || "UNKNOWN"}，默认 local-only，外部 RAG 需要显式 opt-in。`,
     `长期质量控制总分 ${qualityControl.total_score}/${qualityControl.grade}，发布判断 ${qualityControl.release_decision}。`,
-    `Benchmark comparison ${scorecard.benchmark_score} 是所有对标行的保守平均分，不是 AI-PIKit 单体分；AI-PIKit 单体平均见三方横向总览。`,
-    `AI-PIKit full-local benchmark 已把 Graphify 与 GraphRAG/RAG 耗时拆开；graph-lite benchmark 用于低成本开发循环。`,
+    `Benchmark comparison ${scorecard.benchmark_score} 是所有对标行的保守平均分，不是 Zhulong 单体分；Zhulong 单体平均见三方横向总览。`,
+    `Zhulong full-local benchmark 已把 Graphify 与 GraphRAG/RAG 耗时拆开；graph-lite benchmark 用于低成本开发循环。`,
     `GSD 与 Superpowers 本轮使用本机真实 skill/plugin 文件做 skill-pack-backed replay；real agent subprocess 另行记录，不混入 replay 分数。`,
     ...(parts.benchmark?.conclusions || []),
   ];
@@ -2319,13 +2319,13 @@ function buildAuditReport(parts) {
     `${item.total_time_ms} ms`,
   ]);
   const realRows = (parts.benchmark?.real_ai || []).map((item, index) => [
-    ["AI-PIKit", "GSD", "Superpowers"][index] || `tool-${index}`,
+    ["Zhulong", "GSD", "Superpowers"][index] || `tool-${index}`,
     item.status,
     item.command ? `${item.command.duration_ms} ms` : "-",
     item.token_usage?.total_tokens ?? item.token_usage?.status ?? "-",
     item.reason || item.failure_summary || "-",
   ]);
-  const md = `# AI-PIKit Developer Audit Report
+  const md = `# Zhulong Developer Audit Report
 
 生成时间: ${data.generated}
 
@@ -2335,7 +2335,7 @@ function buildAuditReport(parts) {
 - 状态: ${data.status}
 - 总分: ${scorecard.total_score}
 - 等级: ${scorecard.grade}
-- 原始产物: \`.pik-audit/runs/${runId}/\`
+- 原始产物: \`.zl-audit/runs/${runId}/\`
 
 ${markdownTable(["维度", "分数"], [
     ["Command surface", scorecard.command_score],
@@ -2367,11 +2367,11 @@ ${realRows.length ? markdownTable(["工具", "状态", "耗时", "Token", "原�
 
 ## 边界
 
-- \`.pik-audit/\` 已被 git ignore，原始 transcript、fixture、Superpowers clone 不提交。
+- \`.zl-audit/\` 已被 git ignore，原始 transcript、fixture、Superpowers clone 不提交。
 - 默认 benchmark 是 deterministic，对真实 AI token 不做假统计。
 - Skill behavior 分数是 deterministic 行为契约检查，不调用外部模型。
 - Ragas-style 和 Promptfoo-style 分数是本地代理指标，不调用外部 Ragas/Promptfoo SaaS 或外部模型。
-- 真实 Codex subprocess 只有设置 \`AI_PIKIT_AUDIT_REAL_AI=1\` 才执行，并要求 \`--ephemeral --ignore-rules\`；如需完全不读用户配置，可额外设置 \`AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1\`。
+- 真实 Codex subprocess 只有设置 \`ZHULONG_AUDIT_REAL_AI=1\` 才执行，并要求 \`--ephemeral --ignore-rules\`；如需完全不读用户配置，可额外设置 \`ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG=1\`。
 `;
   writeReportPair("AUDIT_SCORECARD", scorecard, `# Audit Scorecard\n\n${markdownTable(["维度", "分数"], [
     ["total", scorecard.total_score],
@@ -2386,7 +2386,7 @@ ${realRows.length ? markdownTable(["工具", "状态", "耗时", "Token", "原�
     ["quality_control", qualityControl.total_score],
   ])}\n`);
   writeReportPair("AUDIT_REPORT", data, md);
-  const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>AI-PIKit Audit Scorecard</title><style>body{font-family:Inter,system-ui,sans-serif;background:#080b10;color:#e8eef8;margin:40px}table{border-collapse:collapse;width:100%;margin:20px 0}td,th{border:1px solid #263241;padding:10px;text-align:left}.score{font-size:64px;font-weight:800;color:#45d483}.card{border:1px solid #263241;border-radius:8px;padding:20px;background:#111722}</style><body><h1>AI-PIKit Developer Audit</h1><div class="card"><div class="score">${scorecard.total_score}</div><p>Grade ${scorecard.grade} / ${data.status}</p></div><h2>Benchmark</h2>${markdownTable(["Tool","Mode","Scenario","Status","Score","Time"], benchmarkRows).replace(/\| ---.*\n/, "").split("\n").map((line, index) => {
+  const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Zhulong Audit Scorecard</title><style>body{font-family:Inter,system-ui,sans-serif;background:#080b10;color:#e8eef8;margin:40px}table{border-collapse:collapse;width:100%;margin:20px 0}td,th{border:1px solid #263241;padding:10px;text-align:left}.score{font-size:64px;font-weight:800;color:#45d483}.card{border:1px solid #263241;border-radius:8px;padding:20px;background:#111722}</style><body><h1>Zhulong Developer Audit</h1><div class="card"><div class="score">${scorecard.total_score}</div><p>Grade ${scorecard.grade} / ${data.status}</p></div><h2>Benchmark</h2>${markdownTable(["Tool","Mode","Scenario","Status","Score","Time"], benchmarkRows).replace(/\| ---.*\n/, "").split("\n").map((line, index) => {
     const cells = line.split("|").slice(1, -1).map((cell) => cell.trim());
     if (!cells.length) return "";
     const tag = index === 0 ? "th" : "td";
@@ -2400,7 +2400,7 @@ function verifyHarness() {
   ensureDir(reportsDir);
   const issues = [];
   const gitignore = readText(path.join(kitRoot, ".gitignore"));
-  if (!gitignore.split(/\r?\n/).includes(".pik-audit/")) issues.push(".pik-audit/ is not listed in .gitignore");
+  if (!gitignore.split(/\r?\n/).includes(".zl-audit/")) issues.push(".zl-audit/ is not listed in .gitignore");
   const pkg = readPackage();
   for (const script of ["dev:audit:quick", "dev:audit:inventory", "dev:audit:commands", "dev:audit:skills", "dev:audit:skill-behavior", "dev:audit:skill-beavior", "dev:audit:features", "dev:audit:security-governance", "dev:audit:ragas-style", "dev:audit:promptfoo-redteam", "dev:audit:benchmark", "dev:audit:report", "dev:audit:full", "dev:audit:nightly", "verify:dev-audit-harness"]) {
     if (!pkg.scripts?.[script]) issues.push(`missing npm script ${script}`);

@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-privacy-strict-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-privacy-strict-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -42,8 +42,8 @@ function assertFileIncludes(label, filePath, expected) {
   assertIncludes(label, read(filePath), expected);
 }
 
-function pik(args, options = {}) {
-  return runCommand(`pik ${args.join(" ")}`, "node", [pikCli, ...args], {
+function zl(args, options = {}) {
+  return runCommand(`zl ${args.join(" ")}`, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -53,17 +53,17 @@ function pik(args, options = {}) {
 fs.mkdirSync(projectRoot, { recursive: true });
 write(path.join(projectRoot, "src", "index.js"), "export const privacyStrictFixture = true;\n");
 write(path.join(projectRoot, "docs", "spec.md"), "# Privacy Strict\n\nLOCAL_PRIVACY_SENTINEL\n");
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "privacy_strict_fixture", "--mode", "existing", "--force"]);
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "privacy_strict_fixture", "--mode", "existing", "--force"]);
 
-const lock = pik(["privacy", "offline-lock", "--target", projectRoot]);
-assertIncludes("pik privacy offline-lock", lock.output, "privacy audit PASS");
+const lock = zl(["privacy", "offline-lock", "--target", projectRoot]);
+assertIncludes("zl privacy offline-lock", lock.output, "privacy audit PASS");
 assertFileIncludes("OFFLINE_LOCK", path.join(projectRoot, ".planning", "privacy", "OFFLINE_LOCK.md"), "External tools: disabled");
 
-const strictAudit = pik(["privacy", "audit", "--target", projectRoot, "--strict"]);
-assertIncludes("pik privacy audit --strict", strictAudit.output, "privacy audit PASS");
+const strictAudit = zl(["privacy", "audit", "--target", projectRoot, "--strict"]);
+assertIncludes("zl privacy audit --strict", strictAudit.output, "privacy audit PASS");
 
-const outbound = pik(["privacy", "outbound", "--target", projectRoot]);
-assertIncludes("pik privacy outbound", outbound.output, "outbound audit PASS");
+const outbound = zl(["privacy", "outbound", "--target", projectRoot]);
+assertIncludes("zl privacy outbound", outbound.output, "outbound audit PASS");
 assertFileIncludes("OUTBOUND_AUDIT", path.join(projectRoot, ".planning", "privacy", "OUTBOUND_AUDIT.md"), "No default outbound behavior");
 
 const configPath = path.join(projectRoot, ".planning", "config.json");
@@ -78,17 +78,17 @@ config.code_map = {
 };
 write(configPath, `${JSON.stringify(config, null, 2)}\n`);
 
-const unsafeAudit = pik(["privacy", "audit", "--target", projectRoot, "--strict"], { allowFailure: true });
+const unsafeAudit = zl(["privacy", "audit", "--target", projectRoot, "--strict"], { allowFailure: true });
 if (unsafeAudit.status === 0) addIssue("unsafe privacy audit", "expected strict audit to fail for external command");
 assertIncludes("unsafe privacy audit", unsafeAudit.output, "network-capable command");
 assertIncludes("unsafe privacy audit", unsafeAudit.output, "external URL");
 
-const unsafeGraph = pik(["graph", "build", "--target", projectRoot, "--run"], { allowFailure: true });
+const unsafeGraph = zl(["graph", "build", "--target", projectRoot, "--run"], { allowFailure: true });
 if (unsafeGraph.status === 0) addIssue("unsafe graph build", "expected graph build to be blocked before executing external command");
 assertIncludes("unsafe graph build", unsafeGraph.output, "status failed");
 assertFileIncludes("GRAPH_BUILD_RESULT", path.join(projectRoot, ".planning", "graphs", "GRAPH_BUILD_RESULT.md"), "Privacy audit: failed");
 
-const kitOutbound = runCommand("kit outbound audit", "node", [pikCli, "privacy", "outbound", "--target", kitRoot], {
+const kitOutbound = runCommand("kit outbound audit", "node", [zlCli, "privacy", "outbound", "--target", kitRoot], {
   cwd: kitRoot,
   timeout: 120000,
 });
@@ -107,7 +107,7 @@ const data = {
 };
 
 writeJsonReport("privacy-strict-check.json", data);
-writeMarkdownReport("privacy-strict-check.md", "AI-PIKit Privacy Strict / Offline Lock Verification", summarizeIssues(issues), [
+writeMarkdownReport("privacy-strict-check.md", "Zhulong Privacy Strict / Offline Lock Verification", summarizeIssues(issues), [
   { title: "Evidence", body: evidence.length ? evidence.map((item) => `- ${item}`) : ["No evidence recorded."] },
   {
     title: "Fixture Paths",

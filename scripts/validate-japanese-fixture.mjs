@@ -6,9 +6,9 @@ import { fileURLToPath } from "node:url";
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const fixtureRoot = path.join(kitRoot, "examples", "japanese-doc-dev-fixture");
-const workRoot = fs.mkdtempSync(path.join(os.tmpdir(), "pik-ja-fixture-"));
+const workRoot = fs.mkdtempSync(path.join(os.tmpdir(), "zl-ja-fixture-"));
 const projectRoot = path.join(workRoot, "project");
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
 
 function run(label, command, args, cwd, options = {}) {
   const result = spawnSync(command, args, {
@@ -32,8 +32,8 @@ function run(label, command, args, cwd, options = {}) {
   return output;
 }
 
-function pik(label, args, options = {}) {
-  return run(label, "node", [pikCli, ...args], projectRoot, options);
+function zl(label, args, options = {}) {
+  return run(label, "node", [zlCli, ...args], projectRoot, options);
 }
 
 function assertIncludes(label, text, expected) {
@@ -43,7 +43,7 @@ function assertIncludes(label, text, expected) {
 }
 
 function copySeed(relativePath) {
-  const source = path.join(projectRoot, "pik-seed", relativePath);
+  const source = path.join(projectRoot, "zl-seed", relativePath);
   const dest = path.join(projectRoot, ".planning", relativePath);
   fs.cpSync(source, dest, { recursive: true });
 }
@@ -60,27 +60,27 @@ run("CR-017 acceptance fails before implementation", "npm", ["run", "test:task"]
   expectFailure: true,
 });
 
-pik("pik init", ["init", "--target", projectRoot, "--template", "backend-service", "--name", "ja_approval_fixture", "--force"]);
+zl("zl init", ["init", "--target", projectRoot, "--template", "backend-service", "--name", "ja_approval_fixture", "--force"]);
 fs.copyFileSync(
-  path.join(projectRoot, "pik.fixture.config.json"),
+  path.join(projectRoot, "zl.fixture.config.json"),
   path.join(projectRoot, ".planning", "config.json"),
 );
 copySeed("issues");
 copySeed(path.join("phases", "admin-approval"));
 
-pik("pik verify", ["verify", "--target", projectRoot]);
-pik("pik docs scan", ["docs", "scan", "--target", projectRoot]);
-pik("pik docs normalize", ["docs", "normalize", "--target", projectRoot]);
-pik("pik docs index direct", ["docs", "index", "--target", projectRoot, "--run"]);
+zl("zl verify", ["verify", "--target", projectRoot]);
+zl("zl docs scan", ["docs", "scan", "--target", projectRoot]);
+zl("zl docs normalize", ["docs", "normalize", "--target", projectRoot]);
+zl("zl docs index direct", ["docs", "index", "--target", projectRoot, "--run"]);
 
-const localQuery = pik("pik docs local query", ["docs", "query", "--target", projectRoot, "代理承認 30,000"]);
+const localQuery = zl("zl docs local query", ["docs", "query", "--target", projectRoot, "代理承認 30,000"]);
 assertIncludes("local document query", localQuery, "QA-042");
 
-const ragQuery = pik("pik docs RAG query", ["docs", "query", "--target", projectRoot, "--rag", "代理承認の上限金額"]);
+const ragQuery = zl("zl docs RAG query", ["docs", "query", "--target", projectRoot, "--rag", "代理承認の上限金額"]);
 assertIncludes("fixture RAG query", ragQuery, "30,000");
 
-pik("pik graph build direct", ["graph", "build", "--target", projectRoot, "--run"]);
-const graphQuery = pik("pik graph query", ["graph", "query", "--target", projectRoot, "PROXY_APPROVAL_LIMIT"]);
+zl("zl graph build direct", ["graph", "build", "--target", projectRoot, "--run"]);
+const graphQuery = zl("zl graph query", ["graph", "query", "--target", projectRoot, "PROXY_APPROVAL_LIMIT"]);
 assertIncludes("graph query before change", graphQuery, "50000");
 
 const policyPath = path.join(projectRoot, "src", "approvalPolicy.js");
@@ -93,11 +93,11 @@ fs.writeFileSync(policyPath, before.replace("PROXY_APPROVAL_LIMIT = 50000", "PRO
 run("CR-017 acceptance passes after implementation", "npm", ["run", "test:task"], projectRoot);
 run("fixture default tests after implementation", "npm", ["test"], projectRoot);
 
-pik("pik graph rebuild direct", ["graph", "build", "--target", projectRoot, "--run"]);
-const graphDiff = pik("pik graph diff", ["graph", "diff", "--target", projectRoot, "--details"]);
+zl("zl graph rebuild direct", ["graph", "build", "--target", projectRoot, "--run"]);
+const graphDiff = zl("zl graph diff", ["graph", "diff", "--target", projectRoot, "--details"]);
 assertIncludes("graph diff after change", graphDiff, "30000");
 
-pik("pik evidence record writeback", [
+zl("zl evidence record writeback", [
   "evidence",
   "record",
   "--target",
@@ -114,7 +114,7 @@ pik("pik evidence record writeback", [
 ]);
 
 const issueText = fs.readFileSync(path.join(projectRoot, ".planning", "issues", "CR-017_proxy_approval_limit.md"), "utf8");
-assertIncludes("issue evidence writeback", issueText, "AI-PIKit Evidence Writeback");
-pik("pik evidence status", ["evidence", "status", "--target", projectRoot]);
+assertIncludes("issue evidence writeback", issueText, "Zhulong Evidence Writeback");
+zl("zl evidence status", ["evidence", "status", "--target", projectRoot]);
 
 console.log(`validated ${projectRoot}`);

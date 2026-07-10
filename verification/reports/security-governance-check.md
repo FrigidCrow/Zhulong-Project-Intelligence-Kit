@@ -1,6 +1,6 @@
-# AI-PIKit Security Governance Verification
+# Zhulong Security Governance Verification
 
-生成时间: 2026-06-28T15:46:27.197Z
+生成时间: 2026-07-10T00:46:14.610Z
 
 ## 摘要
 
@@ -12,7 +12,7 @@
 - 默认 `privacy.network_policy = local_only`。
 - 默认 `privacy.allow_external_rag = false`。
 - 外部 RAG 必须显式 `--allow-external-rag`，并生成风险报告。
-- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 AI-PIKit 命令默认本地边界。
+- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 Zhulong 命令默认本地边界。
 
 ## 外部机制映射
 
@@ -45,4 +45,4 @@ No security governance issues found.
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-security-governance.mjs'`
+- `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-security-governance.mjs'`

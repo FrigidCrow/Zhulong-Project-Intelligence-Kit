@@ -1,12 +1,14 @@
 # Field Notes
 
 This directory stores original working notes and lessons learned that shaped
-AI Project Intelligence Kit.
+Zhulong Project Intelligence Kit.
 
-Field notes may contain real project names, concrete workflows, and historical
-context. Treat them as internal references. Before publishing the kit publicly,
-review this directory for project-specific details and sanitize or distill them
-into generic docs.
+Field notes preserve concrete workflows and historical context, but published
+examples are provider-agnostic and synthetic. IDs, amounts, Japanese
+requirements, QA records, and project paths refer to the
+`examples/japanese-doc-dev-fixture/` test fixture, not a real customer. Review
+this directory again before any public release and keep external providers as
+generic `<external-provider>` placeholders.
 
 ## Included Notes
 

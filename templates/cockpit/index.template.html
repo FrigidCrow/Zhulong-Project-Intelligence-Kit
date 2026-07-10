@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI-PIKit Project Cockpit</title>
+  <title>Zhulong Project Cockpit</title>
   <style>
     :root {
       color-scheme: dark;
@@ -505,8 +505,8 @@
   <main>
     <header>
       <div>
-        <div class="eyebrow">AI Project Intelligence Kit / Project Cockpit</div>
-        <h1>AI-PIKit 项目驾驶舱</h1>
+        <div class="eyebrow">Zhulong Project Intelligence Kit / Project Cockpit</div>
+        <h1>Zhulong 项目驾驶舱</h1>
         <p class="subhead" id="cockpit-subhead"></p>
         <span class="mode-badge" id="template-mode"></span>
       </div>
@@ -514,6 +514,11 @@
     </header>
 
     <div class="summary-grid" id="summary-grid"></div>
+
+    <section>
+      <h2>Quality &amp; Token Metrics</h2>
+      <div class="summary-grid" id="quality-metrics-grid"></div>
+    </section>
 
     <section>
       <h2>Leader View</h2>
@@ -603,7 +608,7 @@
     </p>
   </main>
 
-  <script id="cockpit-data" type="application/json">__AI_PIKIT_COCKPIT_DATA__</script>
+  <script id="cockpit-data" type="application/json">__ZHULONG_COCKPIT_DATA__</script>
   <script>
     const data = JSON.parse(document.getElementById("cockpit-data").textContent);
     const vm = data.viewModel || createLegacyViewModel(data);
@@ -688,7 +693,7 @@
         return `<div class="empty-graph">
           <div>
             <strong>Graphify graph.json missing.</strong><br>
-            <span>Run <code>pik-graph-build --target "$PWD" --run</code> when a fresh map is needed.</span>
+            <span>Run <code>zl-graph-build --target "$PWD" --run</code> when a fresh map is needed.</span>
           </div>
         </div>`;
       }
@@ -765,11 +770,11 @@
 
     function defaultNextCommands() {
       const commands = [];
-      if (!data.graphify?.preview?.available) commands.push('pik-graph-build --target "$PWD" --run');
-      if (data.graphify?.status === "STALE_NEEDS_REFRESH") commands.push('pik-refresh-plan --target "$PWD" && pik-refresh-run --target "$PWD" --graph');
-      if (data.rag?.status !== "PASS") commands.push('pik-docs-sync --target "$PWD"');
-      if (!data.rag?.artifacts?.answerAudit?.exists) commands.push('pik-answer-audit --target "$PWD"');
-      if (!data.privacy?.artifacts?.offlineLock?.exists) commands.push('pik-offline-lock --target "$PWD"');
+      if (!data.graphify?.preview?.available) commands.push('zl-graph-build --target "$PWD" --run');
+      if (data.graphify?.status === "STALE_NEEDS_REFRESH") commands.push('zl-refresh-plan --target "$PWD" && zl-refresh-run --target "$PWD" --graph');
+      if (data.rag?.status !== "PASS") commands.push('zl-docs-sync --target "$PWD"');
+      if (!data.rag?.artifacts?.answerAudit?.exists) commands.push('zl-answer-audit --target "$PWD"');
+      if (!data.privacy?.artifacts?.offlineLock?.exists) commands.push('zl-offline-lock --target "$PWD"');
       return commands.length ? commands : ["# No recovery command required."];
     }
 
@@ -892,6 +897,7 @@
       byId("build-status").className = `status ${status}`;
       byId("build-status").textContent = `cockpit build ${status}`;
       byId("summary-grid").innerHTML = (vm.summary || []).map((item) => renderMetric(item.label, item.status, item.detail)).join("");
+      byId("quality-metrics-grid").innerHTML = (vm.qualityMetrics || []).map((item) => renderMetric(item.label, item.value, item.detail)).join("") || '<p class="muted">No quality metrics available.</p>';
       byId("graphify-links").innerHTML = renderGraphLinks();
       byId("issue-list").innerHTML = renderIssues();
       byId("evidence-chain").innerHTML = renderEvidenceChain();

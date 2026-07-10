@@ -68,7 +68,7 @@ const data = {
 };
 
 writeJsonReport(`${base}.json`, data);
-writeMarkdownReport(`${base}.md`, `AI-PIKit 全量测试计划 ${runId}`, summarizeIssues(issues), [
+writeMarkdownReport(`${base}.md`, `Zhulong 全量测试计划 ${runId}`, summarizeIssues(issues), [
   {
     title: "测试计划",
     body: [

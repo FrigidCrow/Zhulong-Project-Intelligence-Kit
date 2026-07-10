@@ -1,6 +1,6 @@
-# AI-PIKit MVP3 证据质量与策略模式验证
+# Zhulong MVP3 证据质量与策略模式验证
 
-生成时间: 2026-06-28T13:57:36.129Z
+生成时间: 2026-07-10T00:45:37.016Z
 
 ## 摘要
 
@@ -9,23 +9,23 @@
 
 ## 证据
 
-- pik docs index --run: found status success
-- pik graph build --run: found status success
-- pik docs citations: found MVP3_SENTINEL_3301
-- pik citation audit: found citation audit PASS
-- pik rag golden-add: found golden
-- pik rag golden-run: found rag golden run PASS
-- pik rag eval: found rag eval PASS
-- pik evidence record: found write
-- pik trace build: found trace rows
-- pik trace query: found Trace query
-- pik trace audit: found trace audit PASS
-- pik offline-lock: found privacy audit PASS
-- pik policy list: found privacy.local_only
-- pik policy explain: found trace.matrix
-- pik policy check: found policy check PASS
-- pik help skills: found 文档更新
-- pik help skills: found 改修影响面
+- zl docs index --run: found status success
+- zl graph build --run: found status success
+- zl docs citations: found MVP3_SENTINEL_3301
+- zl citation audit: found citation audit PASS
+- zl rag golden-add: found golden
+- zl rag golden-run: found rag golden run PASS
+- zl rag eval: found rag eval PASS
+- zl evidence record: found write
+- zl trace build: found trace rows
+- zl trace query: found Trace query
+- zl trace audit: found trace audit PASS
+- zl offline-lock: found privacy audit PASS
+- zl policy list: found privacy.local_only
+- zl policy explain: found trace.matrix
+- zl policy check: found policy check PASS
+- zl help skills: found 文档更新
+- zl help skills: found 改修影响面
 - HELP_SKILLS: found Recommendations
 - RAG_EVAL: found Status: PASS
 - TRACE_AUDIT: found Status: PASS
@@ -33,9 +33,9 @@
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-2RSRsM`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-mvp3-2RSRsM/project`
-- 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-mvp3-evidence-policy.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp3-Is4B31`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-mvp3-Is4B31/project`
+- 复现命令: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-mvp3-evidence-policy.mjs'`
 
 ## 问题
 

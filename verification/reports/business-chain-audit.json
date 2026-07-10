@@ -1,35 +1,35 @@
 {
-  "generated": "2026-06-28T13:58:59.170Z",
+  "generated": "2026-07-10T00:46:31.118Z",
   "status": "PASS",
   "gates": [
     {
       "id": "init-policy",
       "script": "verify:init-policy",
-      "proves": "pik-init can select reference/strict document policy and none/local/external RAG without hidden refresh.",
+      "proves": "zl-init can select reference/strict document policy and none/local/external RAG without hidden refresh.",
       "report": "verification/reports/init-policy-check.md",
       "status": "PASS",
       "exitCode": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:init-policy\n> node scripts/verify-init-policy.mjs\n\ninit policy check PASS issues=0",
+      "stdout": "> zhulong-kit@0.1.0 verify:init-policy\n> node scripts/verify-init-policy.mjs\n\ninit policy check PASS issues=0",
       "stderr": ""
     },
     {
       "id": "full-command-surface",
       "script": "verify:full-command-surface",
-      "proves": "Every public pik-* bin declared in package.json can execute.",
+      "proves": "Every public zl-* bin declared in package.json can execute.",
       "report": "verification/reports/full-command-surface-check.md",
       "status": "PASS",
       "exitCode": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:full-command-surface\n> node scripts/verify-full-command-surface.mjs\n\nfull command surface check PASS commands=71/71 issues=0",
+      "stdout": "> zhulong-kit@0.1.0 verify:full-command-surface\n> node scripts/verify-full-command-surface.mjs\n\nfull command surface check PASS commands=74/74 issues=0",
       "stderr": ""
     },
     {
       "id": "skills-usability",
       "script": "verify:skills-usability",
-      "proves": "Codex / Claude Code / GitHub Copilot runtime packs point to local pik-* workflow commands.",
+      "proves": "Codex / Claude Code / GitHub Copilot runtime packs point to local zl-* workflow commands.",
       "report": "verification/reports/skills-usability-check.md",
       "status": "PASS",
       "exitCode": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:skills-usability\n> node scripts/verify-skills-usability.mjs\n\nskills usability check PASS rendered=33 issues=0",
+      "stdout": "> zhulong-kit@0.1.0 verify:skills-usability\n> node scripts/verify-skills-usability.mjs\n\nskills usability check PASS rendered=33 issues=0",
       "stderr": ""
     },
     {
@@ -39,7 +39,7 @@
       "report": "verification/reports/workflow-closure-check.md",
       "status": "PASS",
       "exitCode": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:workflow-closure\n> node scripts/verify-workflow-closure.mjs\n\nworkflow closure check PASS issues=0",
+      "stdout": "> zhulong-kit@0.1.0 verify:workflow-closure\n> node scripts/verify-workflow-closure.mjs\n\nworkflow closure check PASS issues=0",
       "stderr": ""
     },
     {
@@ -49,7 +49,7 @@
       "report": "verification/reports/policy-hardening-check.md",
       "status": "PASS",
       "exitCode": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:policy-hardening\n> node scripts/verify-policy-hardening.mjs\n\npolicy hardening check PASS issues=0",
+      "stdout": "> zhulong-kit@0.1.0 verify:policy-hardening\n> node scripts/verify-policy-hardening.mjs\n\npolicy hardening check PASS issues=0",
       "stderr": ""
     },
     {
@@ -59,7 +59,7 @@
       "report": "verification/reports/docs-completeness-check.md",
       "status": "PASS",
       "exitCode": 0,
-      "stdout": "> ai-project-intelligence-kit@0.1.0 verify:docs-completeness\n> node scripts/verify-docs-completeness.mjs\n\ndocs completeness check PASS commands=71 issues=0",
+      "stdout": "> zhulong-kit@0.1.0 verify:docs-completeness\n> node scripts/verify-docs-completeness.mjs\n\ndocs completeness check PASS commands=74 issues=0",
       "stderr": ""
     }
   ],
@@ -91,7 +91,7 @@
         "Codex skills render",
         "Claude Code skills render",
         "GitHub Copilot prompts render",
-        "skills point to local bin/pik.mjs and pik-* examples"
+        "skills point to local bin/zl.mjs and zl-* examples"
       ]
     },
     {

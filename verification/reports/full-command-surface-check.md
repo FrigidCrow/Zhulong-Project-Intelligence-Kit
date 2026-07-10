@@ -1,6 +1,6 @@
-# AI-PIKit 全命令面验证
+# Zhulong 全命令面验证
 
-生成时间: 2026-06-28T15:45:54.089Z
+生成时间: 2026-07-10T00:46:27.445Z
 
 ## 摘要
 
@@ -9,181 +9,188 @@
 
 ## 命令覆盖
 
-- Required commands: 71
-- Executed commands: 71
+- Required commands: 74
+- Executed commands: 74
 
-- PASS `pik`
-- PASS `pik-answer-audit`
-- PASS `pik-citation-audit`
-- PASS `pik-cockpit-build`
-- PASS `pik-code-review`
-- PASS `pik-codebase`
-- PASS `pik-codebase-scan`
-- PASS `pik-codebase-status`
-- PASS `pik-complete-milestone`
-- PASS `pik-completion-check`
-- PASS `pik-context-debug`
-- PASS `pik-context-execute`
-- PASS `pik-debug`
-- PASS `pik-discuss-phase`
-- PASS `pik-docs-citations`
-- PASS `pik-docs-diff`
-- PASS `pik-docs-extract`
-- PASS `pik-docs-index`
-- PASS `pik-docs-normalize`
-- PASS `pik-docs-query`
-- PASS `pik-docs-scan`
-- PASS `pik-docs-status`
-- PASS `pik-docs-sync`
-- PASS `pik-evidence-record`
-- PASS `pik-evidence-status`
-- PASS `pik-execute-phase`
-- PASS `pik-gate-check`
-- PASS `pik-graph-build`
-- PASS `pik-graph-diff`
-- PASS `pik-graph-freshness`
-- PASS `pik-graph-impact`
-- PASS `pik-graph-query`
-- PASS `pik-graph-risk`
-- PASS `pik-graph-status`
-- PASS `pik-help-skills`
-- PASS `pik-init`
-- PASS `pik-license-audit`
-- PASS `pik-map`
-- PASS `pik-mode-set`
-- PASS `pik-mode-status`
-- PASS `pik-new-milestone`
-- PASS `pik-offline-lock`
-- PASS `pik-outbound-audit`
-- PASS `pik-plan-phase`
-- PASS `pik-policy-check`
-- PASS `pik-policy-diff`
-- PASS `pik-policy-explain`
-- PASS `pik-policy-list`
-- PASS `pik-policy-lock`
-- PASS `pik-policy-verify`
-- PASS `pik-preflight`
-- PASS `pik-privacy-audit`
-- PASS `pik-rag-eval`
-- PASS `pik-rag-golden-add`
-- PASS `pik-rag-golden-run`
-- PASS `pik-rag-init-local`
-- PASS `pik-refresh-plan`
-- PASS `pik-refresh-run`
-- PASS `pik-runtime-install`
-- PASS `pik-runtime-status`
-- PASS `pik-spec-phase`
-- PASS `pik-trace-audit`
-- PASS `pik-trace-build`
-- PASS `pik-trace-query`
-- PASS `pik-ui-phase`
-- PASS `pik-verify`
-- PASS `pik-verify-work`
-- PASS `pik-workflow-audit`
-- PASS `pik-workflow-continue`
-- PASS `pik-workflow-run`
-- PASS `pik-workflow-status`
+- PASS `zl`
+- PASS `zl-ambiguity-audit`
+- PASS `zl-answer-audit`
+- PASS `zl-citation-audit`
+- PASS `zl-cockpit-build`
+- PASS `zl-code-review`
+- PASS `zl-codebase`
+- PASS `zl-codebase-scan`
+- PASS `zl-codebase-status`
+- PASS `zl-complete-milestone`
+- PASS `zl-completion-check`
+- PASS `zl-context-debug`
+- PASS `zl-context-execute`
+- PASS `zl-debug`
+- PASS `zl-discuss-phase`
+- PASS `zl-docs-citations`
+- PASS `zl-docs-diff`
+- PASS `zl-docs-extract`
+- PASS `zl-docs-index`
+- PASS `zl-docs-normalize`
+- PASS `zl-docs-query`
+- PASS `zl-docs-scan`
+- PASS `zl-docs-status`
+- PASS `zl-docs-sync`
+- PASS `zl-evidence-record`
+- PASS `zl-evidence-status`
+- PASS `zl-execute-phase`
+- PASS `zl-gate-check`
+- PASS `zl-graph-build`
+- PASS `zl-graph-diff`
+- PASS `zl-graph-freshness`
+- PASS `zl-graph-impact`
+- PASS `zl-graph-query`
+- PASS `zl-graph-risk`
+- PASS `zl-graph-status`
+- PASS `zl-help-skills`
+- PASS `zl-init`
+- PASS `zl-license-audit`
+- PASS `zl-map`
+- PASS `zl-mode-set`
+- PASS `zl-mode-status`
+- PASS `zl-new-milestone`
+- PASS `zl-next`
+- PASS `zl-offline-lock`
+- PASS `zl-outbound-audit`
+- PASS `zl-plan-phase`
+- PASS `zl-policy-check`
+- PASS `zl-policy-diff`
+- PASS `zl-policy-explain`
+- PASS `zl-policy-list`
+- PASS `zl-policy-lock`
+- PASS `zl-policy-verify`
+- PASS `zl-preflight`
+- PASS `zl-privacy-audit`
+- PASS `zl-rag-eval`
+- PASS `zl-rag-golden-add`
+- PASS `zl-rag-golden-run`
+- PASS `zl-rag-init-local`
+- PASS `zl-refresh-plan`
+- PASS `zl-refresh-run`
+- PASS `zl-runtime-install`
+- PASS `zl-runtime-status`
+- PASS `zl-spec-phase`
+- PASS `zl-structure-audit`
+- PASS `zl-trace-audit`
+- PASS `zl-trace-build`
+- PASS `zl-trace-query`
+- PASS `zl-ui-phase`
+- PASS `zl-verify`
+- PASS `zl-verify-work`
+- PASS `zl-workflow-audit`
+- PASS `zl-workflow-continue`
+- PASS `zl-workflow-run`
+- PASS `zl-workflow-status`
 
 ## 证据
 
-- pik: exit 0
-- pik-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --template greenfield-app --name full_command_surface --mode new --force: exit 0
-- pik-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-map --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-codebase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-codebase-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-codebase-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --force --skip-model-check: exit 0
-- pik-rag-init-local: found Local GraphRAG default mode initialized
-- pik-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE_SENTINEL_7719: exit 0
-- pik-docs-citations: found FULL_SURFACE_SENTINEL_7719
-- pik-citation-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-sync: found heavy refresh executed: no
-- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --run: exit 0
-- pik-docs-index --run: found status success
-- pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE_SENTINEL_7719: exit 0
-- pik-docs-query: found FULL_SURFACE_SENTINEL_7719
-- pik-answer-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-answer-audit: found answer audit PASS
-- pik-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --rag FULL_SURFACE_SENTINEL_7719: exit 0
-- pik-docs-query --rag: found FULL_SURFACE_SENTINEL_7719
-- pik-rag-golden-add --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0
-- pik-rag-golden-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-rag-eval --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --run: exit 0
-- pik-graph-build --run: found status success
-- pik-graph-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-graph-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project approvalLimit: exit 0
-- pik-graph-query: found approval
-- pik-graph-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-graph-impact --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --files src/approval.js: exit 0
-- pik-graph-risk --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-graph-freshness --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --strict: exit 0
-- pik-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-preflight: found heavy refresh executed: no
-- pik-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --rag --force: exit 0
-- pik-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --graph --force: exit 0
-- pik-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project graph-lite: exit 0
-- pik-mode-set: found mode graph-lite
-- pik-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project default-local-rag: exit 0
-- pik-evidence-record --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0
-- pik-evidence-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-trace-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-trace-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE: exit 0
-- pik-trace-query: found Trace query
-- pik-trace-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-offline-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --strict: exit 0
-- pik-outbound-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-license-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-policy-list --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-policy-explain --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project trace.matrix: exit 0
-- pik-policy-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --strict: exit 0
-- pik-policy-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-policy-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-policy-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-help-skills --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project 文档更新后想确认影响面和完成前检查: exit 0
-- pik-runtime-install --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/runtime/codex --force: exit 0
-- pik-runtime-status --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/runtime/codex: exit 0
-- pik-runtime-install --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/runtime/claude-code --force: exit 0
-- pik-runtime-status --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/runtime/claude-code: exit 0
-- pik-runtime-install --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/runtime/github-copilot --force: exit 0
-- pik-runtime-status --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/runtime/github-copilot: exit 0
-- pik-context-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE debug context: exit 0
-- pik-context-execute --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE execute context: exit 0
-- pik-workflow-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project debug FULL_SURFACE workflow: exit 0
-- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --gate plan --evidence PLAN.md reviewed: exit 0
-- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --gate implementation --evidence src/approval.js verified: exit 0
-- pik-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project --gate verification --evidence npm run verify:full-command-surface: exit 0
-- pik-workflow-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-workflow-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-gate-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-completion-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-new-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-new-milestone: exit 0
-- pik-spec-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-spec-phase: exit 0
-- pik-discuss-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-discuss-phase: exit 0
-- pik-ui-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-ui-phase: exit 0
-- pik-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-debug: exit 0
-- pik-plan-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-plan-phase: exit 0
-- pik-execute-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-execute-phase: exit 0
-- pik-code-review --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-code-review: exit 0
-- pik-verify-work --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-verify-work: exit 0
-- pik-complete-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project FULL_SURFACE pik-complete-milestone: exit 0
-- pik-cockpit-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project: exit 0
-- pik-cockpit-build: found cockpit build
-- pik-cockpit-build: found heavy refresh executed: no
+- zl: exit 0
+- zl-init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --template greenfield-app --name full_command_surface --mode new --force: exit 0
+- zl-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-map --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-codebase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-codebase-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-codebase-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --force --skip-model-check: exit 0
+- zl-rag-init-local: found Local GraphRAG default mode initialized
+- zl-docs-scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-normalize --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE_SENTINEL_7719: exit 0
+- zl-docs-citations: found FULL_SURFACE_SENTINEL_7719
+- zl-citation-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-sync --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-sync: found heavy refresh executed: no
+- zl-ambiguity-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-docs-index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --run: exit 0
+- zl-docs-index --run: found status success
+- zl-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE_SENTINEL_7719: exit 0
+- zl-docs-query: found FULL_SURFACE_SENTINEL_7719
+- zl-answer-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-answer-audit: found answer audit PASS
+- zl-docs-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --rag FULL_SURFACE_SENTINEL_7719: exit 0
+- zl-docs-query --rag: found FULL_SURFACE_SENTINEL_7719
+- zl-answer-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --answer FULL_SURFACE_SENTINEL_7719 [docs/specs/approval.md:3]: exit 0
+- zl-rag-golden-add --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0
+- zl-rag-golden-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-rag-eval --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-graph-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --run: exit 0
+- zl-graph-build --run: found status success
+- zl-graph-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-graph-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project approvalLimit: exit 0
+- zl-graph-query: found approval
+- zl-graph-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-graph-impact --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --files src/approval.js: exit 0
+- zl-graph-risk --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-graph-freshness --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --strict: exit 0
+- zl-preflight --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-preflight: found heavy refresh executed: no
+- zl-refresh-plan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --rag --force: exit 0
+- zl-refresh-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --graph --force: exit 0
+- zl-mode-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project graph-lite: exit 0
+- zl-mode-set: found mode graph-lite
+- zl-mode-set --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project default-local-rag: exit 0
+- zl-evidence-record --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0
+- zl-evidence-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-trace-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-trace-query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE: exit 0
+- zl-trace-query: found Trace query
+- zl-trace-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-structure-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-offline-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --strict: exit 0
+- zl-outbound-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-license-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-policy-list --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-policy-explain --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project trace.matrix: exit 0
+- zl-policy-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --strict: exit 0
+- zl-policy-lock --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-policy-verify --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-policy-diff --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-help-skills --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project 文档更新后想确认影响面和完成前检查: exit 0
+- zl-next --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-runtime-install --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/runtime/codex --force: exit 0
+- zl-runtime-status --runtime codex --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/runtime/codex: exit 0
+- zl-runtime-install --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/runtime/claude-code --force: exit 0
+- zl-runtime-status --runtime claude-code --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/runtime/claude-code: exit 0
+- zl-runtime-install --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/runtime/github-copilot --force: exit 0
+- zl-runtime-status --runtime github-copilot --dest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/runtime/github-copilot: exit 0
+- zl-context-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE debug context: exit 0
+- zl-context-execute --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE execute context: exit 0
+- zl-workflow-run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project debug FULL_SURFACE workflow: exit 0
+- zl-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --gate plan --evidence PLAN.md reviewed: exit 0
+- zl-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --gate implementation --evidence src/approval.js verified: exit 0
+- zl-workflow-continue --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project --gate verification --evidence npm run verify:full-command-surface: exit 0
+- zl-workflow-status --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-workflow-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-gate-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-completion-check --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-new-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-new-milestone: exit 0
+- zl-spec-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-spec-phase: exit 0
+- zl-discuss-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-discuss-phase: exit 0
+- zl-ui-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-ui-phase: exit 0
+- zl-debug --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-debug: exit 0
+- zl-plan-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-plan-phase: exit 0
+- zl-execute-phase --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-execute-phase: exit 0
+- zl-code-review --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-code-review: exit 0
+- zl-verify-work --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-verify-work: exit 0
+- zl-complete-milestone --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project FULL_SURFACE zl-complete-milestone: exit 0
+- zl-cockpit-build --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project: exit 0
+- zl-cockpit-build: found cockpit build
+- zl-cockpit-build: found heavy refresh executed: no
 - cockpit report: found Heavy refresh executed: no
-- cockpit html: found AI-PIKit 项目驾驶舱
+- cockpit html: found Zhulong 项目驾驶舱
 - policy check report: found Status: PASS
 - policy lock report: found Snapshot hash
 - policy verify report: found Status: PASS
@@ -197,9 +204,9 @@
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-full-command-surface-xN4hyN/project`
-- 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-full-command-surface.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-full-command-surface-tWCIpC/project`
+- 复现命令: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-full-command-surface.mjs'`
 
 ## 问题
 

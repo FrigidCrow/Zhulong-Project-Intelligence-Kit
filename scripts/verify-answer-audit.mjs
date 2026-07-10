@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-answer-audit-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-answer-audit-");
 const projectRoot = path.join(workRoot, "project");
 const missingSourceRoot = path.join(workRoot, "missing-source-project");
 const issues = [];
@@ -44,9 +44,9 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(target, args = [], options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(target, args = [], options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: target,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -80,46 +80,67 @@ write(path.join(projectRoot, "docs", "spec.md"), [
   "",
 ].join("\n"));
 
-pik(projectRoot, ["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "answer_audit_fixture", "--mode", "new", "--force"]);
-pik(projectRoot, ["docs", "sync", "--target", projectRoot]);
-const query = pik(projectRoot, ["docs", "query", "--target", projectRoot, "ANSWER_AUDIT_SENTINEL_4201"]);
+zl(projectRoot, ["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "answer_audit_fixture", "--mode", "new", "--force"]);
+zl(projectRoot, ["docs", "sync", "--target", projectRoot]);
+const query = zl(projectRoot, ["docs", "query", "--target", projectRoot, "ANSWER_AUDIT_SENTINEL_4201"]);
 assertIncludes("docs query writes result", query.output, "DOCS_QUERY_RESULT.md");
+assertIncludes("docs query auto audit", query.output, "answer audit auto PASS");
 
-const defaultAudit = pik(projectRoot, ["answer", "audit", "--target", projectRoot]);
+const defaultAudit = zl(projectRoot, ["answer", "audit", "--target", projectRoot]);
 assertIncludes("default answer audit pass", defaultAudit.output, "answer audit PASS");
 assertFileIncludes("ANSWER_AUDIT default", path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.md"), "Status: PASS");
 
-const explicitAudit = pik(projectRoot, ["answer", "audit", "--target", projectRoot, "--from", ".planning/knowledge/DOCS_QUERY_RESULT.md"]);
+const explicitAudit = zl(projectRoot, ["answer", "audit", "--target", projectRoot, "--from", ".planning/knowledge/DOCS_QUERY_RESULT.md"]);
 assertIncludes("explicit answer audit pass", explicitAudit.output, "answer audit PASS");
 
-const inlineAudit = pik(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "ANSWER_AUDIT_SENTINEL_4201 [docs/spec.md:3]"]);
+const inlineAudit = zl(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "ANSWER_AUDIT_SENTINEL_4201 [docs/spec.md:3]"]);
 assertIncludes("inline answer audit pass", inlineAudit.output, "answer audit PASS");
+const inlineMetrics = JSON.parse(read(path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.json"))).metrics;
+if (inlineMetrics.citation_resolve_rate !== 1) addIssue("answer metrics", `citation_resolve_rate=${inlineMetrics.citation_resolve_rate}`);
+else evidence.push("answer metrics: citation_resolve_rate=1");
 
-const invalidCitation = pik(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "bad citation [docs/missing.md:1]"], { expectedStatus: 1 });
+zl(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "The approved limit is 5000. [docs/spec.md:3]"]);
+const driftMetrics = JSON.parse(read(path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.json"))).metrics;
+if (driftMetrics.value_drift_count < 1) addIssue("answer metrics", "numeric drift was not detected");
+else evidence.push(`answer metrics: value_drift_count=${driftMetrics.value_drift_count}`);
+
+const configPath = path.join(projectRoot, ".planning", "config.json");
+const config = JSON.parse(read(configPath));
+config.knowledge = { ...(config.knowledge || {}), auto_answer_audit: false };
+write(configPath, `${JSON.stringify(config, null, 2)}\n`);
+fs.rmSync(path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.md"), { force: true });
+fs.rmSync(path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.json"), { force: true });
+const disabledAuto = zl(projectRoot, ["docs", "query", "--target", projectRoot, "ANSWER_AUDIT_SENTINEL_4201"]);
+assertIncludes("auto audit config", disabledAuto.output, "auto-run disabled");
+assertFileMissing("auto audit config", path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.json"));
+config.knowledge.auto_answer_audit = true;
+write(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+const invalidCitation = zl(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "bad citation [docs/missing.md:1]"], { expectedStatus: 1 });
 assertIncludes("invalid citation fails", invalidCitation.output, "answer audit FAIL");
 assertIncludes("invalid citation missing source", invalidCitation.output, "source file missing");
 
-const waived = pik(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "No citation in this default-local-rag answer."]);
+const waived = zl(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "No citation in this default-local-rag answer."]);
 assertIncludes("missing citation waived", waived.output, "answer audit WAIVED_WITH_RISK");
 
-pik(projectRoot, ["mode", "set", "--target", projectRoot, "full-strict"]);
-const strictMissing = pik(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "No citation in this full-strict answer."], { expectedStatus: 1 });
+zl(projectRoot, ["mode", "set", "--target", projectRoot, "full-strict"]);
+const strictMissing = zl(projectRoot, ["answer", "audit", "--target", projectRoot, "--answer", "No citation in this full-strict answer."], { expectedStatus: 1 });
 assertIncludes("strict missing citation fails", strictMissing.output, "answer audit FAIL");
 
 fs.rmSync(path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.md"), { force: true });
 fs.rmSync(path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.json"), { force: true });
-const workflow = pik(projectRoot, ["workflow", "run", "--target", projectRoot, "debug", "ANSWER_AUDIT workflow suggestion"], { expectedStatus: 0 });
+const workflow = zl(projectRoot, ["workflow", "run", "--target", projectRoot, "debug", "ANSWER_AUDIT workflow suggestion"], { expectedStatus: 0 });
 assertIncludes("workflow does not block command execution", workflow.output, "heavy refresh executed: no");
 const facadePath = path.join(projectRoot, ".planning", "workflows", "debug-answer-audit-workflow-suggestion", "WORKFLOW_FACADE.md");
-assertFileIncludes("workflow facade suggests answer audit", facadePath, "pik-answer-audit --target <repo>");
+assertFileIncludes("workflow facade suggests answer audit", facadePath, "zl-answer-audit --target <repo>");
 assertFileMissing("workflow does not auto-run answer audit", path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.md"));
 
 fs.mkdirSync(missingSourceRoot, { recursive: true });
 write(path.join(missingSourceRoot, "src", "empty.js"), "export const missingSourceFixture = true;\n");
-pik(missingSourceRoot, ["init", "--target", missingSourceRoot, "--template", "greenfield-app", "--name", "missing_source_fixture", "--mode", "new", "--force"]);
-const missingSource = pik(missingSourceRoot, ["answer", "audit", "--target", missingSourceRoot], { expectedStatus: 1 });
+zl(missingSourceRoot, ["init", "--target", missingSourceRoot, "--template", "greenfield-app", "--name", "missing_source_fixture", "--mode", "new", "--force"]);
+const missingSource = zl(missingSourceRoot, ["answer", "audit", "--target", missingSourceRoot], { expectedStatus: 1 });
 assertIncludes("missing answer source fails", missingSource.output, "answer audit FAIL");
-assertIncludes("missing answer source next", missingSource.output, "pik-docs-query --target <repo>");
+assertIncludes("missing answer source next", missingSource.output, "zl-docs-query --target <repo>");
 
 const data = {
   generated: new Date().toISOString(),
@@ -133,7 +154,7 @@ const data = {
 };
 
 writeJsonReport("answer-audit-check.json", data);
-writeMarkdownReport("answer-audit-check.md", "AI-PIKit Answer Audit Verification", summarizeIssues(issues), [
+writeMarkdownReport("answer-audit-check.md", "Zhulong Answer Audit Verification", summarizeIssues(issues), [
   { title: "证据", body: evidence.length ? evidence.map((item) => `- ${item}`) : ["未记录证据。"] },
   {
     title: "Fixture 路径",

@@ -34,7 +34,7 @@ writeJsonReport("quality-closure-check.json", {
   evidence: ["quality closure gate started"],
   issues: [],
 });
-writeMarkdownReport("quality-closure-check.md", "AI-PIKit Quality Closure Verification", ["状态: RUNNING", "问题数: 0"], [
+writeMarkdownReport("quality-closure-check.md", "Zhulong Quality Closure Verification", ["状态: RUNNING", "问题数: 0"], [
   {
     title: "聚合 Gate",
     body: checks.map((script) => `- PENDING \`npm run ${script}\``),
@@ -71,7 +71,7 @@ const data = {
 };
 
 writeJsonReport("quality-closure-check.json", data);
-writeMarkdownReport("quality-closure-check.md", "AI-PIKit Quality Closure Verification", summarizeIssues(issues), [
+writeMarkdownReport("quality-closure-check.md", "Zhulong Quality Closure Verification", summarizeIssues(issues), [
   {
     title: "聚合 Gate",
     body: checks.map((script) => {
@@ -82,7 +82,7 @@ writeMarkdownReport("quality-closure-check.md", "AI-PIKit Quality Closure Verifi
   {
     title: "边界",
     body: [
-      "- 本 gate 覆盖 MVP4.2 新增的 `pik-cockpit-build`，但不会在验证中触发重刷新。",
+      "- 本 gate 覆盖 MVP4.2 新增的 `zl-cockpit-build`，但不会在验证中触发重刷新。",
       "- 默认验证使用本地 fixture，不需要外部 LLM / API key。",
       "- policy、workflow、skills、docs completeness 检查不得触发隐藏 heavy refresh。",
       "- cockpit build 检查只读取本地 artifact，不执行 GraphRAG index 或 Graphify build。",

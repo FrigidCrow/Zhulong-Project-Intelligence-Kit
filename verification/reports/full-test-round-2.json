@@ -10,7 +10,7 @@
       "status": 0,
       "startedAt": "2026-06-25T11:21:25.310Z",
       "finishedAt": "2026-06-25T11:21:25.606Z",
-      "stdout": "> ai-project-intelligence-kit@0.1.0 check\n> node --check bin/pik.mjs",
+      "stdout": "> ai-project-intelligence-kit@0.1.0 check\n> node --check bin/zl.mjs",
       "stderr": ""
     },
     {

@@ -1,6 +1,6 @@
-# AI-PIKit Schema Check
+# Zhulong Schema Check
 
-生成时间: 2026-06-28T13:57:46.657Z
+生成时间: 2026-07-10T00:45:42.529Z
 
 ## 摘要
 
@@ -12,13 +12,13 @@
 - workflow audit before gates: found workflow guard FAIL
 - workflow audit next command: found next plan:
 - workflow audit after evidence: found workflow guard PASS
-- project manifest schema: ../../../../../../../Users/frigidcrow/Documents/Project-Intelligence-Kit /schemas/project.manifest.schema.json
+- project manifest schema: ../../../../../../../Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/schemas/project.manifest.schema.json
 - project manifest schema: JSON parsed with keys $schema, title, type, required, properties
 - generated project manifest: project.manifest.yml
 - project.manifest.yml: schema-required top-level keys checked (project, knowledge, workflow, privacy)
-- issue record schema: ../../../../../../../Users/frigidcrow/Documents/Project-Intelligence-Kit /schemas/issue-record.schema.md
+- issue record schema: ../../../../../../../Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/schemas/issue-record.schema.md
 - issue record schema: markdown sections checked
-- phase record schema: ../../../../../../../Users/frigidcrow/Documents/Project-Intelligence-Kit /schemas/phase-record.schema.md
+- phase record schema: ../../../../../../../Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/schemas/phase-record.schema.md
 - phase record schema: markdown sections checked
 - active workflow pointer: .planning/workflows/ACTIVE.json
 - active workflow pointer: JSON parsed with keys id, workflow, updatedAt
@@ -32,15 +32,15 @@
 - workflow handoff: .planning/context/handoffs/debug-schema-validation-smoke-HANDOFF.md
 - evidence index: .planning/evidence/INDEX.md
 - evidence index: markdown sections checked
-- evidence record: .planning/evidence/20260628T135746Z-schema-validation-evidence.md
+- evidence record: .planning/evidence/20260710T004542Z-schema-validation-evidence.md
 - evidence record: markdown sections checked
 - debug writeback target: .planning/debug/schema-debug.md
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-schema-w7LiKd`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-schema-w7LiKd/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-schema.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-schema-zqXNEC`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-schema-zqXNEC/project`
+- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-schema.mjs'`
 
 ## Issues
 

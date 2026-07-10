@@ -1,4 +1,4 @@
-# pik-spec-phase
+# zl-spec-phase
 
 Purpose: turn requirement text, QA, minutes, design notes, and business rules
 into implementable specification evidence.
@@ -9,8 +9,8 @@ Required flow:
 
 1. Read the context packet, `.planning/knowledge/`, active phase, and active
    issue/debug records.
-2. Search local normalized documents with `pik-docs-query`.
-3. Use `pik-docs-query --rag` only when the configured RAG backend is approved
+2. Search local normalized documents with `zl-docs-query`.
+3. Use `zl-docs-query --rag` only when the configured RAG backend is approved
    for the documents in scope.
 4. Use Graphify/code-map context when a requirement names modules, functions,
    screens, APIs, DB tables, batch jobs, tests, or impact boundaries.
@@ -27,4 +27,4 @@ Outputs:
 - Requirement trace updates.
 - Open-question list.
 - GraphRAG evidence and Graphify/code-map impact notes when relevant.
-- Next command recommendation: usually `pik-discuss-phase` or `pik-plan-phase`.
+- Next command recommendation: usually `zl-discuss-phase` or `zl-plan-phase`.

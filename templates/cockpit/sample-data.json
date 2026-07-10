@@ -119,8 +119,17 @@
       "qualityClosure": { "path": "verification/reports/quality-closure-check.json", "exists": true, "status": "present", "summary": "PASS checks=9 issues=0" },
       "skillsUsability": { "path": "verification/reports/skills-usability-check.json", "exists": true, "status": "present", "summary": "PASS rendered=33" },
       "workflowClosure": { "path": "verification/reports/workflow-closure-check.json", "exists": true, "status": "present", "summary": "PASS workflow scenarios covered." },
-      "docsCompleteness": { "path": "verification/reports/docs-completeness-check.json", "exists": true, "status": "present", "summary": "PASS commands checked=71" },
-      "fullCommandSurface": { "path": "verification/reports/full-command-surface-check.json", "exists": true, "status": "present", "summary": "PASS 71/71" }
+      "docsCompleteness": { "path": "verification/reports/docs-completeness-check.json", "exists": true, "status": "present", "summary": "PASS commands checked=74" },
+      "fullCommandSurface": { "path": "verification/reports/full-command-surface-check.json", "exists": true, "status": "present", "summary": "PASS 74/74" }
+    },
+    "metrics": {
+      "citationResolveRate": 1,
+      "valueDriftCount": 0,
+      "unsupportedSentenceRatio": 0,
+      "ambiguityHits": 2,
+      "ambiguityDensity": 0.004,
+      "structureComplianceRate": 1,
+      "tokenUsage": { "available": true, "input": 18420, "output": 3210, "cacheRead": 11200, "cacheWrite": 860 }
     }
   },
   "privacy": {
@@ -133,7 +142,7 @@
   },
   "issues": [],
   "nextCommands": [
-    "pik-cockpit-build --target \"$PWD\"",
+    "zl-cockpit-build --target \"$PWD\"",
     "# sample is stable; live project cockpit depends on existing local artifacts"
   ]
 }

@@ -1,4 +1,4 @@
-# pik-verify-work
+# zl-verify-work
 
 Purpose: verify that implementation, specification evidence, code impact, and
 recorded decisions line up before closing work.
@@ -20,6 +20,6 @@ Outputs:
 
 - Verification pass/fail with evidence.
 - Updated active record.
-- Next command recommendation: `pik-complete-milestone` if complete, otherwise
-  `pik-execute-phase` or `pik-debug`.
+- Next command recommendation: `zl-complete-milestone` if complete, otherwise
+  `zl-execute-phase` or `zl-debug`.
 

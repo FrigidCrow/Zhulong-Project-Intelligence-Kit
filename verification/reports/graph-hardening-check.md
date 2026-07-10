@@ -1,6 +1,6 @@
-# AI-PIKit Graph Impact/Risk/Freshness Verification
+# Zhulong Graph Impact/Risk/Freshness Verification
 
-生成时间: 2026-06-28T15:46:02.319Z
+生成时间: 2026-07-10T00:45:30.335Z
 
 ## 摘要
 
@@ -9,21 +9,21 @@
 
 ## Evidence
 
-- pik graph freshness: found Freshness: fresh
+- zl graph freshness: found Freshness: fresh
 - GRAPH_FRESHNESS: found State: fresh
-- pik graph impact: found matched 1
-- pik graph impact: found impacted nodes
+- zl graph impact: found matched 1
+- zl graph impact: found impacted nodes
 - GRAPH_IMPACT: found src/service.js
-- pik graph risk: found high coupling
+- zl graph risk: found high coupling
 - GRAPH_RISK: found src/approval.js
 - GRAPH_RISK: found approval.test.js
-- pik graph freshness stale: found Freshness: STALE
+- zl graph freshness stale: found Freshness: STALE
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-RBghUY`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-graph-hardening-RBghUY/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-graph-hardening.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-graph-hardening-CTZnFE`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-graph-hardening-CTZnFE/project`
+- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-graph-hardening.mjs'`
 
 ## Issues
 

@@ -88,7 +88,7 @@ try {
       const bytes = fs.statSync(screenshot).size;
 
       if (!metrics.h1) addIssue(item.file, viewport.label, "Missing visible H1.");
-      if (metrics.brand !== "AI Project Intelligence Kit") addIssue(item.file, viewport.label, `Unexpected brand text: ${metrics.brand}`);
+      if (metrics.brand !== "Zhulong Project Intelligence Kit") addIssue(item.file, viewport.label, `Unexpected brand text: ${metrics.brand}`);
       if (metrics.overflow > 2) addIssue(item.file, viewport.label, `Horizontal overflow: ${metrics.overflow}px.`);
       if (metrics.emptyCards > 0) addIssue(item.file, viewport.label, `Empty cards found: ${metrics.emptyCards}.`);
       if (metrics.badTextBoxes > 0) addIssue(item.file, viewport.label, `Text boxes with clipped content: ${metrics.badTextBoxes}.`);
@@ -119,7 +119,7 @@ const data = {
 };
 
 writeJsonReport("visual-check.json", data);
-writeMarkdownReport("visual-check.md", "AI-PIKit Visual Verification", summarizeIssues(issues), [
+writeMarkdownReport("visual-check.md", "Zhulong Visual Verification", summarizeIssues(issues), [
   {
     title: "Screenshots",
     body: results.map((result) => `- ${result.page} ${result.viewport}: \`${result.screenshot}\` (${result.bytes} bytes)`),

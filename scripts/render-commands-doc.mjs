@@ -65,14 +65,14 @@ const html = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Project Intelligence Kit - 命令使用手册</title>
-  <meta name="description" content="AI-PIKit 全量 pik-* 命令用法、示例、产物和项目接入步骤。">
-  <link rel="stylesheet" href="assets/pik-site.css">
+  <title>Zhulong Project Intelligence Kit - 命令使用手册</title>
+  <meta name="description" content="Zhulong 全量 zl-* 命令用法、示例、产物和项目接入步骤。">
+  <link rel="stylesheet" href="assets/zl-site.css">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <header class="topbar">
-    <a class="brand-mark" href="../README.md">AI Project Intelligence Kit</a>
+    <a class="brand-mark" href="../README.md">Zhulong Project Intelligence Kit</a>
     <nav class="nav" aria-label="主导航">
       <a href="product.html">产品</a>
       <a href="commands.html" aria-current="page">命令</a>
@@ -85,7 +85,7 @@ const html = `<!doctype html>
   <main id="main">
     <section class="page-title">
       <p class="eyebrow">Command Manual</p>
-      <h1>AI-PIKit 命令控制台。</h1>
+      <h1>Zhulong 命令控制台。</h1>
       <p>这里按“物理命令 + 逻辑用途”完整列出 ${catalog.length} 个公开 CLI 入口。日常开发只需要记住 workflow 主循环，其他命令主要由 workflow、policy、quality gate 无感串联。</p>
     </section>
 
@@ -94,22 +94,22 @@ const html = `<!doctype html>
         <h2>开发者心智模型</h2>
         <p>新项目先接入，既有项目先建基线；日常通过 workflow 命令启动，文档/RAG、Graphify、policy、evidence 都作为本地 guard 和证据层参与。</p>
       </div>
-      <div class="console-mock" aria-label="AI-PIKit 执行管道路径">
+      <div class="console-mock" aria-label="Zhulong 执行管道路径">
         <div class="window-bar">
           <span class="dot"></span><span class="dot"></span><span class="dot"></span>
           <span>command-palette / execution pipeline</span>
           <span class="status-pill" style="margin-left:auto">local-only 默认</span>
         </div>
         <div class="stage-flow command-flow">
-          <code class="active">pik-init</code>
-          <code>pik-codebase-scan</code>
-          <code>pik-docs-sync</code>
-          <code>pik-answer-audit</code>
-          <code>pik-preflight</code>
-          <code>pik-graph-build</code>
-          <code>pik-debug</code>
-          <code>pik-evidence-record</code>
-          <code>pik-completion-check</code>
+          <code class="active">zl-init</code>
+          <code>zl-codebase-scan</code>
+          <code>zl-docs-sync</code>
+          <code>zl-answer-audit</code>
+          <code>zl-preflight</code>
+          <code>zl-graph-build</code>
+          <code>zl-debug</code>
+          <code>zl-evidence-record</code>
+          <code>zl-completion-check</code>
         </div>
       </div>
     </section>
@@ -129,73 +129,73 @@ const html = `<!doctype html>
       <div>
         <section id="rules" class="page-section">
           <h2>通用规则</h2>
-          <p>安装 bin 后推荐直接使用 <code>pik-*</code>。未安装全局 bin 时，可以在 AI-PIKit 仓库里使用 <code>node bin/pik.mjs &lt;subcommand&gt;</code>。默认流程必须是 local-only、no hidden heavy refresh；只有显式 <code>--run</code>、<code>--index</code> 或 <code>pik-refresh-run</code> 才允许重任务。</p>
-          <pre class="code-block"><code>pik-docs-sync --target /path/to/repo
-node bin/pik.mjs docs sync --target /path/to/repo</code></pre>
+          <p>安装 bin 后推荐直接使用 <code>zl-*</code>。未安装全局 bin 时，可以在 Zhulong 仓库里使用 <code>node bin/zl.mjs &lt;subcommand&gt;</code>。默认流程必须是 local-only、no hidden heavy refresh；只有显式 <code>--run</code>、<code>--index</code> 或 <code>zl-refresh-run</code> 才允许重任务。</p>
+          <pre class="code-block"><code>zl-docs-sync --target /path/to/repo
+node bin/zl.mjs docs sync --target /path/to/repo</code></pre>
         </section>
 
         <section id="new-project" class="page-section">
           <h2>新项目从 0 接入</h2>
-          <p>先接入 AI-PIKit，再安装 runtime pack，然后建立代码、文档、本地 RAG 和 Graphify 基线，最后进入第一次 milestone。</p>
+          <p>先接入 Zhulong，再安装 runtime pack，然后建立代码、文档、本地 RAG 和 Graphify 基线，最后进入第一次 milestone。</p>
           <pre class="code-block"><code>cd /path/to/new-project
 
-pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
-pik-runtime-install --runtime codex --dest ~/.codex/skills --force
-pik-runtime-install --runtime claude-code --dest ~/.claude/skills --force
-pik-runtime-install --runtime github-copilot --dest .github/prompts --force
+zl-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+zl-runtime-install --runtime codex --dest ~/.codex/skills --force
+zl-runtime-install --runtime claude-code --dest ~/.claude/skills --force
+zl-runtime-install --runtime github-copilot --dest .github/prompts --force
 
-pik-codebase-scan --target "$PWD"
-pik-docs-sync --target "$PWD"
-pik-rag-init-local --target "$PWD"
-pik-graph-build --target "$PWD" --run
+zl-codebase-scan --target "$PWD"
+zl-docs-sync --target "$PWD"
+zl-rag-init-local --target "$PWD"
+zl-graph-build --target "$PWD" --run
 
-pik-new-milestone --target "$PWD" "MVP1 walking skeleton"
-pik-spec-phase --target "$PWD" "整理 MVP1 仕様"
-pik-plan-phase --target "$PWD" "MVP1 phase 1"
-pik-execute-phase --target "$PWD" "实现第一条纵向链路"
-pik-verify-work --target "$PWD" "验证 MVP1 phase 1"
-pik-complete-milestone --target "$PWD" "MVP1 walking skeleton"</code></pre>
+zl-new-milestone --target "$PWD" "MVP1 walking skeleton"
+zl-spec-phase --target "$PWD" "整理 MVP1 仕様"
+zl-plan-phase --target "$PWD" "MVP1 phase 1"
+zl-execute-phase --target "$PWD" "实现第一条纵向链路"
+zl-verify-work --target "$PWD" "验证 MVP1 phase 1"
+zl-complete-milestone --target "$PWD" "MVP1 walking skeleton"</code></pre>
         </section>
 
         <section id="existing-project" class="page-section">
           <h2>既有项目接入</h2>
-          <p>既有项目不要移动原源码。AI-PIKit 只叠加 <code>.planning/</code>，先扫描已有代码和文档，再从当前真实改修任务进入第一次 workflow。</p>
+          <p>既有项目不要移动原源码。Zhulong 只叠加 <code>.planning/</code>，先扫描已有代码和文档，再从当前真实改修任务进入第一次 workflow。</p>
           <pre class="code-block"><code>cd /path/to/existing-project
 
-pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
-pik-codebase-scan --target "$PWD"
-pik-codebase-status --target "$PWD"
+zl-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+zl-codebase-scan --target "$PWD"
+zl-codebase-status --target "$PWD"
 
-pik-docs-sync --target "$PWD"
-pik-rag-init-local --target "$PWD"
-pik-graph-build --target "$PWD" --run
-pik-preflight --target "$PWD"
+zl-docs-sync --target "$PWD"
+zl-rag-init-local --target "$PWD"
+zl-graph-build --target "$PWD" --run
+zl-preflight --target "$PWD"
 
-pik-debug --target "$PWD" "生产审批金额异常"</code></pre>
+zl-debug --target "$PWD" "生产审批金额异常"</code></pre>
         </section>
 
         <section id="daily-loop" class="page-section">
           <h2>日常开发循环</h2>
           <p>日常优先使用 workflow 主循环命令。GraphRAG、Graphify、policy、evidence 会作为 guard 和 next command 被串起来，不需要开发者每次手动想一遍。</p>
-          <pre class="code-block"><code>pik-new-milestone --target "$PWD" "CR-017 代理承認上限修正"
-pik-spec-phase --target "$PWD" "確認仕様と QA"
-pik-discuss-phase --target "$PWD" "确认实现策略"
-pik-plan-phase --target "$PWD" "拆分实现和验证"
-pik-execute-phase --target "$PWD" "实施改修"
-pik-verify-work --target "$PWD" "跑测试并记录证据"
-pik-complete-milestone --target "$PWD" "CR-017 收口"</code></pre>
+          <pre class="code-block"><code>zl-new-milestone --target "$PWD" "CR-017 代理承認上限修正"
+zl-spec-phase --target "$PWD" "確認仕様と QA"
+zl-discuss-phase --target "$PWD" "确认实现策略"
+zl-plan-phase --target "$PWD" "拆分实现和验证"
+zl-execute-phase --target "$PWD" "实施改修"
+zl-verify-work --target "$PWD" "跑测试并记录证据"
+zl-complete-milestone --target "$PWD" "CR-017 收口"</code></pre>
         </section>
 
         <section id="docs-update-loop" class="page-section">
           <h2>文档更新循环</h2>
           <p>文档更新后默认只跑轻量同步，不自动重建 GraphRAG index。需要重索引时必须显式加 <code>--index</code>，并先确认 local-only 配置没有被改坏。</p>
-          <pre class="code-block"><code>pik-docs-sync --target "$PWD"
-pik-docs-query --target "$PWD" "代理承認 上限"
-pik-answer-audit --target "$PWD"
+          <pre class="code-block"><code>zl-docs-sync --target "$PWD"
+zl-docs-query --target "$PWD" "代理承認 上限"
+zl-answer-audit --target "$PWD"
 
 # 只有明确需要重建本地 GraphRAG index 时才运行
-pik-privacy-audit --target "$PWD" --strict
-pik-docs-sync --target "$PWD" --index</code></pre>
+zl-privacy-audit --target "$PWD" --strict
+zl-docs-sync --target "$PWD" --index</code></pre>
         </section>
 
         <section id="quality-loop" class="page-section">

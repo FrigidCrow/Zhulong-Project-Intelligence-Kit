@@ -1,35 +1,35 @@
 {
-  "generated": "2026-06-28T13:58:26.272Z",
+  "generated": "2026-07-10T00:46:13.625Z",
   "summary": {
     "pass": 132,
     "fail": 0,
     "warn": 1
   },
   "verdict": "pass",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6",
   "workRootRemovedAfterRun": true,
   "liveGraphRag": "not requested",
   "checks": [
     {
-      "name": "AI-PIKit init records new project mode",
+      "name": "Zhulong init records new project mode",
       "status": "PASS",
       "evidence": ".planning/INIT_PROFILE.md",
       "detail": "Found: Mode: new"
     },
     {
-      "name": "AI-PIKit codebase status works for new project mode",
+      "name": "Zhulong codebase status works for new project mode",
       "status": "PASS",
-      "evidence": "pik codebase status",
+      "evidence": "zl codebase status",
       "detail": "Found: ok .planning/codebase/CODEBASE_STATUS.md"
     },
     {
-      "name": "AI-PIKit init records existing project mode",
+      "name": "Zhulong init records existing project mode",
       "status": "PASS",
       "evidence": ".planning/INIT_PROFILE.md",
       "detail": "Found: Mode: existing"
     },
     {
-      "name": "AI-PIKit codebase scan inventories existing project sources",
+      "name": "Zhulong codebase scan inventories existing project sources",
       "status": "PASS",
       "evidence": ".planning/codebase/CODEBASE_STATUS.md",
       "detail": "7 source files"
@@ -41,502 +41,502 @@
       "detail": ""
     },
     {
-      "name": "AI-PIKit local document query finds QA evidence",
+      "name": "Zhulong local document query finds QA evidence",
       "status": "PASS",
-      "evidence": "pik docs query",
+      "evidence": "zl docs query",
       "detail": "Found: QA-042"
     },
     {
-      "name": "AI-PIKit configured RAG query returns 30,000 evidence",
+      "name": "Zhulong configured RAG query returns 30,000 evidence",
       "status": "PASS",
-      "evidence": "pik docs query --rag",
+      "evidence": "zl docs query --rag",
       "detail": "Found: 30,000"
     },
     {
-      "name": "AI-PIKit Graphify adapter query finds PROXY_APPROVAL_LIMIT",
+      "name": "Zhulong Graphify adapter query finds PROXY_APPROVAL_LIMIT",
       "status": "PASS",
-      "evidence": "pik graph query",
+      "evidence": "zl graph query",
       "detail": "Found: PROXY_APPROVAL_LIMIT"
     },
     {
-      "name": "AI-PIKit graph diff captures implementation change",
+      "name": "Zhulong graph diff captures implementation change",
       "status": "PASS",
-      "evidence": "pik graph diff --details",
+      "evidence": "zl graph diff --details",
       "detail": "Found: 30000"
     },
     {
-      "name": "AI-PIKit evidence writeback reaches issue record",
+      "name": "Zhulong evidence writeback reaches issue record",
       "status": "PASS",
       "evidence": ".planning/issues/CR-017_proxy_approval_limit.md",
-      "detail": "Found: AI-PIKit Evidence Writeback"
+      "detail": "Found: Zhulong Evidence Writeback"
     },
     {
-      "name": "All core AI-PIKit workflows create handoffs",
+      "name": "All core Zhulong workflows create handoffs",
       "status": "PASS",
       "evidence": ".planning/context/handoffs",
       "detail": "10 handoff files"
     },
     {
-      "name": "AI-PIKit native handoff marker: code-review-cr-017-code-review-HANDOFF.md",
+      "name": "Zhulong native handoff marker: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: code-review-cr-017-code-review-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/code-review-cr-017-code-review-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "name": "Zhulong native handoff marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/complete-milestone-cr-017-complete-milestone-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: debug-cr-017-debug-HANDOFF.md",
+      "name": "Zhulong native handoff marker: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: debug-cr-017-debug-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/debug-cr-017-debug-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "name": "Zhulong native handoff marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/discuss-phase-cr-017-discuss-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "name": "Zhulong native handoff marker: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: execute-phase-cr-017-execute-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/execute-phase-cr-017-execute-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "name": "Zhulong native handoff marker: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: new-milestone-cr-017-new-milestone-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/new-milestone-cr-017-new-milestone-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "name": "Zhulong native handoff marker: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: plan-phase-cr-017-plan-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/plan-phase-cr-017-plan-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "name": "Zhulong native handoff marker: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: spec-phase-cr-017-spec-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/spec-phase-cr-017-spec-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "name": "Zhulong native handoff marker: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: ui-phase-cr-017-ui-phase-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/ui-phase-cr-017-ui-phase-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
-      "name": "AI-PIKit native handoff marker: verify-work-cr-017-verify-work-HANDOFF.md",
+      "name": "Zhulong native handoff marker: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
-      "detail": "Found: Workflow kernel: AI-PIKit native"
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "detail": "Found: Workflow kernel: Zhulong native"
     },
     {
       "name": "Workflow doc marker: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Found: Workflow doc:"
     },
     {
       "name": "No active GSD backend wording: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Absent: Current backend"
     },
     {
       "name": "No internal backend invocation title: verify-work-cr-017-verify-work-HANDOFF.md",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/handoffs/verify-work-cr-017-verify-work-HANDOFF.md",
       "detail": "Absent: Internal Backend Invocation"
     },
     {
       "name": "Context packet includes document RAG status",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/debug-cr-017-debug.md",
       "detail": "Found: Document RAG Status"
     },
     {
       "name": "Context packet includes code map status",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/debug-cr-017-debug.md",
       "detail": "Found: Code Map Status"
     },
     {
       "name": "Context packet includes Graphify output",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native/.planning/context/debug-cr-017-debug.md",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native/.planning/context/debug-cr-017-debug.md",
       "detail": "Found: Graph Report"
     },
     {
-      "name": "AI-PIKit workflow-run alias starts guarded state",
+      "name": "Zhulong workflow-run alias starts guarded state",
       "status": "PASS",
-      "evidence": "pik-workflow-run",
+      "evidence": "zl-workflow-run",
       "detail": "Found: workflow guard FAIL"
     },
     {
-      "name": "AI-PIKit workflow-run alias marks docs gate as risk before document scan",
+      "name": "Zhulong workflow-run alias marks docs gate as risk before document scan",
       "status": "PASS",
-      "evidence": "pik-workflow-run",
+      "evidence": "zl-workflow-run",
       "detail": "Found: WAIVED_WITH_RISK docs"
     },
     {
-      "name": "AI-PIKit workflow-run alias fails codebase gate before codebase scan",
+      "name": "Zhulong workflow-run alias fails codebase gate before codebase scan",
       "status": "PASS",
-      "evidence": "pik-workflow-run",
+      "evidence": "zl-workflow-run",
       "detail": "Found: FAIL codebase"
     },
     {
-      "name": "AI-PIKit workflow-run alias fails graph gate before graph build",
+      "name": "Zhulong workflow-run alias fails graph gate before graph build",
       "status": "PASS",
-      "evidence": "pik-workflow-run",
+      "evidence": "zl-workflow-run",
       "detail": "Found: FAIL graph"
     },
     {
-      "name": "AI-PIKit completion-check alias blocks incomplete workflow",
+      "name": "Zhulong completion-check alias blocks incomplete workflow",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Non-zero exit before required gates."
     },
     {
-      "name": "AI-PIKit completion-check alias reports blocked completion",
+      "name": "Zhulong completion-check alias reports blocked completion",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: completion blocked"
     },
     {
-      "name": "AI-PIKit gate-check alias passes complete workflow",
+      "name": "Zhulong gate-check alias passes complete workflow",
       "status": "PASS",
-      "evidence": "pik-gate-check",
+      "evidence": "zl-gate-check",
       "detail": "Found: workflow guard PASS"
     },
     {
-      "name": "AI-PIKit completion-check alias allows complete workflow",
+      "name": "Zhulong completion-check alias allows complete workflow",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: completion allowed"
     },
     {
-      "name": "AI-PIKit workflow guard passes context gate",
+      "name": "Zhulong workflow guard passes context gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS context"
     },
     {
-      "name": "AI-PIKit workflow guard passes codebase gate",
+      "name": "Zhulong workflow guard passes codebase gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS codebase"
     },
     {
-      "name": "AI-PIKit workflow guard passes docs gate",
+      "name": "Zhulong workflow guard passes docs gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS docs"
     },
     {
-      "name": "AI-PIKit workflow guard passes graph gate",
+      "name": "Zhulong workflow guard passes graph gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS graph"
     },
     {
-      "name": "AI-PIKit workflow guard passes plan gate",
+      "name": "Zhulong workflow guard passes plan gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS plan"
     },
     {
-      "name": "AI-PIKit workflow guard passes implementation gate",
+      "name": "Zhulong workflow guard passes implementation gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS implementation"
     },
     {
-      "name": "AI-PIKit workflow guard passes verification gate",
+      "name": "Zhulong workflow guard passes verification gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS verification"
     },
     {
-      "name": "AI-PIKit workflow guard passes evidence gate",
+      "name": "Zhulong workflow guard passes evidence gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS evidence"
     },
     {
-      "name": "AI-PIKit workflow guard passes writeback gate",
+      "name": "Zhulong workflow guard passes writeback gate",
       "status": "PASS",
-      "evidence": "pik-completion-check",
+      "evidence": "zl-completion-check",
       "detail": "Found: PASS writeback"
     },
     {
-      "name": "AI-PIKit workflow-status alias reports guard pass",
+      "name": "Zhulong workflow-status alias reports guard pass",
       "status": "PASS",
-      "evidence": "pik-workflow-status",
+      "evidence": "zl-workflow-status",
       "detail": "Found: workflow guard PASS"
     },
     {
-      "name": "AI-PIKit workflow guard writes durable state",
+      "name": "Zhulong workflow guard writes durable state",
       "status": "PASS",
       "evidence": ".planning/workflows/<id>/WORKFLOW_STATE.json",
       "detail": "debug-cr-017-guard"
     },
     {
-      "name": "Public pik-debug alias enters workflow guard",
+      "name": "Public zl-debug alias enters workflow guard",
       "status": "PASS",
-      "evidence": "pik-debug",
+      "evidence": "zl-debug",
       "detail": "Found: workflow guard FAIL"
     },
     {
-      "name": "Public pik-debug alias creates workflow state",
+      "name": "Public zl-debug alias creates workflow state",
       "status": "PASS",
-      "evidence": "pik-debug",
+      "evidence": "zl-debug",
       "detail": "Found: WORKFLOW_STATE.json"
     },
     {
       "name": "Real Graphify graph has nodes and edges/links",
       "status": "PASS",
-      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/real-graphify/.planning/graphs/graph.json",
+      "evidence": "../../../../var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/real-graphify/.planning/graphs/graph.json",
       "detail": "270 nodes, 221 edges/links"
     },
     {
-      "name": "AI-PIKit graph status reads real Graphify graph",
+      "name": "Zhulong graph status reads real Graphify graph",
       "status": "PASS",
-      "evidence": "pik graph status",
+      "evidence": "zl graph status",
       "detail": "Found: edges"
     },
     {
-      "name": "AI-PIKit graph query reads real Graphify report/nodes",
+      "name": "Zhulong graph query reads real Graphify report/nodes",
       "status": "PASS",
-      "evidence": "pik graph query approvalPolicy",
+      "evidence": "zl graph query approvalPolicy",
       "detail": "Found: approvalPolicy"
     },
     {
-      "name": "Runtime codex renders pik-new-milestone",
+      "name": "Runtime codex renders zl-new-milestone",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-new-milestone rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-new-milestone rendered"
     },
     {
-      "name": "Runtime codex renders pik-spec-phase",
+      "name": "Runtime codex renders zl-spec-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-spec-phase rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-spec-phase rendered"
     },
     {
-      "name": "Runtime codex renders pik-discuss-phase",
+      "name": "Runtime codex renders zl-discuss-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-discuss-phase rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-discuss-phase rendered"
     },
     {
-      "name": "Runtime codex renders pik-ui-phase",
+      "name": "Runtime codex renders zl-ui-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-ui-phase rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-ui-phase rendered"
     },
     {
-      "name": "Runtime codex renders pik-debug",
+      "name": "Runtime codex renders zl-debug",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-debug rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-debug rendered"
     },
     {
-      "name": "Runtime codex renders pik-plan-phase",
+      "name": "Runtime codex renders zl-plan-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-plan-phase rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-plan-phase rendered"
     },
     {
-      "name": "Runtime codex renders pik-execute-phase",
+      "name": "Runtime codex renders zl-execute-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-execute-phase rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-execute-phase rendered"
     },
     {
-      "name": "Runtime codex renders pik-code-review",
+      "name": "Runtime codex renders zl-code-review",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-code-review rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-code-review rendered"
     },
     {
-      "name": "Runtime codex renders pik-verify-work",
+      "name": "Runtime codex renders zl-verify-work",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-verify-work rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-verify-work rendered"
     },
     {
-      "name": "Runtime codex renders pik-complete-milestone",
+      "name": "Runtime codex renders zl-complete-milestone",
       "status": "PASS",
-      "evidence": "pik-runtime-status codex",
-      "detail": "Found: ok pik-complete-milestone rendered"
+      "evidence": "zl-runtime-status codex",
+      "detail": "Found: ok zl-complete-milestone rendered"
     },
     {
       "name": "Runtime codex routes workflows through guard runner",
@@ -545,64 +545,64 @@
       "detail": "Found: workflow run"
     },
     {
-      "name": "Runtime claude-code renders pik-new-milestone",
+      "name": "Runtime claude-code renders zl-new-milestone",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-new-milestone rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-new-milestone rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-spec-phase",
+      "name": "Runtime claude-code renders zl-spec-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-spec-phase rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-spec-phase rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-discuss-phase",
+      "name": "Runtime claude-code renders zl-discuss-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-discuss-phase rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-discuss-phase rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-ui-phase",
+      "name": "Runtime claude-code renders zl-ui-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-ui-phase rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-ui-phase rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-debug",
+      "name": "Runtime claude-code renders zl-debug",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-debug rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-debug rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-plan-phase",
+      "name": "Runtime claude-code renders zl-plan-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-plan-phase rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-plan-phase rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-execute-phase",
+      "name": "Runtime claude-code renders zl-execute-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-execute-phase rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-execute-phase rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-code-review",
+      "name": "Runtime claude-code renders zl-code-review",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-code-review rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-code-review rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-verify-work",
+      "name": "Runtime claude-code renders zl-verify-work",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-verify-work rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-verify-work rendered"
     },
     {
-      "name": "Runtime claude-code renders pik-complete-milestone",
+      "name": "Runtime claude-code renders zl-complete-milestone",
       "status": "PASS",
-      "evidence": "pik-runtime-status claude-code",
-      "detail": "Found: ok pik-complete-milestone rendered"
+      "evidence": "zl-runtime-status claude-code",
+      "detail": "Found: ok zl-complete-milestone rendered"
     },
     {
       "name": "Runtime claude-code routes workflows through guard runner",
@@ -611,64 +611,64 @@
       "detail": "Found: workflow run"
     },
     {
-      "name": "Runtime github-copilot renders pik-new-milestone",
+      "name": "Runtime github-copilot renders zl-new-milestone",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-new-milestone rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-new-milestone rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-spec-phase",
+      "name": "Runtime github-copilot renders zl-spec-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-spec-phase rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-spec-phase rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-discuss-phase",
+      "name": "Runtime github-copilot renders zl-discuss-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-discuss-phase rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-discuss-phase rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-ui-phase",
+      "name": "Runtime github-copilot renders zl-ui-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-ui-phase rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-ui-phase rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-debug",
+      "name": "Runtime github-copilot renders zl-debug",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-debug rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-debug rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-plan-phase",
+      "name": "Runtime github-copilot renders zl-plan-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-plan-phase rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-plan-phase rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-execute-phase",
+      "name": "Runtime github-copilot renders zl-execute-phase",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-execute-phase rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-execute-phase rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-code-review",
+      "name": "Runtime github-copilot renders zl-code-review",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-code-review rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-code-review rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-verify-work",
+      "name": "Runtime github-copilot renders zl-verify-work",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-verify-work rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-verify-work rendered"
     },
     {
-      "name": "Runtime github-copilot renders pik-complete-milestone",
+      "name": "Runtime github-copilot renders zl-complete-milestone",
       "status": "PASS",
-      "evidence": "pik-runtime-status github-copilot",
-      "detail": "Found: ok pik-complete-milestone rendered"
+      "evidence": "zl-runtime-status github-copilot",
+      "detail": "Found: ok zl-complete-milestone rendered"
     },
     {
       "name": "Runtime github-copilot routes workflows through guard runner",
@@ -689,164 +689,164 @@
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for new-milestone",
+      "name": "Zhulong workflow exists for new-milestone",
       "status": "PASS",
       "evidence": "core/workflows/new-milestone.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for spec-phase",
+      "name": "Zhulong workflow exists for spec-phase",
       "status": "PASS",
       "evidence": "core/workflows/spec-phase.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for discuss-phase",
+      "name": "Zhulong workflow exists for discuss-phase",
       "status": "PASS",
       "evidence": "core/workflows/discuss-phase.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for ui-phase",
+      "name": "Zhulong workflow exists for ui-phase",
       "status": "PASS",
       "evidence": "core/workflows/ui-phase.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for debug",
+      "name": "Zhulong workflow exists for debug",
       "status": "PASS",
       "evidence": "core/workflows/debug.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for plan-phase",
+      "name": "Zhulong workflow exists for plan-phase",
       "status": "PASS",
       "evidence": "core/workflows/plan-phase.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for execute-phase",
+      "name": "Zhulong workflow exists for execute-phase",
       "status": "PASS",
       "evidence": "core/workflows/execute-phase.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for code-review",
+      "name": "Zhulong workflow exists for code-review",
       "status": "PASS",
       "evidence": "core/workflows/code-review.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for verify-work",
+      "name": "Zhulong workflow exists for verify-work",
       "status": "PASS",
       "evidence": "core/workflows/verify-work.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit workflow exists for complete-milestone",
+      "name": "Zhulong workflow exists for complete-milestone",
       "status": "PASS",
       "evidence": "core/workflows/complete-milestone.md",
       "detail": ""
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for new-milestone",
+      "name": "Zhulong adds docs/graph gates for new-milestone",
       "status": "PASS",
       "evidence": "core/workflows/new-milestone.md",
-      "detail": "new-milestone: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "new-milestone: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for spec-phase",
+      "name": "Zhulong adds docs/graph gates for spec-phase",
       "status": "PASS",
       "evidence": "core/workflows/spec-phase.md",
-      "detail": "spec-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "spec-phase: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for discuss-phase",
+      "name": "Zhulong adds docs/graph gates for discuss-phase",
       "status": "PASS",
       "evidence": "core/workflows/discuss-phase.md",
-      "detail": "discuss-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "discuss-phase: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for ui-phase",
+      "name": "Zhulong adds docs/graph gates for ui-phase",
       "status": "PASS",
       "evidence": "core/workflows/ui-phase.md",
-      "detail": "ui-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "ui-phase: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for debug",
+      "name": "Zhulong adds docs/graph gates for debug",
       "status": "PASS",
       "evidence": "core/workflows/debug.md",
-      "detail": "debug: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "debug: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for plan-phase",
+      "name": "Zhulong adds docs/graph gates for plan-phase",
       "status": "PASS",
       "evidence": "core/workflows/plan-phase.md",
-      "detail": "plan-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "plan-phase: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for execute-phase",
+      "name": "Zhulong adds docs/graph gates for execute-phase",
       "status": "PASS",
       "evidence": "core/workflows/execute-phase.md",
-      "detail": "execute-phase: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "execute-phase: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for verify-work",
+      "name": "Zhulong adds docs/graph gates for verify-work",
       "status": "PASS",
       "evidence": "core/workflows/verify-work.md",
-      "detail": "verify-work: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "verify-work: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
-      "name": "AI-PIKit adds docs/graph gates for complete-milestone",
+      "name": "Zhulong adds docs/graph gates for complete-milestone",
       "status": "PASS",
       "evidence": "core/workflows/complete-milestone.md",
-      "detail": "complete-milestone: AI-PIKit docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
+      "detail": "complete-milestone: Zhulong docs gate=true, graph gate=true; GSD docs mention=true, graph mention=false"
     },
     {
       "name": "Live GraphRAG validation skipped",
       "status": "WARN",
       "evidence": "--live-graphrag",
-      "detail": "Run with GRAPHRAG_API_KEY and --live-graphrag to validate real GraphRAG through AI-PIKit."
+      "detail": "Run with GRAPHRAG_API_KEY and --live-graphrag to validate real GraphRAG through Zhulong."
     }
   ],
   "artifacts": [
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/init-new-project",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/init-existing-project",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/fixture-pik-native",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/workflow-guard",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/workflow-alias",
-    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/pik-full-validation-0ihHde/real-graphify"
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/init-new-project",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/init-existing-project",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/fixture-zl-native",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/workflow-guard",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/workflow-alias",
+    "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zl-full-validation-LvFzK6/real-graphify"
   ],
   "assessment": [
     {
       "area": "Public command surface",
-      "evidence": "package bin exposes pik-*; runtime packs render pik-*",
-      "assessment": "AI-PIKit replaces GSD for user invocation"
+      "evidence": "package bin exposes zl-*; runtime packs render zl-*",
+      "assessment": "Zhulong replaces GSD for user invocation"
     },
     {
       "area": "Workflow contract",
       "evidence": "core/workflows/*.md, .planning/workflows/<id>/WORKFLOW_STATE.json, guard checks",
-      "assessment": "AI-PIKit has native contracts and a CLI guard state machine"
+      "assessment": "Zhulong has native contracts and a CLI guard state machine"
     },
     {
       "area": "Document evidence",
-      "evidence": "pik-docs-*, RAG result files, workflow docs gate spec evidence",
-      "assessment": "AI-PIKit improves document-heavy development"
+      "evidence": "zl-docs-*, RAG result files, workflow docs gate spec evidence",
+      "assessment": "Zhulong improves document-heavy development"
     },
     {
       "area": "Code impact",
-      "evidence": "pik-graph-*, Graphify artifact sync, graph status/query/diff",
-      "assessment": "AI-PIKit makes Graphify an explicit workflow gate"
+      "evidence": "zl-graph-*, Graphify artifact sync, graph status/query/diff",
+      "assessment": "Zhulong makes Graphify an explicit workflow gate"
     },
     {
       "area": "Evidence writeback",
-      "evidence": "pik-evidence-record --writeback verified",
-      "assessment": "AI-PIKit provides reusable evidence loop"
+      "evidence": "zl-evidence-record --writeback verified",
+      "assessment": "Zhulong provides reusable evidence loop"
     },
     {
       "area": "Hard enforcement",
-      "evidence": "pik-workflow-run, pik-gate-check, pik-completion-check verified",
-      "assessment": "AI-PIKit adds artifact-level enforcement beyond prompt guidance"
+      "evidence": "zl-workflow-run, zl-gate-check, zl-completion-check verified",
+      "assessment": "Zhulong adds artifact-level enforcement beyond prompt guidance"
     }
   ]
 }

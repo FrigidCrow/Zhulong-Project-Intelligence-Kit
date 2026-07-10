@@ -1,4 +1,4 @@
-# AI-PIKit Workflow Facade & Policy Guard Contract Report
+# Zhulong Workflow Facade & Policy Guard Contract Report
 
 生成时间: 2026-06-25
 
@@ -6,14 +6,14 @@
 
 本次增强分两个主阶段实施：
 
-1. MVP6.0 Workflow Facade：让 `pik-debug`、`pik-plan-phase`、`pik-execute-phase` 等 public workflow 自动汇总轻量上下文、policy、preflight、gate 和下一步建议，降低开发时的命令心智负担。
-2. MVP6.1 Policy Guard Contract：新增 `pik-policy-lock`、`pik-policy-verify`、`pik-policy-diff`，把 “允许跳过 / 必须阻断 / 带风险继续” 固化为本地可锁定、可验证、可 diff 的 policy contract。
+1. MVP6.0 Workflow Facade：让 `zl-debug`、`zl-plan-phase`、`zl-execute-phase` 等 public workflow 自动汇总轻量上下文、policy、preflight、gate 和下一步建议，降低开发时的命令心智负担。
+2. MVP6.1 Policy Guard Contract：新增 `zl-policy-lock`、`zl-policy-verify`、`zl-policy-diff`，把 “允许跳过 / 必须阻断 / 带风险继续” 固化为本地可锁定、可验证、可 diff 的 policy contract。
 
 ## 新增命令
 
-- `pik-policy-lock --target <repo>`
-- `pik-policy-verify --target <repo>`
-- `pik-policy-diff --target <repo>`
+- `zl-policy-lock --target <repo>`
+- `zl-policy-verify --target <repo>`
+- `zl-policy-diff --target <repo>`
 
 ## 新增产物
 
@@ -58,8 +58,8 @@
 - `npm run verify:integration`: PASS 132 / FAIL 0 / WARN 1
 - `npm run verify:all`: PASS
 
-`WARN 1` 来自 integration 默认未启用外部 live GraphRAG fixture。AI-PIKit 默认已经是 local-only GraphRAG；外部 live GraphRAG 只作为显式 opt-in smoke，不影响本地默认结论。
+`WARN 1` 来自 integration 默认未启用外部 live GraphRAG fixture。Zhulong 默认已经是 local-only GraphRAG；外部 live GraphRAG 只作为显式 opt-in smoke，不影响本地默认结论。
 
 ## 修正记录
 
-integration 首轮暴露了一个旧 fixture 配置问题：`examples/japanese-doc-dev-fixture/pik.fixture.config.json` 使用 `fixture-graphrag` 作为 provider，新的 privacy gate 会正确把它判为非 local-only。已把该 fixture 改为 `graphrag-local`，并显式写入 `privacy.network_policy = local_only`、`graphrag.mode = local`、`requires_api_key = false` 和 localhost API base。修正后 `npm run verify:integration` 与 `npm run fixture:japanese` 均通过。
+integration 首轮暴露了一个旧 fixture 配置问题：`examples/japanese-doc-dev-fixture/zl.fixture.config.json` 使用 `fixture-graphrag` 作为 provider，新的 privacy gate 会正确把它判为非 local-only。已把该 fixture 改为 `graphrag-local`，并显式写入 `privacy.network_policy = local_only`、`graphrag.mode = local`、`requires_api_key = false` 和 localhost API base。修正后 `npm run verify:integration` 与 `npm run fixture:japanese` 均通过。

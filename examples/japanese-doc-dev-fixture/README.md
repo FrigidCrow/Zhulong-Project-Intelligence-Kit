@@ -47,12 +47,12 @@ scripts/
   fake-rag-index.mjs
   fake-rag-query.mjs
   fake-graphify.mjs
-pik-seed/
+zl-seed/
   issues/
   phases/
 ```
 
-## AI-PIKit Validation
+## Zhulong Validation
 
 From the kit root, run:
 
@@ -61,31 +61,31 @@ npm run fixture:japanese
 ```
 
 The validation script copies this fixture to a temporary directory, initializes
-AI-PIKit, configures fixture RAG and Graphify adapters, verifies the expected failing
+Zhulong, configures fixture RAG and Graphify adapters, verifies the expected failing
 task test, applies the CR-017 change in the temp copy, runs tests, diffs the code
 map, and writes evidence back to the seeded issue record.
 
-## Manual AI-PIKit Flow
+## Manual Zhulong Flow
 
 Inside a copied fixture project:
 
 ```bash
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs init --target . --template backend-service --name ja_approval_fixture --force
-cp pik.fixture.config.json .planning/config.json
-cp -R pik-seed/issues/* .planning/issues/
-cp -R pik-seed/phases/* .planning/phases/
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs init --target . --template backend-service --name ja_approval_fixture --force
+cp zl.fixture.config.json .planning/config.json
+cp -R zl-seed/issues/* .planning/issues/
+cp -R zl-seed/phases/* .planning/phases/
 
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs docs normalize --target .
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs docs index --target . --run
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs docs query --target . "代理承認 30,000"
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs docs query --target . --rag "代理承認の上限金額"
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs normalize --target .
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs index --target . --run
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs query --target . "代理承認 30,000"
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs docs query --target . --rag "代理承認の上限金額"
 
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs graph build --target . --run
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs graph query --target . "PROXY_APPROVAL_LIMIT"
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs graph build --target . --run
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs graph query --target . "PROXY_APPROVAL_LIMIT"
 
 npm run test:task
-node /path/to/Project-Intelligence-Kit/bin/pik.mjs evidence record --target . "CR-017 proxy approval limit verified" --writeback .planning/issues/CR-017_proxy_approval_limit.md
+node /path/to/Project-Intelligence-Kit/bin/zl.mjs evidence record --target . "CR-017 proxy approval limit verified" --writeback .planning/issues/CR-017_proxy_approval_limit.md
 ```
 
-The user-facing command layer stays `pik-*`; fixture adapters only stand in for
+The user-facing command layer stays `zl-*`; fixture adapters only stand in for
 real GraphRAG and Graphify backends.

@@ -1,6 +1,6 @@
-# AI-PIKit Docs Verification
+# Zhulong Docs Verification
 
-生成时间: 2026-06-28T18:20:51.026Z
+生成时间: 2026-07-10T00:45:02.006Z
 
 ## 摘要
 
@@ -11,8 +11,12 @@
 
 - `README.md`
 - `docs/architecture.md`
+- `docs/assets/zhulong-icon-variants/README.md`
+- `docs/assets/zhulong-selected-variants/README.md`
+- `docs/brand.md`
 - `docs/changelog.md`
 - `docs/commands.html`
+- `docs/context-efficiency.md`
 - `docs/extraction-map.md`
 - `docs/field-notes/README.md`
 - `docs/field-notes/graphrag-local-operations-guide.md`
@@ -28,6 +32,7 @@
 - `docs/technical-guide.html`
 - `docs/wishlist-loop-plan.md`
 - `docs/wishlist.md`
+- `docs/zhulong-extraction-and-local-plan.md`
 - `verification/README.md`
 
 ## Issues

@@ -1,6 +1,6 @@
-# AI-PIKit Local GraphRAG Verification
+# Zhulong Local GraphRAG Verification
 
-生成时间: 2026-06-28T15:46:25.832Z
+生成时间: 2026-07-10T00:45:27.023Z
 
 ## 摘要
 
@@ -35,18 +35,18 @@
 - local settings: file exists graphrag-workspace/settings.yaml
 - local settings: does not contain GRAPHRAG_API_KEY
 - local settings: graphrag-workspace/.env absent
-- pik-privacy-audit before index: found privacy audit PASS
-- pik docs index --run local: found status success
+- zl-privacy-audit before index: found privacy audit PASS
+- zl docs index --run local: found status success
 - RAG_INDEX_RESULT: file exists .planning/knowledge/RAG_INDEX_RESULT.md
 - RAG_INDEX_RESULT: found Status: success
-- pik docs query --rag local: found 42,420
+- zl docs query --rag local: found 42,420
 - RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md
 - RAG_QUERY_RESULT: found Status: success
 - RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md
 - RAG_QUERY_RESULT: found 42,420
 - RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md
 - RAG_QUERY_RESULT: found Data: Sources
-- pik-privacy-audit after query: found privacy audit PASS
+- zl-privacy-audit after query: found privacy audit PASS
 - PRIVACY_AUDIT: file exists .planning/knowledge/PRIVACY_AUDIT.md
 - PRIVACY_AUDIT: found Status: PASS
 - secret/external scan: no sk-* tokens or external URLs in fixture project
@@ -60,9 +60,9 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-rag-local.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project`
+- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-rag-local.mjs'`
 
 ## Issues
 

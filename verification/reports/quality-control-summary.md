@@ -1,4 +1,4 @@
-# AI-PIKit Quality Control Summary
+# Zhulong Quality Control Summary
 
 生成时间: 2026-06-28T15:46:46.243Z
 
@@ -35,8 +35,8 @@
 
 ## 边界
 
-- 默认 local-only，除显式 `--allow-external-rag` 外不允许 AI-PIKit 命令外发项目资料。
-- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 AI-PIKit 命令默认本地边界。
+- 默认 local-only，除显式 `--allow-external-rag` 外不允许 Zhulong 命令外发项目资料。
+- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 Zhulong 命令默认本地边界。
 - Ragas-style / Promptfoo-style 是本地代理评分，不接外部 SaaS，也不调用外部模型。
 - OWASP / NIST 是治理 checklist，不是外部认证。
-- 本摘要来自 `.pik-audit/latest/QUALITY_CONTROL_SCORECARD.md`。
+- 本摘要来自 `.zl-audit/latest/QUALITY_CONTROL_SCORECARD.md`。

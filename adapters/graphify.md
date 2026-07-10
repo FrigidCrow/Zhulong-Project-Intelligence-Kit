@@ -11,14 +11,14 @@ Graphify is the code relationship adapter.
 
 ## Common Commands
 
-AI-PIKit facade:
+Zhulong facade:
 
 ```bash
-pik-graph-status --target <repo>
-pik-graph-query --target <repo> "<entity-or-question>"
-pik-graph-build --target <repo>
-pik-graph-build --target <repo> --run
-pik-graph-diff --target <repo>
+zl-graph-status --target <repo>
+zl-graph-query --target <repo> "<entity-or-question>"
+zl-graph-build --target <repo>
+zl-graph-build --target <repo> --run
+zl-graph-diff --target <repo>
 ```
 
 Adapter command examples:
@@ -42,7 +42,7 @@ Before high-risk production edits:
 After structural edits:
 
 1. Run focused tests/build checks.
-2. Run `pik-graph-build --run` when direct graph refresh is approved.
-3. Run `pik-graph-diff` to inspect structural graph changes.
+2. Run `zl-graph-build --run` when direct graph refresh is approved.
+3. Run `zl-graph-diff` to inspect structural graph changes.
 4. Refresh only the affected subsystem graph when possible.
 5. Refresh the root graph only for cross-subsystem or shared-boundary changes.

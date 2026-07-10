@@ -1,6 +1,6 @@
-# AI-PIKit License Audit
+# Zhulong License Audit
 
-Generated: 2026-06-28T13:57:31.261Z
+Generated: 2026-07-10T00:45:33.637Z
 
 ## Summary
 
@@ -8,13 +8,13 @@ Generated: 2026-06-28T13:57:31.261Z
 - Items checked: 4
 - Restricted / commercial-review licenses: 0
 - Non-MIT or unknown items: 3
-- Unknown license metadata: 3
+- Unknown license metadata: 2
 
 ## Items
 
 | Name | Version | Source | License | Risk |
 | --- | --- | --- | --- | --- |
-| `ai-project-intelligence-kit` | 0.1.0 | package.json | not declared; private package | unknown |
+| `zhulong-kit` | 0.1.0 | package.json | UNLICENSED | non-mit-permissive-or-review |
 | `graphrag` | installed | CLI at /Users/frigidcrow/.local/bin/graphrag | UNKNOWN | unknown |
 | `graphify` | graphify 0.8.40 | CLI at /Users/frigidcrow/.local/bin/graphify | UNKNOWN | unknown |
 | `ollama` | ollama version is 0.21.0 | Homebrew metadata / CLI | MIT | mit |

@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Project Intelligence Kit - AI 工程上下文框架</title>
-  <meta name="description" content="AI Project Intelligence Kit 是面向文档密集型软件开发的本地 AI 工程上下文框架。">
-  <link rel="stylesheet" href="assets/pik-site.css">
+  <title>Zhulong Project Intelligence Kit - AI 工程上下文框架</title>
+  <meta name="description" content="Zhulong Project Intelligence Kit 是面向文档密集型软件开发的本地 AI 工程上下文框架。">
+  <link rel="stylesheet" href="assets/zl-site.css">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <div class="site-shell">
     <header class="topbar">
-      <a class="brand-mark" href="../README.md">AI Project Intelligence Kit</a>
+      <a class="brand-mark" href="../README.md">Zhulong Project Intelligence Kit</a>
       <nav class="nav" aria-label="主导航">
         <a href="product.html" aria-current="page">产品</a>
         <a href="commands.html">命令</a>
@@ -22,24 +22,24 @@
     </header>
 
     <main id="main">
-      <section class="hero" aria-label="AI-PIKit 产品介绍">
+      <section class="hero" aria-label="Zhulong 产品介绍">
         <canvas id="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-content">
-          <p class="eyebrow">AI Engineering Control Plane</p>
-          <h1>基于你项目的 AI 编程。</h1>
+          <p class="eyebrow">本地项目智能控制面</p>
+          <h1>Zhulong（烛龙）</h1>
           <p>
-            在 AI 代理接触代码之前，AI-PIKit 会把项目上下文、仕様证据、Graphify 代码影响图、
-            workflow gates 和 evidence writeback 交给它。
+            照亮 AI 编程看不见的项目状态。Zhulong 在代理接触代码之前组织项目上下文、规格证据、
+            Graphify 代码影响图、工作流门禁和验证回写。
           </p>
           <div class="hero-actions">
             <a class="button primary" href="commands.html">查看命令手册</a>
             <a class="button" href="technical-guide.html">阅读技术教程</a>
           </div>
-          <div class="console-mock product-hero-mock" aria-label="AI-PIKit 工程控制台示意">
+          <div class="console-mock product-hero-mock" aria-label="Zhulong 工程控制台示意">
             <div class="window-bar">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span>pik-console ~ root/core</span>
-              <span class="status-pill" style="margin-left:auto">MVP4.2 / 71 命令 / 审计 95A</span>
+              <span>zl-console ~ root/core</span>
+              <span class="status-pill" style="margin-left:auto">74 条命令 / 机械审计 / 本地优先</span>
             </div>
             <div class="console-grid">
               <div class="console-pane">
@@ -51,13 +51,13 @@
               </div>
               <div class="console-pane center">
                 <div>
-                  <div class="command-chip active">&gt; pik-preflight</div>
+                  <div class="command-chip active">&gt; zl-preflight</div>
                   <div class="flow-line"></div>
-                  <div class="command-chip">&gt; pik-refresh-plan</div>
+                  <div class="command-chip">&gt; zl-refresh-plan</div>
                   <div class="flow-line"></div>
-                  <div class="command-chip">&gt; pik-plan-phase</div>
+                  <div class="command-chip">&gt; zl-plan-phase</div>
                   <div class="flow-line"></div>
-                  <div class="command-chip">&gt; pik-completion-check</div>
+                  <div class="command-chip">&gt; zl-completion-check</div>
                 </div>
               </div>
               <div class="console-pane">
@@ -88,11 +88,11 @@
               </div>
             </div>
           </div>
-          <div class="metric-strip" aria-label="AI-PIKit 核心能力">
+          <div class="metric-strip" aria-label="Zhulong 核心能力">
             <div class="metric"><strong>4</strong><span>上下文层：workflow、docs、graph、evidence</span></div>
             <div class="metric"><strong>9</strong><span>completion gates 阻断虚假完成</span></div>
             <div class="metric"><strong>3</strong><span>Codex / Claude Code / Copilot runtime</span></div>
-            <div class="metric"><strong>71</strong><span>`pik-*` 命令面已执行验证</span></div>
+            <div class="metric"><strong>74</strong><span><code>zl-*</code> 命令面已执行验证</span></div>
             <div class="metric"><strong>95</strong><span>Developer audit 总分，等级 A</span></div>
           </div>
         </div>
@@ -100,8 +100,42 @@
 
       <section class="section">
         <div class="section-header">
+          <h2>五个能被验证的特色，不是一组宣传口号。</h2>
+          <p>每项能力都对应真实摩擦、本地制品和独立验证脚本；完整记录规则见 <a href="brand.md">品牌与特色能力规范</a>。</p>
+        </div>
+        <div class="control-bento">
+          <article class="control-card wide">
+            <div class="pane-label">烛照全局</div>
+            <h3>问一句“下一步做什么”</h3>
+            <p><code>zl-next</code> 读取当前项目状态，只给 2-3 条命令；cockpit 用真实制品呈现状态，不用总分掩盖缺口。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">机械判定</div>
+            <h3>质量不交给模型猜</h3>
+            <p>暧昧、结构和回答审计只使用正则、集合、mini-schema、数值比较和词法重叠。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">证据闭环</div>
+            <h3>结论能够回到来源</h3>
+            <p>引用解析率、数值漂移、追踪矩阵和 evidence writeback 共同证明“为什么这样改”。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">昼夜有序</div>
+            <h3>自动化没有惊吓</h3>
+            <p>零成本审计可以自动折叠；索引重建、代码图重建和刷新始终要求显式命令。</p>
+          </article>
+          <article class="control-card">
+            <div class="pane-label">本地边界</div>
+            <h3>项目资料默认留在本机</h3>
+            <p>local-only、offline lock、外发审计和 deny 模板共同约束网络与敏感文件访问。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
           <h2>本地工程控制面，而不是另一个聊天入口。</h2>
-          <p>三个 runtime 入口都落到同一套 `pik-*` 命令和 `.planning/` 本地制品，页面视觉也统一成控制台式信息模块。</p>
+          <p>三个 runtime 入口都落到同一套 `zl-*` 命令和 `.planning/` 本地制品，页面视觉也统一成控制台式信息模块。</p>
         </div>
         <div class="control-bento">
           <article class="control-card wide">
@@ -110,7 +144,7 @@
               <code>Codex</code>
               <code>Claude Code</code>
               <code>GitHub Copilot</code>
-              <code class="active">AI-PIKit CLI</code>
+              <code class="active">Zhulong CLI</code>
               <code>.planning/</code>
               <code>Completion Gates</code>
             </div>
@@ -133,12 +167,12 @@
           <article class="control-card">
             <div class="pane-label">policy</div>
             <h3>MVP6 policy contract</h3>
-            <p>`pik-policy-lock`、`pik-policy-verify`、`pik-policy-diff` 把 local-only、profile 和四态 gate 固化为本地合同。</p>
+            <p>`zl-policy-lock`、`zl-policy-verify`、`zl-policy-diff` 把 local-only、profile 和四态 gate 固化为本地合同。</p>
           </article>
           <article class="control-card">
             <div class="pane-label">freshness</div>
             <h3>MVP3.5 refresh control</h3>
-            <p>`pik-preflight` 和 `pik-refresh-plan` 只提醒；`pik-refresh-run` 才显式刷新 GraphRAG / Graphify。</p>
+            <p>`zl-preflight` 和 `zl-refresh-plan` 只提醒；`zl-refresh-run` 才显式刷新 GraphRAG / Graphify。</p>
           </article>
         </div>
       </section>
@@ -147,15 +181,15 @@
         <div class="section-header">
           <h2>不是更会写代码，而是更知道为什么改。</h2>
           <p>
-            普通 AI coding 只看到 prompt 和当前文件。AI-PIKit 让 AI 先读项目状态、仕様依据、QA、議事録、
+            普通 AI coding 只看到 prompt 和当前文件。Zhulong 让 AI 先读项目状态、仕様依据、QA、議事録、
             代码影响面和验证要求，再进入实现。
           </p>
         </div>
-        <div class="comparison" aria-label="普通 AI coding 和 AI-PIKit 对比">
+        <div class="comparison" aria-label="普通 AI coding 和 Zhulong 对比">
           <div class="comparison-row">
             <div>维度</div>
             <div>普通 AI Coding</div>
-            <div>AI Project Intelligence Kit</div>
+            <div>Zhulong Project Intelligence Kit</div>
           </div>
           <div class="comparison-row">
             <div>输入</div>
@@ -165,12 +199,12 @@
           <div class="comparison-row">
             <div>改修前</div>
             <div>靠模型猜测影响面，容易漏掉旧系统边界。</div>
-            <div>先跑 `pik-codebase-scan` 和 Graphify，把入口、依赖、风险模块显式化。</div>
+            <div>先跑 `zl-codebase-scan` 和 Graphify，把入口、依赖、风险模块显式化。</div>
           </div>
           <div class="comparison-row">
             <div>文档依据</div>
             <div>需要人工复制粘贴，文档一多就断层。</div>
-            <div>`pik-docs-sync`、`pik-docs-query`、`pik-answer-audit`、可选 GraphRAG，把依据和审计写回 `.planning/`。</div>
+            <div>`zl-docs-sync`、`zl-docs-query`、`zl-answer-audit`、可选 GraphRAG，把依据和审计写回 `.planning/`。</div>
           </div>
           <div class="comparison-row">
             <div>完成定义</div>
@@ -183,12 +217,12 @@
       <section class="section">
         <div class="section-header">
           <h2>四个层次，组成一个工程控制面。</h2>
-          <p>AI-PIKit 的价值不是把几个工具绑在一起，而是把它们变成 AI 开发时必须经过的上下文路径。</p>
+          <p>Zhulong 的价值不是把几个工具绑在一起，而是把它们变成 AI 开发时必须经过的上下文路径。</p>
         </div>
         <div class="grid four">
           <article class="panel panel-pad">
             <h3>Workflow guard</h3>
-            <p>用 AI-PIKit native workflow 复刻 GSD 的严格流程思路。`pik-debug`、`pik-plan-phase`、`pik-execute-phase` 都会进入 gate 检查。</p>
+            <p>用 Zhulong native workflow 复刻 GSD 的严格流程思路。`zl-debug`、`zl-plan-phase`、`zl-execute-phase` 都会进入 gate 检查。</p>
           </article>
           <article class="panel panel-pad">
             <h3>Document intelligence</h3>
@@ -196,11 +230,11 @@
           </article>
           <article class="panel panel-pad">
             <h3>Code map</h3>
-            <p>Graphify 提供代码地图和影响面。AI-PIKit 负责把图谱产物同步进 `.planning/graphs/`，供 workflow 使用。</p>
+            <p>Graphify 提供代码地图和影响面。Zhulong 负责把图谱产物同步进 `.planning/graphs/`，供 workflow 使用。</p>
           </article>
           <article class="panel panel-pad">
             <h3>Evidence loop</h3>
-            <p>测试命令、验证结果、风险判断、仕様引用都写回 evidence。最后由 `pik-completion-check` 判断能不能收口。</p>
+            <p>测试命令、验证结果、风险判断、仕様引用都写回 evidence。最后由 `zl-completion-check` 判断能不能收口。</p>
           </article>
         </div>
       </section>
@@ -208,57 +242,57 @@
       <section class="section alt">
         <div class="section-header">
           <h2>面向对日开发现场的真实摩擦。</h2>
-          <p>AI-PIKit 优先解决“文档很多、旧代码复杂、交付要讲依据”的场景，而不是做一个空泛的聊天外壳。</p>
+          <p>Zhulong 优先解决“文档很多、旧代码复杂、交付要讲依据”的场景，而不是做一个空泛的聊天外壳。</p>
         </div>
         <div class="split-feature">
           <div class="story-stack">
             <div class="story-row">
               <strong>仕様变更</strong>
-              <p>先把变更点进入 `pik-spec-phase`，查询文档依据，记录未决点，再生成计划。</p>
+              <p>先把变更点进入 `zl-spec-phase`，查询文档依据，记录未决点，再生成计划。</p>
             </div>
             <div class="story-row">
               <strong>缺陷调查</strong>
-              <p>`pik-debug` 会写 context packet，把 QA、議事録、Graphify 影响面和验证 gate 串起来。</p>
+              <p>`zl-debug` 会写 context packet，把 QA、議事録、Graphify 影响面和验证 gate 串起来。</p>
             </div>
             <div class="story-row">
               <strong>既存改修</strong>
-              <p>既有项目初始化后必须跑 `pik-codebase-scan`。没有 codebase baseline，guard 不允许轻易完成。</p>
+              <p>既有项目初始化后必须跑 `zl-codebase-scan`。没有 codebase baseline，guard 不允许轻易完成。</p>
             </div>
             <div class="story-row">
               <strong>文档更新</strong>
-              <p>文档新增或变更后先跑 `pik-docs-sync`。它只标记 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG；需要新索引时再显式加 `--index`。</p>
+              <p>文档新增或变更后先跑 `zl-docs-sync`。它只标记 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG；需要新索引时再显式加 `--index`。</p>
             </div>
             <div class="story-row">
               <strong>代码更新</strong>
-              <p>别人提交和你当前任务无关时可以跳过重刷新；相关源码或测试变更才推荐 `pik-refresh-run --graph`。</p>
+              <p>别人提交和你当前任务无关时可以跳过重刷新；相关源码或测试变更才推荐 `zl-refresh-run --graph`。</p>
             </div>
           </div>
           <div class="panel panel-pad">
             <h3>开发者每天真正会用到的入口</h3>
-            <pre class="code-block"><code>pik-debug --target "$PWD" "障害内容"
-pik-preflight --target "$PWD"
-pik-refresh-plan --target "$PWD"
-pik-docs-sync --target "$PWD"
-pik-docs-query --target "$PWD" "仕様根拠"
-pik-answer-audit --target "$PWD"
-pik-graph-query --target "$PWD" "変更対象"
-pik-plan-phase --target "$PWD" "MVP1"
-pik-execute-phase --target "$PWD" "実装"
-pik-verify-work --target "$PWD" "検証"
-pik-completion-check --target "$PWD"</code></pre>
-            <p>Codex、Claude Code、Copilot 只是不同入口。真正稳定的能力边界是本地 `pik-*` 命令和 `.planning/` artifact。</p>
+            <pre class="code-block"><code>zl-debug --target "$PWD" "障害内容"
+zl-preflight --target "$PWD"
+zl-refresh-plan --target "$PWD"
+zl-docs-sync --target "$PWD"
+zl-docs-query --target "$PWD" "仕様根拠"
+zl-answer-audit --target "$PWD"
+zl-graph-query --target "$PWD" "変更対象"
+zl-plan-phase --target "$PWD" "MVP1"
+zl-execute-phase --target "$PWD" "実装"
+zl-verify-work --target "$PWD" "検証"
+zl-completion-check --target "$PWD"</code></pre>
+            <p>Codex、Claude Code、Copilot 只是不同入口。真正稳定的能力边界是本地 `zl-*` 命令和 `.planning/` artifact。</p>
           </div>
         </div>
       </section>
 
       <section class="section">
         <div class="section-header">
-          <h2>AI-PIKit 的工作方式</h2>
+          <h2>Zhulong 的工作方式</h2>
           <p>它不搬动你的项目，也不替代 IDE。它在目标项目根目录叠加一个本地工程控制面。</p>
         </div>
         <div class="grid two">
           <div class="panel panel-pad diagram">
-            <div class="node"><strong>1. pik-debug / pik-plan-phase</strong><br>启动 AI-PIKit workflow guard。</div>
+            <div class="node"><strong>1. zl-debug / zl-plan-phase</strong><br>启动 Zhulong workflow guard。</div>
             <div class="node"><strong>2. .planning/context</strong><br>生成 context packet 和 handoff。</div>
             <div class="node"><strong>3. docs + graph</strong><br>查询文档依据和代码影响面。</div>
             <div class="node"><strong>4. evidence</strong><br>把验证记录写入 `.planning/evidence/` 并回写 issue。</div>
@@ -278,7 +312,7 @@ pik-completion-check --target "$PWD"</code></pre>
     refresh/
     workflows/
     evidence/</code></pre>
-            <p>AI-PIKit 的产物默认留在目标项目本地。外部流通只会来自你配置的 runtime、RAG provider 或 Graphify command。</p>
+            <p>Zhulong 的产物默认留在目标项目本地。外部流通只会来自你配置的 runtime、RAG provider 或 Graphify command。</p>
           </div>
         </div>
       </section>
@@ -286,7 +320,7 @@ pik-completion-check --target "$PWD"</code></pre>
       <section class="section alt">
         <div class="section-header">
           <h2>每一步都有落点，不只停在聊天里。</h2>
-          <p>AI-PIKit 会把 AI 开发过程拆成可检查的本地文件。你可以打开这些文件，确认它到底有没有接入文档、Graphify 和 workflow。</p>
+          <p>Zhulong 会把 AI 开发过程拆成可检查的本地文件。你可以打开这些文件，确认它到底有没有接入文档、Graphify 和 workflow。</p>
         </div>
         <div class="signal-board">
           <div class="signal"><strong>.planning/codebase/</strong><span>代码清单、结构、技术栈、测试策略、既有项目 baseline。</span></div>
@@ -298,33 +332,33 @@ pik-completion-check --target "$PWD"</code></pre>
           <div class="signal"><strong>.planning/trace/</strong><span>文档、代码、测试、evidence 的追踪矩阵。</span></div>
           <div class="signal"><strong>.planning/policies/</strong><span>完成前 policy check，保密和证据质量统一给出 PASS/FAIL。</span></div>
           <div class="signal"><strong>.planning/refresh/</strong><span>记录 GraphRAG / Graphify 上次刷新 commit、preflight、refresh plan 和显式刷新结果。</span></div>
-          <div class="signal"><strong>AGENTS.md</strong><span>把 AI-PIKit 调用规则写进目标项目，让 runtime 更容易遵守流程。</span></div>
+          <div class="signal"><strong>AGENTS.md</strong><span>把 Zhulong 调用规则写进目标项目，让 runtime 更容易遵守流程。</span></div>
         </div>
       </section>
 
       <section class="section">
         <div class="section-header">
           <h2>成本可控，不把每个任务都变成全量重建。</h2>
-          <p>MVP3.5 增加执行预算层。AI-PIKit 会告诉你 GraphRAG / Graphify 距离最新 commit 落后多少，以及这些 commit 是否真的改到了相关文档或代码。</p>
+          <p>MVP3.5 增加执行预算层。Zhulong 会告诉你 GraphRAG / Graphify 距离最新 commit 落后多少，以及这些 commit 是否真的改到了相关文档或代码。</p>
         </div>
         <div class="grid three">
           <article class="panel panel-pad">
             <h3>轻量提醒</h3>
-            <pre class="code-block"><code>pik-preflight --target "$PWD"
+            <pre class="code-block"><code>zl-preflight --target "$PWD"
 sed -n '1,120p' .planning/refresh/PREFLIGHT.md</code></pre>
             <p>只读 git diff 和刷新账本，输出 `heavy refresh executed: no`。</p>
           </article>
           <article class="panel panel-pad">
             <h3>差分计划</h3>
-            <pre class="code-block"><code>pik-refresh-plan --target "$PWD"
+            <pre class="code-block"><code>zl-refresh-plan --target "$PWD"
 sed -n '1,160p' .planning/refresh/REFRESH_PLAN.md</code></pre>
             <p>无关 commit 显示 `behind-unrelated`；相关文档/源码才推荐刷新。</p>
           </article>
           <article class="panel panel-pad">
             <h3>显式刷新</h3>
-            <pre class="code-block"><code>pik-refresh-run --target "$PWD" --rag
-pik-refresh-run --target "$PWD" --graph
-pik-mode-set --target "$PWD" docs-strict</code></pre>
+            <pre class="code-block"><code>zl-refresh-run --target "$PWD" --rag
+zl-refresh-run --target "$PWD" --graph
+zl-mode-set --target "$PWD" docs-strict</code></pre>
             <p>真正刷新必须由命令触发，结果写回 `REFRESH_STATE.json`。</p>
           </article>
         </div>
@@ -333,26 +367,26 @@ pik-mode-set --target "$PWD" docs-strict</code></pre>
       <section class="section alt">
         <div class="section-header">
           <h2>两条接入路线，按项目真实约束选择。</h2>
-          <p>AI-PIKit 不要求所有项目一上来就安装 RAG。文档少的项目先用 workflow + Graphify；文档严格的项目再启用本地 GraphRAG 和 citation gate。</p>
+          <p>Zhulong 不要求所有项目一上来就安装 RAG。文档少的项目先用 workflow + Graphify；文档严格的项目再启用本地 GraphRAG 和 citation gate。</p>
         </div>
         <div class="grid three">
           <article class="panel panel-pad">
             <h3>轻量路线</h3>
-            <pre class="code-block"><code>pik-init --target "$PWD" --doc-policy reference --rag none
-pik-codebase-scan --target "$PWD"
-pik-docs-sync --target "$PWD"</code></pre>
-            <p>适合文档少、文档不完整、先想把 AI-PIKit 和代码地图用起来的项目。缺文档时输出 `WAIVED_WITH_RISK`，由 evidence 记录风险。</p>
+            <pre class="code-block"><code>zl-init --target "$PWD" --doc-policy reference --rag none
+zl-codebase-scan --target "$PWD"
+zl-docs-sync --target "$PWD"</code></pre>
+            <p>适合文档少、文档不完整、先想把 Zhulong 和代码地图用起来的项目。缺文档时输出 `WAIVED_WITH_RISK`，由 evidence 记录风险。</p>
           </article>
           <article class="panel panel-pad">
             <h3>严格路线</h3>
-            <pre class="code-block"><code>pik-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
-pik-rag-init-local --target "$PWD"
-pik-docs-index --target "$PWD" --run</code></pre>
+            <pre class="code-block"><code>zl-init --target "$PWD" --doc-policy strict --rag local --setup-rag skip
+zl-rag-init-local --target "$PWD"
+zl-docs-index --target "$PWD" --run</code></pre>
             <p>适合对日、仕様書驱动、验收强依赖文档的项目。missing citation、RAG stale、外部 provider 会进入阻断逻辑。</p>
           </article>
           <article class="panel panel-pad">
             <h3>演示路线</h3>
-            <pre class="code-block"><code>pik-cockpit-build --target "$PWD"</code></pre>
+            <pre class="code-block"><code>zl-cockpit-build --target "$PWD"</code></pre>
             <p>生成本地项目驾驶舱，展示 workflow、Graphify、RAG、policy、quality 和 evidence 状态；它只读已有 artifact，不执行重刷新。</p>
           </article>
         </div>
@@ -361,7 +395,7 @@ pik-docs-index --target "$PWD" --run</code></pre>
       <section class="section alt">
         <div class="section-header">
           <h2>适合的项目</h2>
-          <p>AI-PIKit 的目标用户不是纯玩具项目，而是代码、文档、变更依据和交付责任同时存在的开发现场。</p>
+          <p>Zhulong 的目标用户不是纯玩具项目，而是代码、文档、变更依据和交付责任同时存在的开发现场。</p>
         </div>
         <div class="grid">
           <article class="panel panel-pad">
@@ -382,12 +416,12 @@ pik-docs-index --target "$PWD" --run</code></pre>
       <section class="section">
         <div class="section-header">
           <h2>可信度来自可复跑验证。</h2>
-          <p>AI-PIKit 不要求你相信文案。它要求每个接入点都有命令、有产物、有验证报告。</p>
+          <p>Zhulong 不要求你相信文案。它要求每个接入点都有命令、有产物、有验证报告。</p>
         </div>
         <div class="grid">
           <article class="panel panel-pad">
             <h3>接入验证</h3>
-            <p>`pik-verify --target "$PWD"` 检查目标项目是否真的有 `AGENTS.md`、`project.manifest.yml`、`.planning/`。</p>
+            <p>`zl-verify --target "$PWD"` 检查目标项目是否真的有 `AGENTS.md`、`project.manifest.yml`、`.planning/`。</p>
           </article>
           <article class="panel panel-pad">
             <h3>能力验证</h3>
@@ -395,19 +429,19 @@ pik-docs-index --target "$PWD" --run</code></pre>
           </article>
           <article class="panel panel-pad">
             <h3>命令面验证</h3>
-            <p>`npm run verify:full-command-surface` 会逐个执行 `package.json` 中全部 `pik-*` / `pik` bin 命令，避免“文档写了但实际不能用”。</p>
+            <p>`npm run verify:full-command-surface` 会逐个执行 `package.json` 中全部 `zl-*` / `zl` bin 命令，避免“文档写了但实际不能用”。</p>
           </article>
           <article class="panel panel-pad">
             <h3>项目驾驶舱</h3>
-            <p>`pik-cockpit-build` 会把 Graphify 影响图、GraphRAG/RAG 证据链、workflow、quality 和 privacy 状态生成成本地静态 HTML，适合 leader 演示。稳定样例页在 `templates/cockpit/sample.html`，真实项目快照在 `.planning/cockpit/index.html`。</p>
+            <p>`zl-cockpit-build` 会把 Graphify 影响图、GraphRAG/RAG 证据链、workflow、quality 和 privacy 状态生成成本地静态 HTML，适合 leader 演示。稳定样例页在 `templates/cockpit/sample.html`，真实项目快照在 `.planning/cockpit/index.html`。</p>
           </article>
           <article class="panel panel-pad">
             <h3>开发者审计 / 对标</h3>
-            <p>`npm run dev:audit:full` 会生成维护者专用 scorecard：71 个命令、33 个 runtime skill/prompt、feature gate、AI-PIKit / GSD / Superpowers 对标、耗时和 token 边界。最近一次完整审计为 96 / A，三方 benchmark 为 AI-PIKit 90 / A、GSD 88 / B、Superpowers 82 / B。Scorecard 里的 Benchmark comparison 87 是混合对标平均分，不是 AI-PIKit 单体分。摘要在 `verification/reports/developer-audit-summary.md`。</p>
+            <p><code>npm run dev:audit:full</code> 会生成维护者专用评分卡：74 个命令、33 个运行环境 skill/prompt、功能门禁、对标结果、耗时和 token 边界。历史评分只作为当次验证证据，不作为永久宣传数字；摘要位于 <code>verification/reports/developer-audit-summary.md</code>。</p>
           </article>
           <article class="panel panel-pad">
             <h3>完成验证</h3>
-            <p>`pik-completion-check` 会在 evidence 或 writeback 缺失时阻断，避免“看起来完成了”的假收口。</p>
+            <p>`zl-completion-check` 会在 evidence 或 writeback 缺失时阻断，避免“看起来完成了”的假收口。</p>
           </article>
         </div>
       </section>
@@ -420,26 +454,26 @@ pik-docs-index --target "$PWD" --run</code></pre>
         <div class="grid two">
           <div class="panel panel-pad">
             <h3>新项目</h3>
-            <pre class="code-block"><code>pik-init --target "$PWD" --template greenfield-app --name my_new_project --mode new --doc-policy reference --rag none
-pik-codebase-scan --target "$PWD"
-pik-preflight --target "$PWD"
-pik-verify --target "$PWD"</code></pre>
+            <pre class="code-block"><code>zl-init --target "$PWD" --template greenfield-app --name my_new_project --mode new --doc-policy reference --rag none
+zl-codebase-scan --target "$PWD"
+zl-preflight --target "$PWD"
+zl-verify --target "$PWD"</code></pre>
           </div>
           <div class="panel panel-pad">
             <h3>既存项目</h3>
-            <pre class="code-block"><code>pik-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
-pik-codebase-scan --target "$PWD"
-pik-docs-sync --target "$PWD"
-pik-graph-build --target "$PWD" --run</code></pre>
+            <pre class="code-block"><code>zl-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
+zl-codebase-scan --target "$PWD"
+zl-docs-sync --target "$PWD"
+zl-graph-build --target "$PWD" --run</code></pre>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>AI Project Intelligence Kit：让 AI 在项目上下文、仕様依据、代码影响面和验证闭环里工作。</p>
+      <p>Zhulong Project Intelligence Kit：让 AI 在项目上下文、仕様依据、代码影响面和验证闭环里工作。</p>
     </footer>
   </div>
-  <script src="assets/pik-site.js"></script>
+  <script src="assets/zl-site.js"></script>
 </body>
 </html>

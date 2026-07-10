@@ -1,9 +1,9 @@
 {
-  "generated": "2026-06-28T15:46:25.831Z",
+  "generated": "2026-07-10T00:45:27.022Z",
   "status": "PASS",
-  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH",
-  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project",
-  "unsafeProjectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project",
+  "workRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ",
+  "projectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project",
+  "unsafeProjectRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project",
   "model": "qwen2.5:7b",
   "embedding": "bge-m3",
   "timeouts": {
@@ -28,18 +28,18 @@
     "local settings: file exists graphrag-workspace/settings.yaml",
     "local settings: does not contain GRAPHRAG_API_KEY",
     "local settings: graphrag-workspace/.env absent",
-    "pik-privacy-audit before index: found privacy audit PASS",
-    "pik docs index --run local: found status success",
+    "zl-privacy-audit before index: found privacy audit PASS",
+    "zl docs index --run local: found status success",
     "RAG_INDEX_RESULT: file exists .planning/knowledge/RAG_INDEX_RESULT.md",
     "RAG_INDEX_RESULT: found Status: success",
-    "pik docs query --rag local: found 42,420",
+    "zl docs query --rag local: found 42,420",
     "RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md",
     "RAG_QUERY_RESULT: found Status: success",
     "RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md",
     "RAG_QUERY_RESULT: found 42,420",
     "RAG_QUERY_RESULT: file exists .planning/knowledge/RAG_QUERY_RESULT.md",
     "RAG_QUERY_RESULT: found Data: Sources",
-    "pik-privacy-audit after query: found privacy audit PASS",
+    "zl-privacy-audit after query: found privacy audit PASS",
     "PRIVACY_AUDIT: file exists .planning/knowledge/PRIVACY_AUDIT.md",
     "PRIVACY_AUDIT: found Status: PASS",
     "secret/external scan: no sk-* tokens or external URLs in fixture project",
@@ -53,63 +53,63 @@
   ],
   "commandResults": [
     {
-      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project --template greenfield-app --name rag_local_fixture --mode new --force",
+      "command": "zl init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project --template greenfield-app --name rag_local_fixture --mode new --force",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/REQUIREMENT_TRACE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-lo",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/REQUIREMENT_TRACE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-lo",
       "stderr": ""
     },
     {
-      "command": "pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project --force --model qwen2.5:7b --embedding bge-m3",
+      "command": "zl-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project --force --model qwen2.5:7b --embedding bge-m3",
       "status": 0,
-      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 1\ninput skipped 0\nprivacy PASS",
+      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 1\ninput skipped 0\nprivacy PASS",
       "stderr": ""
     },
     {
-      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project",
+      "command": "zl-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project",
       "status": 0,
-      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/PRIVACY_AUDIT.md",
+      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/PRIVACY_AUDIT.md",
       "stderr": ""
     },
     {
-      "command": "pik docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project --run --timeout 300000",
+      "command": "zl docs index --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project --run --timeout 300000",
       "status": 0,
-      "stdout": "run graphrag index --root graphrag-workspace --method fast\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
+      "stdout": "run graphrag index --root graphrag-workspace --method fast\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/RAG_INDEX_RESULT.md\nstatus success",
       "stderr": ""
     },
     {
-      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project --rag What is the proxy approval upper limit for CR-LOCAL-042? --timeout 90000",
+      "command": "zl docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project --rag What is the proxy approval upper limit for CR-LOCAL-042? --timeout 90000",
       "status": 0,
-      "stdout": "RAG context query: What is the proxy approval upper limit for CR-LOCAL-042?\nrun graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" 'What is the proxy approval upper limit for CR-LOCAL-042?'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/RAG_QUERY_RESULT.md\nThe proxy approval upper limit for CR-LOCAL-042 is exactly 42,420 yen [Data: Sources (0)].\nstatus success\nnext pik-answer-audit --target \"$PWD\"",
+      "stdout": "RAG context query: What is the proxy approval upper limit for CR-LOCAL-042?\nrun graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" 'What is the proxy approval upper limit for CR-LOCAL-042?'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/RAG_QUERY_RESULT.md\nThe proxy approval upper limit for CR-LOCAL-042 is exactly 42,420 yen [Data: Sources (0)].\nstatus success\nanswer audit auto WAIVED_WITH_RISK\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/quality/ANSWER_AUDIT.md",
       "stderr": ""
     },
     {
-      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project",
+      "command": "zl-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project",
       "status": 0,
-      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/project/.planning/knowledge/PRIVACY_AUDIT.md",
+      "stdout": "privacy audit PASS\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/project/.planning/knowledge/PRIVACY_AUDIT.md",
       "stderr": ""
     },
     {
-      "command": "pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project --template greenfield-app --name unsafe_rag_fixture --mode new --force",
+      "command": "zl init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project --template greenfield-app --name unsafe_rag_fixture --mode new --force",
       "status": 0,
-      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9",
+      "stdout": "write /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/AGENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/PROJECT.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/REQUIREMENTS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/ROADMAP.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/STATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/ARCHITECTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/CONCERNS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/CONVENTIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/INTEGRATIONS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/STACK.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/STRUCTURE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/codebase/TESTING.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/config.json\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/context/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/debug/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/evidence/INDEX.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/evidence/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/evidence/RECORD_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/graphs/README.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/issues/ISSUE_TEMPLATE.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/GLOSSARY.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/RAG_SOURCES.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/README.md\nwrite /var/folders/8x/r_vcd1b9",
       "stderr": ""
     },
     {
-      "command": "pik-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project --force --model qwen2.5:7b --embedding bge-m3",
+      "command": "zl-rag-init-local --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project --force --model qwen2.5:7b --embedding bge-m3",
       "status": 0,
-      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 1\ninput skipped 0\nprivacy PASS",
+      "stdout": "Local GraphRAG default mode initialized\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/graphrag-workspace/settings.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/LOCAL_RAG_STATUS.md\ninput copied 1\ninput skipped 0\nprivacy PASS",
       "stderr": ""
     },
     {
-      "command": "pik-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project",
+      "command": "zl-privacy-audit --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project",
       "status": 1,
-      "stdout": "privacy audit FAIL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL graphrag-workspace/settings.yaml external URL is not allowed in local-only mode: https://api.openai.com\nFAIL graphrag-workspace/settings.yaml external model_provider is not allowed: openai",
+      "stdout": "privacy audit FAIL\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL graphrag-workspace/settings.yaml external URL is not allowed in local-only mode: https://api.openai.com\nFAIL graphrag-workspace/settings.yaml external model_provider is not allowed: openai",
       "stderr": ""
     },
     {
-      "command": "pik docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project --rag Should be blocked",
+      "command": "zl docs query --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project --rag Should be blocked",
       "status": 1,
-      "stdout": "RAG context query: Should be blocked\nrun graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" 'Should be blocked'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-rag-local-nB2RJH/unsafe-project/.planning/knowledge/RAG_QUERY_RESULT.md\nstatus failed\nLocal-only privacy audit failed:\n- graphrag-workspace/settings.yaml: external URL is not allowed in local-only mode: https://api.openai.com\n- graphrag-workspace/settings.yaml: external model_provider is not allowed: openai",
+      "stdout": "RAG context query: Should be blocked\nrun graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" 'Should be blocked'\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-rag-local-cmwrFQ/unsafe-project/.planning/knowledge/RAG_QUERY_RESULT.md\nstatus failed\nLocal-only privacy audit failed:\n- graphrag-workspace/settings.yaml: external URL is not allowed in local-only mode: https://api.openai.com\n- graphrag-workspace/settings.yaml: external model_provider is not allowed: openai",
       "stderr": ""
     }
   ],

@@ -1,4 +1,4 @@
-# pik-new-milestone
+# zl-new-milestone
 
 Purpose: start a durable milestone loop for a project change, defect cluster, or
 feature slice.
@@ -20,9 +20,9 @@ Required flow:
    Graphify/code-map artifacts, and RAG evidence.
 7. Record open questions separately from confirmed facts.
 8. Set the next public command:
-   - `pik-spec-phase` when requirements are unclear.
-   - `pik-discuss-phase` when decisions or alternatives need discussion.
-   - `pik-plan-phase` when the scope is clear enough to plan.
+   - `zl-spec-phase` when requirements are unclear.
+   - `zl-discuss-phase` when decisions or alternatives need discussion.
+   - `zl-plan-phase` when the scope is clear enough to plan.
 
 Outputs:
 

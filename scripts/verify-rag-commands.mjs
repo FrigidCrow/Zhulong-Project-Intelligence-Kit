@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-rag-commands-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-rag-commands-");
 const projectRoot = path.join(workRoot, "project");
 const aliasBin = path.join(workRoot, "bin");
 const issues = [];
@@ -41,9 +41,9 @@ function record(command, result) {
   return result;
 }
 
-function runPik(args, options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function runZl(args, options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -75,10 +75,10 @@ function assertFileIncludes(command, filePath, expected) {
 
 function makeAliasBins() {
   fs.mkdirSync(aliasBin, { recursive: true });
-  for (const alias of ["pik-docs-scan", "pik-docs-status", "pik-docs-normalize", "pik-docs-index", "pik-docs-query"]) {
+  for (const alias of ["zl-docs-scan", "zl-docs-status", "zl-docs-normalize", "zl-docs-index", "zl-docs-query"]) {
     const aliasPath = path.join(aliasBin, alias);
     if (fs.existsSync(aliasPath)) fs.rmSync(aliasPath);
-    fs.symlinkSync(pikCli, aliasPath);
+    fs.symlinkSync(zlCli, aliasPath);
   }
 }
 
@@ -134,67 +134,67 @@ write(path.join(projectRoot, "仕様書", "approval.csv"), [
   "",
 ].join("\n"));
 
-runPik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "rag_command_fixture", "--mode", "new", "--force"]);
+runZl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "rag_command_fixture", "--mode", "new", "--force"]);
 configureFakeRag();
 
-const canonicalScan = runPik(["docs", "scan", "--target", projectRoot]);
-assertIncludes("pik docs scan", canonicalScan.output, "documents 3");
-assertFileIncludes("pik docs scan", path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "QA-101.md");
-assertFileIncludes("pik docs scan", path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "minutes.txt");
-assertFileIncludes("pik docs scan", path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "approval.csv");
+const canonicalScan = runZl(["docs", "scan", "--target", projectRoot]);
+assertIncludes("zl docs scan", canonicalScan.output, "documents 3");
+assertFileIncludes("zl docs scan", path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "QA-101.md");
+assertFileIncludes("zl docs scan", path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "minutes.txt");
+assertFileIncludes("zl docs scan", path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "approval.csv");
 
-const aliasScan = runAlias("pik-docs-scan", ["--target", projectRoot]);
-assertIncludes("pik-docs-scan", aliasScan.output, "documents 3");
+const aliasScan = runAlias("zl-docs-scan", ["--target", projectRoot]);
+assertIncludes("zl-docs-scan", aliasScan.output, "documents 3");
 
-const canonicalStatus = runPik(["docs", "status", "--target", projectRoot]);
-assertIncludes("pik docs status", canonicalStatus.output, "Total source documents: 3");
+const canonicalStatus = runZl(["docs", "status", "--target", projectRoot]);
+assertIncludes("zl docs status", canonicalStatus.output, "Total source documents: 3");
 
-const aliasStatus = runAlias("pik-docs-status", ["--target", projectRoot]);
-assertIncludes("pik-docs-status", aliasStatus.output, "Total source documents: 3");
+const aliasStatus = runAlias("zl-docs-status", ["--target", projectRoot]);
+assertIncludes("zl-docs-status", aliasStatus.output, "Total source documents: 3");
 
-const canonicalNormalize = runPik(["docs", "normalize", "--target", projectRoot]);
-assertIncludes("pik docs normalize", canonicalNormalize.output, "normalized 3");
-assertFileIncludes("pik docs normalize", path.join(projectRoot, ".planning", "knowledge", "normalized", "MANIFEST.md"), "QA-101.md");
+const canonicalNormalize = runZl(["docs", "normalize", "--target", projectRoot]);
+assertIncludes("zl docs normalize", canonicalNormalize.output, "normalized 3");
+assertFileIncludes("zl docs normalize", path.join(projectRoot, ".planning", "knowledge", "normalized", "MANIFEST.md"), "QA-101.md");
 
-const aliasNormalize = runAlias("pik-docs-normalize", ["--target", projectRoot]);
-assertIncludes("pik-docs-normalize", aliasNormalize.output, "normalized 3");
+const aliasNormalize = runAlias("zl-docs-normalize", ["--target", projectRoot]);
+assertIncludes("zl-docs-normalize", aliasNormalize.output, "normalized 3");
 
-const localQuery = runPik(["docs", "query", "--target", projectRoot, "RAG_COMMAND_SENTINEL"]);
-assertIncludes("pik docs query", localQuery.output, "RAG_COMMAND_SENTINEL");
-assertIncludes("pik docs query", localQuery.output, "QA-101.md");
+const localQuery = runZl(["docs", "query", "--target", projectRoot, "RAG_COMMAND_SENTINEL"]);
+assertIncludes("zl docs query", localQuery.output, "RAG_COMMAND_SENTINEL");
+assertIncludes("zl docs query", localQuery.output, "QA-101.md");
 
-const aliasLocalQuery = runAlias("pik-docs-query", ["--target", projectRoot, "RAG_MINUTES_SENTINEL"]);
-assertIncludes("pik-docs-query", aliasLocalQuery.output, "RAG_MINUTES_SENTINEL");
-assertIncludes("pik-docs-query", aliasLocalQuery.output, "minutes.txt");
+const aliasLocalQuery = runAlias("zl-docs-query", ["--target", projectRoot, "RAG_MINUTES_SENTINEL"]);
+assertIncludes("zl-docs-query", aliasLocalQuery.output, "RAG_MINUTES_SENTINEL");
+assertIncludes("zl-docs-query", aliasLocalQuery.output, "minutes.txt");
 
-const handoff = runPik(["docs", "index", "--target", projectRoot]);
-assertIncludes("pik docs index", handoff.output, "backend document RAG handoff");
-assertFileIncludes("pik docs index", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_HANDOFF.md"), "pik-docs-index --target <repo> --run");
+const handoff = runZl(["docs", "index", "--target", projectRoot]);
+assertIncludes("zl docs index", handoff.output, "backend document RAG handoff");
+assertFileIncludes("zl docs index", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_HANDOFF.md"), "zl-docs-index --target <repo> --run");
 
-const aliasHandoff = runAlias("pik-docs-index", ["--target", projectRoot]);
-assertIncludes("pik-docs-index", aliasHandoff.output, "backend document RAG handoff");
+const aliasHandoff = runAlias("zl-docs-index", ["--target", projectRoot]);
+assertIncludes("zl-docs-index", aliasHandoff.output, "backend document RAG handoff");
 
-const runIndex = runPik(["docs", "index", "--target", projectRoot, "--run"]);
-assertIncludes("pik docs index --run", runIndex.output, "status success");
-assertFileIncludes("pik docs index --run", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "FAKE_RAG_INDEX_OK");
-assertFileIncludes("pik docs index --run", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "Status: success");
+const runIndex = runZl(["docs", "index", "--target", projectRoot, "--run"]);
+assertIncludes("zl docs index --run", runIndex.output, "status success");
+assertFileIncludes("zl docs index --run", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "FAKE_RAG_INDEX_OK");
+assertFileIncludes("zl docs index --run", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "Status: success");
 
-const aliasRunIndex = runAlias("pik-docs-index", ["--target", projectRoot, "--run"]);
-assertIncludes("pik-docs-index --run", aliasRunIndex.output, "status success");
+const aliasRunIndex = runAlias("zl-docs-index", ["--target", projectRoot, "--run"]);
+assertIncludes("zl-docs-index --run", aliasRunIndex.output, "status success");
 
-const ragQuery = runPik(["docs", "query", "--target", projectRoot, "--rag", "代理承認の上限金額"]);
-assertIncludes("pik docs query --rag", ragQuery.output, "RAG_ANSWER_SENTINEL_42420");
-assertFileIncludes("pik docs query --rag", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Status: success");
+const ragQuery = runZl(["docs", "query", "--target", projectRoot, "--rag", "代理承認の上限金額"]);
+assertIncludes("zl docs query --rag", ragQuery.output, "RAG_ANSWER_SENTINEL_42420");
+assertFileIncludes("zl docs query --rag", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Status: success");
 
-const backendQuery = runPik(["docs", "query", "--target", projectRoot, "--backend", "graphrag", "代理承認"]);
-assertIncludes("pik docs query --backend graphrag", backendQuery.output, "RAG_ANSWER_SENTINEL_42420");
+const backendQuery = runZl(["docs", "query", "--target", projectRoot, "--backend", "graphrag", "代理承認"]);
+assertIncludes("zl docs query --backend graphrag", backendQuery.output, "RAG_ANSWER_SENTINEL_42420");
 
-const aliasRagQuery = runAlias("pik-docs-query", ["--target", projectRoot, "--rag", "代理承認"]);
-assertIncludes("pik-docs-query --rag", aliasRagQuery.output, "RAG_ANSWER_SENTINEL_42420");
+const aliasRagQuery = runAlias("zl-docs-query", ["--target", projectRoot, "--rag", "代理承認"]);
+assertIncludes("zl-docs-query --rag", aliasRagQuery.output, "RAG_ANSWER_SENTINEL_42420");
 
-const finalStatus = runAlias("pik-docs-status", ["--target", projectRoot]);
-assertIncludes("pik-docs-status after RAG", finalStatus.output, "RAG backend: graphrag");
-assertIncludes("pik-docs-status after RAG", finalStatus.output, "Index status: Indexed by configured RAG command");
+const finalStatus = runAlias("zl-docs-status", ["--target", projectRoot]);
+assertIncludes("zl-docs-status after RAG", finalStatus.output, "RAG backend: graphrag");
+assertIncludes("zl-docs-status after RAG", finalStatus.output, "Index status: Indexed by configured RAG command");
 
 const data = {
   generated: new Date().toISOString(),
@@ -202,21 +202,21 @@ const data = {
   workRoot,
   projectRoot,
   commandsCovered: [
-    "pik docs scan",
-    "pik docs status",
-    "pik docs normalize",
-    "pik docs index",
-    "pik docs index --run",
-    "pik docs query",
-    "pik docs query --rag",
-    "pik docs query --backend graphrag",
-    "pik-docs-scan",
-    "pik-docs-status",
-    "pik-docs-normalize",
-    "pik-docs-index",
-    "pik-docs-index --run",
-    "pik-docs-query",
-    "pik-docs-query --rag",
+    "zl docs scan",
+    "zl docs status",
+    "zl docs normalize",
+    "zl docs index",
+    "zl docs index --run",
+    "zl docs query",
+    "zl docs query --rag",
+    "zl docs query --backend graphrag",
+    "zl-docs-scan",
+    "zl-docs-status",
+    "zl-docs-normalize",
+    "zl-docs-index",
+    "zl-docs-index --run",
+    "zl-docs-query",
+    "zl-docs-query --rag",
   ],
   evidence,
   commandResults,
@@ -224,7 +224,7 @@ const data = {
 };
 
 writeJsonReport("rag-command-check.json", data);
-writeMarkdownReport("rag-command-check.md", "AI-PIKit RAG Command Verification", summarizeIssues(issues), [
+writeMarkdownReport("rag-command-check.md", "Zhulong RAG Command Verification", summarizeIssues(issues), [
   {
     title: "Commands Covered",
     body: data.commandsCovered.map((item) => `- \`${item}\``),

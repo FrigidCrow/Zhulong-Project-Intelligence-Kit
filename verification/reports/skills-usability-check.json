@@ -1,238 +1,238 @@
 {
-  "generated": "2026-06-28T15:45:54.635Z",
+  "generated": "2026-07-10T00:46:27.761Z",
   "status": "PASS",
-  "tempRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix",
+  "tempRoot": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K",
   "expectedRuntimeCount": 3,
   "expectedSkillsPerRuntime": 11,
   "expectedRenderedItems": 33,
   "results": [
     {
       "runtime": "codex",
-      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex",
+      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex",
       "itemCount": 11,
-      "installOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-code-review/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-debug/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-execute-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-plan-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-verify-work/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
-      "statusOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex\nok pik-cockpit-build rendered\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "installOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-code-review/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-debug/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-execute-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-plan-phase/agents/openai.yaml\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-verify-work/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
+      "statusOutput": "runtime codex\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/codex/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
-          "skill": "pik-new-milestone",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-new-milestone/SKILL.md",
+          "skill": "zl-new-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-new-milestone/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-spec-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-spec-phase/SKILL.md",
+          "skill": "zl-spec-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-spec-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-discuss-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-discuss-phase/SKILL.md",
+          "skill": "zl-discuss-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-discuss-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-ui-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-ui-phase/SKILL.md",
+          "skill": "zl-ui-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-ui-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-plan-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-plan-phase/SKILL.md",
+          "skill": "zl-plan-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-plan-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-execute-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-execute-phase/SKILL.md",
+          "skill": "zl-execute-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-execute-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-verify-work",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-verify-work/SKILL.md",
+          "skill": "zl-verify-work",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-verify-work/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-complete-milestone",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-complete-milestone/SKILL.md",
+          "skill": "zl-complete-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-complete-milestone/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-debug",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-debug/SKILL.md",
+          "skill": "zl-debug",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-debug/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-code-review",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-code-review/SKILL.md",
+          "skill": "zl-code-review",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-code-review/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-cockpit-build",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/codex/pik-cockpit-build/SKILL.md",
+          "skill": "zl-cockpit-build",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/codex/zl-cockpit-build/SKILL.md",
           "exists": true
         }
       ]
     },
     {
       "runtime": "claude-code",
-      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code",
+      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code",
       "itemCount": 11,
-      "installOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
-      "statusOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code\nok pik-cockpit-build rendered\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "installOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-cockpit-build/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-code-review/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-complete-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-debug/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-discuss-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-execute-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-new-milestone/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-plan-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-spec-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-ui-phase/SKILL.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
+      "statusOutput": "runtime claude-code\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/claude-code/skills\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
-          "skill": "pik-new-milestone",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-new-milestone/SKILL.md",
+          "skill": "zl-new-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-new-milestone/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-spec-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-spec-phase/SKILL.md",
+          "skill": "zl-spec-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-spec-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-discuss-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-discuss-phase/SKILL.md",
+          "skill": "zl-discuss-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-discuss-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-ui-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-ui-phase/SKILL.md",
+          "skill": "zl-ui-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-ui-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-plan-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-plan-phase/SKILL.md",
+          "skill": "zl-plan-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-plan-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-execute-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-execute-phase/SKILL.md",
+          "skill": "zl-execute-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-execute-phase/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-verify-work",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-verify-work/SKILL.md",
+          "skill": "zl-verify-work",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-verify-work/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-complete-milestone",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-complete-milestone/SKILL.md",
+          "skill": "zl-complete-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-complete-milestone/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-debug",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-debug/SKILL.md",
+          "skill": "zl-debug",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-debug/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-code-review",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-code-review/SKILL.md",
+          "skill": "zl-code-review",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-code-review/SKILL.md",
           "exists": true
         },
         {
-          "skill": "pik-cockpit-build",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/claude-code/pik-cockpit-build/SKILL.md",
+          "skill": "zl-cockpit-build",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/claude-code/zl-cockpit-build/SKILL.md",
           "exists": true
         }
       ]
     },
     {
       "runtime": "github-copilot",
-      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot",
+      "dest": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot",
       "itemCount": 11,
-      "installOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-cockpit-build.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-code-review.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-complete-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-debug.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-discuss-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-execute-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-new-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-plan-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-spec-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-ui-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
-      "statusOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Project-Intelligence-Kit /runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot\nok pik-cockpit-build rendered\nok pik-code-review rendered\nok pik-complete-milestone rendered\nok pik-debug rendered\nok pik-discuss-phase rendered\nok pik-execute-phase rendered\nok pik-new-milestone rendered\nok pik-plan-phase rendered\nok pik-spec-phase rendered\nok pik-ui-phase rendered\nok pik-verify-work rendered",
+      "installOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-cockpit-build.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-code-review.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-complete-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-debug.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-discuss-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-execute-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-new-milestone.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-plan-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-spec-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-ui-phase.prompt.md\nwrite /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
+      "statusOutput": "runtime github-copilot\nsource /Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/runtime/github-copilot/prompts\ndest /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
-          "skill": "pik-new-milestone",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-new-milestone.prompt.md",
+          "skill": "zl-new-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-new-milestone.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-spec-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-spec-phase.prompt.md",
+          "skill": "zl-spec-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-spec-phase.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-discuss-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-discuss-phase.prompt.md",
+          "skill": "zl-discuss-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-discuss-phase.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-ui-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-ui-phase.prompt.md",
+          "skill": "zl-ui-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-ui-phase.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-plan-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-plan-phase.prompt.md",
+          "skill": "zl-plan-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-plan-phase.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-execute-phase",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-execute-phase.prompt.md",
+          "skill": "zl-execute-phase",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-execute-phase.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-verify-work",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-verify-work.prompt.md",
+          "skill": "zl-verify-work",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-verify-work.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-complete-milestone",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-complete-milestone.prompt.md",
+          "skill": "zl-complete-milestone",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-complete-milestone.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-debug",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-debug.prompt.md",
+          "skill": "zl-debug",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-debug.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-code-review",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-code-review.prompt.md",
+          "skill": "zl-code-review",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-code-review.prompt.md",
           "exists": true
         },
         {
-          "skill": "pik-cockpit-build",
-          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-skills-usability-njxcix/github-copilot/pik-cockpit-build.prompt.md",
+          "skill": "zl-cockpit-build",
+          "filePath": "/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-skills-usability-FEPb4K/github-copilot/zl-cockpit-build.prompt.md",
           "exists": true
         }
       ]
     }
   ],
   "evidence": [
-    "codex:pik-new-milestone installed and inspected",
-    "codex:pik-spec-phase installed and inspected",
-    "codex:pik-discuss-phase installed and inspected",
-    "codex:pik-ui-phase installed and inspected",
-    "codex:pik-plan-phase installed and inspected",
-    "codex:pik-execute-phase installed and inspected",
-    "codex:pik-verify-work installed and inspected",
-    "codex:pik-complete-milestone installed and inspected",
-    "codex:pik-debug installed and inspected",
-    "codex:pik-code-review installed and inspected",
-    "codex:pik-cockpit-build installed and inspected",
-    "claude-code:pik-new-milestone installed and inspected",
-    "claude-code:pik-spec-phase installed and inspected",
-    "claude-code:pik-discuss-phase installed and inspected",
-    "claude-code:pik-ui-phase installed and inspected",
-    "claude-code:pik-plan-phase installed and inspected",
-    "claude-code:pik-execute-phase installed and inspected",
-    "claude-code:pik-verify-work installed and inspected",
-    "claude-code:pik-complete-milestone installed and inspected",
-    "claude-code:pik-debug installed and inspected",
-    "claude-code:pik-code-review installed and inspected",
-    "claude-code:pik-cockpit-build installed and inspected",
-    "github-copilot:pik-new-milestone installed and inspected",
-    "github-copilot:pik-spec-phase installed and inspected",
-    "github-copilot:pik-discuss-phase installed and inspected",
-    "github-copilot:pik-ui-phase installed and inspected",
-    "github-copilot:pik-plan-phase installed and inspected",
-    "github-copilot:pik-execute-phase installed and inspected",
-    "github-copilot:pik-verify-work installed and inspected",
-    "github-copilot:pik-complete-milestone installed and inspected",
-    "github-copilot:pik-debug installed and inspected",
-    "github-copilot:pik-code-review installed and inspected",
-    "github-copilot:pik-cockpit-build installed and inspected"
+    "codex:zl-new-milestone installed and inspected",
+    "codex:zl-spec-phase installed and inspected",
+    "codex:zl-discuss-phase installed and inspected",
+    "codex:zl-ui-phase installed and inspected",
+    "codex:zl-plan-phase installed and inspected",
+    "codex:zl-execute-phase installed and inspected",
+    "codex:zl-verify-work installed and inspected",
+    "codex:zl-complete-milestone installed and inspected",
+    "codex:zl-debug installed and inspected",
+    "codex:zl-code-review installed and inspected",
+    "codex:zl-cockpit-build installed and inspected",
+    "claude-code:zl-new-milestone installed and inspected",
+    "claude-code:zl-spec-phase installed and inspected",
+    "claude-code:zl-discuss-phase installed and inspected",
+    "claude-code:zl-ui-phase installed and inspected",
+    "claude-code:zl-plan-phase installed and inspected",
+    "claude-code:zl-execute-phase installed and inspected",
+    "claude-code:zl-verify-work installed and inspected",
+    "claude-code:zl-complete-milestone installed and inspected",
+    "claude-code:zl-debug installed and inspected",
+    "claude-code:zl-code-review installed and inspected",
+    "claude-code:zl-cockpit-build installed and inspected",
+    "github-copilot:zl-new-milestone installed and inspected",
+    "github-copilot:zl-spec-phase installed and inspected",
+    "github-copilot:zl-discuss-phase installed and inspected",
+    "github-copilot:zl-ui-phase installed and inspected",
+    "github-copilot:zl-plan-phase installed and inspected",
+    "github-copilot:zl-execute-phase installed and inspected",
+    "github-copilot:zl-verify-work installed and inspected",
+    "github-copilot:zl-complete-milestone installed and inspected",
+    "github-copilot:zl-debug installed and inspected",
+    "github-copilot:zl-code-review installed and inspected",
+    "github-copilot:zl-cockpit-build installed and inspected"
   ],
   "issues": []
 }

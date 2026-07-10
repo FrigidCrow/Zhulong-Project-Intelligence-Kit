@@ -1,6 +1,6 @@
-# AI-PIKit Quality Closure Verification
+# Zhulong Quality Closure Verification
 
-生成时间: 2026-06-28T13:58:59.423Z
+生成时间: 2026-07-10T00:46:31.233Z
 
 ## 摘要
 
@@ -24,7 +24,7 @@
 
 ## 边界
 
-- 本 gate 覆盖 MVP4.2 新增的 `pik-cockpit-build`，但不会在验证中触发重刷新。
+- 本 gate 覆盖 MVP4.2 新增的 `zl-cockpit-build`，但不会在验证中触发重刷新。
 - 默认验证使用本地 fixture，不需要外部 LLM / API key。
 - policy、workflow、skills、docs completeness 检查不得触发隐藏 heavy refresh。
 - cockpit build 检查只读取本地 artifact，不执行 GraphRAG index 或 Graphify build。
@@ -35,4 +35,4 @@
 
 ## 复现
 
-- `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-quality-closure.mjs'`
+- `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-quality-closure.mjs'`

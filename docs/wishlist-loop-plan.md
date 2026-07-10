@@ -5,16 +5,16 @@ Date: 2026-06-25
 
 ## Gold
 
-AI Project Intelligence Kit should expose **AI-PIKit commands** as the stable user
+Zhulong Project Intelligence Kit should expose **Zhulong commands** as the stable user
 interface.
 
 The user should say:
 
 ```text
-$pik-debug
-$pik-plan-phase
-$pik-execute-phase
-$pik-code-review
+$zl-debug
+$zl-plan-phase
+$zl-execute-phase
+$zl-code-review
 ```
 
 The user should not need to say:
@@ -26,7 +26,7 @@ $gsd-execute-phase
 $gsd-code-review
 ```
 
-GSD is the current workflow backend. It should remain replaceable. Future AI-PIKit
+GSD is the current workflow backend. It should remain replaceable. Future Zhulong
 versions may swap the workflow backend without changing the user-facing command
 namespace.
 
@@ -45,46 +45,46 @@ plan
 The loop stops only when the wishlist is satisfied or a blocking dependency is
 explicitly recorded.
 
-## Loop 1: AI-PIKit Command Facade
+## Loop 1: Zhulong Command Facade
 
 Status: implemented in MVP1 skeleton
 
-Goal: make `pik-*` the public namespace.
+Goal: make `zl-*` the public namespace.
 
 Deliverables:
 
-- Documentation says `pik-*` is the external command layer.
-- Generated `AGENTS.md` treats `pik-*` as public commands.
+- Documentation says `zl-*` is the external command layer.
+- Generated `AGENTS.md` treats `zl-*` as public commands.
 - Manifest records the workflow backend and command mapping.
-- CLI exposes `pik-init`, `pik-verify`, `pik-map`, `pik-docs-scan`, and
-  `pik-docs-status` aliases.
+- CLI exposes `zl-init`, `zl-verify`, `zl-map`, `zl-docs-scan`, and
+  `zl-docs-status` aliases.
 
 Verification:
 
 - `npm run check`
-- temp-project smoke test using both `node bin/pik.mjs ...` and `pik-*` symlink
+- temp-project smoke test using both `node bin/zl.mjs ...` and `zl-*` symlink
   aliases.
 
 Result:
 
-- `package.json` exposes `pik-init`, `pik-verify`, `pik-map`,
-  `pik-docs-scan`, and `pik-docs-status`.
-- `bin/pik.mjs` maps executable aliases back to the existing implementation.
+- `package.json` exposes `zl-init`, `zl-verify`, `zl-map`,
+  `zl-docs-scan`, and `zl-docs-status`.
+- `bin/zl.mjs` maps executable aliases back to the existing implementation.
 - Generated manifests include `command_facade` with GSD as the current
   replaceable backend.
-- Generated `AGENTS.md` documents `pik-*` as the public command layer.
+- Generated `AGENTS.md` documents `zl-*` as the public command layer.
 
 ## Loop 2: Context Packet Generator
 
 Status: implemented in MVP skeleton
 
-Goal: make AI-PIKit able to generate context packets before backend execution.
+Goal: make Zhulong able to generate context packets before backend execution.
 
 Possible commands:
 
 ```bash
-pik-context-debug --target <repo> "<bug description>"
-pik-context-execute --target <repo> "<change request>"
+zl-context-debug --target <repo> "<bug description>"
+zl-context-execute --target <repo> "<change request>"
 ```
 
 Deliverables:
@@ -96,8 +96,8 @@ Deliverables:
 
 Result:
 
-- `package.json` exposes `pik-context-debug` and `pik-context-execute`.
-- `bin/pik.mjs` writes packets to `.planning/context/`.
+- `package.json` exposes `zl-context-debug` and `zl-context-execute`.
+- `bin/zl.mjs` writes packets to `.planning/context/`.
 - Packets include command routing, workflow state, spec context, code-map
   context, testing context, verification plan, and open risks.
 - Packets still do not call semantic RAG or Graphify automatically; that belongs
@@ -105,51 +105,51 @@ Result:
 
 ## Loop 3: Workflow Backend Adapter
 
-Status: superseded by AI-PIKit native workflow guard
+Status: superseded by Zhulong native workflow guard
 
-Original goal: wrap current GSD flows behind AI-PIKit command names.
+Original goal: wrap current GSD flows behind Zhulong command names.
 
-Current position: GSD is reference design only. AI-PIKit now owns native
+Current position: GSD is reference design only. Zhulong now owns native
 workflow contracts, guard state, handoff files, and evidence writeback.
 
 Possible public commands:
 
 ```text
-$pik-debug
-$pik-plan-phase
-$pik-execute-phase
-$pik-code-review
+$zl-debug
+$zl-plan-phase
+$zl-execute-phase
+$zl-code-review
 ```
 
 Historical reference mapping:
 
 ```text
-$pik-debug        -> $gsd-debug
-$pik-plan-phase   -> $gsd-plan-phase
-$pik-execute-phase -> $gsd-execute-phase
-$pik-code-review  -> $gsd-code-review
+$zl-debug        -> $gsd-debug
+$zl-plan-phase   -> $gsd-plan-phase
+$zl-execute-phase -> $gsd-execute-phase
+$zl-code-review  -> $gsd-code-review
 ```
 
 Deliverables:
 
 - Backend adapter documentation.
-- Generated agent instructions that route `pik-*` to the configured backend.
-- Optional AI-PIKit skills or command templates for environments that support custom
+- Generated agent instructions that route `zl-*` to the configured backend.
+- Optional Zhulong skills or command templates for environments that support custom
   command registration.
 - Executable CLI aliases that generate context packets and backend handoff
   records:
-  - `pik-debug`
-  - `pik-plan-phase`
-  - `pik-execute-phase`
-  - `pik-code-review`
-  - `pik-verify-work`
+  - `zl-debug`
+  - `zl-plan-phase`
+  - `zl-execute-phase`
+  - `zl-code-review`
+  - `zl-verify-work`
 
 Result:
 
 - `package.json` exposes all five workflow aliases.
-- `bin/pik.mjs` generates a context packet and a backend handoff record for
+- `bin/zl.mjs` generates a context packet and a backend handoff record for
   each workflow command.
-- Handoffs preserve the public `pik-*` command and record the current GSD
+- Handoffs preserve the public `zl-*` command and record the current GSD
   backend invocation.
 - The CLI does not execute chat-runtime skills directly. Later loops add native
   runtime command packs for Codex, Claude Code, and GitHub Copilot.
@@ -169,16 +169,16 @@ Deliverables:
 
 MVP boundary:
 
-- `pik-docs-normalize` handles local text-like docs (`.md`, `.txt`, `.csv`).
-- `pik-docs-query` performs local keyword lookup with source citations.
+- `zl-docs-normalize` handles local text-like docs (`.md`, `.txt`, `.csv`).
+- `zl-docs-query` performs local keyword lookup with source citations.
 - PDF/Word/Excel text extraction remains future adapter work.
 
 Result:
 
-- `package.json` exposes `pik-docs-normalize` and `pik-docs-query`.
-- `pik-docs-normalize` writes local normalized text under
+- `package.json` exposes `zl-docs-normalize` and `zl-docs-query`.
+- `zl-docs-normalize` writes local normalized text under
   `.planning/knowledge/normalized/`.
-- `pik-docs-query` searches normalized text and returns source-path citations
+- `zl-docs-query` searches normalized text and returns source-path citations
   with source line numbers.
 - Non-text document types remain metadata-only until a document extraction/RAG
   adapter is added.
@@ -187,7 +187,7 @@ Result:
 
 Status: implemented in MVP skeleton
 
-Goal: make code-map evidence available to AI-PIKit context packets.
+Goal: make code-map evidence available to Zhulong context packets.
 
 Deliverables:
 
@@ -197,22 +197,22 @@ Deliverables:
 
 MVP boundary:
 
-- `pik-graph-status` reads local `.planning/graphs/` and `graphify-out/`
+- `zl-graph-status` reads local `.planning/graphs/` and `graphify-out/`
   artifacts.
-- `pik-graph-query` performs local keyword lookup over graph reports and graph
+- `zl-graph-query` performs local keyword lookup over graph reports and graph
   JSON nodes.
-- `pik-graph-build` writes a deterministic Graphify backend handoff. It does
+- `zl-graph-build` writes a deterministic Graphify backend handoff. It does
   not run Graphify automatically.
 
 Result:
 
-- `package.json` exposes `pik-graph-build`, `pik-graph-status`, and
-  `pik-graph-query`.
-- `bin/pik.mjs` routes those aliases through the AI-PIKit command facade.
+- `package.json` exposes `zl-graph-build`, `zl-graph-status`, and
+  `zl-graph-query`.
+- `bin/zl.mjs` routes those aliases through the Zhulong command facade.
 - Context packets now include a `Code Map Status` section with graph artifact
   presence, node/edge counts, sync notes, and a simple stale warning.
 - Smoke test proved graph status, graph query, graph build handoff,
-  `pik-debug` context generation, and `pik-verify` on a temporary project.
+  `zl-debug` context generation, and `zl-verify` on a temporary project.
 
 ## Loop 6: Evidence Writeback
 
@@ -228,9 +228,9 @@ Deliverables:
 
 MVP boundary:
 
-- `pik-evidence-record` writes durable Markdown records under
+- `zl-evidence-record` writes durable Markdown records under
   `.planning/evidence/`.
-- `pik-evidence-status` lists local evidence records and updates
+- `zl-evidence-status` lists local evidence records and updates
   `.planning/evidence/INDEX.md`.
 - Workflow context packets and handoffs remind agents to create evidence
   records after non-trivial verification.
@@ -239,23 +239,23 @@ MVP boundary:
 
 Result:
 
-- `package.json` exposes `pik-evidence-record` and `pik-evidence-status`.
-- `.planning/evidence/` templates are generated during `pik-init`.
+- `package.json` exposes `zl-evidence-record` and `zl-evidence-status`.
+- `.planning/evidence/` templates are generated during `zl-init`.
 - Evidence records include scope, specification evidence, code-map status,
   verification command/result, remaining risk, rollback, and follow-ups.
 - Smoke test proved empty status, record creation, index update, evidence file
-  content, and `pik-verify` directory checks.
+  content, and `zl-verify` directory checks.
 
 ## Loop 7: End-to-End Validation
 
 Status: implemented in MVP skeleton
 
-Goal: prove an AI-PIKit command can drive one real development task.
+Goal: prove a Zhulong command can drive one real development task.
 
 Acceptance flow:
 
 ```text
-$pik-debug "<bug>"
+$zl-debug "<bug>"
   -> context packet
   -> backend workflow
   -> implementation
@@ -267,8 +267,8 @@ Result:
 
 - End-to-end MVP1 smoke validation is recorded in
   `docs/mvp1-e2e-validation.md`.
-- The validation proved local spec lookup, code-map lookup, AI-PIKit workflow
-  handoff, durable evidence writeback, and `pik-verify` in one temporary
+- The validation proved local spec lookup, code-map lookup, Zhulong workflow
+  handoff, durable evidence writeback, and `zl-verify` in one temporary
   project.
 - The workflow still uses a backend handoff instead of native chat-runtime
   command registration. That remains outside the MVP1 skeleton.
@@ -281,13 +281,13 @@ Status: open
 
 Status: implemented for Codex
 
-Goal: make AI-PIKit commands available inside Codex as native skills, not only as
+Goal: make Zhulong commands available inside Codex as native skills, not only as
 shell aliases.
 
 Deliverables:
 
-- Codex skill pack for `pik-debug`, `pik-plan-phase`, `pik-execute-phase`,
-  `pik-code-review`, and `pik-verify-work`.
+- Codex skill pack for `zl-debug`, `zl-plan-phase`, `zl-execute-phase`,
+  `zl-code-review`, and `zl-verify-work`.
 - Runtime installer/status commands.
 - Manifest/schema support for runtime command pack status.
 - Documentation for installed command behavior and remaining runtime gaps.
@@ -295,36 +295,36 @@ Deliverables:
 Result:
 
 - `runtime/codex/skills/` contains five valid Codex skills.
-- `pik-runtime-install --runtime codex --dest <skills_dir>` renders and installs
+- `zl-runtime-install --runtime codex --dest <skills_dir>` renders and installs
   the skill pack.
-- `pik-runtime-status --runtime codex --dest <skills_dir>` reports installed
+- `zl-runtime-status --runtime codex --dest <skills_dir>` reports installed
   and rendered skills.
 - Smoke test installed into a temporary skills directory and verified that
-  `{{PIK_CLI}}` rendered to the absolute local AI-PIKit CLI command.
+  `{{ZL_CLI}}` rendered to the absolute local Zhulong CLI command.
 
 ## Loop 9: Direct Graphify Build/Diff Adapter
 
 Status: implemented
 
-Goal: let AI-PIKit refresh and diff code-map artifacts directly through `pik-*`,
+Goal: let Zhulong refresh and diff code-map artifacts directly through `zl-*`,
 while keeping handoff mode for cautious projects.
 
 Deliverables:
 
-- `pik-graph-build --run` direct execution path.
-- `pik-graph-diff` graph baseline comparison.
+- `zl-graph-build --run` direct execution path.
+- `zl-graph-diff` graph baseline comparison.
 - Build and diff result artifacts under `.planning/graphs/`.
 - Config/schema fields for graph baseline, build result, and diff result paths.
-- Documentation that Graphify remains the backend and `pik-*` remains the
+- Documentation that Graphify remains the backend and `zl-*` remains the
   public interface.
 
 Result:
 
-- `pik-graph-build` still writes `GRAPH_BUILD_HANDOFF.md` by default.
-- `pik-graph-build --run` executes the configured update command, syncs
+- `zl-graph-build` still writes `GRAPH_BUILD_HANDOFF.md` by default.
+- `zl-graph-build --run` executes the configured update command, syncs
   `graphify-out/graph.json` and `graphify-out/GRAPH_REPORT.md` into
   `.planning/graphs/`, and writes `GRAPH_BUILD_RESULT.md`.
-- `pik-graph-diff` compares `.planning/graphs/graph.baseline.json` with the
+- `zl-graph-diff` compares `.planning/graphs/graph.baseline.json` with the
   current `.planning/graphs/graph.json` and writes `GRAPH_DIFF.md`.
 - Smoke test used a fake Graphify command to prove direct build, artifact sync,
   diff output, and query against the refreshed graph.
@@ -333,26 +333,26 @@ Result:
 
 Status: implemented
 
-Goal: let AI-PIKit index and query document RAG backends through `pik-*`, while
+Goal: let Zhulong index and query document RAG backends through `zl-*`, while
 keeping local keyword lookup and handoff mode as the safe defaults.
 
 Deliverables:
 
-- `pik-docs-index` handoff mode.
-- `pik-docs-index --run` direct configured RAG index execution.
-- `pik-docs-query --rag` direct configured RAG query execution.
+- `zl-docs-index` handoff mode.
+- `zl-docs-index --run` direct configured RAG index execution.
+- `zl-docs-query --rag` direct configured RAG query execution.
 - RAG result artifacts under `.planning/knowledge/`.
 - Config/schema fields for document RAG commands and result paths.
 - Runtime command guidance for using document RAG only when approved.
 
 Result:
 
-- `pik-docs-index` writes `.planning/knowledge/RAG_INDEX_HANDOFF.md` by default.
-- `pik-docs-index --run` executes the configured index command and writes
+- `zl-docs-index` writes `.planning/knowledge/RAG_INDEX_HANDOFF.md` by default.
+- `zl-docs-index --run` executes the configured index command and writes
   `.planning/knowledge/RAG_INDEX_RESULT.md`.
-- `pik-docs-query --rag` executes the configured query command and writes
+- `zl-docs-query --rag` executes the configured query command and writes
   `.planning/knowledge/RAG_QUERY_RESULT.md`.
-- `pik-docs-query` without `--rag` remains local normalized keyword search.
+- `zl-docs-query` without `--rag` remains local normalized keyword search.
 - Smoke test used fake RAG index/query commands to prove handoff, direct index,
   direct query, status update, and result artifacts.
 
@@ -360,12 +360,12 @@ Result:
 
 Status: implemented
 
-Goal: link durable AI-PIKit evidence records back into active backend issue, debug,
+Goal: link durable Zhulong evidence records back into active backend issue, debug,
 or phase records.
 
 Deliverables:
 
-- `pik-evidence-record --writeback <record>` appends a compact evidence summary
+- `zl-evidence-record --writeback <record>` appends a compact evidence summary
   to an existing backend record.
 - `--issue`, `--debug`, and `--phase` shortcuts resolve existing records when
   possible.
@@ -375,7 +375,7 @@ Deliverables:
 
 Result:
 
-- Evidence writeback appends an `AI-PIKit Evidence Writeback` section containing the
+- Evidence writeback appends an `Zhulong Evidence Writeback` section containing the
   evidence link, summary, command, result, risk, and rollback.
 - Writeback targets are constrained to project-local paths.
 - Smoke test proved standalone evidence creation plus writeback into issue,
@@ -385,7 +385,7 @@ Result:
 
 Status: implemented
 
-Goal: prove AI-PIKit against a realistic Japanese document-heavy maintenance task,
+Goal: prove Zhulong against a realistic Japanese document-heavy maintenance task,
 not only synthetic command smoke tests.
 
 Deliverables:
@@ -401,40 +401,40 @@ Deliverables:
 Result:
 
 - The validation script copies the fixture to a temporary project and runs
-  `pik-init`, `pik-verify`, `pik-docs-scan`, `pik-docs-normalize`,
-  `pik-docs-index --run`, local document query, RAG query,
-  `pik-graph-build --run`, graph query, graph diff, tests, and evidence
+  `zl-init`, `zl-verify`, `zl-docs-scan`, `zl-docs-normalize`,
+  `zl-docs-index --run`, local document query, RAG query,
+  `zl-graph-build --run`, graph query, graph diff, tests, and evidence
   writeback.
 - The CR-017 acceptance test fails before the implementation and passes after
   the scripted temp-project change.
 - The graph diff captures the change from `PROXY_APPROVAL_LIMIT=50000` to
   `PROXY_APPROVAL_LIMIT=30000`.
-- The seeded issue receives an `AI-PIKit Evidence Writeback` section after
+- The seeded issue receives an `Zhulong Evidence Writeback` section after
   verification.
 
 ## Loop 13: Claude Code and GitHub Copilot Runtime Packs
 
 Status: implemented
 
-Goal: make `pik-*` available inside the user's other coding runtimes, while
+Goal: make `zl-*` available inside the user's other coding runtimes, while
 keeping GSD as a replaceable backend rather than the public command name.
 
 Deliverables:
 
 - Claude Code skills under `runtime/claude-code/skills/`.
 - GitHub Copilot prompt files under `runtime/github-copilot/prompts/`.
-- `pik-runtime-install` and `pik-runtime-status` support for `codex`,
+- `zl-runtime-install` and `zl-runtime-status` support for `codex`,
   `claude-code`, and `github-copilot`.
 - Manifest/schema/docs updated for `skills_path` and `prompts_path`.
 
 Result:
 
-- Claude Code can install `/pik-debug`, `/pik-plan-phase`,
-  `/pik-execute-phase`, `/pik-code-review`, and `/pik-verify-work` as skills.
+- Claude Code can install `/zl-debug`, `/zl-plan-phase`,
+  `/zl-execute-phase`, `/zl-code-review`, and `/zl-verify-work` as skills.
 - GitHub Copilot can install matching slash prompt files into
   `.github/prompts/`.
 - Codex support remains intact.
-- All runtime packs render the local AI-PIKit CLI path and instruct the agent to
+- All runtime packs render the local Zhulong CLI path and instruct the agent to
   gather context, check specifications, check code maps, verify, and write back
   evidence.
 

@@ -1,6 +1,6 @@
 # Refresh Control
 
-AI-PIKit uses this directory for lightweight freshness reminders and explicit refresh records.
+Zhulong uses this directory for lightweight freshness reminders and explicit refresh records.
 
 Generated files:
 

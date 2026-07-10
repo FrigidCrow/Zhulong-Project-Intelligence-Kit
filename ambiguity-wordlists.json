@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "description": "Zhulong self-authored deterministic ambiguity terms. Project extensions are merged from .planning/knowledge/ambiguity-wordlists.json.",
+  "languages": {
+    "en": {
+      "ambiguous": [
+        { "term": "appropriate", "category": "subjective" },
+        { "term": "as needed", "category": "optional-condition" },
+        { "term": "etc.", "category": "open-ended" },
+        { "term": "fast", "category": "unquantified" },
+        { "term": "sufficient", "category": "unquantified" },
+        { "term": "user-friendly", "category": "subjective" }
+      ]
+    },
+    "ja": {
+      "ambiguous": [
+        { "term": "なるべく", "category": "weak-obligation" },
+        { "term": "必要に応じて", "category": "optional-condition" },
+        { "term": "適切", "category": "subjective" },
+        { "term": "十分", "category": "unquantified" },
+        { "term": "高速", "category": "unquantified" },
+        { "term": "など", "category": "open-ended" }
+      ]
+    },
+    "zh": {
+      "ambiguous": [
+        { "term": "尽量", "category": "weak-obligation" },
+        { "term": "酌情", "category": "optional-condition" },
+        { "term": "适当", "category": "subjective" },
+        { "term": "足够", "category": "unquantified" },
+        { "term": "快速", "category": "unquantified" },
+        { "term": "等等", "category": "open-ended" }
+      ]
+    }
+  }
+}

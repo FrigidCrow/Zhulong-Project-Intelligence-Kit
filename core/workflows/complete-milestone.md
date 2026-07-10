@@ -1,4 +1,4 @@
-# pik-complete-milestone
+# zl-complete-milestone
 
 Purpose: close a milestone only after implementation, verification, evidence,
 and follow-up records are coherent.

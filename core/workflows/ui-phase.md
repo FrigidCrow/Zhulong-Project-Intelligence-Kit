@@ -1,4 +1,4 @@
-# pik-ui-phase
+# zl-ui-phase
 
 Purpose: define UI behavior, states, data dependencies, and verification before
 frontend implementation.
@@ -20,5 +20,5 @@ Outputs:
 
 - UI scope and state checklist.
 - Impact surface list.
-- Next command recommendation: `pik-plan-phase` or `pik-execute-phase`.
+- Next command recommendation: `zl-plan-phase` or `zl-execute-phase`.
 

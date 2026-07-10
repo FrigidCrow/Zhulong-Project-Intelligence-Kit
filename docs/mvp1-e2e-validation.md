@@ -11,7 +11,7 @@ Validation goal:
 ```text
 spec evidence
   -> code-map evidence
-  -> AI-PIKit workflow handoff
+  -> Zhulong workflow handoff
   -> durable evidence writeback
   -> project verification
 ```
@@ -19,21 +19,21 @@ spec evidence
 ## Commands
 
 ```bash
-pik-init --target <tmp> --template brownfield-monorepo --name e2e_smoke
-pik-docs-scan --target <tmp>
-pik-docs-normalize --target <tmp>
-pik-docs-query --target <tmp> 承認条件
-pik-graph-status --target <tmp>
-pik-graph-query --target <tmp> PaymentService
-pik-debug --target <tmp> "PaymentService should reject non-admin approval"
-pik-evidence-record --target <tmp> "PaymentService approval rule verified" \
+zl-init --target <tmp> --template brownfield-monorepo --name e2e_smoke
+zl-docs-scan --target <tmp>
+zl-docs-normalize --target <tmp>
+zl-docs-query --target <tmp> 承認条件
+zl-graph-status --target <tmp>
+zl-graph-query --target <tmp> PaymentService
+zl-debug --target <tmp> "PaymentService should reject non-admin approval"
+zl-evidence-record --target <tmp> "PaymentService approval rule verified" \
   --command "node --check src/payment.ts" \
   --result "passed" \
   --risk "No semantic GraphRAG adapter in MVP1" \
   --rollback "restore previous PaymentService implementation" \
   --source "docs/approval.md:3"
-pik-evidence-status --target <tmp>
-pik-verify --target <tmp>
+zl-evidence-status --target <tmp>
+zl-verify --target <tmp>
 ```
 
 ## Observed Evidence
@@ -66,25 +66,25 @@ records 1
 20260624T163017Z-paymentservice-approval-rule-verified.md
 ```
 
-`pik-verify` passed required file, directory, placeholder, and JSON checks.
+`zl-verify` passed required file, directory, placeholder, and JSON checks.
 
 ## Result
 
-MVP1 proves the AI-PIKit-shaped loop:
+MVP1 proves the Zhulong-shaped loop:
 
 ```text
-user runs pik-* command
-  -> AI-PIKit gathers local spec/code-map context
-  -> AI-PIKit preserves current GSD backend routing as an implementation detail
-  -> AI-PIKit writes durable context and evidence artifacts
-  -> AI-PIKit verifies the local workspace shape
+user runs zl-* command
+  -> Zhulong gathers local spec/code-map context
+  -> Zhulong preserves current GSD backend routing as an implementation detail
+  -> Zhulong writes durable context and evidence artifacts
+  -> Zhulong verifies the local workspace shape
 ```
 
 ## Remaining Gaps
 
 - Chat-runtime native command registration was not implemented in MVP1. Later
   loops added Codex, Claude Code, and GitHub Copilot runtime packs.
-- GraphRAG semantic indexing was not executed by AI-PIKit in MVP1. Later loops added
+- GraphRAG semantic indexing was not executed by Zhulong in MVP1. Later loops added
   configured direct RAG indexing/query commands.
 - Graphify execution was represented by handoff/status/query over artifacts in
   MVP1. Later loops added configured direct Graphify execution.

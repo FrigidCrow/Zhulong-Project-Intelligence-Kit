@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zhulong Plan Phase"
+  short_description: "Plan work with Zhulong project context"
+  default_prompt: "$zl-plan-phase"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zhulong Verify Work"
+  short_description: "Verify work with Zhulong evidence"
+  default_prompt: "$zl-verify-work"

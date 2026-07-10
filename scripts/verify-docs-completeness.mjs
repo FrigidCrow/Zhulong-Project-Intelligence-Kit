@@ -36,16 +36,16 @@ const REQUIRED_FIELDS = [
 ];
 
 const README_KEY_COMMANDS = [
-  "pik-init",
-  "pik-codebase-scan",
-  "pik-docs-sync",
-  "pik-rag-init-local",
-  "pik-graph-build",
-  "pik-new-milestone",
-  "pik-debug",
-  "pik-answer-audit",
-  "pik-completion-check",
-  "pik-cockpit-build",
+  "zl-init",
+  "zl-codebase-scan",
+  "zl-docs-sync",
+  "zl-rag-init-local",
+  "zl-graph-build",
+  "zl-new-milestone",
+  "zl-debug",
+  "zl-answer-audit",
+  "zl-completion-check",
+  "zl-cockpit-build",
 ];
 
 function addIssue(file, detail) {
@@ -104,8 +104,8 @@ for (const [filePath, text] of [
   [path.join(kitRoot, "docs", "quality-plan.md"), readText(path.join(kitRoot, "docs", "quality-plan.md"))],
 ]) {
   if (hasUnsafeGsdLine(text)) addIssue(filePath, "Contains unsafe executable gsd-* guidance.");
-  if (!text.includes("AI Project Intelligence Kit")) addIssue(filePath, "Missing full product name.");
-  if (!text.includes("AI-PIKit")) addIssue(filePath, "Missing AI-PIKit abbreviation.");
+  if (!text.includes("Zhulong Project Intelligence Kit")) addIssue(filePath, "Missing full product name.");
+  if (!text.includes("Zhulong")) addIssue(filePath, "Missing Zhulong abbreviation.");
 }
 
 const data = {
@@ -119,7 +119,7 @@ const data = {
 };
 
 writeJsonReport("docs-completeness-check.json", data);
-writeMarkdownReport("docs-completeness-check.md", "AI-PIKit Docs Completeness Verification", summarizeIssues(issues), [
+writeMarkdownReport("docs-completeness-check.md", "Zhulong Docs Completeness Verification", summarizeIssues(issues), [
   {
     title: "命令详情覆盖",
     body: [

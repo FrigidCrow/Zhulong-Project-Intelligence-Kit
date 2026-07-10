@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-workflow-closure-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-workflow-closure-");
 const roots = {
   newProject: path.join(workRoot, "new-project"),
   existingProject: path.join(workRoot, "existing-project"),
@@ -48,9 +48,9 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(root, args = [], options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(root, args = [], options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: root,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -154,28 +154,28 @@ function initProject(root, mode = "new") {
   write(path.join(root, "src", "approval.js"), "export const workflowClosureLimit = 30000;\n");
   write(path.join(root, "test", "approval.test.js"), "console.log('WORKFLOW_CLOSURE_TEST');\n");
   write(path.join(root, "docs", "spec.md"), "# Spec\n\nWORKFLOW_CLOSURE_SPEC 30,000 [docs/spec.md:3]\n");
-  pik(root, ["init", "--target", root, "--template", mode === "new" ? "greenfield-app" : "brownfield-monorepo", "--name", `workflow_closure_${mode}`, "--mode", mode, "--force"]);
-  pik(root, ["codebase", "scan", "--target", root]);
-  pik(root, ["docs", "sync", "--target", root]);
+  zl(root, ["init", "--target", root, "--template", mode === "new" ? "greenfield-app" : "brownfield-monorepo", "--name", `workflow_closure_${mode}`, "--mode", mode, "--force"]);
+  zl(root, ["codebase", "scan", "--target", root]);
+  zl(root, ["docs", "sync", "--target", root]);
   configureLocalRagFixture(root);
   configureFakeGraph(root);
-  pik(root, ["graph", "build", "--target", root, "--run"]);
+  zl(root, ["graph", "build", "--target", root, "--run"]);
   makeGraphFresh(root);
-  pik(root, ["privacy", "offline-lock", "--target", root]);
+  zl(root, ["privacy", "offline-lock", "--target", root]);
 }
 
 function completeCurrentWorkflow(root) {
-  pik(root, ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", "plan accepted"]);
-  pik(root, ["workflow", "continue", "--target", root, "--gate", "implementation", "--evidence", "implementation done"]);
-  pik(root, ["workflow", "continue", "--target", root, "--gate", "verification", "--evidence", "focused test passed"]);
-  pik(root, ["evidence", "record", "--target", root, "workflow closure evidence", "--command", "fixture", "--result", "passed", "--writeback", ".planning/issues/workflow-closure.md"]);
-  const completion = pik(root, ["workflow", "completion-check", "--target", root]);
+  zl(root, ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", "plan accepted"]);
+  zl(root, ["workflow", "continue", "--target", root, "--gate", "implementation", "--evidence", "implementation done"]);
+  zl(root, ["workflow", "continue", "--target", root, "--gate", "verification", "--evidence", "focused test passed"]);
+  zl(root, ["evidence", "record", "--target", root, "workflow closure evidence", "--command", "fixture", "--result", "passed", "--writeback", ".planning/issues/workflow-closure.md"]);
+  const completion = zl(root, ["workflow", "completion-check", "--target", root]);
   assertIncludes("completion allowed", completion.output, "completion allowed");
 }
 
 function scenarioNewProject() {
   initProject(roots.newProject, "new");
-  const milestone = pik(roots.newProject, ["workflow", "run", "--target", roots.newProject, "new-milestone", "MVP4.1 first loop"]);
+  const milestone = zl(roots.newProject, ["workflow", "run", "--target", roots.newProject, "new-milestone", "MVP4.1 first loop"]);
   assertIncludes("new project no heavy refresh", milestone.output, "heavy refresh executed: no");
   completeCurrentWorkflow(roots.newProject);
   assertFileIncludes("new project facade", path.join(roots.newProject, ".planning", "workflows", "new-milestone-mvp4-1-first-loop", "WORKFLOW_FACADE.md"), "Heavy refresh executed: no");
@@ -184,29 +184,29 @@ function scenarioNewProject() {
 function scenarioExistingDocsUpdate() {
   initProject(roots.existingProject, "existing");
   write(path.join(roots.existingProject, "docs", "minutes.md"), "# Minutes\n\nWORKFLOW_CLOSURE_DOC_UPDATE 代理承認 updated [docs/minutes.md:3]\n");
-  const sync = pik(roots.existingProject, ["docs", "sync", "--target", roots.existingProject]);
+  const sync = zl(roots.existingProject, ["docs", "sync", "--target", roots.existingProject]);
   assertIncludes("existing docs sync stale", sync.output, "STALE_NEEDS_REFRESH");
   assertIncludes("existing docs sync no heavy", sync.output, "heavy refresh executed: no");
-  const query = pik(roots.existingProject, ["docs", "query", "--target", roots.existingProject, "WORKFLOW_CLOSURE_DOC_UPDATE"]);
+  const query = zl(roots.existingProject, ["docs", "query", "--target", roots.existingProject, "WORKFLOW_CLOSURE_DOC_UPDATE"]);
   assertIncludes("existing docs query", query.output, "WORKFLOW_CLOSURE_DOC_UPDATE");
-  const audit = pik(roots.existingProject, ["answer", "audit", "--target", roots.existingProject]);
+  const audit = zl(roots.existingProject, ["answer", "audit", "--target", roots.existingProject]);
   assertIncludes("existing answer audit", audit.output, "answer audit PASS");
-  const debug = pik(roots.existingProject, ["workflow", "run", "--target", roots.existingProject, "debug", "既有项目文档更新后调查"]);
+  const debug = zl(roots.existingProject, ["workflow", "run", "--target", roots.existingProject, "debug", "既有项目文档更新后调查"]);
   assertIncludes("existing workflow no heavy", debug.output, "heavy refresh executed: no");
 }
 
 function scenarioGraphLiteNoDocs() {
   fs.mkdirSync(roots.graphLite, { recursive: true });
   write(path.join(roots.graphLite, "src", "lite.js"), "export const graphLite = true;\n");
-  pik(roots.graphLite, ["init", "--target", roots.graphLite, "--template", "greenfield-app", "--name", "workflow_graph_lite", "--mode", "new", "--force"]);
-  pik(roots.graphLite, ["mode", "set", "--target", roots.graphLite, "graph-lite"]);
-  pik(roots.graphLite, ["codebase", "scan", "--target", roots.graphLite]);
+  zl(roots.graphLite, ["init", "--target", roots.graphLite, "--template", "greenfield-app", "--name", "workflow_graph_lite", "--mode", "new", "--force"]);
+  zl(roots.graphLite, ["mode", "set", "--target", roots.graphLite, "graph-lite"]);
+  zl(roots.graphLite, ["codebase", "scan", "--target", roots.graphLite]);
   configureFakeGraph(roots.graphLite, "GRAPH_LITE_WORKFLOW_GRAPH");
   configureLocalRagFixture(roots.graphLite);
-  pik(roots.graphLite, ["graph", "build", "--target", roots.graphLite, "--run"]);
+  zl(roots.graphLite, ["graph", "build", "--target", roots.graphLite, "--run"]);
   makeGraphFresh(roots.graphLite);
-  pik(roots.graphLite, ["privacy", "offline-lock", "--target", roots.graphLite]);
-  const run = pik(roots.graphLite, ["workflow", "run", "--target", roots.graphLite, "debug", "graph lite no docs"]);
+  zl(roots.graphLite, ["privacy", "offline-lock", "--target", roots.graphLite]);
+  const run = zl(roots.graphLite, ["workflow", "run", "--target", roots.graphLite, "debug", "graph lite no docs"]);
   assertIncludes("graph-lite waived", run.output, "WAIVED_WITH_RISK");
   completeCurrentWorkflow(roots.graphLite);
   assertFileIncludes("graph-lite workflow state", path.join(roots.graphLite, ".planning", "workflows", "debug-graph-lite-no-docs", "WORKFLOW_STATE.md"), "WAIVED_WITH_RISK");
@@ -214,18 +214,18 @@ function scenarioGraphLiteNoDocs() {
 
 function scenarioFullStrictBlocking() {
   initProject(roots.fullStrict, "new");
-  pik(roots.fullStrict, ["mode", "set", "--target", roots.fullStrict, "full-strict"]);
+  zl(roots.fullStrict, ["mode", "set", "--target", roots.fullStrict, "full-strict"]);
   const future = new Date(Date.now() + 10000);
   fs.utimesSync(path.join(roots.fullStrict, "src", "approval.js"), future, future);
-  const stale = pik(roots.fullStrict, ["workflow", "run", "--target", roots.fullStrict, "execute-phase", "strict stale check"]);
+  const stale = zl(roots.fullStrict, ["workflow", "run", "--target", roots.fullStrict, "execute-phase", "strict stale check"]);
   assertIncludes("full-strict stale", stale.output, "STALE_NEEDS_REFRESH");
-  const completion = pik(roots.fullStrict, ["workflow", "completion-check", "--target", roots.fullStrict], { expectedStatus: 1 });
+  const completion = zl(roots.fullStrict, ["workflow", "completion-check", "--target", roots.fullStrict], { expectedStatus: 1 });
   assertIncludes("full-strict blocked", completion.output, "completion blocked");
 
   const config = JSON.parse(read(configPath(roots.fullStrict)));
   config.privacy.allow_external_rag = true;
   write(configPath(roots.fullStrict), `${JSON.stringify(config, null, 2)}\n`);
-  const privacyFail = pik(roots.fullStrict, ["policy", "verify", "--target", roots.fullStrict], { expectedStatus: 1 });
+  const privacyFail = zl(roots.fullStrict, ["policy", "verify", "--target", roots.fullStrict], { expectedStatus: 1 });
   assertIncludes("full-strict external provider blocked", privacyFail.output, "policy verify FAIL");
 }
 
@@ -253,7 +253,7 @@ const data = {
 };
 
 writeJsonReport("workflow-closure-check.json", data);
-writeMarkdownReport("workflow-closure-check.md", "AI-PIKit Workflow Closure Verification", summarizeIssues(issues), [
+writeMarkdownReport("workflow-closure-check.md", "Zhulong Workflow Closure Verification", summarizeIssues(issues), [
   { title: "场景", body: [
     "- 新项目第一次闭环",
     "- 既有项目 + 文档更新",

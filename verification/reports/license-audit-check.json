@@ -1,14 +1,17 @@
 {
-  "generated": "2026-06-28T13:57:31.268Z",
+  "generated": "2026-07-10T00:45:33.642Z",
   "status": "PASS",
   "commandStatus": 0,
   "evidence": [
-    "pik license audit: found license audit",
-    "pik license audit: found write",
+    "zl license audit: found license audit",
+    "zl license audit: found write",
     "license report: found Restricted / commercial-review licenses",
     "license report: found Non-MIT or unknown items",
     "license report: found ollama",
-    "license report: found graphify"
+    "license report: found graphify",
+    "third-party notices: found Vendored ambiguity wordlists",
+    "third-party notices: found None.",
+    "third-party notices: found ambiguity-wordlists.json"
   ],
   "issues": []
 }

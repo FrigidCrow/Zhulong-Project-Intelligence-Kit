@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-policy-hardening-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-policy-hardening-");
 const projectRoot = path.join(workRoot, "project");
 const graphLiteRoot = path.join(workRoot, "graph-lite-project");
 const issues = [];
@@ -44,9 +44,9 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(target, args = [], options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(target, args = [], options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: target,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -141,37 +141,37 @@ function prepareStrictProject() {
   write(path.join(projectRoot, "src", "approval.js"), "export const policyHardeningLimit = 51000;\n");
   write(path.join(projectRoot, "test", "approval.test.js"), "console.log('POLICY_HARDENING_TEST');\n");
   write(path.join(projectRoot, "docs", "spec.md"), "# Spec\n\nPOLICY_HARDENING_SPEC citation target.\n");
-  pik(projectRoot, ["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "policy_hardening_fixture", "--mode", "new", "--force"]);
-  pik(projectRoot, ["mode", "set", "--target", projectRoot, "full-strict"]);
-  pik(projectRoot, ["codebase", "scan", "--target", projectRoot]);
-  pik(projectRoot, ["docs", "scan", "--target", projectRoot]);
-  pik(projectRoot, ["docs", "extract", "--target", projectRoot]);
-  pik(projectRoot, ["docs", "citations", "--target", projectRoot, "POLICY_HARDENING_SPEC"]);
+  zl(projectRoot, ["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "policy_hardening_fixture", "--mode", "new", "--force"]);
+  zl(projectRoot, ["mode", "set", "--target", projectRoot, "full-strict"]);
+  zl(projectRoot, ["codebase", "scan", "--target", projectRoot]);
+  zl(projectRoot, ["docs", "scan", "--target", projectRoot]);
+  zl(projectRoot, ["docs", "extract", "--target", projectRoot]);
+  zl(projectRoot, ["docs", "citations", "--target", projectRoot, "POLICY_HARDENING_SPEC"]);
   writeFreshGraph(projectRoot);
   writeFreshRag(projectRoot, "full-strict");
-  pik(projectRoot, ["privacy", "offline-lock", "--target", projectRoot]);
+  zl(projectRoot, ["privacy", "offline-lock", "--target", projectRoot]);
 }
 
 function testPolicyLockVerifyDiff() {
-  const lock = pik(projectRoot, ["policy", "lock", "--target", projectRoot]);
+  const lock = zl(projectRoot, ["policy", "lock", "--target", projectRoot]);
   assertIncludes("policy lock", lock.output, "policy lock PASS");
   assertIncludes("policy lock no heavy", lock.output, "heavy refresh executed: no");
   assertFileIncludes("POLICY_LOCK hash", path.join(projectRoot, ".planning", "policies", "POLICY_LOCK.json"), "snapshotHash");
 
-  const verify = pik(projectRoot, ["policy", "verify", "--target", projectRoot]);
+  const verify = zl(projectRoot, ["policy", "verify", "--target", projectRoot]);
   assertIncludes("policy verify", verify.output, "policy verify PASS");
   assertIncludes("policy verify no heavy", verify.output, "heavy refresh executed: no");
 
-  const clean = pik(projectRoot, ["policy", "diff", "--target", projectRoot]);
+  const clean = zl(projectRoot, ["policy", "diff", "--target", projectRoot]);
   assertIncludes("policy diff clean", clean.output, "policy diff CLEAN");
 
   const config = readConfig(projectRoot);
   config.privacy.allow_external_rag = true;
   writeConfig(projectRoot, config);
-  const changed = pik(projectRoot, ["policy", "diff", "--target", projectRoot], { expectedStatus: 1 });
+  const changed = zl(projectRoot, ["policy", "diff", "--target", projectRoot], { expectedStatus: 1 });
   assertIncludes("policy diff changed", changed.output, "policy diff CHANGED");
   assertFileIncludes("POLICY_DIFF field", path.join(projectRoot, ".planning", "policies", "POLICY_DIFF.md"), "privacy.allow_external_rag");
-  const unsafe = pik(projectRoot, ["policy", "verify", "--target", projectRoot], { expectedStatus: 1 });
+  const unsafe = zl(projectRoot, ["policy", "verify", "--target", projectRoot], { expectedStatus: 1 });
   assertIncludes("policy verify unsafe", unsafe.output, "policy verify FAIL");
   assertIncludes("policy verify unsafe external", unsafe.output, "allow_external_rag");
 
@@ -180,16 +180,16 @@ function testPolicyLockVerifyDiff() {
 }
 
 function testFullStrictStaleAndMissingCitation() {
-  pik(projectRoot, ["policy", "verify", "--target", projectRoot]);
+  zl(projectRoot, ["policy", "verify", "--target", projectRoot]);
   const future = new Date(Date.now() + 10000);
   fs.utimesSync(path.join(projectRoot, "src", "approval.js"), future, future);
-  const stale = pik(projectRoot, ["policy", "verify", "--target", projectRoot], { expectedStatus: 1 });
+  const stale = zl(projectRoot, ["policy", "verify", "--target", projectRoot], { expectedStatus: 1 });
   assertIncludes("full-strict stale", stale.output, "STALE_NEEDS_REFRESH");
   assertIncludes("full-strict stale no heavy", stale.output, "heavy refresh executed: no");
 
   writeFreshGraph(projectRoot, "POLICY_GRAPH_REFRESHED_MANUAL");
   fs.rmSync(path.join(projectRoot, ".planning", "knowledge", "CITATIONS.md"), { force: true });
-  const missingCitation = pik(projectRoot, ["policy", "verify", "--target", projectRoot], { expectedStatus: 1 });
+  const missingCitation = zl(projectRoot, ["policy", "verify", "--target", projectRoot], { expectedStatus: 1 });
   assertIncludes("full-strict missing citation", missingCitation.output, "evidence.citations");
   assertIncludes("full-strict missing citation fail", missingCitation.output, "FAIL");
 }
@@ -197,21 +197,21 @@ function testFullStrictStaleAndMissingCitation() {
 function prepareGraphLiteProject() {
   fs.mkdirSync(graphLiteRoot, { recursive: true });
   write(path.join(graphLiteRoot, "src", "lite.js"), "export const graphLiteOnly = true;\n");
-  pik(graphLiteRoot, ["init", "--target", graphLiteRoot, "--template", "greenfield-app", "--name", "graph_lite_fixture", "--mode", "new", "--force"]);
-  pik(graphLiteRoot, ["mode", "set", "--target", graphLiteRoot, "graph-lite"]);
-  pik(graphLiteRoot, ["codebase", "scan", "--target", graphLiteRoot]);
+  zl(graphLiteRoot, ["init", "--target", graphLiteRoot, "--template", "greenfield-app", "--name", "graph_lite_fixture", "--mode", "new", "--force"]);
+  zl(graphLiteRoot, ["mode", "set", "--target", graphLiteRoot, "graph-lite"]);
+  zl(graphLiteRoot, ["codebase", "scan", "--target", graphLiteRoot]);
   writeFreshGraph(graphLiteRoot, "GRAPH_LITE_GRAPH");
-  pik(graphLiteRoot, ["privacy", "offline-lock", "--target", graphLiteRoot]);
+  zl(graphLiteRoot, ["privacy", "offline-lock", "--target", graphLiteRoot]);
 }
 
 function testGraphLiteWaiver() {
-  const run = pik(graphLiteRoot, ["workflow", "run", "--target", graphLiteRoot, "debug", "GRAPH_LITE no docs"]);
+  const run = zl(graphLiteRoot, ["workflow", "run", "--target", graphLiteRoot, "debug", "GRAPH_LITE no docs"]);
   assertIncludes("graph-lite workflow", run.output, "WAIVED_WITH_RISK");
-  pik(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "plan", "--evidence", "graph-lite plan accepted"]);
-  pik(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "implementation", "--evidence", "graph-lite implementation accepted"]);
-  pik(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "verification", "--evidence", "graph-lite verification accepted"]);
-  pik(graphLiteRoot, ["evidence", "record", "--target", graphLiteRoot, "graph-lite evidence", "--command", "manual", "--result", "passed", "--writeback", ".planning/issues/graph-lite.md"]);
-  const completion = pik(graphLiteRoot, ["workflow", "completion-check", "--target", graphLiteRoot]);
+  zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "plan", "--evidence", "graph-lite plan accepted"]);
+  zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "implementation", "--evidence", "graph-lite implementation accepted"]);
+  zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "verification", "--evidence", "graph-lite verification accepted"]);
+  zl(graphLiteRoot, ["evidence", "record", "--target", graphLiteRoot, "graph-lite evidence", "--command", "manual", "--result", "passed", "--writeback", ".planning/issues/graph-lite.md"]);
+  const completion = zl(graphLiteRoot, ["workflow", "completion-check", "--target", graphLiteRoot]);
   assertIncludes("graph-lite completion allowed", completion.output, "completion allowed");
   assertIncludes("graph-lite completion waiver", completion.output, "WAIVED_WITH_RISK");
   assertFileIncludes("graph-lite workflow audit waiver", path.join(graphLiteRoot, ".planning", "workflows", "debug-graph-lite-no-docs", "WORKFLOW_STATE.md"), "WAIVED_WITH_RISK");
@@ -243,7 +243,7 @@ const data = {
 };
 
 writeJsonReport("policy-hardening-check.json", data);
-writeMarkdownReport("policy-hardening-check.md", "AI-PIKit Policy Hardening & Guard Contract Verification", summarizeIssues(issues), [
+writeMarkdownReport("policy-hardening-check.md", "Zhulong Policy Hardening & Guard Contract Verification", summarizeIssues(issues), [
   {
     title: "证据",
     body: evidence.length ? evidence.map((item) => `- ${item}`) : ["未记录证据。"],

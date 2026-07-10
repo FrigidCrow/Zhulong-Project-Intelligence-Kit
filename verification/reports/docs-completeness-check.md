@@ -1,6 +1,6 @@
-# AI-PIKit Docs Completeness Verification
+# Zhulong Docs Completeness Verification
 
-生成时间: 2026-06-28T18:20:50.754Z
+生成时间: 2026-07-10T00:46:31.228Z
 
 ## 摘要
 
@@ -9,92 +9,95 @@
 
 ## 命令详情覆盖
 
-- Commands checked: 71
+- Commands checked: 74
 - Required fields per command: 13
-- PASS `pik`
-- PASS `pik-init`
-- PASS `pik-verify`
-- PASS `pik-map`
-- PASS `pik-codebase`
-- PASS `pik-codebase-scan`
-- PASS `pik-codebase-status`
-- PASS `pik-docs-scan`
-- PASS `pik-docs-status`
-- PASS `pik-docs-normalize`
-- PASS `pik-docs-extract`
-- PASS `pik-docs-diff`
-- PASS `pik-docs-citations`
-- PASS `pik-docs-index`
-- PASS `pik-docs-query`
-- PASS `pik-docs-sync`
-- PASS `pik-answer-audit`
-- PASS `pik-rag-init-local`
-- PASS `pik-rag-golden-add`
-- PASS `pik-rag-golden-run`
-- PASS `pik-rag-eval`
-- PASS `pik-citation-audit`
-- PASS `pik-graph-build`
-- PASS `pik-graph-status`
-- PASS `pik-graph-query`
-- PASS `pik-graph-diff`
-- PASS `pik-graph-impact`
-- PASS `pik-graph-risk`
-- PASS `pik-graph-freshness`
-- PASS `pik-preflight`
-- PASS `pik-refresh-plan`
-- PASS `pik-refresh-run`
-- PASS `pik-mode-status`
-- PASS `pik-mode-set`
-- PASS `pik-trace-build`
-- PASS `pik-trace-query`
-- PASS `pik-trace-audit`
-- PASS `pik-evidence-record`
-- PASS `pik-evidence-status`
-- PASS `pik-policy-list`
-- PASS `pik-policy-check`
-- PASS `pik-policy-explain`
-- PASS `pik-policy-lock`
-- PASS `pik-policy-verify`
-- PASS `pik-policy-diff`
-- PASS `pik-privacy-audit`
-- PASS `pik-offline-lock`
-- PASS `pik-outbound-audit`
-- PASS `pik-license-audit`
-- PASS `pik-runtime-install`
-- PASS `pik-runtime-status`
-- PASS `pik-context-debug`
-- PASS `pik-context-execute`
-- PASS `pik-new-milestone`
-- PASS `pik-spec-phase`
-- PASS `pik-discuss-phase`
-- PASS `pik-ui-phase`
-- PASS `pik-debug`
-- PASS `pik-plan-phase`
-- PASS `pik-execute-phase`
-- PASS `pik-code-review`
-- PASS `pik-verify-work`
-- PASS `pik-complete-milestone`
-- PASS `pik-workflow-run`
-- PASS `pik-workflow-status`
-- PASS `pik-workflow-continue`
-- PASS `pik-workflow-audit`
-- PASS `pik-gate-check`
-- PASS `pik-completion-check`
-- PASS `pik-cockpit-build`
-- PASS `pik-help-skills`
+- PASS `zl`
+- PASS `zl-init`
+- PASS `zl-verify`
+- PASS `zl-map`
+- PASS `zl-codebase`
+- PASS `zl-codebase-scan`
+- PASS `zl-codebase-status`
+- PASS `zl-docs-scan`
+- PASS `zl-docs-status`
+- PASS `zl-docs-normalize`
+- PASS `zl-docs-extract`
+- PASS `zl-docs-diff`
+- PASS `zl-docs-citations`
+- PASS `zl-docs-index`
+- PASS `zl-docs-query`
+- PASS `zl-docs-sync`
+- PASS `zl-ambiguity-audit`
+- PASS `zl-structure-audit`
+- PASS `zl-answer-audit`
+- PASS `zl-rag-init-local`
+- PASS `zl-rag-golden-add`
+- PASS `zl-rag-golden-run`
+- PASS `zl-rag-eval`
+- PASS `zl-citation-audit`
+- PASS `zl-graph-build`
+- PASS `zl-graph-status`
+- PASS `zl-graph-query`
+- PASS `zl-graph-diff`
+- PASS `zl-graph-impact`
+- PASS `zl-graph-risk`
+- PASS `zl-graph-freshness`
+- PASS `zl-preflight`
+- PASS `zl-refresh-plan`
+- PASS `zl-refresh-run`
+- PASS `zl-mode-status`
+- PASS `zl-mode-set`
+- PASS `zl-trace-build`
+- PASS `zl-trace-query`
+- PASS `zl-trace-audit`
+- PASS `zl-evidence-record`
+- PASS `zl-evidence-status`
+- PASS `zl-policy-list`
+- PASS `zl-policy-check`
+- PASS `zl-policy-explain`
+- PASS `zl-policy-lock`
+- PASS `zl-policy-verify`
+- PASS `zl-policy-diff`
+- PASS `zl-privacy-audit`
+- PASS `zl-offline-lock`
+- PASS `zl-outbound-audit`
+- PASS `zl-license-audit`
+- PASS `zl-runtime-install`
+- PASS `zl-runtime-status`
+- PASS `zl-context-debug`
+- PASS `zl-context-execute`
+- PASS `zl-new-milestone`
+- PASS `zl-spec-phase`
+- PASS `zl-discuss-phase`
+- PASS `zl-ui-phase`
+- PASS `zl-debug`
+- PASS `zl-plan-phase`
+- PASS `zl-execute-phase`
+- PASS `zl-code-review`
+- PASS `zl-verify-work`
+- PASS `zl-complete-milestone`
+- PASS `zl-workflow-run`
+- PASS `zl-workflow-status`
+- PASS `zl-workflow-continue`
+- PASS `zl-workflow-audit`
+- PASS `zl-gate-check`
+- PASS `zl-completion-check`
+- PASS `zl-cockpit-build`
+- PASS `zl-help-skills`
+- PASS `zl-next`
 
 ## README 关键入口
 
-- PASS `pik-init`
-- PASS `pik-codebase-scan`
-- PASS `pik-docs-sync`
-- PASS `pik-rag-init-local`
-- PASS `pik-graph-build`
-- PASS `pik-new-milestone`
-- PASS `pik-debug`
-- PASS `pik-answer-audit`
-- PASS `pik-completion-check`
-- PASS `pik-cockpit-build`
+- PASS `zl-init`
+- PASS `zl-codebase-scan`
+- PASS `zl-docs-sync`
+- PASS `zl-rag-init-local`
+- PASS `zl-graph-build`
+- PASS `zl-new-milestone`
+- PASS `zl-debug`
+- PASS `zl-answer-audit`
+- PASS `zl-completion-check`
+- PASS `zl-cockpit-build`
 
 ## 问题
 

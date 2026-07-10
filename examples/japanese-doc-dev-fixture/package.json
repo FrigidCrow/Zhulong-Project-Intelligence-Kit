@@ -1,9 +1,9 @@
 {
-  "name": "pik-japanese-doc-dev-fixture",
+  "name": "zl-japanese-doc-dev-fixture",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Japanese document-heavy approval workflow fixture for AI Project Intelligence Kit.",
+  "description": "Japanese document-heavy approval workflow fixture for Zhulong Project Intelligence Kit.",
   "scripts": {
     "test": "node --test tests/current.test.js",
     "test:task": "node --test tests/cr017_proxy_limit.test.js",
@@ -12,6 +12,6 @@
     "rag:query": "node scripts/fake-rag-query.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24 <25"
   }
 }

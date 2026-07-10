@@ -1,20 +1,59 @@
-# AI-PIKit Changelog
+# Zhulong Changelog
 
-Date: 2026-06-25  
-Full name: **AI Project Intelligence Kit**  
-Documentation abbreviation: **AI-PIKit**  
-Command namespace: **`pik-*`**
+Date: 2026-06-25
+Full name: **Zhulong Project Intelligence Kit**
+Documentation abbreviation: **Zhulong**
+Command namespace: **`zl-*`**
+
+## 2026-07-10：机械质量审计、低心智门面与品牌特色收口
+
+本阶段把截图规划中的 Phase A-C 从设计稿落成可运行、可复跑、可证明的 Zhulong 能力，并建立统一的特色功能记载规范。
+
+新增公开命令：
+
+- `zl-ambiguity-audit`：中英日暧昧表达审计，支持项目词表扩展与 `--strict`。
+- `zl-structure-audit`：对五类关键 `.planning/` JSON 执行确定性 mini-schema 检查。
+- `zl-next`：读取本地状态，只推荐 2-3 条下一步命令并写入 `.planning/help/NEXT.md`。
+
+回答与门面增强：
+
+- `zl-answer-audit` 新增 `citation_resolve_rate`、`value_drift_count` 和 `unsupported_sentence_ratio`。
+- `zl-docs-sync` 自动附带只读 ambiguity audit。
+- `zl-docs-query` 默认自动附带 answer audit，可用 `knowledge.auto_answer_audit=false` 关闭。
+- `zl-completion-check` 自动刷新 structure audit；重建索引、代码图和 refresh run 仍保持显式。
+- `zl-help-skills` 从 5 类扩展到 9 类场景。
+
+驾驶舱与护栏：
+
+- cockpit 新增 Quality & Token Metrics，读取回答、暧昧、结构和可选 `TOKEN_USAGE.json` 指标。
+- 大图保持聚合社区预览，不嵌入完整原始 graph。
+- 新增 Claude Code deny 模板，禁止 WebFetch、常见外发 CLI、敏感文件读取和需求源目录写入，并关闭 hooks、bypass 与 auto 模式。
+- 新增 `docs/context-efficiency.md`，定义稳定前缀、引用优先、制品交接和 token 槽位。
+
+品牌与文档：
+
+- 新增 `docs/brand.md`，定义品牌目的、定位、五个特色支柱、语言规范、视觉规范和证明指标。
+- README 与产品页按“问题、机制、产物、证据、边界”突出特色，不再用内部 MVP 编号作为主要卖点。
+- 改造计划将 Phase A-C 标为已完成并建立逐项实现映射；Phase D 保留为需要许可证决策的发布治理。
+- field notes 中的特定外部 provider 示例改为通用 `<external-provider>` 占位。
+
+验证：
+
+- 新增 `verify:ambiguity`、`verify:structure`、`verify:guardrails` 并纳入 `verify:quality`。
+- `verify:answer-audit` 覆盖自动审计开关和数值漂移。
+- `verify:cockpit-build` 覆盖质量与 token 指标槽位。
+- `verify:full-command-surface` 覆盖 74 / 74 公开逻辑命令。
 
 ## 2026-06-29: Scenario Playbook Documentation Sync
 
-本阶段不新增公开命令，专门补齐“不同项目场景应该怎么用 AI-PIKit”的说明书闭环，并同步 HTML 文档。
+本阶段不新增公开命令，专门补齐“不同项目场景应该怎么用 Zhulong”的说明书闭环，并同步 HTML 文档。
 
 文档增强：
 
 - `README.md` 新增场景路线速查和状态处理速查，明确文档少/无文档项目默认走 `reference + rag none`，对日/规格严格项目才走 `strict + rag local`。
-- `docs/commands.html` 新增场景路线和状态处理章节；新项目、既有项目接入示例改为默认轻量接入，不再把 `pik-rag-init-local` 写成所有项目必跑步骤。
+- `docs/commands.html` 新增场景路线和状态处理章节；新项目、既有项目接入示例改为默认轻量接入，不再把 `zl-rag-init-local` 写成所有项目必跑步骤。
 - `docs/technical-guide.html` 新增场景选择模型，补充 `RAG backend disabled`、`WAIVED_WITH_RISK`、strict 阻断等排障路径，并把 docs gate 定义收紧为“真实文档扫描结果或带本地 citation 的 query”。
-- `docs/product.html` 补充轻量路线、严格路线、演示路线，说明 AI-PIKit 不强迫所有项目默认上 RAG。
+- `docs/product.html` 补充轻量路线、严格路线、演示路线，说明 Zhulong 不强迫所有项目默认上 RAG。
 - `docs/quality-dashboard.html` 补充场景质量覆盖表，把轻量项目、严格文档、既有项目、文档更新、runtime skills、leader 演示对应到验证脚本和报告。
 - `docs/runtime-command-packs.md` 新增 Codex / Claude Code / GitHub Copilot 的实际调用例，强调 runtime pack 只调用本地 CLI，不安装 RAG、不切外部 provider、不隐藏触发 heavy refresh。
 
@@ -27,7 +66,7 @@ Command namespace: **`pik-*`**
 
 ## 2026-06-28: Long-Term Quality Control Scorecard
 
-本阶段把质量检查从“脚本集合”升级为长期可复跑的内部质量控制机制。它不新增公开 `pik-*` 用户命令，不进入 `docs/commands.html`，只新增维护者 npm scripts 和审计报告。
+本阶段把质量检查从“脚本集合”升级为长期可复跑的内部质量控制机制。它不新增公开 `zl-*` 用户命令，不进入 `docs/commands.html`，只新增维护者 npm scripts 和审计报告。
 
 新增内部质量入口：
 
@@ -42,11 +81,11 @@ Command namespace: **`pik-*`**
 
 新增和扩展产物：
 
-- `.pik-audit/latest/SKILL_BEHAVIOR_SCORES.md/json`
-- `.pik-audit/latest/SECURITY_GOVERNANCE_CHECK.md/json`
-- `.pik-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.md/json`
-- `.pik-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.md/json`
-- `.pik-audit/latest/QUALITY_CONTROL_SCORECARD.md/json/html`
+- `.zl-audit/latest/SKILL_BEHAVIOR_SCORES.md/json`
+- `.zl-audit/latest/SECURITY_GOVERNANCE_CHECK.md/json`
+- `.zl-audit/latest/RAGAS_STYLE_KNOWLEDGE_SCORES.md/json`
+- `.zl-audit/latest/PROMPTFOO_STYLE_REDTEAM_SCORES.md/json`
+- `.zl-audit/latest/QUALITY_CONTROL_SCORECARD.md/json/html`
 - `verification/reports/security-governance-check.md/json`
 - `verification/reports/quality-control-summary.md/json`
 
@@ -67,7 +106,7 @@ Command namespace: **`pik-*`**
 - `RAGAS_STYLE_KNOWLEDGE_SCORES` 和 `PROMPTFOO_STYLE_REDTEAM_SCORES` 是本地代理指标，不调用外部 SaaS 或外部模型。
 - 默认 local-only，`privacy.allow_external_rag = false`，`privacy.allow_external_tools = false`。
 - 外部 RAG 只能通过 `--doc-policy strict --rag external --allow-external-rag` 显式开启，并生成风险报告。
-- Codex、Claude Code、GitHub Copilot 是用户主动使用的外部 coding runtime 例外；这个例外不允许 AI-PIKit 命令默认外发项目资料。
+- Codex、Claude Code、GitHub Copilot 是用户主动使用的外部 coding runtime 例外；这个例外不允许 Zhulong 命令默认外发项目资料。
 - 外部机制只借鉴方法：OpenAI Agent Skill Evals、SkillsBench、Ragas、Promptfoo、OWASP Agentic Top 10、NIST AI RMF；当前不强制引入外部 SaaS。
 - 2026-06-29 复核并补充方法论链接：OpenAI Agent Skills / skill evals、SkillsBench、Anthropic agent evals、Ragas agent metrics、Promptfoo Agent Skills、OWASP Agentic Top 10 2026、NIST AI RMF / AI 600-1。README、quality plan、developer audit 和 verification README 均标注采用方式与 local-only 边界。
 
@@ -81,21 +120,21 @@ Command namespace: **`pik-*`**
 
 ## 2026-06-28: MVP4.3 Init Wizard & Document/RAG Policy Simplification
 
-本阶段把 `pik-init` 从单纯生成 `.planning/` 的入口，升级为项目级一次性接入向导语义。
+本阶段把 `zl-init` 从单纯生成 `.planning/` 的入口，升级为项目级一次性接入向导语义。
 
 新增和调整：
 
-- `pik-init` 支持 `--doc-policy reference|strict`。
-- `pik-init` 支持 `--rag none|local|external`。
-- `pik-init` 支持 `--setup-rag ask|install|skip`，默认不安装依赖、不触发 GraphRAG index。
-- `pik-init` 支持 `--allow-external-rag`，没有显式确认时外部 RAG 直接失败。
-- 真实终端中只运行 `pik-init --target "$PWD"` 会进入 init wizard；CI/非 TTY 使用显式参数或默认值，不等待输入。
+- `zl-init` 支持 `--doc-policy reference|strict`。
+- `zl-init` 支持 `--rag none|local|external`。
+- `zl-init` 支持 `--setup-rag ask|install|skip`，默认不安装依赖、不触发 GraphRAG index。
+- `zl-init` 支持 `--allow-external-rag`，没有显式确认时外部 RAG 直接失败。
+- 真实终端中只运行 `zl-init --target "$PWD"` 会进入 init wizard；CI/非 TTY 使用显式参数或默认值，不等待输入。
 - 默认初始化从旧的 Local GraphRAG 默认口径改为 `reference + rag none + local_only`。
 - `strict + rag none` 现在是硬失败，严格文档模式必须选择 local 或 external RAG。
 - `strict + rag local` 会写 `.planning/knowledge/LOCAL_RAG_SETUP_PLAN.md`，默认推荐 `qwen2.5:7b` + `bge-m3`。
 - `strict + rag external --allow-external-rag` 会写 `.planning/privacy/EXTERNAL_RAG_RISK.md`。
-- `pik-docs-index --run` 和 `pik-docs-query --rag` 在 `rag none` 下会明确失败并提示 `RAG backend disabled`，避免误跑 GraphRAG。
-- `pik-mode-set` 新增推荐语义 `docs-reference`、`docs-strict`，同时兼容 `graph-lite`、`default-local-rag`、`full-strict`。
+- `zl-docs-index --run` 和 `zl-docs-query --rag` 在 `rag none` 下会明确失败并提示 `RAG backend disabled`，避免误跑 GraphRAG。
+- `zl-mode-set` 新增推荐语义 `docs-reference`、`docs-strict`，同时兼容 `graph-lite`、`default-local-rag`、`full-strict`。
 - policy snapshot 纳入 `document_policy` 和 `rag_backend`，避免配置漂移漏检。
 - 本地 RAG 默认 LLM 从 `qwen3.5:4b` 调整为 `qwen2.5:7b`，原因是实际 smoke 发现 `qwen3.5:4b` 会输出较长 thinking，容易拖慢 GraphRAG query。
 - `npm run verify:rag-local` 增加明确超时边界：默认 index 300 秒、query 90 秒；慢模型或 GraphRAG query 卡住会生成失败报告，不再让质量 gate 长时间悬挂。
@@ -157,7 +196,7 @@ Command namespace: **`pik-*`**
 
 - 默认 local-only。
 - 不默认接 Figma、外部白板或外部设计平台。
-- 当前阶段只写入 roadmap，不实现 `pik-ui-flow-*` 命令。
+- 当前阶段只写入 roadmap，不实现 `zl-ui-flow-*` 命令。
 
 文档同步：
 
@@ -168,12 +207,12 @@ Command namespace: **`pik-*`**
 
 ## 2026-06-28: Developer Audit & Benchmark Product Artifact
 
-本阶段目标：把“AI-PIKit 可用性怎么样”做成维护者可复跑的常态审计机制，并实际执行一次命令、skills、功能 gate、AI-PIKit / GSD / Superpowers 对标、时间/token/隔离统计。
+本阶段目标：把“Zhulong 可用性怎么样”做成维护者可复跑的常态审计机制，并实际执行一次命令、skills、功能 gate、Zhulong / GSD / Superpowers 对标、时间/token/隔离统计。
 
 新增内部机制：
 
 - `scripts/dev-audit/run-dev-audit.mjs`
-- `.pik-audit/` 已加入 `.gitignore`
+- `.zl-audit/` 已加入 `.gitignore`
 - `docs/internal/dev-audit.md`
 - `verification/reports/developer-audit-summary.md/json`
 
@@ -192,41 +231,41 @@ Command namespace: **`pik-*`**
 
 审计产物：
 
-- `.pik-audit/latest/AUDIT_REPORT.md/json`
-- `.pik-audit/latest/AUDIT_SCORECARD.md/json/html`
-- `.pik-audit/latest/COMMAND_SCORES.md/json`
-- `.pik-audit/latest/SKILL_SCORES.md/json`
-- `.pik-audit/latest/FEATURE_SCORES.md/json`
-- `.pik-audit/latest/BENCHMARK_COMPARISON.md/json`
-- `.pik-audit/latest/TIME_BREAKDOWN.md/json`
-- `.pik-audit/latest/TOKEN_USAGE.md/json`
+- `.zl-audit/latest/AUDIT_REPORT.md/json`
+- `.zl-audit/latest/AUDIT_SCORECARD.md/json/html`
+- `.zl-audit/latest/COMMAND_SCORES.md/json`
+- `.zl-audit/latest/SKILL_SCORES.md/json`
+- `.zl-audit/latest/FEATURE_SCORES.md/json`
+- `.zl-audit/latest/BENCHMARK_COMPARISON.md/json`
+- `.zl-audit/latest/TIME_BREAKDOWN.md/json`
+- `.zl-audit/latest/TOKEN_USAGE.md/json`
 
 最近一次完整审计结果：
 
 - Run ID: `2026-06-27T19-01-06-200Z`
 - Status: PASS
 - Total score: 96 / A
-- Command surface: 100，覆盖 71 个 `pik` / `pik-*` bin
+- Command surface: 100，覆盖 71 个 `zl` / `zl-*` bin
 - Runtime skills: 100，覆盖 33 个 Codex / Claude Code / GitHub Copilot skill/prompt
 - Feature gates: 100
-- Benchmark comparison: 87，表示全部 12 行对标矩阵的保守平均，不是 AI-PIKit 单体分
+- Benchmark comparison: 87，表示全部 12 行对标矩阵的保守平均，不是 Zhulong 单体分
 - Cost / isolation observability: 85
 
 最新三方 benchmark 修正：
 
 - Run ID: `2026-06-27T19-01-06-200Z`
 - Status: PASS
-- AI-PIKit: `90 / A`，4 pass，1 `WAIVED_WITH_RISK`，1 `EXPECTED_BLOCK`，0 fail
+- Zhulong: `90 / A`，4 pass，1 `WAIVED_WITH_RISK`，1 `EXPECTED_BLOCK`，0 fail
 - GSD: `88 / B`，2 pass，1 `WAIVED_WITH_RISK`，0 fail
 - Superpowers: `82 / B`，2 pass，1 `WAIVED_WITH_RISK`，0 fail
 
 对标结论：
 
-- AI-PIKit `graph-lite` 在 `docs-complete`、`docs-missing`、`docs-partial` 三种 fixture 中都能闭环；无文档场景标记 `WAIVED_WITH_RISK`。
-- AI-PIKit full-local 在 `docs-complete` 和 `docs-partial` PASS，在 `docs-missing` 输出 `EXPECTED_BLOCK`，这是正确边界：没有文档依据时不能假装 GraphRAG/RAG 证据完整。
-- `Benchmark comparison: 87` 偏保守是预期结果：它同时平均 AI-PIKit 两种模式、GSD、Superpowers 和三种文档状态；`graph-lite` 低成本路径、full-local 的正确阻断、GSD / Superpowers 的 replay 可信度上限都会拉低横向均值。
+- Zhulong `graph-lite` 在 `docs-complete`、`docs-missing`、`docs-partial` 三种 fixture 中都能闭环；无文档场景标记 `WAIVED_WITH_RISK`。
+- Zhulong full-local 在 `docs-complete` 和 `docs-partial` PASS，在 `docs-missing` 输出 `EXPECTED_BLOCK`，这是正确边界：没有文档依据时不能假装 GraphRAG/RAG 证据完整。
+- `Benchmark comparison: 87` 偏保守是预期结果：它同时平均 Zhulong 两种模式、GSD、Superpowers 和三种文档状态；`graph-lite` 低成本路径、full-local 的正确阻断、GSD / Superpowers 的 replay 可信度上限都会拉低横向均值。
 - GSD / Superpowers 本轮使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 instruction pack hash、指令摘录、fixture、代码改修、测试和证据文件；因为不是 repository-local CLI / live model benchmark，分数设置可信度上限。
-- 默认 benchmark 是 deterministic，不调用外部 AI；token 写 `TOKEN_USAGE_UNAVAILABLE`。本轮额外尝试真实 Codex 子进程，已使用 `AI_PIKIT_AUDIT_REAL_AI=1 AI_PIKIT_AUDIT_CODEX_IGNORE_USER_CONFIG=1 AI_PIKIT_AUDIT_CODEX_TIMEOUT_MS=60000` 和 `--ephemeral --ignore-user-config --ignore-rules --json`；三个 real-codex subprocess 均因当前 ChatGPT account 不支持默认 `gpt-5.3-codex` 模型而在启动阶段失败，因此没有 usage events，token 仍为 `TOKEN_USAGE_UNAVAILABLE`。
+- 默认 benchmark 是 deterministic，不调用外部 AI；token 写 `TOKEN_USAGE_UNAVAILABLE`。本轮额外尝试真实 Codex 子进程，已使用 `ZHULONG_AUDIT_REAL_AI=1 ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG=1 ZHULONG_AUDIT_CODEX_TIMEOUT_MS=60000` 和 `--ephemeral --ignore-user-config --ignore-rules --json`；三个 real-codex subprocess 均因当前 ChatGPT account 不支持默认 `gpt-5.3-codex` 模型而在启动阶段失败，因此没有 usage events，token 仍为 `TOKEN_USAGE_UNAVAILABLE`。
 
 文档同步：
 
@@ -251,7 +290,7 @@ Command namespace: **`pik-*`**
 
 实现变化：
 
-- `pik-cockpit-build` 不再把整页 HTML 硬编码在 `bin/pik.mjs`，而是读取 `templates/cockpit/index.template.html` 并注入真实 `cockpit-data.json`。
+- `zl-cockpit-build` 不再把整页 HTML 硬编码在 `bin/zl.mjs`，而是读取 `templates/cockpit/index.template.html` 并注入真实 `cockpit-data.json`。
 - `cockpit-data.json` 新增 `template.mode` 和 `nextCommands`，页面可以区分 `sample` 和 `live`。
 - 新增 `npm run build:cockpit-sample`，用于从假数据重新生成 `templates/cockpit/sample.html`。
 - 借鉴 Graphify 的 viewer 结构，新增稳定数据契约 `cockpit-viewmodel.v1`：页面优先读取 `summary`、`impactGraph`、`evidenceChain`、`artifactGroups` 等固定字段，而不是直接拼散落报告。
@@ -262,22 +301,22 @@ Command namespace: **`pik-*`**
 文档同步：
 
 - `README.md`：区分稳定样例 `templates/cockpit/sample.html` 与真实项目 `.planning/cockpit/index.html`。
-- `docs/commands.html`：更新 `pik-cockpit-build` 的默认行为和失败说明。
+- `docs/commands.html`：更新 `zl-cockpit-build` 的默认行为和失败说明。
 - `docs/quality-plan.md`、`docs/quality-dashboard.html`、`docs/technical-guide.html`、`verification/README.md`：同步 cockpit template/sample 的验证边界。
 
 ## 2026-06-27: MVP4.2 Project Cockpit & Runtime Skill Usability
 
-本阶段目标：新增实际项目驾驶舱，把 AI-PIKit 已有的 workflow、skills、Graphify、GraphRAG/RAG、policy、privacy、evidence 和 quality closure 状态集中到一个本地静态 HTML，方便自查和 leader 演示。
+本阶段目标：新增实际项目驾驶舱，把 Zhulong 已有的 workflow、skills、Graphify、GraphRAG/RAG、policy、privacy、evidence 和 quality closure 状态集中到一个本地静态 HTML，方便自查和 leader 演示。
 
 新增命令：
 
-- `pik-cockpit-build`
+- `zl-cockpit-build`
 
 新增 runtime 入口：
 
-- `runtime/codex/skills/pik-cockpit-build/SKILL.md`
-- `runtime/claude-code/skills/pik-cockpit-build/SKILL.md`
-- `runtime/github-copilot/prompts/pik-cockpit-build.prompt.md`
+- `runtime/codex/skills/zl-cockpit-build/SKILL.md`
+- `runtime/claude-code/skills/zl-cockpit-build/SKILL.md`
+- `runtime/github-copilot/prompts/zl-cockpit-build.prompt.md`
 
 新增产物：
 
@@ -299,15 +338,15 @@ Command namespace: **`pik-*`**
 
 能力边界：
 
-- `pik-cockpit-build` 默认只读取已有本地 artifact，不执行 GraphRAG index、不执行 Graphify build、不访问外网、不需要 API key。
+- `zl-cockpit-build` 默认只读取已有本地 artifact，不执行 GraphRAG index、不执行 Graphify build、不访问外网、不需要 API key。
 - Graphify HTML 只有在不包含外部 URL/CDN/远程 script/stylesheet 时才复制到 cockpit assets；否则阻断复制并显示 WARN。
 - 无 Graphify HTML 时使用 `graph.json` fallback 网状图；无 RAG/citation/answer audit 时显示 `WAIVED_WITH_RISK`，但不让 cockpit 构建失败。
 - cockpit skill 是低频演示/可视化入口，不把所有 `npm run verify:*` 暴露成日常 skill。
 
 文档同步：
 
-- `README.md`：新增 Project Cockpit 用法、产物路径、`pik-cockpit-build` 与 `npm run verify:cockpit-build` 的区别。
-- `docs/commands.html`：重生成 71 个命令详情，包含 `pik-cockpit-build`。
+- `README.md`：新增 Project Cockpit 用法、产物路径、`zl-cockpit-build` 与 `npm run verify:cockpit-build` 的区别。
+- `docs/commands.html`：重生成 71 个命令详情，包含 `zl-cockpit-build`。
 - `docs/technical-guide.html`：新增 cockpit 路由、artifact 和 troubleshooting。
 - `docs/quality-plan.md`：新增 MVP4.2 cockpit 质量计划和验收标准。
 - `docs/quality-dashboard.html`：新增 cockpit 验证报告入口。
@@ -316,13 +355,13 @@ Command namespace: **`pik-*`**
 
 ## 2026-06-27: MVP4.1 Quality Closure & Documentation Completeness Freeze
 
-本阶段目标：不新增公开 `pik-*` 功能命令，先把现有能力收成可交付闭环。重点证明命令能跑、skills 能正确调用、workflow 能闭环、报告可信、默认不重刷新、不外发，并且 README 关联文档能指导新项目、既有项目、日常开发、文档更新和质量验证。
+本阶段目标：不新增公开 `zl-*` 功能命令，先把现有能力收成可交付闭环。重点证明命令能跑、skills 能正确调用、workflow 能闭环、报告可信、默认不重刷新、不外发，并且 README 关联文档能指导新项目、既有项目、日常开发、文档更新和质量验证。
 
 MVP4.1 当时命令面：
 
-- 公开 bin 保持 70 个，不新增功能命令。MVP4.2 加入 `pik-cockpit-build` 后，当前命令面已更新为 71 / 71。
+- 公开 bin 保持 70 个，不新增功能命令。MVP4.2 加入 `zl-cockpit-build` 后，当前命令面已更新为 71 / 71。
 - `docs/commands.html` 改为由 `scripts/command-catalog.mjs` + `scripts/render-commands-doc.mjs` 生成。
-- 每个 `pik-*` / `pik` 命令都有独立 `cmd-<command>` 锚点、物理名、逻辑名、用途、参数、示例、产物、失败场景、关联命令和适用场景。
+- 每个 `zl-*` / `zl` 命令都有独立 `cmd-<command>` 锚点、物理名、逻辑名、用途、参数、示例、产物、失败场景、关联命令和适用场景。
 
 新增验证：
 
@@ -340,7 +379,7 @@ MVP4.1 当时命令面：
 
 新增质量 contract：
 
-- runtime install 渲染 Markdown skill / prompt 时追加 `AI-PIKit Local Runtime Contract`，统一强调本地 CLI、local-only、no hidden heavy refresh、evidence writeback。
+- runtime install 渲染 Markdown skill / prompt 时追加 `Zhulong Local Runtime Contract`，统一强调本地 CLI、local-only、no hidden heavy refresh、evidence writeback。
 - `verify:skills-usability` 临时安装 Codex / Claude Code / GitHub Copilot 三套 runtime pack，MVP4.1 当时检查 30 个核心 workflow skill/prompt；MVP4.2 加入 cockpit 后当前为 33 个。
 - `verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`graph-lite` 无文档风险放行、`full-strict` stale/privacy 阻断。
 - `verify:docs-completeness` 检查 README 关键命令跳转、命令手册独立详情和命名边界；MVP4.1 当时为 70 个，MVP4.2 当前为 71 个。
@@ -364,24 +403,24 @@ MVP4.1 当时命令面：
 
 ## 2026-06-27: MVP4.0 Knowledge Reliability Lite
 
-本阶段目标：把“文档更新后怎么同步”和“AI 回答有没有依据”做成默认简单用法。范围刻意保持轻量，不做 `pik-rag-route`，不让 workflow 自动触发重任务。
+本阶段目标：把“文档更新后怎么同步”和“AI 回答有没有依据”做成默认简单用法。范围刻意保持轻量，不做 `zl-rag-route`，不让 workflow 自动触发重任务。
 
 新增命令：
 
-- `pik-docs-sync`
-- `pik-answer-audit`
+- `zl-docs-sync`
+- `zl-answer-audit`
 
 新增能力：
 
-- `pik-docs-sync --target <repo>` 默认按 diff -> extract -> citation audit 轻量同步文档，输出 `heavy refresh executed: no`。
-- `pik-docs-sync --target <repo> --index` 才允许执行 configured GraphRAG index，输出 `heavy refresh executed: yes`。
+- `zl-docs-sync --target <repo>` 默认按 diff -> extract -> citation audit 轻量同步文档，输出 `heavy refresh executed: no`。
+- `zl-docs-sync --target <repo> --index` 才允许执行 configured GraphRAG index，输出 `heavy refresh executed: yes`。
 - 文档新增、修改、删除时，`DOCS_SYNC` 状态写 `STALE_NEEDS_REFRESH`，默认不阻断，是否阻断交给 profile / policy。
-- `pik-docs-query` 现在会写 `.planning/knowledge/DOCS_QUERY_RESULT.md` 和 `.planning/knowledge/DOCS_QUERY_RESULT.json`。
-- `pik-answer-audit --target <repo>` 默认审计最近一次 `RAG_QUERY_RESULT.md`、`DOCS_QUERY_RESULT.md` 或 `CITATIONS.md`，日常不用复制长 answer。
-- `pik-answer-audit --from <file>` 可审指定文件，`--answer "<text>"` 只作为调试 escape hatch。
+- `zl-docs-query` 现在会写 `.planning/knowledge/DOCS_QUERY_RESULT.md` 和 `.planning/knowledge/DOCS_QUERY_RESULT.json`。
+- `zl-answer-audit --target <repo>` 默认审计最近一次 `RAG_QUERY_RESULT.md`、`DOCS_QUERY_RESULT.md` 或 `CITATIONS.md`，日常不用复制长 answer。
+- `zl-answer-audit --from <file>` 可审指定文件，`--answer "<text>"` 只作为调试 escape hatch。
 - `answer audit` 第一版只做 citation/source-grounding：检查 citation 是否存在、源文件是否存在、行号是否合法；不做 LLM/NLI 级幻觉判断。
-- public workflow facade 如果发现最近 query 结果但没有 answer audit，只把 `pik-answer-audit --target <repo>` 加到 next commands，不自动运行、不阻断 completion。
-- `pik-help-skills` 的“文档更新”场景改为优先推荐 `pik-docs-sync` 和 `pik-answer-audit`。
+- public workflow facade 如果发现最近 query 结果但没有 answer audit，只把 `zl-answer-audit --target <repo>` 加到 next commands，不自动运行、不阻断 completion。
+- `zl-help-skills` 的“文档更新”场景改为优先推荐 `zl-docs-sync` 和 `zl-answer-audit`。
 
 新增产物：
 
@@ -416,25 +455,25 @@ MVP4.1 当时命令面：
 文档同步：
 
 - `README.md`：新增 MVP4.0 说明、默认 docs sync / answer audit 用法、验证脚本和 70 命令面。
-- `docs/commands.html`：新增 `pik-docs-sync`、`pik-answer-audit` 的表格和全命令卡片。
+- `docs/commands.html`：新增 `zl-docs-sync`、`zl-answer-audit` 的表格和全命令卡片。
 - `docs/technical-guide.html`：新增 Knowledge Reliability Lite 流程、artifact contract 和验证入口。
 - `docs/quality-plan.md`：新增质量矩阵和专项脚本说明。
 - `docs/quality-dashboard.html` / `docs/product.html`：同步 70 / 70 命令面和新报告入口。
 
 ## 2026-06-25: MVP6 Workflow Facade & Policy Guard Contract
 
-本阶段目标：把“命令很多”的心智负担收敛到 public workflow，同时把“允许跳过 / 必须阻断 / 带风险继续”固化成 AI-PIKit native policy-as-code 合同。
+本阶段目标：把“命令很多”的心智负担收敛到 public workflow，同时把“允许跳过 / 必须阻断 / 带风险继续”固化成 Zhulong native policy-as-code 合同。
 
 新增命令：
 
-- `pik-policy-lock`
-- `pik-policy-verify`
-- `pik-policy-diff`
+- `zl-policy-lock`
+- `zl-policy-verify`
+- `zl-policy-diff`
 
 新增能力：
 
 - public workflow 现在会写 `WORKFLOW_FACADE.json` 和 `WORKFLOW_FACADE.md`，把 preflight、policy、docs、graph、evidence、workflow gates 和下一步建议命令汇总成一个无感编排层。
-- public workflow 只执行轻量检查，不会自动运行 `pik-docs-index --run`、`pik-graph-build --run` 或 `pik-refresh-run`。
+- public workflow 只执行轻量检查，不会自动运行 `zl-docs-index --run`、`zl-graph-build --run` 或 `zl-refresh-run`。
 - policy 命令支持 lock / verify / diff：生成稳定 snapshot、SHA-256 hash、字段级 drift diff 和 verify 报告。
 - workflow / policy gate 统一四态语义：`PASS`、`FAIL`、`WAIVED_WITH_RISK`、`STALE_NEEDS_REFRESH`。
 - profile 规则固化：`graph-lite` 可带风险跳过文档，`default-local-rag` stale 只提醒，`full-strict` 对 stale、missing citation、外部 provider/API key/URL 硬阻断。
@@ -477,11 +516,11 @@ MVP4.1 当时命令面：
 
 ## 2026-06-25: Documentation Surface Sync
 
-本阶段目标：把 HTML 文档从旧的产品说明状态同步到当前 AI-PIKit 能力面，避免页面只讲品牌和基础流程，却漏掉 MVP3.5 refresh control、local GraphRAG、Graphify hardening、quality dashboard 和 65 个命令面的实际用法。
+本阶段目标：把 HTML 文档从旧的产品说明状态同步到当前 Zhulong 能力面，避免页面只讲品牌和基础流程，却漏掉 MVP3.5 refresh control、local GraphRAG、Graphify hardening、quality dashboard 和 65 个命令面的实际用法。
 
 更新内容：
 
-- `docs/product.html`：更新为 MVP3.5 / 65 命令口径，补充 `pik-preflight`、`pik-refresh-plan`、`pik-refresh-run`、graph-lite/full-strict 等执行预算说明。
+- `docs/product.html`：更新为 MVP3.5 / 65 命令口径，补充 `zl-preflight`、`zl-refresh-plan`、`zl-refresh-run`、graph-lite/full-strict 等执行预算说明。
 - `docs/technical-guide.html`：补齐 `.planning/refresh/`、文档/RAG 生命周期、Graphify impact/risk/freshness、runtime install/status、全量命令面和 troubleshooting。
 - `docs/quality-dashboard.html`：增加验证脚本说明和 65 个命令的覆盖矩阵，让 QA Dashboard 可以作为当前质量入口。
 - `docs/commands.html`：已保持 65 / 65 命令覆盖，作为完整命令使用手册继续保留。
@@ -495,25 +534,25 @@ MVP4.1 当时命令面：
 
 ## 2026-06-25: MVP3.5 Execution Budget & Freshness Control
 
-本阶段目标：让 AI-PIKit 在保持 GraphRAG / Graphify 增强能力的同时，避免每个任务都触发重刷新。普通 workflow 只做轻量提醒，真正重刷新必须来自显式命令或 strict policy gate。
+本阶段目标：让 Zhulong 在保持 GraphRAG / Graphify 增强能力的同时，避免每个任务都触发重刷新。普通 workflow 只做轻量提醒，真正重刷新必须来自显式命令或 strict policy gate。
 
 新增命令：
 
-- `pik-preflight`
-- `pik-refresh-plan`
-- `pik-refresh-run`
-- `pik-mode-status`
-- `pik-mode-set`
+- `zl-preflight`
+- `zl-refresh-plan`
+- `zl-refresh-run`
+- `zl-mode-status`
+- `zl-mode-set`
 
 新增能力：
 
 - `.planning/refresh/REFRESH_STATE.json` 记录上次 GraphRAG / Graphify 成功刷新所在 commit。
-- `pik-preflight` 只读取状态和 git diff，显示 GraphRAG / Graphify 距离 HEAD 落后几个 commit，不执行重刷新。
-- `pik-refresh-plan` 判断落后 commit 是否改到了文档源或代码地图相关路径；无关 commit 显示 `behind-unrelated` 并建议跳过。
-- `pik-refresh-run --rag|--graph|--all` 是显式刷新入口；它会写 `REFRESH_RUN.md`，并在成功后更新 `REFRESH_STATE.json`。
-- `pik-docs-index --run` 和 `pik-graph-build --run` 也会更新刷新账本，因为它们本身就是显式重命令。
-- `pik-mode-set` 支持 `default-local-rag`、`graph-lite`、`full-strict` 三种执行预算模式。
-- `pik-policy-check --strict` 接入 `freshness.preflight`，可以让 stale 作为 policy failure，但不会自动重建。
+- `zl-preflight` 只读取状态和 git diff，显示 GraphRAG / Graphify 距离 HEAD 落后几个 commit，不执行重刷新。
+- `zl-refresh-plan` 判断落后 commit 是否改到了文档源或代码地图相关路径；无关 commit 显示 `behind-unrelated` 并建议跳过。
+- `zl-refresh-run --rag|--graph|--all` 是显式刷新入口；它会写 `REFRESH_RUN.md`，并在成功后更新 `REFRESH_STATE.json`。
+- `zl-docs-index --run` 和 `zl-graph-build --run` 也会更新刷新账本，因为它们本身就是显式重命令。
+- `zl-mode-set` 支持 `default-local-rag`、`graph-lite`、`full-strict` 三种执行预算模式。
+- `zl-policy-check --strict` 接入 `freshness.preflight`，可以让 stale 作为 policy failure，但不会自动重建。
 
 新增验证：
 
@@ -532,21 +571,21 @@ MVP4.1 当时命令面：
 
 ## 2026-06-25: MVP3 Evidence Quality & Policy Mode
 
-本阶段目标：让 AI-PIKit 不只“能查文档、能跑 workflow”，而是能证明 RAG 答案、规格引用、代码影响面、验证证据和完成策略是可信的。
+本阶段目标：让 Zhulong 不只“能查文档、能跑 workflow”，而是能证明 RAG 答案、规格引用、代码影响面、验证证据和完成策略是可信的。
 
 新增命令：
 
-- `pik-rag-golden-add`
-- `pik-rag-golden-run`
-- `pik-rag-eval`
-- `pik-citation-audit`
-- `pik-trace-build`
-- `pik-trace-query`
-- `pik-trace-audit`
-- `pik-policy-list`
-- `pik-policy-check`
-- `pik-policy-explain`
-- `pik-help-skills`
+- `zl-rag-golden-add`
+- `zl-rag-golden-run`
+- `zl-rag-eval`
+- `zl-citation-audit`
+- `zl-trace-build`
+- `zl-trace-query`
+- `zl-trace-audit`
+- `zl-policy-list`
+- `zl-policy-check`
+- `zl-policy-explain`
+- `zl-help-skills`
 
 新增验证：
 
@@ -577,11 +616,11 @@ MVP4.1 当时命令面：
 
 完成内容：
 
-- `pik-rag-init-local`
-- `pik-privacy-audit`
-- `pik-offline-lock`
-- `pik-outbound-audit`
-- `pik-license-audit`
+- `zl-rag-init-local`
+- `zl-privacy-audit`
+- `zl-offline-lock`
+- `zl-outbound-audit`
+- `zl-license-audit`
 - `verify:rag-local`
 - `verify:privacy-strict`
 - `verify:license`
@@ -608,14 +647,14 @@ MVP4.1 当时命令面：
 
 完成内容：
 
-- `pik-docs-extract`
-- `pik-docs-diff`
-- `pik-docs-citations`
-- `pik-graph-impact`
-- `pik-graph-risk`
-- `pik-graph-freshness`
-- `pik-workflow-audit`
-- `pik-completion-check`
+- `zl-docs-extract`
+- `zl-docs-diff`
+- `zl-docs-citations`
+- `zl-graph-impact`
+- `zl-graph-risk`
+- `zl-graph-freshness`
+- `zl-workflow-audit`
+- `zl-completion-check`
 - `verify:docs-extract`
 - `verify:graph-hardening`
 
@@ -624,27 +663,27 @@ MVP4.1 当时命令面：
 - `verification/reports/docs-extract-citation-check.md`
 - `verification/reports/graph-hardening-check.md`
 
-## 2026-06-25: MVP1 Native `pik-*` Workflow Surface
+## 2026-06-25: MVP1 Native `zl-*` Workflow Surface
 
-本阶段目标：把 GSD 从用户入口移出去，保留为参考设计，建立 AI-PIKit 自己的命令面、workflow guard 和 runtime pack。
+本阶段目标：把 GSD 从用户入口移出去，保留为参考设计，建立 Zhulong 自己的命令面、workflow guard 和 runtime pack。
 
 完成内容：
 
-- `pik-init`
-- `pik-codebase-scan`
-- `pik-docs-scan`
-- `pik-graph-build`
-- `pik-evidence-record`
-- `pik-runtime-install`
-- `pik-debug`
-- `pik-plan-phase`
-- `pik-execute-phase`
-- `pik-verify-work`
-- `pik-complete-milestone`
+- `zl-init`
+- `zl-codebase-scan`
+- `zl-docs-scan`
+- `zl-graph-build`
+- `zl-evidence-record`
+- `zl-runtime-install`
+- `zl-debug`
+- `zl-plan-phase`
+- `zl-execute-phase`
+- `zl-verify-work`
+- `zl-complete-milestone`
 
 设计结论：
 
-- 用户只调用 `pik-*`。
+- 用户只调用 `zl-*`。
 - GSD 只作为 workflow 参考，不作为用户命令面。
 - Codex、Claude Code、GitHub Copilot 通过 runtime command pack 接入同一套本地 CLI。
 
@@ -660,7 +699,7 @@ MVP4.1 当时命令面：
 下一阶段建议叫 **MVP4.3 Knowledge Reliability Mode**：
 
 - 增强 RAG answer audit。
-- 继续增强已落地的 `pik-docs-sync`，把文档更新后的 scan/extract/diff/index/citation 做成更可解释的稳定流程。
+- 继续增强已落地的 `zl-docs-sync`，把文档更新后的 scan/extract/diff/index/citation 做成更可解释的稳定流程。
 - 增加更细的 GraphRAG query route：local / global / drift / basic。
 - 增加项目级 QA Dashboard，让文档、代码图、trace、policy 和 evidence 关系可视化。
 - 继续保持默认 local-only，不把保密项目资料默认发送到外部 provider。

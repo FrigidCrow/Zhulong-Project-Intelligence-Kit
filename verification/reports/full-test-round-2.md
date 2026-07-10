@@ -1,4 +1,4 @@
-# AI-PIKit 全量测试计划 round-2
+# Zhulong 全量测试计划 round-2
 
 生成时间: 2026-06-25T11:23:43.713Z
 
@@ -25,7 +25,7 @@ stdout 尾部:
 
 ```text
 > ai-project-intelligence-kit@0.1.0 check
-> node --check bin/pik.mjs
+> node --check bin/zl.mjs
 ```
 
 stderr 尾部:

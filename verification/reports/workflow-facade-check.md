@@ -1,6 +1,6 @@
-# AI-PIKit Workflow Facade Verification
+# Zhulong Workflow Facade Verification
 
-生成时间: 2026-06-28T13:57:41.406Z
+生成时间: 2026-07-10T00:45:40.007Z
 
 ## 摘要
 
@@ -9,31 +9,31 @@
 
 ## 证据
 
-- pik init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project --template greenfield-app --name workflow_facade_fixture --mode new --force: exit 0
-- pik codebase scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project: exit 0
-- pik docs scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project: exit 0
-- pik docs extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project: exit 0
-- pik docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project WORKFLOW_FACADE_SPEC: exit 0
-- pik workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project debug WORKFLOW_FACADE debug: exit 0
-- pik-debug facade output: found facade
-- pik-debug no heavy refresh: found heavy refresh executed: no
-- debug WORKFLOW_FACADE: found AI-PIKit Workflow Facade
+- zl init --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project --template greenfield-app --name workflow_facade_fixture --mode new --force: exit 0
+- zl codebase scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project: exit 0
+- zl docs scan --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project: exit 0
+- zl docs extract --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project: exit 0
+- zl docs citations --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project WORKFLOW_FACADE_SPEC: exit 0
+- zl workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project debug WORKFLOW_FACADE debug: exit 0
+- zl-debug facade output: found facade
+- zl-debug no heavy refresh: found heavy refresh executed: no
+- debug WORKFLOW_FACADE: found Zhulong Workflow Facade
 - debug WORKFLOW_FACADE heavy: found Heavy refresh executed: no
 - debug WORKFLOW_FACADE policy: found ## Policy
-- pik workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project plan-phase WORKFLOW_FACADE plan: exit 0
-- pik-plan-phase facade output: found facade
-- plan WORKFLOW_FACADE: found pik-plan-phase
-- pik workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project execute-phase WORKFLOW_FACADE execute: exit 0
-- pik-execute-phase stale facade: found STALE_NEEDS_REFRESH
+- zl workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project plan-phase WORKFLOW_FACADE plan: exit 0
+- zl-plan-phase facade output: found facade
+- plan WORKFLOW_FACADE: found zl-plan-phase
+- zl workflow run --target /var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project execute-phase WORKFLOW_FACADE execute: exit 0
+- zl-execute-phase stale facade: found STALE_NEEDS_REFRESH
 - execute WORKFLOW_FACADE stale: found STALE_NEEDS_REFRESH
 - execute WORKFLOW_FACADE no refresh: found Heavy refresh executed: no
 - public workflow facade did not create REFRESH_RUN.md
 
 ## Fixture 路径
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-workflow-facade-pDoaoj/project`
-- 复现命令: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-workflow-facade.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-workflow-facade-BhDabe/project`
+- 复现命令: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-workflow-facade.mjs'`
 
 ## 问题
 

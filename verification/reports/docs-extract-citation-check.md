@@ -1,6 +1,6 @@
-# AI-PIKit Document Extraction and Citation Verification
+# Zhulong Document Extraction and Citation Verification
 
-生成时间: 2026-06-28T13:57:22.053Z
+生成时间: 2026-07-10T00:45:27.527Z
 
 ## 摘要
 
@@ -9,25 +9,25 @@
 
 ## Evidence
 
-- pik docs extract: found extracted 6
+- zl docs extract: found extracted 6
 - DOCUMENT_EXTRACT_REPORT: found docx-zip-xml
 - DOCUMENT_EXTRACT_REPORT: found xlsx-zip-xml
 - DOCUMENT_INDEX: found word.docx
-- pik docs citations MD_SENTINEL_2101: found MD_SENTINEL_2101
-- pik docs citations TXT_SENTINEL_2102: found TXT_SENTINEL_2102
-- pik docs citations CSV_SENTINEL_2103: found CSV_SENTINEL_2103
-- pik docs citations PDF_SENTINEL_2104: found PDF_SENTINEL_2104
-- pik docs citations DOCX_SENTINEL_2105: found DOCX_SENTINEL_2105
-- pik docs citations XLSX_SENTINEL_2106: found XLSX_SENTINEL_2106
+- zl docs citations MD_SENTINEL_2101: found MD_SENTINEL_2101
+- zl docs citations TXT_SENTINEL_2102: found TXT_SENTINEL_2102
+- zl docs citations CSV_SENTINEL_2103: found CSV_SENTINEL_2103
+- zl docs citations PDF_SENTINEL_2104: found PDF_SENTINEL_2104
+- zl docs citations DOCX_SENTINEL_2105: found DOCX_SENTINEL_2105
+- zl docs citations XLSX_SENTINEL_2106: found XLSX_SENTINEL_2106
 - CITATIONS: found XLSX_SENTINEL_2106
-- pik docs diff: found modified 1
+- zl docs diff: found modified 1
 - DOCUMENT_DIFF: found md.md
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-zErtnK`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-extract-zErtnK/project`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-docs-extract-citation.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-extract-AiV8DO`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-extract-AiV8DO/project`
+- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-docs-extract-citation.mjs'`
 
 ## Issues
 

@@ -1,6 +1,6 @@
-# AI-PIKit Docs Update Fixture
+# Zhulong Docs Update Fixture
 
-生成时间: 2026-06-28T13:56:51.899Z
+生成时间: 2026-07-10T00:45:02.368Z
 
 ## 摘要
 
@@ -17,10 +17,10 @@
 
 ## Fixture Paths
 
-- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-lcxoan`
-- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-lcxoan/project`
-- New document: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/aipikit-docs-update-lcxoan/project/docs/minutes/2026-06-25_update.md`
-- Reproduce command: `node '/Users/frigidcrow/Documents/Project-Intelligence-Kit /scripts/verify-docs-update-fixture.mjs'`
+- Work root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn`
+- Project root: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn/project`
+- New document: `/var/folders/8x/r_vcd1b9087b2z66wcry685c0000gn/T/zhulong-docs-update-BYcVLn/project/docs/minutes/2026-06-25_update.md`
+- Reproduce command: `node '/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/scripts/verify-docs-update-fixture.mjs'`
 
 ## Issues
 

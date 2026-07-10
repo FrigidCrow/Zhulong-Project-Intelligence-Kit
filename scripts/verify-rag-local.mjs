@@ -10,20 +10,20 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-rag-local-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-rag-local-");
 const projectRoot = path.join(workRoot, "project");
 const unsafeProjectRoot = path.join(workRoot, "unsafe-project");
 const aliasBin = path.join(workRoot, "bin");
 const issues = [];
 const evidence = [];
 const commandResults = [];
-const model = process.env.AI_PIKIT_LOCAL_LLM_MODEL || "qwen2.5:7b";
-const embedding = process.env.AI_PIKIT_LOCAL_EMBEDDING_MODEL || "bge-m3";
-const commandTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_COMMAND_TIMEOUT_MS || 120000);
-const indexTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_INDEX_TIMEOUT_MS || 300000);
-const queryTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_QUERY_TIMEOUT_MS || 90000);
-const pullTimeoutMs = Number(process.env.AI_PIKIT_RAG_LOCAL_PULL_TIMEOUT_MS || 1200000);
+const model = process.env.ZHULONG_LOCAL_LLM_MODEL || "qwen2.5:7b";
+const embedding = process.env.ZHULONG_LOCAL_EMBEDDING_MODEL || "bge-m3";
+const commandTimeoutMs = Number(process.env.ZHULONG_RAG_LOCAL_COMMAND_TIMEOUT_MS || 120000);
+const indexTimeoutMs = Number(process.env.ZHULONG_RAG_LOCAL_INDEX_TIMEOUT_MS || 300000);
+const queryTimeoutMs = Number(process.env.ZHULONG_RAG_LOCAL_QUERY_TIMEOUT_MS || 90000);
+const pullTimeoutMs = Number(process.env.ZHULONG_RAG_LOCAL_PULL_TIMEOUT_MS || 1200000);
 
 function addIssue(command, detail) {
   issues.push({ command, detail });
@@ -59,10 +59,10 @@ function localEnv() {
   };
 }
 
-function runPik(args, options = {}) {
+function runZl(args, options = {}) {
   const cwd = options.projectRoot || projectRoot;
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd,
     timeout: commandTimeoutMs,
     env: localEnv(),
@@ -109,10 +109,10 @@ function assertFileNotIncludes(command, filePath, forbidden) {
 
 function makeAliasBins() {
   fs.mkdirSync(aliasBin, { recursive: true });
-  for (const alias of ["pik-rag-init-local", "pik-privacy-audit"]) {
+  for (const alias of ["zl-rag-init-local", "zl-privacy-audit"]) {
     const aliasPath = path.join(aliasBin, alias);
     if (fs.existsSync(aliasPath)) fs.rmSync(aliasPath);
-    fs.symlinkSync(pikCli, aliasPath);
+    fs.symlinkSync(zlCli, aliasPath);
   }
 }
 
@@ -209,8 +209,8 @@ makeAliasBins();
 writeFixtureDocs(projectRoot);
 
 if (issues.length === 0) {
-  runPik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "rag_local_fixture", "--mode", "new", "--force"]);
-  runAlias("pik-rag-init-local", ["--target", projectRoot, "--force", "--model", model, "--embedding", embedding]);
+  runZl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "rag_local_fixture", "--mode", "new", "--force"]);
+  runAlias("zl-rag-init-local", ["--target", projectRoot, "--force", "--model", model, "--embedding", embedding]);
 
   const config = JSON.parse(read(path.join(projectRoot, ".planning", "config.json")));
   if (config.spec_context?.provider !== "graphrag-local") addIssue(".planning/config.json", "spec_context.provider is not graphrag-local");
@@ -228,36 +228,36 @@ if (issues.length === 0) {
   if (fs.existsSync(path.join(projectRoot, "graphrag-workspace", ".env"))) addIssue("local settings", "graphrag-workspace/.env should not exist in local mode");
   else evidence.push("local settings: graphrag-workspace/.env absent");
 
-  const auditBefore = runAlias("pik-privacy-audit", ["--target", projectRoot]);
-  assertIncludes("pik-privacy-audit before index", auditBefore.output, "privacy audit PASS");
+  const auditBefore = runAlias("zl-privacy-audit", ["--target", projectRoot]);
+  assertIncludes("zl-privacy-audit before index", auditBefore.output, "privacy audit PASS");
 
-  const indexResult = runPik(["docs", "index", "--target", projectRoot, "--run", "--timeout", String(indexTimeoutMs)], {
+  const indexResult = runZl(["docs", "index", "--target", projectRoot, "--run", "--timeout", String(indexTimeoutMs)], {
     allowFailure: true,
     timeout: indexTimeoutMs + 30000,
   });
   if (indexResult.status !== 0) {
-    addIssue("pik docs index --run local", `index failed or timed out within ${indexTimeoutMs}ms`);
+    addIssue("zl docs index --run local", `index failed or timed out within ${indexTimeoutMs}ms`);
   } else {
-    assertIncludes("pik docs index --run local", indexResult.output, "status success");
+    assertIncludes("zl docs index --run local", indexResult.output, "status success");
     assertFileIncludes("RAG_INDEX_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "Status: success");
   }
 
-  const queryResult = runPik(["docs", "query", "--target", projectRoot, "--rag", "What is the proxy approval upper limit for CR-LOCAL-042?", "--timeout", String(queryTimeoutMs)], {
+  const queryResult = runZl(["docs", "query", "--target", projectRoot, "--rag", "What is the proxy approval upper limit for CR-LOCAL-042?", "--timeout", String(queryTimeoutMs)], {
     allowFailure: true,
     timeout: queryTimeoutMs + 30000,
   });
   if (queryResult.status !== 0) {
-    addIssue("pik docs query --rag local", `query failed or timed out within ${queryTimeoutMs}ms; inspect RAG_QUERY_RESULT.md and GraphRAG query.log`);
+    addIssue("zl docs query --rag local", `query failed or timed out within ${queryTimeoutMs}ms; inspect RAG_QUERY_RESULT.md and GraphRAG query.log`);
     assertFileExists("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"));
   } else {
-    assertIncludes("pik docs query --rag local", queryResult.output, "42,420");
+    assertIncludes("zl docs query --rag local", queryResult.output, "42,420");
     assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Status: success");
     assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "42,420");
     assertFileIncludes("RAG_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "Data: Sources");
   }
 
-  const auditAfter = runAlias("pik-privacy-audit", ["--target", projectRoot]);
-  assertIncludes("pik-privacy-audit after query", auditAfter.output, "privacy audit PASS");
+  const auditAfter = runAlias("zl-privacy-audit", ["--target", projectRoot]);
+  assertIncludes("zl-privacy-audit after query", auditAfter.output, "privacy audit PASS");
 
   const privacyReport = path.join(projectRoot, ".planning", "knowledge", "PRIVACY_AUDIT.md");
   assertFileIncludes("PRIVACY_AUDIT", privacyReport, "Status: PASS");
@@ -271,11 +271,11 @@ if (issues.length === 0) {
 
   fs.mkdirSync(unsafeProjectRoot, { recursive: true });
   writeFixtureDocs(unsafeProjectRoot);
-  runPik(["init", "--target", unsafeProjectRoot, "--template", "greenfield-app", "--name", "unsafe_rag_fixture", "--mode", "new", "--force"], { projectRoot: unsafeProjectRoot });
-  runAlias("pik-rag-init-local", ["--target", unsafeProjectRoot, "--force", "--model", model, "--embedding", embedding], { projectRoot: unsafeProjectRoot });
+  runZl(["init", "--target", unsafeProjectRoot, "--template", "greenfield-app", "--name", "unsafe_rag_fixture", "--mode", "new", "--force"], { projectRoot: unsafeProjectRoot });
+  runAlias("zl-rag-init-local", ["--target", unsafeProjectRoot, "--force", "--model", model, "--embedding", embedding], { projectRoot: unsafeProjectRoot });
   const unsafeSettingsPath = path.join(unsafeProjectRoot, "graphrag-workspace", "settings.yaml");
   fs.appendFileSync(unsafeSettingsPath, "\n# Deliberate negative test below\nunsafe_external_model:\n  model_provider: openai\n  api_base: https://api.openai.com/v1\n");
-  const unsafeAudit = runAlias("pik-privacy-audit", ["--target", unsafeProjectRoot], {
+  const unsafeAudit = runAlias("zl-privacy-audit", ["--target", unsafeProjectRoot], {
     projectRoot: unsafeProjectRoot,
     allowFailure: true,
   });
@@ -285,7 +285,7 @@ if (issues.length === 0) {
     assertIncludes("negative privacy audit", unsafeAudit.output, "external URL");
     evidence.push("negative privacy audit: external provider rejected");
   }
-  const unsafeQuery = runPik(["docs", "query", "--target", unsafeProjectRoot, "--rag", "Should be blocked"], {
+  const unsafeQuery = runZl(["docs", "query", "--target", unsafeProjectRoot, "--rag", "Should be blocked"], {
     projectRoot: unsafeProjectRoot,
     allowFailure: true,
   });
@@ -317,7 +317,7 @@ const data = {
 };
 
 writeJsonReport("rag-local-check.json", data);
-writeMarkdownReport("rag-local-check.md", "AI-PIKit Local GraphRAG Verification", summarizeIssues(issues), [
+writeMarkdownReport("rag-local-check.md", "Zhulong Local GraphRAG Verification", summarizeIssues(issues), [
   {
     title: "Local Profile",
     body: [

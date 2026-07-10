@@ -1,0 +1,72 @@
+{
+  "mode": "interactive",
+  "granularity": "standard",
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true,
+    "auto_advance": false,
+    "context_coverage_gate": true,
+    "security_enforcement": true
+  },
+  "planning": {
+    "commit_docs": false,
+    "search_gitignored": true,
+    "sub_repos": []
+  },
+  "command_facade": {
+    "public_prefix": "zl",
+    "workflow_kernel": {
+      "provider": "zl-native",
+      "prefix": "zl",
+      "reference_design": "gsd"
+    }
+  },
+  "spec_context": {
+    "enabled": true,
+    "provider": "graphrag-local",
+    "source_paths": ["docs"],
+    "scan_extensions": [".md"],
+    "require_citations": true,
+    "index_command": "node scripts/fake-rag-index.mjs",
+    "query_command": "node scripts/fake-rag-query.mjs --query {query}"
+  },
+  "privacy": {
+    "network_policy": "local_only",
+    "offline_lock": false,
+    "allow_external_rag": false,
+    "allow_external_tools": false,
+    "allowed_hosts": ["127.0.0.1", "localhost"]
+  },
+  "code_map": {
+    "provider": "fixture-graphify",
+    "enabled": true,
+    "graph_path": ".planning/graphs/graph.json",
+    "report_path": ".planning/graphs/GRAPH_REPORT.md",
+    "baseline_path": ".planning/graphs/graph.baseline.json",
+    "build_result_path": ".planning/graphs/GRAPH_BUILD_RESULT.md",
+    "diff_result_path": ".planning/graphs/GRAPH_DIFF.md",
+    "update_command": "node scripts/fake-graphify.mjs"
+  },
+  "evidence_loop": {
+    "require_source_citation": true,
+    "require_test_record": true,
+    "writeback_enabled": true,
+    "records_path": ".planning/evidence/",
+    "writeback_targets": [".planning/issues/", ".planning/debug/", ".planning/phases/"]
+  },
+  "graphify": {
+    "enabled": true,
+    "update_command": "node scripts/fake-graphify.mjs"
+  },
+  "graphrag": {
+    "enabled": true,
+    "mode": "local",
+    "requires_api_key": false,
+    "api_base": "http://127.0.0.1:11434",
+    "root": "graphrag-workspace",
+    "index_command": "node scripts/fake-rag-index.mjs",
+    "local_query_command": "node scripts/fake-rag-query.mjs --query {query}"
+  },
+  "project_code": "ja_approval_fixture"
+}

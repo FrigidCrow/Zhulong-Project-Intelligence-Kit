@@ -11,10 +11,10 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
 const cockpitSampleScript = path.join(kitRoot, "scripts", "render-cockpit-sample.mjs");
 const cockpitSampleHtml = path.join(kitRoot, "templates", "cockpit", "sample.html");
-const workRoot = tempRoot("aipikit-cockpit-build-");
+const workRoot = tempRoot("zhulong-cockpit-build-");
 const issues = [];
 const evidence = [];
 const results = [];
@@ -41,7 +41,7 @@ function runCockpit(caseName, root) {
   const result = runCommand(
     `${caseName} cockpit build`,
     "node",
-    [pikCli, "cockpit", "build", "--target", root],
+    [zlCli, "cockpit", "build", "--target", root],
     { timeout: 30000, allowFailure: true },
   );
   results.push({
@@ -72,12 +72,13 @@ function runCockpitSample() {
   assert(result.status === 0, "template sample render", "sample render exits 0");
   assert(fs.existsSync(cockpitSampleHtml), "template sample render", "templates/cockpit/sample.html generated");
   const html = readText(cockpitSampleHtml);
-  assert(!html.includes("__AI_PIKIT_COCKPIT_DATA__"), "template sample render", "sample placeholder replaced");
+  assert(!html.includes("__ZHULONG_COCKPIT_DATA__"), "template sample render", "sample placeholder replaced");
   assert(html.includes("sample template data"), "template sample render", "sample page exposes sample mode");
   assert(html.includes("代理承認上限仕様"), "template sample render", "sample page contains fake Japanese project data");
   assert(html.includes("graph-search"), "template sample render", "sample includes interactive graph search");
   assert(html.includes("approval-flow"), "template sample render", "sample includes stable graph legend data");
   assert(html.includes("cockpit-viewmodel.v1"), "template sample render", "sample includes stable viewModel v1");
+  assert(html.includes("Quality &amp; Token Metrics"), "template sample render", "sample includes quality and token metrics panel");
   assert(!/https?:\/\//i.test(html), "template sample render", "sample page contains no external URL");
 }
 
@@ -132,8 +133,8 @@ function seedBase(root) {
   write(path.join(root, "verification", "reports", "quality-closure-check.json"), JSON.stringify({ status: "PASS" }, null, 2));
   write(path.join(root, "verification", "reports", "skills-usability-check.json"), JSON.stringify({ status: "PASS", expectedRenderedItems: 33 }, null, 2));
   write(path.join(root, "verification", "reports", "workflow-closure-check.json"), JSON.stringify({ status: "PASS" }, null, 2));
-  write(path.join(root, "verification", "reports", "docs-completeness-check.json"), JSON.stringify({ status: "PASS", commandsChecked: ["pik-cockpit-build"] }, null, 2));
-  write(path.join(root, "verification", "reports", "full-command-surface-check.json"), JSON.stringify({ status: "PASS", commandsCovered: ["pik-cockpit-build"] }, null, 2));
+  write(path.join(root, "verification", "reports", "docs-completeness-check.json"), JSON.stringify({ status: "PASS", commandsChecked: ["zl-cockpit-build"] }, null, 2));
+  write(path.join(root, "verification", "reports", "full-command-surface-check.json"), JSON.stringify({ status: "PASS", commandsCovered: ["zl-cockpit-build"] }, null, 2));
   const future = new Date(Date.now() + 5000);
   fs.utimesSync(path.join(root, ".planning", "graphs", "graph.json"), future, future);
   fs.utimesSync(path.join(root, "graphify-out", "graph.json"), future, future);
@@ -146,7 +147,13 @@ function seedRag(root) {
   write(path.join(root, ".planning", "knowledge", "RAG_QUERY_RESULT.md"), "# RAG Query Result\n\n- Status: success\n\nAnswer with [docs/spec.md]\n");
   write(path.join(root, ".planning", "knowledge", "DOCS_QUERY_RESULT.md"), "# Docs Query Result\n\n- docs/spec.md: approval limit\n");
   write(path.join(root, ".planning", "quality", "ANSWER_AUDIT.md"), "# Answer Audit\n\n- Status: PASS\n");
-  write(path.join(root, ".planning", "quality", "ANSWER_AUDIT.json"), JSON.stringify({ status: "PASS" }, null, 2));
+  write(path.join(root, ".planning", "quality", "ANSWER_AUDIT.json"), JSON.stringify({
+    status: "PASS",
+    metrics: { citation_resolve_rate: 1, value_drift_count: 0, unsupported_sentence_ratio: 0 },
+  }, null, 2));
+  write(path.join(root, ".planning", "quality", "AMBIGUITY_AUDIT.json"), JSON.stringify({ status: "PASS", ambiguity_hits: 0, ambiguity_density: 0, records: [] }, null, 2));
+  write(path.join(root, ".planning", "quality", "STRUCTURE_AUDIT.json"), JSON.stringify({ status: "PASS", structure_compliance_rate: 1, records: [] }, null, 2));
+  write(path.join(root, ".planning", "metrics", "TOKEN_USAGE.json"), JSON.stringify({ input_tokens: 1200, output_tokens: 300, cache_read_tokens: 800 }, null, 2));
   write(path.join(root, ".planning", "quality", "CITATION_AUDIT.md"), "# Citation Audit\n\n- Status: PASS\n");
   write(path.join(root, ".planning", "quality", "CITATION_AUDIT.json"), JSON.stringify({ status: "PASS" }, null, 2));
 }
@@ -161,7 +168,7 @@ function assertCommonArtifacts(caseName, root) {
   const html = readText(indexPath);
   assert(!/https?:\/\//i.test(html), caseName, "index.html contains no http/https URL");
   assert(html.includes("templates/cockpit/index.template.html"), caseName, "index.html was rendered from cockpit template");
-  assert(!html.includes("__AI_PIKIT_COCKPIT_DATA__"), caseName, "index.html has no unreplaced template placeholder");
+  assert(!html.includes("__ZHULONG_COCKPIT_DATA__"), caseName, "index.html has no unreplaced template placeholder");
   const data = readJson(dataPath);
   for (const key of ["graphify", "rag", "workflow", "quality", "privacy"]) {
     assert(Object.prototype.hasOwnProperty.call(data, key), caseName, `cockpit-data.json includes ${key}`);
@@ -171,6 +178,9 @@ function assertCommonArtifacts(caseName, root) {
   assert(data.viewModel?.version === "cockpit-viewmodel.v1", caseName, "cockpit-data.json includes stable viewModel v1");
   assert(data.viewModel?.impactGraph?.available !== undefined, caseName, "viewModel includes impactGraph");
   assert(Array.isArray(data.viewModel?.artifactGroups), caseName, "viewModel includes artifact groups");
+  assert(Array.isArray(data.viewModel?.qualityMetrics), caseName, "viewModel includes quality metrics");
+  assert(Object.prototype.hasOwnProperty.call(data.quality?.metrics || {}, "citationResolveRate"), caseName, "quality metrics include citation resolve rate slot");
+  assert(typeof data.quality?.metrics?.tokenUsage?.available === "boolean", caseName, "quality metrics include optional token usage slot");
   return { html, data };
 }
 
@@ -183,6 +193,8 @@ write(path.join(safeRoot, "graphify-out", "index.html"), "<!doctype html><html><
 const safeRun = runCockpit("safe graphify html", safeRoot);
 assert(safeRun.output.includes("cockpit build PASS"), "safe graphify html", "fully populated fixture returns PASS");
 const safe = assertCommonArtifacts("safe graphify html", safeRoot);
+assert(safe.data.quality.metrics.citationResolveRate === 1, "safe graphify html", "quality metrics read citation resolve rate");
+assert(safe.data.quality.metrics.tokenUsage.available === true, "safe graphify html", "quality metrics read optional token usage");
 assert(fs.existsSync(path.join(safeRoot, ".planning", "cockpit", "assets", "graphify", "index.html")), "safe graphify html", "safe Graphify HTML copied");
 assert(safe.html.includes("Knowledge Evidence Chain"), "safe graphify html", "Knowledge Evidence panel rendered");
 assert(safe.data.graphify.html.copied.length === 1, "safe graphify html", "data records copied Graphify HTML");
@@ -228,7 +240,7 @@ const data = {
 };
 
 writeJsonReport("cockpit-build-check.json", data);
-writeMarkdownReport("cockpit-build-check.md", "AI-PIKit Cockpit Build Verification", summarizeIssues(issues), [
+writeMarkdownReport("cockpit-build-check.md", "Zhulong Cockpit Build Verification", summarizeIssues(issues), [
   {
     title: "覆盖场景",
     body: [

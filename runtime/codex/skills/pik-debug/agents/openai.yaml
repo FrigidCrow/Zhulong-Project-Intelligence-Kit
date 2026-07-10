@@ -1,4 +1,0 @@
-interface:
-  display_name: "AI-PIKit Debug"
-  short_description: "Debug defects with AI-PIKit context"
-  default_prompt: "$pik-debug"

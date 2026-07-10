@@ -16,7 +16,7 @@ Required sections:
 12. Deployment Result
 13. Rollback Plan
 14. Follow-ups
-15. AI-PIKit Evidence Writeback entries when evidence was recorded separately
+15. Zhulong Evidence Writeback entries when evidence was recorded separately
 
 Rules:
 

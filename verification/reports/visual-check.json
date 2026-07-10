@@ -1,16 +1,16 @@
 {
-  "generated": "2026-06-28T18:21:12.892Z",
+  "generated": "2026-07-10T00:45:58.575Z",
   "status": "PASS",
   "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "results": [
     {
       "page": "docs/product.html",
       "viewport": "desktop",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/product-desktop.png",
-      "bytes": 1488375,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/product-desktop.png",
+      "bytes": 1664723,
       "metrics": {
-        "h1": "基于你项目的 AI 编程。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "Zhulong（烛龙）",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -23,11 +23,11 @@
     {
       "page": "docs/commands.html",
       "viewport": "desktop",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/commands-desktop.png",
-      "bytes": 11982186,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/commands-desktop.png",
+      "bytes": 11909269,
       "metrics": {
-        "h1": "AI-PIKit 命令控制台。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "Zhulong 命令控制台。",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -40,11 +40,11 @@
     {
       "page": "docs/technical-guide.html",
       "viewport": "desktop",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/technical-guide-desktop.png",
-      "bytes": 3512859,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/technical-guide-desktop.png",
+      "bytes": 3423390,
       "metrics": {
-        "h1": "了解 AI-PIKit 架构。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "了解 Zhulong 架构。",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -57,11 +57,11 @@
     {
       "page": "docs/quality-dashboard.html",
       "viewport": "desktop",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/quality-dashboard-desktop.png",
-      "bytes": 1248971,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/quality-dashboard-desktop.png",
+      "bytes": 1246750,
       "metrics": {
-        "h1": "AI-PIKit QA Dashboard。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "Zhulong QA Dashboard。",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -74,11 +74,11 @@
     {
       "page": "docs/product.html",
       "viewport": "mobile",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/product-mobile.png",
-      "bytes": 1244981,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/product-mobile.png",
+      "bytes": 1412451,
       "metrics": {
-        "h1": "基于你项目的 AI 编程。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "Zhulong（烛龙）",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -91,11 +91,11 @@
     {
       "page": "docs/commands.html",
       "viewport": "mobile",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/commands-mobile.png",
-      "bytes": 8716333,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/commands-mobile.png",
+      "bytes": 8882167,
       "metrics": {
-        "h1": "AI-PIKit 命令控制台。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "Zhulong 命令控制台。",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -108,11 +108,11 @@
     {
       "page": "docs/technical-guide.html",
       "viewport": "mobile",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/technical-guide-mobile.png",
-      "bytes": 2742554,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/technical-guide-mobile.png",
+      "bytes": 2671030,
       "metrics": {
-        "h1": "了解 AI-PIKit 架构。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "了解 Zhulong 架构。",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
@@ -125,11 +125,11 @@
     {
       "page": "docs/quality-dashboard.html",
       "viewport": "mobile",
-      "screenshot": "/Users/frigidcrow/Documents/Project-Intelligence-Kit /verification/reports/quality-dashboard-mobile.png",
-      "bytes": 786391,
+      "screenshot": "/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit/verification/reports/quality-dashboard-mobile.png",
+      "bytes": 779575,
       "metrics": {
-        "h1": "AI-PIKit QA Dashboard。",
-        "brand": "AI Project Intelligence Kit",
+        "h1": "Zhulong QA Dashboard。",
+        "brand": "Zhulong Project Intelligence Kit",
         "overflow": 0,
         "emptyCards": 0,
         "badTextBoxes": 0,
