@@ -46,6 +46,9 @@ expect(!release.includes("npm run verify:full-command-surface"), "release must n
 expect(!release.includes("secrets.NPM_TOKEN"), "release must not depend on a general long-lived npm token");
 expect(release.includes("secrets.NPM_BOOTSTRAP_TOKEN"), "release must expose an explicit one-time first-publish bootstrap path");
 expect((release.match(/NODE_AUTH_TOKEN/g) || []).length === 1, "NODE_AUTH_TOKEN must be scoped to exactly one bootstrap publish step");
+expect(release.includes("npm publish ./dist/*.tgz --access public --provenance"), "bootstrap publish must use an explicit local tarball path");
+expect(release.includes("npm publish ./dist/*.tgz --access public"), "trusted publish must use an explicit local tarball path");
+expect(!release.includes("npm publish dist/*.tgz"), "npm publish must not interpret dist/tarball as a GitHub shorthand");
 expect(release.includes("steps.npm-auth.outputs.mode == 'bootstrap'"), "bootstrap token use must be conditional on a missing npm package");
 expect(release.includes("steps.npm-auth.outputs.mode == 'trusted'"), "existing packages must use the OIDC trusted-publishing path");
 expect(release.includes("node scripts/select-npm-auth-mode.mjs"), "release must use the tested npm authentication selector");
