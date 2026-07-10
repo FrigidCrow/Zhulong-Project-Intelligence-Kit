@@ -1,6 +1,6 @@
 # Zhulong Schema Check
 
-生成时间: 2026-07-10T03:49:50.414Z
+生成时间: 2026-07-10T04:45:42.284Z
 
 ## 摘要
 
@@ -32,14 +32,14 @@
 - workflow handoff: .planning/context/handoffs/debug-schema-validation-smoke-HANDOFF.md
 - evidence index: .planning/evidence/INDEX.md
 - evidence index: markdown sections checked
-- evidence record: .planning/evidence/20260710T034950Z-schema-validation-evidence.md
+- evidence record: .planning/evidence/20260710T044542Z-schema-validation-evidence.md
 - evidence record: markdown sections checked
 - debug writeback target: .planning/debug/schema-debug.md
 
 ## Fixture Paths
 
-- Work root: `<tmp>/zhulong-schema-spi0s3`
-- Project root: `<tmp>/zhulong-schema-spi0s3/project`
+- Work root: `<tmp>/zhulong-schema-qX0Vq0`
+- Project root: `<tmp>/zhulong-schema-qX0Vq0/project`
 - Reproduce command: `node '<kit-root>/scripts/verify-schema.mjs'`
 
 ## Issues

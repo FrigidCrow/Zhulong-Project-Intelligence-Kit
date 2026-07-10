@@ -1,6 +1,6 @@
 # Zhulong Runtime Pack Verification
 
-生成时间: 2026-07-10T03:50:50.801Z
+生成时间: 2026-07-10T04:55:20.705Z
 
 ## 摘要
 
@@ -9,12 +9,12 @@
 
 ## Runtime Installs
 
-- codex: 11 items installed to `<tmp>/zhulong-runtime-3oH8J8/codex`
+- codex: 11 items installed to `<tmp>/zhulong-runtime-6rXaha/codex`
 
 ```text
 runtime codex
 source <kit-root>/runtime/codex/skills
-dest <tmp>/zhulong-runtime-3oH8J8/codex
+dest <tmp>/zhulong-runtime-6rXaha/codex
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -27,12 +27,12 @@ ok zl-spec-phase rendered
 ok zl-ui-phase rendered
 ok zl-verify-work rendered
 ```
-- claude-code: 11 items installed to `<tmp>/zhulong-runtime-3oH8J8/claude-code`
+- claude-code: 11 items installed to `<tmp>/zhulong-runtime-6rXaha/claude-code`
 
 ```text
 runtime claude-code
 source <kit-root>/runtime/claude-code/skills
-dest <tmp>/zhulong-runtime-3oH8J8/claude-code
+dest <tmp>/zhulong-runtime-6rXaha/claude-code
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -45,12 +45,12 @@ ok zl-spec-phase rendered
 ok zl-ui-phase rendered
 ok zl-verify-work rendered
 ```
-- github-copilot: 11 items installed to `<tmp>/zhulong-runtime-3oH8J8/github-copilot`
+- github-copilot: 11 items installed to `<tmp>/zhulong-runtime-6rXaha/github-copilot`
 
 ```text
 runtime github-copilot
 source <kit-root>/runtime/github-copilot/prompts
-dest <tmp>/zhulong-runtime-3oH8J8/github-copilot
+dest <tmp>/zhulong-runtime-6rXaha/github-copilot
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered

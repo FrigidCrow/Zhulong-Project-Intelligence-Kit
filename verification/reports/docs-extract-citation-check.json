@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T03:49:38.038Z",
+  "generated": "2026-07-10T04:45:21.463Z",
   "status": "PASS",
-  "workRoot": "<tmp>/zhulong-docs-extract-TWI6PI",
-  "projectRoot": "<tmp>/zhulong-docs-extract-TWI6PI/project",
+  "workRoot": "<tmp>/zhulong-docs-extract-tpAmxr",
+  "projectRoot": "<tmp>/zhulong-docs-extract-tpAmxr/project",
   "evidence": [
     "zl docs extract: found extracted 6",
     "DOCUMENT_EXTRACT_REPORT: found docx-zip-xml",

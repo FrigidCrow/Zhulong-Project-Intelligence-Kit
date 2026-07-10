@@ -1,199 +1,199 @@
 {
-  "generated": "2026-07-10T03:51:02.220Z",
+  "generated": "2026-07-10T04:55:20.715Z",
   "status": "PASS",
-  "tempRoot": "<tmp>/zhulong-skills-usability-vXrqG7",
+  "tempRoot": "<tmp>/zhulong-skills-usability-QsEpZa",
   "expectedRuntimeCount": 3,
   "expectedSkillsPerRuntime": 11,
   "expectedRenderedItems": 33,
   "results": [
     {
       "runtime": "codex",
-      "dest": "<tmp>/zhulong-skills-usability-vXrqG7/codex",
+      "dest": "<tmp>/zhulong-skills-usability-QsEpZa/codex",
       "itemCount": 11,
-      "installOutput": "runtime codex\nsource <kit-root>/runtime/codex/skills\ndest <tmp>/zhulong-skills-usability-vXrqG7/codex\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-cockpit-build/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-code-review/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-code-review/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-complete-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-debug/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-debug/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-discuss-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-execute-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-execute-phase/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-new-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-plan-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-plan-phase/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-spec-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-ui-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-verify-work/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/codex/zl-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
-      "statusOutput": "runtime codex\nsource <kit-root>/runtime/codex/skills\ndest <tmp>/zhulong-skills-usability-vXrqG7/codex\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
+      "installOutput": "runtime codex\nsource <kit-root>/runtime/codex/skills\ndest <tmp>/zhulong-skills-usability-QsEpZa/codex\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-cockpit-build/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-code-review/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-code-review/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-complete-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-debug/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-debug/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-discuss-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-execute-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-execute-phase/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-new-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-plan-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-plan-phase/agents/openai.yaml\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-spec-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-ui-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-verify-work/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/codex/zl-verify-work/agents/openai.yaml\nRestart Codex after installing new skills.",
+      "statusOutput": "runtime codex\nsource <kit-root>/runtime/codex/skills\ndest <tmp>/zhulong-skills-usability-QsEpZa/codex\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
           "skill": "zl-new-milestone",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-new-milestone/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-new-milestone/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-spec-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-spec-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-spec-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-discuss-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-discuss-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-discuss-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-ui-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-ui-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-ui-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-plan-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-plan-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-plan-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-execute-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-execute-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-execute-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-verify-work",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-verify-work/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-verify-work/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-complete-milestone",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-complete-milestone/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-complete-milestone/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-debug",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-debug/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-debug/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-code-review",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-code-review/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-code-review/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-cockpit-build",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/codex/zl-cockpit-build/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/codex/zl-cockpit-build/SKILL.md",
           "exists": true
         }
       ]
     },
     {
       "runtime": "claude-code",
-      "dest": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code",
+      "dest": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code",
       "itemCount": 11,
-      "installOutput": "runtime claude-code\nsource <kit-root>/runtime/claude-code/skills\ndest <tmp>/zhulong-skills-usability-vXrqG7/claude-code\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-cockpit-build/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-code-review/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-complete-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-debug/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-discuss-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-execute-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-new-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-plan-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-spec-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-ui-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
-      "statusOutput": "runtime claude-code\nsource <kit-root>/runtime/claude-code/skills\ndest <tmp>/zhulong-skills-usability-vXrqG7/claude-code\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
+      "installOutput": "runtime claude-code\nsource <kit-root>/runtime/claude-code/skills\ndest <tmp>/zhulong-skills-usability-QsEpZa/claude-code\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-cockpit-build/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-code-review/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-complete-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-debug/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-discuss-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-execute-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-new-milestone/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-plan-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-spec-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-ui-phase/SKILL.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-verify-work/SKILL.md\nRestart Claude Code if the top-level skills directory was newly created.",
+      "statusOutput": "runtime claude-code\nsource <kit-root>/runtime/claude-code/skills\ndest <tmp>/zhulong-skills-usability-QsEpZa/claude-code\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
           "skill": "zl-new-milestone",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-new-milestone/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-new-milestone/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-spec-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-spec-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-spec-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-discuss-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-discuss-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-discuss-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-ui-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-ui-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-ui-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-plan-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-plan-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-plan-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-execute-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-execute-phase/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-execute-phase/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-verify-work",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-verify-work/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-verify-work/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-complete-milestone",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-complete-milestone/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-complete-milestone/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-debug",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-debug/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-debug/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-code-review",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-code-review/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-code-review/SKILL.md",
           "exists": true
         },
         {
           "skill": "zl-cockpit-build",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/claude-code/zl-cockpit-build/SKILL.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/claude-code/zl-cockpit-build/SKILL.md",
           "exists": true
         }
       ]
     },
     {
       "runtime": "github-copilot",
-      "dest": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot",
+      "dest": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot",
       "itemCount": 11,
-      "installOutput": "runtime github-copilot\nsource <kit-root>/runtime/github-copilot/prompts\ndest <tmp>/zhulong-skills-usability-vXrqG7/github-copilot\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-cockpit-build.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-code-review.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-complete-milestone.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-debug.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-discuss-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-execute-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-new-milestone.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-plan-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-spec-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-ui-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
-      "statusOutput": "runtime github-copilot\nsource <kit-root>/runtime/github-copilot/prompts\ndest <tmp>/zhulong-skills-usability-vXrqG7/github-copilot\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
+      "installOutput": "runtime github-copilot\nsource <kit-root>/runtime/github-copilot/prompts\ndest <tmp>/zhulong-skills-usability-QsEpZa/github-copilot\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-cockpit-build.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-code-review.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-complete-milestone.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-debug.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-discuss-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-execute-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-new-milestone.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-plan-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-spec-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-ui-phase.prompt.md\nwrite <tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-verify-work.prompt.md\nReload VS Code or run the chat customization diagnostics if prompts do not appear.",
+      "statusOutput": "runtime github-copilot\nsource <kit-root>/runtime/github-copilot/prompts\ndest <tmp>/zhulong-skills-usability-QsEpZa/github-copilot\nok zl-cockpit-build rendered\nok zl-code-review rendered\nok zl-complete-milestone rendered\nok zl-debug rendered\nok zl-discuss-phase rendered\nok zl-execute-phase rendered\nok zl-new-milestone rendered\nok zl-plan-phase rendered\nok zl-spec-phase rendered\nok zl-ui-phase rendered\nok zl-verify-work rendered",
       "installed": [
         {
           "skill": "zl-new-milestone",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-new-milestone.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-new-milestone.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-spec-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-spec-phase.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-spec-phase.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-discuss-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-discuss-phase.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-discuss-phase.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-ui-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-ui-phase.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-ui-phase.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-plan-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-plan-phase.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-plan-phase.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-execute-phase",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-execute-phase.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-execute-phase.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-verify-work",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-verify-work.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-verify-work.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-complete-milestone",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-complete-milestone.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-complete-milestone.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-debug",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-debug.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-debug.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-code-review",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-code-review.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-code-review.prompt.md",
           "exists": true
         },
         {
           "skill": "zl-cockpit-build",
-          "filePath": "<tmp>/zhulong-skills-usability-vXrqG7/github-copilot/zl-cockpit-build.prompt.md",
+          "filePath": "<tmp>/zhulong-skills-usability-QsEpZa/github-copilot/zl-cockpit-build.prompt.md",
           "exists": true
         }
       ]

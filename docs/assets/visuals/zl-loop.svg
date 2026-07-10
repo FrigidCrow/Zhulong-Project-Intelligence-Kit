@@ -31,7 +31,7 @@
     <g>
       <rect x="500" y="178" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>
       <text x="528" y="218" fill="#eef4ff" font-size="22" font-weight="800">2. 查文档</text>
-      <text x="528" y="250" fill="#a9b7c8" font-size="15">仕様 / QA / 議事録</text>
+      <text x="528" y="250" fill="#a9b7c8" font-size="15">需求 / QA / 决策</text>
     </g>
     <g>
       <rect x="886" y="178" width="210" height="104" rx="10" fill="#111b24" stroke="#2b3a4d"/>

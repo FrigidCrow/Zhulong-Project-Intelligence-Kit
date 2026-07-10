@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Zhulong Project Intelligence Kit</strong><br>
-  面向文档密集型软件项目的本地 AI 工程情报套件。
+  适配文档密集型与非文档密集型项目的通用本地 AI 工程情报框架。
 </p>
 
 <p align="center">
@@ -28,14 +28,16 @@
 
 ## 这是什么
 
-Zhulong Kit 是为 AI 编程工作准备的本地项目情报层。它帮助 AI 助手读取项目状态、检索规格与会议记录、分析代码影响面、执行工作流门禁，并在任务完成前写回验证证据。
+Zhulong Kit 是为 AI 编程工作准备的通用本地项目情报层。它帮助 AI 助手读取项目状态、按需检索项目资料、分析代码影响面、执行工作流门禁，并在任务完成前写回验证证据。它不绑定国家、语言、行业或技术栈，新项目、既有代码库、文档密集型项目和非文档密集型项目都可以按自己的约束接入。
 
 它不替代 Codex、Claude Code、GitHub Copilot、GraphRAG 或 Graphify。它负责把这些工具连接到同一套本地项目记忆、证据链和确定性检查上。
+
+`--rag none` 是非文档密集型项目的正式运行模式，不是功能不完整的降级模式。它关闭 RAG 安装、索引和 RAG 查询，但保留 workflow、codebase、Graphify、policy、evidence 与 completion gate；项目仍可按需使用轻量文档扫描和直接引用。只有当文档本身是需求、验收或合规依据时，才需要切换到 `--rag local`。
 
 ```text
 zhulong
   -> 读取项目状态
-  -> 查询规格、测试、会议纪要与设计文档
+  -> 按需查询需求、测试、决策记录与设计资料
   -> 检查代码地图、影响面与新鲜度
   -> 执行工作流门禁和质量验证
   -> 写回证据、风险与后续任务
@@ -45,7 +47,7 @@ zhulong
 
 **照亮项目状态，让每个结论有依据，让每次完成经得起检查。**
 
-Zhulong 的名字来自掌管昼夜与秩序的烛龙。这个意象在产品中对应三件具体的事：把隐藏的项目状态变得可见，把混乱的文档和代码关系组织成证据，把自动化限制在用户能够预期的边界内。
+Zhulong 的名字来自掌管昼夜与秩序的烛龙。这个意象在产品中对应三件具体的事：把隐藏的项目状态变得可见，把分散的代码、资料和决策关系组织成证据，把自动化限制在用户能够预期的边界内。
 
 ## 五个特色能力
 
@@ -108,15 +110,16 @@ zhulong init --target "$PWD" \
   --rag none
 
 zhulong codebase scan --target "$PWD"
-zhulong docs sync --target "$PWD"
+zhulong preflight --target "$PWD"
 zhulong verify --target "$PWD"
 ```
 
 同一能力也可以使用短命令：
 
 ```bash
-zl-init --target "$PWD" --template brownfield-monorepo --mode existing
-zl-docs-sync --target "$PWD"
+zl-init --target "$PWD" --template brownfield-monorepo --mode existing --doc-policy reference --rag none
+zl-codebase-scan --target "$PWD"
+zl-preflight --target "$PWD"
 zl-completion-check --target "$PWD"
 ```
 
@@ -132,7 +135,7 @@ zl-completion-check --target "$PWD"
 | 里程碑工作流 | 从需求、计划、实现到验证组织完整闭环 | [`zhulong workflow run new-milestone`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-new-milestone) |
 | 缺陷调查 | 结合规格证据和代码地图定位问题 | [`zhulong workflow run debug`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-debug) |
 | 回答审计 | 检查引用、数值漂移和答案接地情况 | [`zhulong answer audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-answer-audit) |
-| 暧昧审计 | 检查中英日规格中的不可验收表达 | [`zhulong ambiguity audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-ambiguity-audit) |
+| 暧昧审计 | 检查多语言需求与验收条件中的不可验证表达 | [`zhulong ambiguity audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-ambiguity-audit) |
 | 结构审计 | 校验关键 `.planning/` 制品的 mini-schema | [`zhulong structure audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-structure-audit) |
 | 下一步发现 | 根据项目状态推荐 2-3 条命令 | [`zhulong next`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-next) |
 | 完成门禁 | 在任务完成前检查证据、风险和工作流状态 | [`zhulong workflow completion-check`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-completion-check) |
@@ -142,11 +145,13 @@ zl-completion-check --target "$PWD"
 
 | 场景 | 推荐设置 | 默认不会做的事 |
 | --- | --- | --- |
-| 轻量项目 | `--doc-policy reference --rag none` | 不安装或运行 RAG |
-| 规格密集型项目 | `--doc-policy strict --rag local` | 不使用未经批准的外部服务 |
+| 非文档密集型项目 | `--doc-policy reference --rag none` | 不安装、索引或查询 RAG；workflow、代码地图和 evidence 正常工作 |
+| 文档密集型项目 | `--doc-policy strict --rag local` | 不使用未经批准的外部服务；把引用、新鲜度和回答依据纳入门禁 |
 | 已有代码库 | 先扫描代码，再同步文档，按需构建代码图 | 不移动业务源码到 `.planning/` |
-| 文档更新 | 先执行同步，确有需要时再显式建索引 | 不自动执行重型 GraphRAG 刷新 |
+| 文档或决策记录更新 | 先执行轻量同步，确有需要时再显式建索引 | 不自动执行重型 GraphRAG 刷新 |
 | 发布或交接 | 执行完成检查、策略检查和质量收口 | 不把缺失证据视为已完成 |
+
+多语言能力只是审计覆盖，不是使用前提。内置中、英、日词表用于验证不同语言的需求表达；Zhulong 的项目模型、工作流和门禁对地域与语言保持中立。
 
 ## 本地优先原则
 

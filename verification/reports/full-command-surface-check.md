@@ -1,6 +1,6 @@
 # Zhulong 全命令面验证
 
-生成时间: 2026-07-10T03:51:01.950Z
+生成时间: 2026-07-10T04:53:58.790Z
 
 ## 摘要
 
@@ -90,103 +90,103 @@
 ## 证据
 
 - zl: exit 0
-- zl-init --target <tmp>/zhulong-full-command-surface-TkUUWD/project --template greenfield-app --name full_command_surface --mode new --force: exit 0
-- zl-verify --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-map --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-codebase --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-codebase-scan --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-codebase-status --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-rag-init-local --target <tmp>/zhulong-full-command-surface-TkUUWD/project --force --skip-model-check: exit 0
+- zl-init --target <tmp>/zhulong-full-command-surface-PChI8t/project --template greenfield-app --name full_command_surface --mode new --force: exit 0
+- zl-verify --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-map --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-codebase --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-codebase-scan --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-codebase-status --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-rag-init-local --target <tmp>/zhulong-full-command-surface-PChI8t/project --force --skip-model-check: exit 0
 - zl-rag-init-local: found Local GraphRAG default mode initialized
-- zl-docs-scan --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-status --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-normalize --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-extract --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-diff --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-citations --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE_SENTINEL_7719: exit 0
+- zl-docs-scan --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-status --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-normalize --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-extract --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-diff --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-citations --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE_SENTINEL_7719: exit 0
 - zl-docs-citations: found FULL_SURFACE_SENTINEL_7719
-- zl-citation-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-sync --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
+- zl-citation-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-sync --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
 - zl-docs-sync: found heavy refresh executed: no
-- zl-ambiguity-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-index --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-docs-index --target <tmp>/zhulong-full-command-surface-TkUUWD/project --run: exit 0
+- zl-ambiguity-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-index --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-docs-index --target <tmp>/zhulong-full-command-surface-PChI8t/project --run: exit 0
 - zl-docs-index --run: found status success
-- zl-docs-query --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE_SENTINEL_7719: exit 0
+- zl-docs-query --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE_SENTINEL_7719: exit 0
 - zl-docs-query: found FULL_SURFACE_SENTINEL_7719
-- zl-answer-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
+- zl-answer-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
 - zl-answer-audit: found answer audit PASS
-- zl-docs-query --target <tmp>/zhulong-full-command-surface-TkUUWD/project --rag FULL_SURFACE_SENTINEL_7719: exit 0
+- zl-docs-query --target <tmp>/zhulong-full-command-surface-PChI8t/project --rag FULL_SURFACE_SENTINEL_7719: exit 0
 - zl-docs-query --rag: found FULL_SURFACE_SENTINEL_7719
-- zl-answer-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project --answer FULL_SURFACE_SENTINEL_7719 [docs/specs/approval.md:3]: exit 0
-- zl-rag-golden-add --target <tmp>/zhulong-full-command-surface-TkUUWD/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0
-- zl-rag-golden-run --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-rag-eval --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-graph-build --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-graph-build --target <tmp>/zhulong-full-command-surface-TkUUWD/project --run: exit 0
+- zl-answer-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project --answer FULL_SURFACE_SENTINEL_7719 [docs/specs/approval.md:3]: exit 0
+- zl-rag-golden-add --target <tmp>/zhulong-full-command-surface-PChI8t/project --question FULL_SURFACE_SENTINEL_7719 --expect FULL_SURFACE_SENTINEL_7719 --citation docs/specs/approval.md:3: exit 0
+- zl-rag-golden-run --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-rag-eval --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-graph-build --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-graph-build --target <tmp>/zhulong-full-command-surface-PChI8t/project --run: exit 0
 - zl-graph-build --run: found status success
-- zl-graph-status --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-graph-query --target <tmp>/zhulong-full-command-surface-TkUUWD/project approvalLimit: exit 0
+- zl-graph-status --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-graph-query --target <tmp>/zhulong-full-command-surface-PChI8t/project approvalLimit: exit 0
 - zl-graph-query: found approval
-- zl-graph-diff --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-graph-impact --target <tmp>/zhulong-full-command-surface-TkUUWD/project --files src/approval.js: exit 0
-- zl-graph-risk --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-graph-freshness --target <tmp>/zhulong-full-command-surface-TkUUWD/project --strict: exit 0
-- zl-preflight --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
+- zl-graph-diff --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-graph-impact --target <tmp>/zhulong-full-command-surface-PChI8t/project --files src/approval.js: exit 0
+- zl-graph-risk --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-graph-freshness --target <tmp>/zhulong-full-command-surface-PChI8t/project --strict: exit 0
+- zl-preflight --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
 - zl-preflight: found heavy refresh executed: no
-- zl-refresh-plan --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-refresh-run --target <tmp>/zhulong-full-command-surface-TkUUWD/project --rag --force: exit 0
-- zl-refresh-run --target <tmp>/zhulong-full-command-surface-TkUUWD/project --graph --force: exit 0
-- zl-mode-status --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-mode-set --target <tmp>/zhulong-full-command-surface-TkUUWD/project graph-lite: exit 0
+- zl-refresh-plan --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-refresh-run --target <tmp>/zhulong-full-command-surface-PChI8t/project --rag --force: exit 0
+- zl-refresh-run --target <tmp>/zhulong-full-command-surface-PChI8t/project --graph --force: exit 0
+- zl-mode-status --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-mode-set --target <tmp>/zhulong-full-command-surface-PChI8t/project graph-lite: exit 0
 - zl-mode-set: found mode graph-lite
-- zl-mode-set --target <tmp>/zhulong-full-command-surface-TkUUWD/project default-local-rag: exit 0
-- zl-evidence-record --target <tmp>/zhulong-full-command-surface-TkUUWD/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0
-- zl-evidence-status --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-trace-build --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-trace-query --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE: exit 0
+- zl-mode-set --target <tmp>/zhulong-full-command-surface-PChI8t/project default-local-rag: exit 0
+- zl-evidence-record --target <tmp>/zhulong-full-command-surface-PChI8t/project Full command surface evidence --source docs/specs/approval.md --command npm run verify:full-command-surface --result passed --writeback .planning/issues/full-command-surface.md: exit 0
+- zl-evidence-status --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-trace-build --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-trace-query --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE: exit 0
 - zl-trace-query: found Trace query
-- zl-trace-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-structure-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-offline-lock --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-privacy-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project --strict: exit 0
-- zl-outbound-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-license-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-policy-list --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-policy-explain --target <tmp>/zhulong-full-command-surface-TkUUWD/project trace.matrix: exit 0
-- zl-policy-check --target <tmp>/zhulong-full-command-surface-TkUUWD/project --strict: exit 0
-- zl-policy-lock --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-policy-verify --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-policy-diff --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-help-skills --target <tmp>/zhulong-full-command-surface-TkUUWD/project 文档更新后想确认影响面和完成前检查: exit 0
-- zl-next --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-runtime-install --runtime codex --dest <tmp>/zhulong-full-command-surface-TkUUWD/runtime/codex --force: exit 0
-- zl-runtime-status --runtime codex --dest <tmp>/zhulong-full-command-surface-TkUUWD/runtime/codex: exit 0
-- zl-runtime-install --runtime claude-code --dest <tmp>/zhulong-full-command-surface-TkUUWD/runtime/claude-code --force: exit 0
-- zl-runtime-status --runtime claude-code --dest <tmp>/zhulong-full-command-surface-TkUUWD/runtime/claude-code: exit 0
-- zl-runtime-install --runtime github-copilot --dest <tmp>/zhulong-full-command-surface-TkUUWD/runtime/github-copilot --force: exit 0
-- zl-runtime-status --runtime github-copilot --dest <tmp>/zhulong-full-command-surface-TkUUWD/runtime/github-copilot: exit 0
-- zl-context-debug --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE debug context: exit 0
-- zl-context-execute --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE execute context: exit 0
-- zl-workflow-run --target <tmp>/zhulong-full-command-surface-TkUUWD/project debug FULL_SURFACE workflow: exit 0
-- zl-workflow-continue --target <tmp>/zhulong-full-command-surface-TkUUWD/project --gate plan --evidence PLAN.md reviewed: exit 0
-- zl-workflow-continue --target <tmp>/zhulong-full-command-surface-TkUUWD/project --gate implementation --evidence src/approval.js verified: exit 0
-- zl-workflow-continue --target <tmp>/zhulong-full-command-surface-TkUUWD/project --gate verification --evidence npm run verify:full-command-surface: exit 0
-- zl-workflow-status --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-workflow-audit --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-gate-check --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-completion-check --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
-- zl-new-milestone --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-new-milestone: exit 0
-- zl-spec-phase --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-spec-phase: exit 0
-- zl-discuss-phase --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-discuss-phase: exit 0
-- zl-ui-phase --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-ui-phase: exit 0
-- zl-debug --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-debug: exit 0
-- zl-plan-phase --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-plan-phase: exit 0
-- zl-execute-phase --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-execute-phase: exit 0
-- zl-code-review --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-code-review: exit 0
-- zl-verify-work --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-verify-work: exit 0
-- zl-complete-milestone --target <tmp>/zhulong-full-command-surface-TkUUWD/project FULL_SURFACE zl-complete-milestone: exit 0
-- zl-cockpit-build --target <tmp>/zhulong-full-command-surface-TkUUWD/project: exit 0
+- zl-trace-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-structure-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-offline-lock --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-privacy-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project --strict: exit 0
+- zl-outbound-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-license-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-policy-list --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-policy-explain --target <tmp>/zhulong-full-command-surface-PChI8t/project trace.matrix: exit 0
+- zl-policy-check --target <tmp>/zhulong-full-command-surface-PChI8t/project --strict: exit 0
+- zl-policy-lock --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-policy-verify --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-policy-diff --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-help-skills --target <tmp>/zhulong-full-command-surface-PChI8t/project 文档更新后想确认影响面和完成前检查: exit 0
+- zl-next --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-runtime-install --runtime codex --dest <tmp>/zhulong-full-command-surface-PChI8t/runtime/codex --force: exit 0
+- zl-runtime-status --runtime codex --dest <tmp>/zhulong-full-command-surface-PChI8t/runtime/codex: exit 0
+- zl-runtime-install --runtime claude-code --dest <tmp>/zhulong-full-command-surface-PChI8t/runtime/claude-code --force: exit 0
+- zl-runtime-status --runtime claude-code --dest <tmp>/zhulong-full-command-surface-PChI8t/runtime/claude-code: exit 0
+- zl-runtime-install --runtime github-copilot --dest <tmp>/zhulong-full-command-surface-PChI8t/runtime/github-copilot --force: exit 0
+- zl-runtime-status --runtime github-copilot --dest <tmp>/zhulong-full-command-surface-PChI8t/runtime/github-copilot: exit 0
+- zl-context-debug --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE debug context: exit 0
+- zl-context-execute --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE execute context: exit 0
+- zl-workflow-run --target <tmp>/zhulong-full-command-surface-PChI8t/project debug FULL_SURFACE workflow: exit 0
+- zl-workflow-continue --target <tmp>/zhulong-full-command-surface-PChI8t/project --gate plan --evidence PLAN.md reviewed: exit 0
+- zl-workflow-continue --target <tmp>/zhulong-full-command-surface-PChI8t/project --gate implementation --evidence src/approval.js verified: exit 0
+- zl-workflow-continue --target <tmp>/zhulong-full-command-surface-PChI8t/project --gate verification --evidence npm run verify:full-command-surface: exit 0
+- zl-workflow-status --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-workflow-audit --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-gate-check --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-completion-check --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
+- zl-new-milestone --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-new-milestone: exit 0
+- zl-spec-phase --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-spec-phase: exit 0
+- zl-discuss-phase --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-discuss-phase: exit 0
+- zl-ui-phase --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-ui-phase: exit 0
+- zl-debug --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-debug: exit 0
+- zl-plan-phase --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-plan-phase: exit 0
+- zl-execute-phase --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-execute-phase: exit 0
+- zl-code-review --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-code-review: exit 0
+- zl-verify-work --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-verify-work: exit 0
+- zl-complete-milestone --target <tmp>/zhulong-full-command-surface-PChI8t/project FULL_SURFACE zl-complete-milestone: exit 0
+- zl-cockpit-build --target <tmp>/zhulong-full-command-surface-PChI8t/project: exit 0
 - zl-cockpit-build: found cockpit build
 - zl-cockpit-build: found heavy refresh executed: no
 - cockpit report: found Heavy refresh executed: no
@@ -204,8 +204,8 @@
 
 ## Fixture 路径
 
-- Work root: `<tmp>/zhulong-full-command-surface-TkUUWD`
-- Project root: `<tmp>/zhulong-full-command-surface-TkUUWD/project`
+- Work root: `<tmp>/zhulong-full-command-surface-PChI8t`
+- Project root: `<tmp>/zhulong-full-command-surface-PChI8t/project`
 - 复现命令: `node '<kit-root>/scripts/verify-full-command-surface.mjs'`
 
 ## 问题

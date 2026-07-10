@@ -1,6 +1,6 @@
 # Zhulong MVP3 证据质量与策略模式验证
 
-生成时间: 2026-07-10T03:49:45.464Z
+生成时间: 2026-07-10T04:45:33.930Z
 
 ## 摘要
 
@@ -33,8 +33,8 @@
 
 ## Fixture 路径
 
-- Work root: `<tmp>/zhulong-mvp3-Sp4MA6`
-- Project root: `<tmp>/zhulong-mvp3-Sp4MA6/project`
+- Work root: `<tmp>/zhulong-mvp3-35OG6a`
+- Project root: `<tmp>/zhulong-mvp3-35OG6a/project`
 - 复现命令: `node '<kit-root>/scripts/verify-mvp3-evidence-policy.mjs'`
 
 ## 问题

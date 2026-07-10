@@ -1,24 +1,24 @@
 {
-  "generated": "2026-07-10T03:49:48.103Z",
+  "generated": "2026-07-10T04:45:37.951Z",
   "status": "PASS",
-  "workRoot": "<tmp>/zhulong-workflow-facade-8DUvd2",
-  "projectRoot": "<tmp>/zhulong-workflow-facade-8DUvd2/project",
+  "workRoot": "<tmp>/zhulong-workflow-facade-MF9DBv",
+  "projectRoot": "<tmp>/zhulong-workflow-facade-MF9DBv/project",
   "evidence": [
-    "zl init --target <tmp>/zhulong-workflow-facade-8DUvd2/project --template greenfield-app --name workflow_facade_fixture --mode new --force: exit 0",
-    "zl codebase scan --target <tmp>/zhulong-workflow-facade-8DUvd2/project: exit 0",
-    "zl docs scan --target <tmp>/zhulong-workflow-facade-8DUvd2/project: exit 0",
-    "zl docs extract --target <tmp>/zhulong-workflow-facade-8DUvd2/project: exit 0",
-    "zl docs citations --target <tmp>/zhulong-workflow-facade-8DUvd2/project WORKFLOW_FACADE_SPEC: exit 0",
-    "zl workflow run --target <tmp>/zhulong-workflow-facade-8DUvd2/project debug WORKFLOW_FACADE debug: exit 0",
+    "zl init --target <tmp>/zhulong-workflow-facade-MF9DBv/project --template greenfield-app --name workflow_facade_fixture --mode new --force: exit 0",
+    "zl codebase scan --target <tmp>/zhulong-workflow-facade-MF9DBv/project: exit 0",
+    "zl docs scan --target <tmp>/zhulong-workflow-facade-MF9DBv/project: exit 0",
+    "zl docs extract --target <tmp>/zhulong-workflow-facade-MF9DBv/project: exit 0",
+    "zl docs citations --target <tmp>/zhulong-workflow-facade-MF9DBv/project WORKFLOW_FACADE_SPEC: exit 0",
+    "zl workflow run --target <tmp>/zhulong-workflow-facade-MF9DBv/project debug WORKFLOW_FACADE debug: exit 0",
     "zl-debug facade output: found facade",
     "zl-debug no heavy refresh: found heavy refresh executed: no",
     "debug WORKFLOW_FACADE: found Zhulong Workflow Facade",
     "debug WORKFLOW_FACADE heavy: found Heavy refresh executed: no",
     "debug WORKFLOW_FACADE policy: found ## Policy",
-    "zl workflow run --target <tmp>/zhulong-workflow-facade-8DUvd2/project plan-phase WORKFLOW_FACADE plan: exit 0",
+    "zl workflow run --target <tmp>/zhulong-workflow-facade-MF9DBv/project plan-phase WORKFLOW_FACADE plan: exit 0",
     "zl-plan-phase facade output: found facade",
     "plan WORKFLOW_FACADE: found zl-plan-phase",
-    "zl workflow run --target <tmp>/zhulong-workflow-facade-8DUvd2/project execute-phase WORKFLOW_FACADE execute: exit 0",
+    "zl workflow run --target <tmp>/zhulong-workflow-facade-MF9DBv/project execute-phase WORKFLOW_FACADE execute: exit 0",
     "zl-execute-phase stale facade: found STALE_NEEDS_REFRESH",
     "execute WORKFLOW_FACADE stale: found STALE_NEEDS_REFRESH",
     "execute WORKFLOW_FACADE no refresh: found Heavy refresh executed: no",
@@ -26,59 +26,59 @@
   ],
   "commandResults": [
     {
-      "command": "zl init --target <tmp>/zhulong-workflow-facade-8DUvd2/project --template greenfield-app --name workflow_facade_fixture --mode new --force",
+      "command": "zl init --target <tmp>/zhulong-workflow-facade-MF9DBv/project --template greenfield-app --name workflow_facade_fixture --mode new --force",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "write <tmp>/zhulong-workflow-facade-8DUvd2/project/AGENTS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/PROJECT.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/REQUIREMENTS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/ROADMAP.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/STATE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/ARCHITECTURE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/CONCERNS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/CONVENTIONS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/INTEGRATIONS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/STACK.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/STRUCTURE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/TESTING.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/config.json\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/README.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/debug/README.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/evidence/INDEX.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/evidence/README.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/graphs/README.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/GLOSSARY.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/RAG_SOURCES.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/README.md\nwrite <tmp>",
+      "stdout": "write <tmp>/zhulong-workflow-facade-MF9DBv/project/AGENTS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/PROJECT.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/REQUIREMENTS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/ROADMAP.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/STATE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/ARCHITECTURE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/CONCERNS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/CONVENTIONS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/INTEGRATIONS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/STACK.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/STRUCTURE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/TESTING.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/config.json\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/README.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/debug/README.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/evidence/INDEX.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/evidence/README.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/graphs/README.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/GLOSSARY.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/RAG_SOURCES.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/README.md\nwrite <tmp>",
       "stderr": ""
     },
     {
-      "command": "zl codebase scan --target <tmp>/zhulong-workflow-facade-8DUvd2/project",
+      "command": "zl codebase scan --target <tmp>/zhulong-workflow-facade-MF9DBv/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "write <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/CODEBASE_STATUS.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/STRUCTURE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/TESTING.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/STACK.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/codebase/ARCHITECTURE.md\nsource files 2\ntest files 1",
+      "stdout": "write <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/CODEBASE_STATUS.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/STRUCTURE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/TESTING.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/STACK.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/codebase/ARCHITECTURE.md\nsource files 2\ntest files 1",
       "stderr": ""
     },
     {
-      "command": "zl docs scan --target <tmp>/zhulong-workflow-facade-8DUvd2/project",
+      "command": "zl docs scan --target <tmp>/zhulong-workflow-facade-MF9DBv/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "write <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/RAG_SOURCES.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 1\nsource roots docs",
+      "stdout": "write <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/RAG_SOURCES.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/DOC_RAG_STATUS.md\ndocuments 1\nsource roots docs",
       "stderr": ""
     },
     {
-      "command": "zl docs extract --target <tmp>/zhulong-workflow-facade-8DUvd2/project",
+      "command": "zl docs extract --target <tmp>/zhulong-workflow-facade-MF9DBv/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "write <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/DOCUMENT_INDEX.json\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/DOCUMENT_EXTRACT_REPORT.md\nextracted 1\ndocuments 1",
+      "stdout": "write <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/DOCUMENT_INDEX.json\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/DOCUMENT_EXTRACT_REPORT.md\nextracted 1\ndocuments 1",
       "stderr": ""
     },
     {
-      "command": "zl docs citations --target <tmp>/zhulong-workflow-facade-8DUvd2/project WORKFLOW_FACADE_SPEC",
+      "command": "zl docs citations --target <tmp>/zhulong-workflow-facade-MF9DBv/project WORKFLOW_FACADE_SPEC",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "Document citations: WORKFLOW_FACADE_SPEC\n- docs/spec.md:3 WORKFLOW_FACADE_SPEC citation target.\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/CITATIONS.md",
+      "stdout": "Document citations: WORKFLOW_FACADE_SPEC\n- docs/spec.md:3 WORKFLOW_FACADE_SPEC citation target.\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/CITATIONS.md",
       "stderr": ""
     },
     {
-      "command": "zl workflow run --target <tmp>/zhulong-workflow-facade-8DUvd2/project debug WORKFLOW_FACADE debug",
+      "command": "zl workflow run --target <tmp>/zhulong-workflow-facade-MF9DBv/project debug WORKFLOW_FACADE debug",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "workflow debug-workflow-facade-debug\nfacade BLOCKED\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/debug-workflow-facade-debug.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/handoffs/debug-workflow-facade-debug-HANDOFF.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/workflows/debug-workflow-facade-debug/WORKFLOW_FACADE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/workflows/debug-workflow-facade-debug/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stdout": "workflow debug-workflow-facade-debug\nfacade BLOCKED\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/debug-workflow-facade-debug.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/handoffs/debug-workflow-facade-debug-HANDOFF.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/workflows/debug-workflow-facade-debug/WORKFLOW_FACADE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/workflows/debug-workflow-facade-debug/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
       "stderr": ""
     },
     {
-      "command": "zl workflow run --target <tmp>/zhulong-workflow-facade-8DUvd2/project plan-phase WORKFLOW_FACADE plan",
+      "command": "zl workflow run --target <tmp>/zhulong-workflow-facade-MF9DBv/project plan-phase WORKFLOW_FACADE plan",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "workflow plan-phase-workflow-facade-plan\nfacade BLOCKED\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/plan-workflow-facade-plan.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/handoffs/plan-phase-workflow-facade-plan-HANDOFF.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/workflows/plan-phase-workflow-facade-plan/WORKFLOW_FACADE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/workflows/plan-phase-workflow-facade-plan/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stdout": "workflow plan-phase-workflow-facade-plan\nfacade BLOCKED\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/plan-workflow-facade-plan.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/handoffs/plan-phase-workflow-facade-plan-HANDOFF.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/workflows/plan-phase-workflow-facade-plan/WORKFLOW_FACADE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/workflows/plan-phase-workflow-facade-plan/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nPASS graph .planning/graphs\nPASS privacy <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
       "stderr": ""
     },
     {
-      "command": "zl workflow run --target <tmp>/zhulong-workflow-facade-8DUvd2/project execute-phase WORKFLOW_FACADE execute",
+      "command": "zl workflow run --target <tmp>/zhulong-workflow-facade-MF9DBv/project execute-phase WORKFLOW_FACADE execute",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "workflow execute-phase-workflow-facade-execute\nfacade BLOCKED\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/execute-workflow-facade-execute.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/context/handoffs/execute-phase-workflow-facade-execute-HANDOFF.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/workflows/execute-phase-workflow-facade-execute/WORKFLOW_FACADE.md\nwrite <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/workflows/execute-phase-workflow-facade-execute/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nSTALE_NEEDS_REFRESH graph .planning/graphs\nPASS privacy <tmp>/zhulong-workflow-facade-8DUvd2/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
+      "stdout": "workflow execute-phase-workflow-facade-execute\nfacade BLOCKED\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/execute-workflow-facade-execute.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/context/handoffs/execute-phase-workflow-facade-execute-HANDOFF.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/workflows/execute-phase-workflow-facade-execute/WORKFLOW_FACADE.md\nwrite <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/workflows/execute-phase-workflow-facade-execute/WORKFLOW_STATE.json\nheavy refresh executed: no\nPASS context .planning/context + handoff\nPASS codebase .planning/codebase/CODEBASE_STATUS.md\nPASS docs .planning/knowledge/RAG_SOURCES.md or RAG_QUERY_RESULT.md\nSTALE_NEEDS_REFRESH graph .planning/graphs\nPASS privacy <tmp>/zhulong-workflow-facade-MF9DBv/project/.planning/knowledge/PRIVACY_AUDIT.md\nFAIL plan Plan gate not marked.\nFAIL implementation Implementation gate not marked.\nFAIL verification Verification gate not marked.\nFAIL evidence .planning/evidence\nFAIL writeback .planning/issues|debug|phases\nworkflow guard FAIL",
       "stderr": ""
     }
   ],

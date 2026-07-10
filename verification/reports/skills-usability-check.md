@@ -1,6 +1,6 @@
 # Zhulong Skills Usability Verification
 
-生成时间: 2026-07-10T03:51:02.221Z
+生成时间: 2026-07-10T04:55:20.717Z
 
 ## 摘要
 
@@ -12,7 +12,7 @@
 - Runtimes: codex, claude-code, github-copilot
 - Core skills/prompts per runtime: 11
 - Expected rendered items: 33
-- Temp install root: `<tmp>/zhulong-skills-usability-vXrqG7`
+- Temp install root: `<tmp>/zhulong-skills-usability-QsEpZa`
 
 ## 安装结果
 
@@ -21,7 +21,7 @@
 ```text
 runtime codex
 source <kit-root>/runtime/codex/skills
-dest <tmp>/zhulong-skills-usability-vXrqG7/codex
+dest <tmp>/zhulong-skills-usability-QsEpZa/codex
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -39,7 +39,7 @@ ok zl-verify-work rendered
 ```text
 runtime claude-code
 source <kit-root>/runtime/claude-code/skills
-dest <tmp>/zhulong-skills-usability-vXrqG7/claude-code
+dest <tmp>/zhulong-skills-usability-QsEpZa/claude-code
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered
@@ -57,7 +57,7 @@ ok zl-verify-work rendered
 ```text
 runtime github-copilot
 source <kit-root>/runtime/github-copilot/prompts
-dest <tmp>/zhulong-skills-usability-vXrqG7/github-copilot
+dest <tmp>/zhulong-skills-usability-QsEpZa/github-copilot
 ok zl-cockpit-build rendered
 ok zl-code-review rendered
 ok zl-complete-milestone rendered

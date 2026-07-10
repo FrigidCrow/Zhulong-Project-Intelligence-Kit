@@ -1,17 +1,18 @@
 # zl-spec-phase
 
-Purpose: turn requirement text, QA, minutes, design notes, and business rules
-into implementable specification evidence.
+Purpose: turn user requests, issue records, acceptance criteria, tests, optional
+documents, and business rules into implementable requirement evidence.
 
 Reference design: `$gsd-spec-phase`
 
 Required flow:
 
-1. Read the context packet, `.planning/knowledge/`, active phase, and active
-   issue/debug records.
-2. Search local normalized documents with `zl-docs-query`.
-3. Use `zl-docs-query --rag` only when the configured RAG backend is approved
-   for the documents in scope.
+1. Read the context packet, active phase, issue/debug records, relevant source,
+   and tests. Read `.planning/knowledge/` only when project documents exist.
+2. Search local normalized documents with `zl-docs-query` only when the source
+   inventory contains relevant material.
+3. Use `zl-docs-query --rag` only when `rag_backend` is not `none` and the
+   configured backend is approved for the documents in scope.
 4. Use Graphify/code-map context when a requirement names modules, functions,
    screens, APIs, DB tables, batch jobs, tests, or impact boundaries.
 5. Separate confirmed requirements, inferred assumptions, contradictions, and
@@ -26,5 +27,5 @@ Outputs:
 
 - Requirement trace updates.
 - Open-question list.
-- GraphRAG evidence and Graphify/code-map impact notes when relevant.
+- Optional document/RAG evidence and Graphify/code-map impact notes when relevant.
 - Next command recommendation: usually `zl-discuss-phase` or `zl-plan-phase`.

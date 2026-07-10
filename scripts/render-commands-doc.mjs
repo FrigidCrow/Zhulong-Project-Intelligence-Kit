@@ -96,7 +96,7 @@ const html = `<!doctype html>
     <section class="section">
       <div class="section-header">
         <h2>开发者心智模型</h2>
-        <p>新项目先接入，既有项目先建基线；日常通过 workflow 命令启动，文档/RAG、Graphify、policy、evidence 都作为本地 guard 和证据层参与。</p>
+        <p>新项目先接入，既有项目先建基线；日常通过 workflow 命令启动，Graphify、policy、evidence 始终参与，文档/RAG 则按项目模式启用。</p>
       </div>
       <div class="route-map" aria-label="Zhulong 执行管道路径">
         <div class="route-map-header">
@@ -139,21 +139,19 @@ node bin/zl.mjs docs sync --target /path/to/repo</code></pre>
 
         <section id="new-project" class="page-section">
           <h2>新项目从 0 接入</h2>
-          <p>先接入 Zhulong，再安装 runtime pack，然后建立代码、文档、本地 RAG 和 Graphify 基线，最后进入第一次 milestone。</p>
+          <p>先接入 Zhulong，再安装 runtime pack，然后建立代码和 Graphify 基线，最后进入第一次 milestone。非文档密集型项目使用 <code>rag none</code>，无需准备 RAG。</p>
           <pre class="code-block"><code>cd /path/to/new-project
 
-zl-init --target "$PWD" --template greenfield-app --name my_new_project --mode new
+zl-init --target "$PWD" --template greenfield-app --name my_new_project --mode new --doc-policy reference --rag none
 zl-runtime-install --runtime codex --dest ~/.codex/skills --force
 zl-runtime-install --runtime claude-code --dest ~/.claude/skills --force
 zl-runtime-install --runtime github-copilot --dest .github/prompts --force
 
 zl-codebase-scan --target "$PWD"
-zl-docs-sync --target "$PWD"
-zl-rag-init-local --target "$PWD"
 zl-graph-build --target "$PWD" --run
 
 zl-new-milestone --target "$PWD" "MVP1 walking skeleton"
-zl-spec-phase --target "$PWD" "整理 MVP1 仕様"
+zl-spec-phase --target "$PWD" "整理 MVP1 需求"
 zl-plan-phase --target "$PWD" "MVP1 phase 1"
 zl-execute-phase --target "$PWD" "实现第一条纵向链路"
 zl-verify-work --target "$PWD" "验证 MVP1 phase 1"
@@ -162,15 +160,13 @@ zl-complete-milestone --target "$PWD" "MVP1 walking skeleton"</code></pre>
 
         <section id="existing-project" class="page-section">
           <h2>既有项目接入</h2>
-          <p>既有项目不要移动原源码。Zhulong 只叠加 <code>.planning/</code>，先扫描已有代码和文档，再从当前真实改修任务进入第一次 workflow。</p>
+          <p>既有项目不要移动原源码。Zhulong 只叠加 <code>.planning/</code>，先扫描已有代码；存在项目资料时再同步文档，然后从当前真实任务进入第一次 workflow。</p>
           <pre class="code-block"><code>cd /path/to/existing-project
 
-zl-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing
+zl-init --target "$PWD" --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
 zl-codebase-scan --target "$PWD"
 zl-codebase-status --target "$PWD"
 
-zl-docs-sync --target "$PWD"
-zl-rag-init-local --target "$PWD"
 zl-graph-build --target "$PWD" --run
 zl-preflight --target "$PWD"
 
@@ -179,9 +175,9 @@ zl-debug --target "$PWD" "生产审批金额异常"</code></pre>
 
         <section id="daily-loop" class="page-section">
           <h2>日常开发循环</h2>
-          <p>日常优先使用 workflow 主循环命令。GraphRAG、Graphify、policy、evidence 会作为 guard 和 next command 被串起来，不需要开发者每次手动想一遍。</p>
-          <pre class="code-block"><code>zl-new-milestone --target "$PWD" "CR-017 代理承認上限修正"
-zl-spec-phase --target "$PWD" "確認仕様と QA"
+          <p>日常优先使用 workflow 主循环命令。Graphify、policy、evidence 会作为 guard 和 next command 被串起来；只有启用 RAG 的项目才加入 GraphRAG gate。</p>
+          <pre class="code-block"><code>zl-new-milestone --target "$PWD" "CR-017 退款上限修复"
+zl-spec-phase --target "$PWD" "确认需求与验收条件"
 zl-discuss-phase --target "$PWD" "确认实现策略"
 zl-plan-phase --target "$PWD" "拆分实现和验证"
 zl-execute-phase --target "$PWD" "实施改修"
@@ -191,9 +187,9 @@ zl-complete-milestone --target "$PWD" "CR-017 收口"</code></pre>
 
         <section id="docs-update-loop" class="page-section">
           <h2>文档更新循环</h2>
-          <p>文档更新后默认只跑轻量同步，不自动重建 GraphRAG index。需要重索引时必须显式加 <code>--index</code>，并先确认 local-only 配置没有被改坏。</p>
+          <p>文档更新后默认只跑轻量同步，不自动重建 GraphRAG index。<code>rag none</code> 项目到此即可；本地 RAG 项目需要重索引时必须显式加 <code>--index</code>，并先确认 local-only 配置没有被改坏。</p>
           <pre class="code-block"><code>zl-docs-sync --target "$PWD"
-zl-docs-query --target "$PWD" "代理承認 上限"
+zl-docs-query --target "$PWD" "退款 上限"
 zl-answer-audit --target "$PWD"
 
 # 只有明确需要重建本地 GraphRAG index 时才运行

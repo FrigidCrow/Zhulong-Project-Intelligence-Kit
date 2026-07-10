@@ -1,6 +1,6 @@
 # Zhulong Docs Update Fixture
 
-生成时间: 2026-07-10T03:49:36.895Z
+生成时间: 2026-07-10T04:45:18.948Z
 
 ## 摘要
 
@@ -17,9 +17,9 @@
 
 ## Fixture Paths
 
-- Work root: `<tmp>/zhulong-docs-update-iLDKuf`
-- Project root: `<tmp>/zhulong-docs-update-iLDKuf/project`
-- New document: `<tmp>/zhulong-docs-update-iLDKuf/project/docs/minutes/2026-06-25_update.md`
+- Work root: `<tmp>/zhulong-docs-update-hqECbA`
+- Project root: `<tmp>/zhulong-docs-update-hqECbA/project`
+- New document: `<tmp>/zhulong-docs-update-hqECbA/project/docs/minutes/2026-06-25_update.md`
 - Reproduce command: `node '<kit-root>/scripts/verify-docs-update-fixture.mjs'`
 
 ## Issues

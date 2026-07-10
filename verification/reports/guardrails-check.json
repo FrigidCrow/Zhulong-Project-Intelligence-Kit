@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-10T03:49:39.586Z",
+  "generated": "2026-07-10T04:45:24.693Z",
   "status": "PASS",
   "evidence": [
     "neutral permissions: allow list is explicit and empty by default",

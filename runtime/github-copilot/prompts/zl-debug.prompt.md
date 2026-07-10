@@ -11,12 +11,11 @@ Use the text typed after `/zl-debug` as the bug description.
 
 1. Run `{{ZL_CLI}} workflow run debug --target . "<bug description>"`.
 2. Read the generated `.planning/context/` packet and handoff.
-3. Check `.planning/STATE.md`, relevant issue/debug records, and specification
-   evidence under `.planning/knowledge/` plus source docs such as `docs/`,
-   `documents/`, or `仕様書/`.
-4. Use `{{ZL_CLI}} docs query --target . "<keywords>"` for local document
-   lookup. Use `{{ZL_CLI}} docs query --target . --rag "<question>"` only when
-   the configured RAG backend is approved for the documents in scope.
+3. Establish expected behavior from `.planning/STATE.md`, relevant issue/debug
+   records, source, tests, and the user request.
+4. Query `.planning/knowledge/` or local documents only when relevant sources
+   exist. Use `{{ZL_CLI}} docs query --target . --rag "<question>"` only when
+   `rag_backend` is not `none` and the backend is approved.
 5. Use `{{ZL_CLI}} graph status --target .` and `{{ZL_CLI}} graph query
    --target . "<symbol>"` before risky edits.
 6. Follow `core/workflows/debug.md` and execute the debug workflow inline.

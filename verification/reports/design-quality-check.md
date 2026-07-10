@@ -1,6 +1,6 @@
 # Zhulong Design Quality Verification
 
-生成时间: 2026-07-10T03:50:37.479Z
+生成时间: 2026-07-10T04:48:38.416Z
 
 ## 摘要
 
@@ -47,6 +47,15 @@
 - docs/quality-dashboard.html: all images have meaningful alt text
 - product hero: uses the selected Zhulong visual asset
 - product hero: references the canonical icon
+- product positioning: states both supported project modes
+- product positioning: presents RAG none as a first-class route
+- README positioning: states both supported project modes
+- README positioning: defines RAG none as a complete mode
+- technical guide positioning: documents the no-RAG operating boundary
+- README.md: contains no region-specific product positioning
+- docs/product.html: contains no region-specific product positioning
+- docs/technical-guide.html: contains no region-specific product positioning
+- docs/brand.md: contains no region-specific product positioning
 - docs/assets/zl-site.css: does not use Inter font
 - docs/assets/zl-site.css: does not use radial gradient
 - docs/assets/zl-site.css: does not use negative letter spacing
@@ -55,9 +64,14 @@
 - docs/assets/zl-site.css: defines a dark color scheme
 - docs/assets/zl-site.css: honors reduced motion
 - docs/assets/zl-site.css: defines visible keyboard focus
+- docs/assets/zl-site.css: adds progressive reading progress motion
+- docs/assets/zl-site.css: animates execution flow in sequence
 - docs/assets/zl-site.js: uses no scroll event listener
 - docs/assets/zl-site.js: uses IntersectionObserver for reveals and TOC state
 - docs/assets/zl-site.js: supports modern and file URL copy flows
+- docs/assets/zl-site.js: animates numeric evidence without changing layout
+- docs/assets/zl-site.js: adds pointer-aware hero feedback
+- docs/assets/zl-site.js: batches continuous visual updates
 - templates/cockpit/index.template.html: contains no Inter font dependency
 - templates/cockpit/index.template.html: contains no generic glow gradient
 - templates/cockpit/index.template.html: contains no em dash or en dash

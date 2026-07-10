@@ -1,6 +1,6 @@
 ---
 name: zl-plan-phase
-description: Zhulong native phase planning workflow with document evidence, code-map context, planning, and verification gates.
+description: Zhulong native phase planning workflow with task/source evidence, optional documents, code-map context, planning, and verification gates.
 ---
 
 # Zhulong Plan Phase
@@ -20,10 +20,10 @@ Treat the user text after `/zl-plan-phase` as the planning request.
 2. Read the generated `.planning/context/*plan*.md` packet and handoff.
 3. Confirm current project state in `.planning/STATE.md`, `.planning/ROADMAP.md`,
    and active phase or issue records.
-4. Query specification context before planning business behavior:
-   - `{{ZL_CLI}} docs query --target . "<domain keywords>"`
-   - use `{{ZL_CLI}} docs query --target . --rag "<question>"` only when the
-     configured document RAG backend is approved for these documents.
+4. Confirm requirements from the request, active records, source, and tests.
+   Query local documents only when relevant sources exist; use
+   `{{ZL_CLI}} docs query --target . --rag "<question>"` only when
+   `rag_backend` is not `none` and the backend is approved.
 5. Query code-map context for likely impact areas:
 
    ```bash

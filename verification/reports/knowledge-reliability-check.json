@@ -1,48 +1,48 @@
 {
-  "generated": "2026-07-10T03:49:39.809Z",
+  "generated": "2026-07-10T04:45:25.149Z",
   "status": "PASS",
-  "workRoot": "<tmp>/zhulong-knowledge-reliability-dGy9KU",
-  "projectRoot": "<tmp>/zhulong-knowledge-reliability-dGy9KU/project",
+  "workRoot": "<tmp>/zhulong-knowledge-reliability-Xfvcfc",
+  "projectRoot": "<tmp>/zhulong-knowledge-reliability-Xfvcfc/project",
   "evidence": [
-    "zl init --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force: exit 0",
-    "zl docs sync --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project: exit 0",
+    "zl init --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force: exit 0",
+    "zl docs sync --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project: exit 0",
     "knowledge docs sync status: found docs sync STALE_NEEDS_REFRESH",
     "knowledge docs sync light: found heavy refresh executed: no",
-    "zl docs query --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project KNOWLEDGE_RELIABILITY_SENTINEL_4301: exit 0",
+    "zl docs query --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project KNOWLEDGE_RELIABILITY_SENTINEL_4301: exit 0",
     "knowledge docs query writes result: found DOCS_QUERY_RESULT.md",
     "DOCS_QUERY_RESULT: found KNOWLEDGE_RELIABILITY_SENTINEL_4301",
-    "zl answer audit --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project: exit 0",
+    "zl answer audit --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project: exit 0",
     "knowledge answer audit: found answer audit PASS",
     "knowledge answer audit light: found heavy refresh executed: no",
     "ANSWER_AUDIT: found Status: PASS"
   ],
   "commandResults": [
     {
-      "command": "zl init --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force",
+      "command": "zl init --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project --template greenfield-app --name knowledge_reliability_fixture --mode new --force",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "write <tmp>/zhulong-knowledge-reliability-dGy9KU/project/AGENTS.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/PROJECT.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/REQUIREMENTS.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/ROADMAP.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/STATE.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/ARCHITECTURE.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/CONCERNS.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/CONVENTIONS.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/INTEGRATIONS.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/STACK.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/STRUCTURE.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/codebase/TESTING.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/config.json\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/context/README.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/debug/README.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/evidence/INDEX.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/evidence/README.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/graphs/README.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/knowledge/GLOSSARY.md\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/knowledge/RAG_SOURCES.md\nwrite <tmp>",
+      "stdout": "write <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/AGENTS.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/PROJECT.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/REQUIREMENTS.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/ROADMAP.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/STATE.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/ARCHITECTURE.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/CONCERNS.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/CONVENTIONS.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/INTEGRATIONS.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/STACK.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/STRUCTURE.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/codebase/TESTING.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/config.json\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/context/README.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/debug/README.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/evidence/INDEX.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/evidence/README.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/evidence/RECORD_TEMPLATE.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/graphs/README.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/issues/ISSUE_TEMPLATE.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/knowledge/DOC_RAG_STATUS.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/knowledge/GLOSSARY.md\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/knowledge/RAG_SOURCES.md\nwrite <tmp>",
       "stderr": ""
     },
     {
-      "command": "zl docs sync --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project",
+      "command": "zl docs sync --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 1\nmodified 0\nremoved 0\nambiguity audit PASS\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
+      "stdout": "docs sync STALE_NEEDS_REFRESH\nadded 1\nmodified 0\nremoved 0\nambiguity audit PASS\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/knowledge/DOCS_SYNC.md\nheavy refresh executed: no",
       "stderr": ""
     },
     {
-      "command": "zl docs query --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project KNOWLEDGE_RELIABILITY_SENTINEL_4301",
+      "command": "zl docs query --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project KNOWLEDGE_RELIABILITY_SENTINEL_4301",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "Document context query: KNOWLEDGE_RELIABILITY_SENTINEL_4301\n- docs/qa/QA-900.md:3 KNOWLEDGE_RELIABILITY_SENTINEL_4301 must be cited before completion.\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nanswer audit auto PASS\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/quality/ANSWER_AUDIT.md",
+      "stdout": "Document context query: KNOWLEDGE_RELIABILITY_SENTINEL_4301\n- docs/qa/QA-900.md:3 KNOWLEDGE_RELIABILITY_SENTINEL_4301 must be cited before completion.\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/knowledge/DOCS_QUERY_RESULT.md\nanswer audit auto PASS\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/quality/ANSWER_AUDIT.md",
       "stderr": ""
     },
     {
-      "command": "zl answer audit --target <tmp>/zhulong-knowledge-reliability-dGy9KU/project",
+      "command": "zl answer audit --target <tmp>/zhulong-knowledge-reliability-Xfvcfc/project",
       "status": 0,
       "expectedStatus": 0,
-      "stdout": "answer audit PASS\nsource .planning/knowledge/DOCS_QUERY_RESULT.md\ncitations 1\nwrite <tmp>/zhulong-knowledge-reliability-dGy9KU/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
+      "stdout": "answer audit PASS\nsource .planning/knowledge/DOCS_QUERY_RESULT.md\ncitations 1\nwrite <tmp>/zhulong-knowledge-reliability-Xfvcfc/project/.planning/quality/ANSWER_AUDIT.md\nheavy refresh executed: no",
       "stderr": ""
     }
   ],

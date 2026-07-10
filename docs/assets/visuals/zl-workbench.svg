@@ -26,7 +26,7 @@
   <circle cx="260" cy="160" r="160" fill="#66e8ff" opacity="0.08"/>
   <circle cx="940" cy="560" r="180" fill="#ffd166" opacity="0.07"/>
   <text x="64" y="84" fill="#eef4ff" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800">Zhulong Project Intelligence Kit</text>
-  <text x="64" y="124" fill="#a9b7c8" font-family="Inter, Arial, sans-serif" font-size="20">让 AI 在项目上下文、仕様依据、代码影响面和验证闭环里写代码</text>
+  <text x="64" y="124" fill="#a9b7c8" font-family="Inter, Arial, sans-serif" font-size="20">让 AI 在项目状态、按需依据、代码影响面和验证闭环里写代码</text>
 
   <g fill="#121922" stroke="#2b3a4d" stroke-width="2">
     <rect x="72" y="210" width="230" height="86" rx="8"/>
@@ -60,7 +60,7 @@
     <rect x="884" y="562" width="240" height="76" rx="8"/>
   </g>
   <g font-family="Inter, Arial, sans-serif">
-    <text x="916" y="178" fill="#eef4ff" font-size="21" font-weight="750">仕様 / QA / 議事録</text>
+    <text x="916" y="178" fill="#eef4ff" font-size="21" font-weight="750">需求 / QA / 决策记录</text>
     <text x="916" y="202" fill="#a9b7c8" font-size="15">.planning/knowledge</text>
     <text x="916" y="282" fill="#eef4ff" font-size="21" font-weight="750">GraphRAG / RAG</text>
     <text x="916" y="306" fill="#a9b7c8" font-size="15">index / query handoff</text>

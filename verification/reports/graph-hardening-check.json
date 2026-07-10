@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T03:49:40.051Z",
+  "generated": "2026-07-10T04:45:25.665Z",
   "status": "PASS",
-  "workRoot": "<tmp>/zhulong-graph-hardening-KypxQw",
-  "projectRoot": "<tmp>/zhulong-graph-hardening-KypxQw/project",
+  "workRoot": "<tmp>/zhulong-graph-hardening-vdpdpn",
+  "projectRoot": "<tmp>/zhulong-graph-hardening-vdpdpn/project",
   "evidence": [
     "zl graph freshness: found Freshness: fresh",
     "GRAPH_FRESHNESS: found State: fresh",
