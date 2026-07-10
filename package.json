@@ -196,7 +196,7 @@
     "node": ">=24 <25",
     "npm": ">=11.5.1 <12"
   },
-  "packageManager": "npm@11.12.1",
+  "packageManager": "npm@11.18.0",
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",
     "playwright": "1.61.1"

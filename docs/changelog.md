@@ -16,6 +16,7 @@ Command namespace: **`zl-*`**
 - 临时验证报告和截图退出 Git/npm 包，稳定摘要迁入 `verification/baselines/`；npm tarball 设压缩、解包和最大单文件 gate。
 - 新增文档密集型与非文档密集型双项目画像，机械证明 `rag none` 不初始化或建议 RAG。
 - GitHub 官方 action 更新到 `checkout v7`、`configure-pages v6`、`upload-pages-artifact v5` 与 `deploy-pages v5`，继续使用完整 commit SHA 固定供应链。
+- npm 固定到 11.18.0；release workflow 明确区分首次发布的一次性 bootstrap token 与后续 OIDC trusted publishing，首发后强制删除 secret、撤销 token。
 
 ## 2026-07-10：Apache 2.0、GitHub Pages 与公开仓库治理
 

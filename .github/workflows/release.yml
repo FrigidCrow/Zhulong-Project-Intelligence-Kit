@@ -30,7 +30,7 @@ jobs:
           package-manager-cache: false
 
       - name: Pin npm 11
-        run: npm install --global npm@11.12.1
+        run: npm install --global npm@11.18.0
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
@@ -42,6 +42,12 @@ jobs:
         env:
           ZL_RELEASE_REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
         run: npm run verify:release-readiness
+
+      - name: Select npm authentication mode
+        id: npm-auth
+        env:
+          HAS_NPM_BOOTSTRAP_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN != '' }}
+        run: node scripts/select-npm-auth-mode.mjs
 
       - name: Run release gates
         run: npm run verify:release
@@ -59,8 +65,23 @@ jobs:
         with:
           subject-path: dist/*.tgz
 
+      - name: First publish with one-time bootstrap token
+        if: ${{ steps.npm-auth.outputs.mode == 'bootstrap' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
+        run: npm publish dist/*.tgz --access public --provenance
+
       - name: Publish with npm trusted publishing
+        if: ${{ steps.npm-auth.outputs.mode == 'trusted' }}
         run: npm publish dist/*.tgz --access public
+
+      - name: Record bootstrap cleanup requirement
+        if: ${{ steps.npm-auth.outputs.mode == 'bootstrap' }}
+        run: |
+          echo '## 首发后的强制收口' >> "$GITHUB_STEP_SUMMARY"
+          echo '1. 在 npm 为 zhulong-kit 配置 GitHub Actions trusted publisher：release.yml / npm environment / allow publish。' >> "$GITHUB_STEP_SUMMARY"
+          echo '2. 删除 GitHub environment secret NPM_BOOTSTRAP_TOKEN。' >> "$GITHUB_STEP_SUMMARY"
+          echo '3. 撤销 npm 上对应的一次性 granular token。' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Append release metadata
         env:
