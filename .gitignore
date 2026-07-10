@@ -2,6 +2,6 @@
 node_modules/
 .zl-tmp/
 .zl-audit/
-.ci-artifacts/
+ci-artifacts/
 dist/
 *.log
