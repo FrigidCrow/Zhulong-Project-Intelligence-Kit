@@ -2,27 +2,32 @@
 
 ## 基线身份
 
-- 名称：`engineering-consolidation-start`
+- 名称：`v0.1.0-engineering-consolidation-candidate`
 - 日期：2026-07-10
-- 来源 commit：`36d2fe20e651b06a03d00b477d46c382b9c638b8`
+- 来源 commit：`5043f6d04ea20e4cb520d4e9d94e95f99de7b8e2`
 - 状态：PASS
-- Node.js：24.14.0
+- Node.js：24（远端 CI）
 - npm：11.12.1
 
 ## 已证明结果
 
-- `npm run verify:quality`：PASS。
-- `npm run verify:full-command-surface`：PASS，74 / 74。
-- GitHub Actions CI：PASS，run `29070642695`。
+- `npm run verify:release`：PASS，40 / 40，0 skipped。
+- `npm test`：PASS，25 / 25。
+- integration：PASS 132，FAIL 0，WARN 1。
+- 全命令面：PASS，74 / 74；npm bin 入口 75 个。
+- 双项目画像：PASS，文档密集型与非文档密集型 `rag none` 各 1 套。
+- tarball 安装 smoke：PASS，验证 `zhulong`、`zl`、`zl-init` 与 `zl-codebase-scan`。
+- GitHub Actions：PASS，run `29082499192`；Ubuntu/macOS smoke 与 Ubuntu quality 均通过。
+- CodeQL：PASS，run `29082497034`；JavaScript/TypeScript、GitHub Actions 与聚合检查均通过。
 - 运行时 npm 依赖：0。
 
-## 收口前体积
+## 分发体积
 
-- npm 压缩包：2,152,246 bytes。
-- npm 解包体积：2,577,433 bytes。
-- Git pack：约 170.78 MiB。
-
-这些体积是工程收口开始时的对照值，不是目标值。后续稳定基线应记录优化后的 npm 包、Git pack、双项目画像和跨平台结果。
+- npm 压缩包：467,089 bytes。
+- npm 解包体积：900,274 bytes。
+- npm 文件数：124。
+- 当前远端 Git 历史仍约 170.78 MiB。
+- 隔离历史瘦身演练后的 Git pack：约 2.59 MiB；远端替换仍需所有者单独确认。
 
 ## 证据保存策略
 

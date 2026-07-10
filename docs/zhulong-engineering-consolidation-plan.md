@@ -1,6 +1,6 @@
 # Zhulong Kit 工程收口与下一阶段优化计划
 
-> 计划状态：执行中（M0-M6 已完成；M7 本地发布审计通过，远端 CI/Pages、npm 发布与远端历史替换待完成）
+> 计划状态：执行中（M0-M6 已完成；M7 本地与远端 CI 审计通过，Pages 上线、npm 发布与远端历史替换待完成）
 > 制定日期：2026-07-10
 > 适用范围：`v0.1.0` 首次公开发布前至 `v0.2.0`
 > 历史依据：[截图提取稿与本地改造计划](zhulong-extraction-and-local-plan.md)
@@ -61,7 +61,7 @@ Zhulong 当前不缺新的产品能力。下一阶段应暂停扩充命令面，
 - [x] npm 包不包含验证截图、临时报告、图标候选和高分辨率设计源文件。
 - [x] 文档密集型和非文档密集型两套 fixture 均完成核心工作流验证。
 - [x] `rag none` fixture 不初始化 RAG，也不会收到错误的 RAG 建议。
-- [ ] Ubuntu 完整质量流程通过，macOS 核心 smoke test 通过。
+- [x] Ubuntu 完整质量流程通过，macOS 核心 smoke test 通过。
 - [x] CodeQL、Dependabot security updates、secret scanning 和 push protection 已配置。
 - [x] Pages 构建产物可直接显示当前版本或短 commit SHA；线上部署待合并到 `main` 后核验。
 - [ ] 首个 release 可从 npm 安装并运行 `zhulong --help`、`zl --help` 和一条核心命令。
@@ -442,7 +442,7 @@ Git 历史重写不与普通 PR 混合。它应作为独立维护窗口执行，
 - [ ] M1.1：在临时 clone 演练 Git 历史瘦身并提交体积对比，等待所有者确认。
 - [x] PR-04：启用 CodeQL 和仓库安全能力。
 - [x] PR-05：增加 macOS 核心 smoke matrix，记录 Windows 决策。
-- [ ] 完成 `v0.1.0` 发布就绪审查。
+- [x] 完成 `v0.1.0` 发布就绪审查；正式发布仍待所有者确认。
 
 ## 11. 官方实践参考
 

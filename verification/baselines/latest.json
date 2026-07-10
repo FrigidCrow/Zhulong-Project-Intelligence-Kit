@@ -1,18 +1,36 @@
 {
   "schemaVersion": "zhulong-verification-baseline.v1",
-  "baseline": "engineering-consolidation-start",
+  "baseline": "v0.1.0-engineering-consolidation-candidate",
   "date": "2026-07-10",
-  "sourceCommit": "36d2fe20e651b06a03d00b477d46c382b9c638b8",
+  "sourceCommit": "5043f6d04ea20e4cb520d4e9d94e95f99de7b8e2",
   "status": "PASS",
   "toolchain": {
-    "node": "24.14.0",
+    "node": "24",
     "npm": "11.12.1"
   },
   "checks": [
     {
-      "id": "quality",
-      "command": "npm run verify:quality",
-      "status": "PASS"
+      "id": "release",
+      "command": "npm run verify:release",
+      "status": "PASS",
+      "passed": 40,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "unit",
+      "command": "npm test",
+      "status": "PASS",
+      "passed": 25,
+      "total": 25
+    },
+    {
+      "id": "integration",
+      "command": "npm run verify:integration",
+      "status": "PASS",
+      "passed": 132,
+      "failed": 0,
+      "warnings": 1
     },
     {
       "id": "full-command-surface",
@@ -22,18 +40,37 @@
       "total": 74
     },
     {
+      "id": "project-profiles",
+      "command": "npm run verify:project-profiles",
+      "status": "PASS",
+      "profiles": 2
+    },
+    {
+      "id": "install-smoke",
+      "command": "npm run verify:install-smoke",
+      "status": "PASS"
+    },
+    {
       "id": "github-ci",
       "status": "PASS",
-      "run": "29070642695"
+      "run": "29082499192",
+      "platforms": ["ubuntu-latest", "macos-latest"]
+    },
+    {
+      "id": "codeql",
+      "status": "PASS",
+      "run": "29082497034"
     }
   ],
   "metrics": {
     "logicalCommands": 74,
     "npmBins": 75,
     "runtimeDependencies": 0,
-    "npmPackedBytes": 2152246,
-    "npmUnpackedBytes": 2577433,
-    "gitPackMiB": 170.78
+    "npmPackedBytes": 467089,
+    "npmUnpackedBytes": 900274,
+    "npmFiles": 124,
+    "currentGitPackMiB": 170.78,
+    "rehearsedFilteredGitPackMiB": 2.59
   },
   "artifactPolicy": {
     "stableSummary": "verification/baselines/",
