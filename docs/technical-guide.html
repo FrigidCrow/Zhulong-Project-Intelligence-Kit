@@ -22,9 +22,9 @@
 
   <main id="main">
     <section class="page-title">
-      <p class="eyebrow">Technical Guide</p>
-      <h1>了解 Zhulong 架构。</h1>
-      <p>这是一份面向接手者的技术教程，逐步剖析 Zhulong 如何把 workflow、文档 RAG、Graphify 和 evidence loop 接到 AI 开发过程里。</p>
+      <p class="eyebrow">技术手册</p>
+      <h1>Zhulong 如何工作。</h1>
+      <p>从命令路由、本地制品到 completion gate，逐层理解 workflow、文档 RAG、Graphify 和 evidence loop。</p>
     </section>
 
     <section class="section">
@@ -32,11 +32,10 @@
         <h2>先用三张图建立技术模型。</h2>
         <p>技术教程后面会展开细节，但接手者最先需要知道三件事：Zhulong 在哪里、文件落在哪里、生命周期怎么走。</p>
       </div>
-      <div class="console-mock" aria-label="Zhulong 架构探索器">
-        <div class="window-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span>architecture-explorer / local control plane</span>
-          <span class="status-pill" style="margin-left:auto">本地制品</span>
+      <div class="route-map" aria-label="Zhulong 架构路径">
+        <div class="route-map-header">
+          <span>本地控制面</span>
+          <span class="status-pill">制品留在项目内</span>
         </div>
         <div class="stage-flow architecture-flow">
           <code class="active">Runtime Packs</code>
@@ -107,8 +106,8 @@
           <p>Zhulong 是目标项目旁边的一层本地 intelligence layer。它不搬动源码，不替代 IDE，不替代 AI runtime。它负责组织上下文、证据、代码地图和完成前检查。</p>
           <div class="grid two">
             <div class="panel panel-pad diagram">
-              <div class="node"><strong>用户 / runtime</strong><br>调用 `zl-debug`、`zl-plan-phase`、`/zl-debug`。</div>
-              <div class="node"><strong>Zhulong CLI</strong><br>读取 `.planning/config.json`，写 context、handoff、state。</div>
+              <div class="node"><strong>用户 / runtime</strong><br>调用 <code>zl-debug</code>、<code>zl-plan-phase</code>、<code>/zl-debug</code>。</div>
+              <div class="node"><strong>Zhulong CLI</strong><br>读取 <code>.planning/config.json</code>，写 context、handoff、state。</div>
               <div class="node"><strong>Adapters</strong><br>调用文档扫描、GraphRAG/RAG、Graphify、evidence。</div>
               <div class="node"><strong>Guard</strong><br>检查本地 artifact，阻断未完成工作。</div>
             </div>
@@ -166,7 +165,7 @@ zl command
 
         <section id="install" class="page-section">
           <h2>3. 接入目标项目</h2>
-          <p>Zhulong 接入后会在目标项目根目录增加 `AGENTS.md`、`project.manifest.yml`、`.planning/`。不会移动原来的 `src/`、`tests/`、`docs/`。</p>
+          <p>Zhulong 接入后会在目标项目根目录增加 <code>AGENTS.md</code>、<code>project.manifest.yml</code>、<code>.planning/</code>。不会移动原来的 <code>src/</code>、<code>tests/</code>、<code>docs/</code>。</p>
           <pre class="code-block"><code>target-project/
   src/
   tests/
@@ -220,7 +219,7 @@ zl-codebase-status --target "$PWD"</code></pre>
                 <tr><td><code>implementation</code></td><td>手动标记实现 gate。</td><td>确认改动已实施。</td></tr>
                 <tr><td><code>verification</code></td><td>手动标记验证 gate。</td><td>确认测试或检查已执行。</td></tr>
                 <tr><td><code>evidence</code></td><td>存在正式 evidence record。</td><td>结论必须可审计。</td></tr>
-                <tr><td><code>writeback</code></td><td>issue/debug/phase 中有 `Zhulong Evidence Writeback`。</td><td>证据要回到工作记录里。</td></tr>
+                <tr><td><code>writeback</code></td><td>issue/debug/phase 中有 <code>Zhulong Evidence Writeback</code>。</td><td>证据要回到工作记录里。</td></tr>
               </tbody>
             </table>
           </div>
@@ -258,19 +257,19 @@ ollama pull bge-m3</code></pre>
   }
 }</code></pre>
           <div class="diagram">
-            <div class="node">`zl-docs-scan` 写 `RAG_SOURCES.md` 和 `DOC_RAG_STATUS.md`。</div>
-            <div class="node">`zl-docs-extract` 抽取 md/txt/csv/pdf/docx/xlsx，写 `DOCUMENT_INDEX.json`。</div>
-            <div class="node">`zl-docs-sync` 默认先 diff 再 extract，发现变更写 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG。</div>
-            <div class="node">`zl-docs-citations` 写 source citation；`zl-answer-audit` 审计最近一次 docs/RAG 回答是否有依据。</div>
-            <div class="node">`zl-citation-audit` 检查 citation 是否指向真实源文件。</div>
-            <div class="node">`zl-rag-init-local` 写 `graphrag-workspace/settings.yaml` 和 `LOCAL_RAG_STATUS.md`。</div>
-            <div class="node">`zl-docs-query --rag` 先过隐私审计，再执行本地 GraphRAG query command。</div>
+            <div class="node"><code>zl-docs-scan</code> 写 <code>RAG_SOURCES.md</code> 和 <code>DOC_RAG_STATUS.md</code>。</div>
+            <div class="node"><code>zl-docs-extract</code> 抽取 md/txt/csv/pdf/docx/xlsx，写 <code>DOCUMENT_INDEX.json</code>。</div>
+            <div class="node"><code>zl-docs-sync</code> 默认先 diff 再 extract，发现变更写 <code>STALE_NEEDS_REFRESH</code>，不自动重建 GraphRAG。</div>
+            <div class="node"><code>zl-docs-citations</code> 写 source citation；<code>zl-answer-audit</code> 审计最近一次 docs/RAG 回答是否有依据。</div>
+            <div class="node"><code>zl-citation-audit</code> 检查 citation 是否指向真实源文件。</div>
+            <div class="node"><code>zl-rag-init-local</code> 写 <code>graphrag-workspace/settings.yaml</code> 和 <code>LOCAL_RAG_STATUS.md</code>。</div>
+            <div class="node"><code>zl-docs-query --rag</code> 先过隐私审计，再执行本地 GraphRAG query command。</div>
           </div>
         </section>
 
         <section id="graph" class="page-section">
           <h2>6. Graphify 机制</h2>
-          <p>Zhulong 不重写 Graphify。Zhulong 通过配置执行 Graphify，然后把 `graphify-out/` 中的结果同步到 `.planning/graphs/`，供 workflow guard 和 query 使用。</p>
+          <p>Zhulong 不重写 Graphify。Zhulong 通过配置执行 Graphify，然后把 <code>graphify-out/</code> 中的结果同步到 <code>.planning/graphs/</code>，供 workflow guard 和 query 使用。</p>
           <pre class="code-block"><code>.planning/config.json
 {
   "code_map": {
@@ -279,17 +278,17 @@ ollama pull bge-m3</code></pre>
   }
 }</code></pre>
           <div class="diagram">
-            <div class="node">`zl-graph-build --run` 执行 `update_command`。</div>
-            <div class="node">读取 `graphify-out/graph.json` 和 `graphify-out/GRAPH_REPORT.md`。</div>
-            <div class="node">同步到 `.planning/graphs/graph.json` 和 `GRAPH_REPORT.md`。</div>
-            <div class="node">`zl-graph-query`、`zl-graph-impact`、`zl-graph-risk`、`zl-graph-diff` 读取 `.planning/graphs/`。</div>
-            <div class="node">`zl-graph-freshness --strict` 在图谱 stale 时阻断完成证据。</div>
+            <div class="node"><code>zl-graph-build --run</code> 执行 <code>update_command</code>。</div>
+            <div class="node">读取 <code>graphify-out/graph.json</code> 和 <code>graphify-out/GRAPH_REPORT.md</code>。</div>
+            <div class="node">同步到 <code>.planning/graphs/graph.json</code> 和 <code>GRAPH_REPORT.md</code>。</div>
+            <div class="node"><code>zl-graph-query</code>、<code>zl-graph-impact</code>、<code>zl-graph-risk</code>、<code>zl-graph-diff</code> 读取 <code>.planning/graphs/</code>。</div>
+            <div class="node"><code>zl-graph-freshness --strict</code> 在图谱 stale 时阻断完成证据。</div>
           </div>
         </section>
 
         <section id="runtime" class="page-section">
           <h2>7. Runtime command pack</h2>
-          <p>Runtime pack 只是让不同 AI 工具知道如何调用 Zhulong。核心命令仍然是本地 `zl` CLI。</p>
+          <p>Runtime pack 只是让不同 AI 工具知道如何调用 Zhulong。核心命令仍然是本地 <code>zl</code> CLI。</p>
           <div class="table-wrap">
             <table>
               <thead><tr><th>Runtime</th><th>安装目录</th><th>文件类型</th><th>内部调用</th></tr></thead>
@@ -315,7 +314,7 @@ zl-runtime-status --runtime codex --dest ~/.codex/skills</code></pre>
   --result "passed" \
   --source "docs/qa/QA-042.md,.planning/graphs/GRAPH_REPORT.md" \
   --writeback .planning/issues/CR-017.md</code></pre>
-          <p>这会创建 evidence record，并在目标 issue 中追加 `Zhulong Evidence Writeback`。Guard 的 `evidence` 和 `writeback` gate 都依赖它。</p>
+          <p>这会创建 evidence record，并在目标 issue 中追加 <code>Zhulong Evidence Writeback</code>。Guard 的 <code>evidence</code> 和 <code>writeback</code> gate 都依赖它。</p>
         </section>
 
         <section id="quality" class="page-section">
@@ -340,7 +339,7 @@ zl-trace-query --target "$PWD" "代理承認"
 zl-trace-audit --target "$PWD"</code></pre>
             </div>
           </div>
-          <p>核心产物是 `.planning/quality/` 和 `.planning/trace/`。以后接可视化 QA 时，这两类文件会成为“仕様依据 -> 代码影响面 -> 测试 -> evidence”的数据源。</p>
+          <p>核心产物是 <code>.planning/quality/</code> 和 <code>.planning/trace/</code>。以后接可视化 QA 时，这两类文件会成为“仕様依据 -> 代码影响面 -> 测试 -> evidence”的数据源。</p>
           <div class="panel panel-pad">
             <h3>MVP4.0 Knowledge Reliability Lite</h3>
             <p>Knowledge Reliability Lite 把文档更新和回答依据做成默认轻量流程。它不会每次都重建 GraphRAG，也不会在 public workflow 里自动审计，只会在有最近 query 且缺少 answer audit 时提示下一条命令。</p>
@@ -350,7 +349,7 @@ zl-answer-audit --target "$PWD"
 
 # 只有明确需要重建本地 GraphRAG index 时
 zl-docs-sync --target "$PWD" --index</code></pre>
-            <p>核心产物是 `.planning/knowledge/DOCS_SYNC.md`、`.planning/knowledge/DOCS_QUERY_RESULT.md` 和 `.planning/quality/ANSWER_AUDIT.md`。`zl-answer-audit --target "$PWD"` 会自动读取最近一次 RAG/docs query 结果；`--answer` 只作为调试入口。</p>
+            <p>核心产物是 <code>.planning/knowledge/DOCS_SYNC.md</code>、<code>.planning/knowledge/DOCS_QUERY_RESULT.md</code> 和 <code>.planning/quality/ANSWER_AUDIT.md</code>。<code>zl-answer-audit --target "$PWD"</code> 会自动读取最近一次 RAG/docs query 结果；<code>--answer</code> 只作为调试入口。</p>
           </div>
           <div class="panel panel-pad">
             <h3>MVP3.5 执行预算</h3>
@@ -362,20 +361,20 @@ zl-refresh-run --target "$PWD" --graph
 zl-mode-status --target "$PWD"
 zl-mode-set --target "$PWD" docs-reference
 zl-mode-set --target "$PWD" docs-strict</code></pre>
-            <p>核心产物是 `.planning/refresh/REFRESH_STATE.json`、`PREFLIGHT.md`、`REFRESH_PLAN.md`、`REFRESH_RUN.md` 和 `MODE.md`。看到 `behind-unrelated` 时，说明落后的 commit 没改到文档源或代码地图相关路径，可以先跳过刷新。</p>
+            <p>核心产物是 <code>.planning/refresh/REFRESH_STATE.json</code>、<code>PREFLIGHT.md</code>、<code>REFRESH_PLAN.md</code>、<code>REFRESH_RUN.md</code> 和 <code>MODE.md</code>。看到 <code>behind-unrelated</code> 时，说明落后的 commit 没改到文档源或代码地图相关路径，可以先跳过刷新。</p>
           </div>
         </section>
 
         <section id="policy" class="page-section">
           <h2>10. Policy mode</h2>
-          <p>Policy mode 是完成前的横向审计：local-only、citation、golden、trace、graph freshness、license 必须统一给出四态结果。它不是聊天建议，而是写入 `.planning/policies/` 的本地报告。</p>
+          <p>Policy mode 是完成前的横向审计：local-only、citation、golden、trace、graph freshness、license 必须统一给出四态结果。它不是聊天建议，而是写入 <code>.planning/policies/</code> 的本地报告。</p>
           <pre class="code-block"><code>zl-policy-list --target "$PWD"
 zl-policy-explain --target "$PWD" privacy.local_only
 zl-policy-check --target "$PWD" --strict
 zl-policy-lock --target "$PWD"
 zl-policy-verify --target "$PWD"
 zl-policy-diff --target "$PWD"</code></pre>
-          <div class="callout">`--strict` 和 `docs-strict` 会要求 offline lock。保密项目建议先跑 `zl-offline-lock --target "$PWD"`，再用 `zl-policy-lock` 固化当前本地策略。</div>
+          <div class="callout"><code>--strict</code> 和 <code>docs-strict</code> 会要求 offline lock。保密项目建议先跑 <code>zl-offline-lock --target "$PWD"</code>，再用 <code>zl-policy-lock</code> 固化当前本地策略。</div>
           <div class="table-wrap">
             <table>
               <thead><tr><th>状态</th><th>语义</th><th>profile 行为</th></tr></thead>
@@ -387,8 +386,8 @@ zl-policy-diff --target "$PWD"</code></pre>
               </tbody>
             </table>
           </div>
-          <p>`zl-policy-lock` 生成稳定 snapshot 和 SHA-256 hash；`zl-policy-verify` 重新生成 snapshot 并做轻量 checks；`zl-policy-diff` 输出字段级差异。三条命令都必须输出 `heavy refresh executed: no`，不会触发 GraphRAG index 或 Graphify build。</p>
-          <p>当你不知道该跑什么命令时，可以用 `zl-help-skills` 让 Zhulong 根据场景推荐命令组：</p>
+          <p><code>zl-policy-lock</code> 生成稳定 snapshot 和 SHA-256 hash；<code>zl-policy-verify</code> 重新生成 snapshot 并做轻量 checks；<code>zl-policy-diff</code> 输出字段级差异。三条命令都必须输出 <code>heavy refresh executed: no</code>，不会触发 GraphRAG index 或 Graphify build。</p>
+          <p>当你不知道该跑什么命令时，可以用 <code>zl-help-skills</code> 让 Zhulong 根据场景推荐命令组：</p>
           <pre class="code-block"><code>zl-help-skills --target "$PWD" "文档更新后想确认影响面和完成前检查"</code></pre>
         </section>
 
@@ -396,12 +395,12 @@ zl-policy-diff --target "$PWD"</code></pre>
           <h2>11. 保密边界</h2>
           <div class="callout">Zhulong CLI 本身不主动上传数据。默认 <code>reference + rag none</code> 不需要 GraphRAG、模型或外部 API key；<code>strict + rag local</code> 也使用本地 Ollama。风险来自你把 RAG/Graphify/runtime 配置改成外部服务。</div>
           <ul>
-            <li>审查 `.planning/config.json` 中的 `index_command`、`query_command`、`update_command`。</li>
-            <li>默认保密项目使用 `zl-rag-init-local`、Ollama、本地 embedding 和 LanceDB。</li>
-            <li>运行 `zl-offline-lock --target "$PWD"`、`zl-privacy-audit --target "$PWD" --strict`、`zl-outbound-audit --target "$PWD"`，确认没有外部 endpoint、外部 provider、API key 或网络命令。</li>
-            <li>不要把 `.planning/`、`graphify-out/`、`graphrag-workspace/` 提交到公开仓库。</li>
+            <li>审查 <code>.planning/config.json</code> 中的 <code>index_command</code>、<code>query_command</code>、<code>update_command</code>。</li>
+            <li>默认保密项目使用 <code>zl-rag-init-local</code>、Ollama、本地 embedding 和 LanceDB。</li>
+            <li>运行 <code>zl-offline-lock --target "$PWD"</code>、<code>zl-privacy-audit --target "$PWD" --strict</code>、<code>zl-outbound-audit --target "$PWD"</code>，确认没有外部 endpoint、外部 provider、API key 或网络命令。</li>
+            <li>不要把 <code>.planning/</code>、<code>graphify-out/</code>、<code>graphrag-workspace/</code> 提交到公开仓库。</li>
           </ul>
-          <p>不要把 `graphrag-workspace/settings.yaml` 中的 `model_provider` 改成 `openai`、`deepseek`、`azure` 等外部 provider，也不要把 `api_base` 改成公网 URL。GraphRAG index 会处理原始文档和 text units，query 会把问题和检索上下文交给配置的模型；改成外部 provider 就可能造成资料外泄。</p>
+          <p>不要把 <code>graphrag-workspace/settings.yaml</code> 中的 <code>model_provider</code> 改成 <code>openai</code>、<code>deepseek</code>、<code>azure</code> 等外部 provider，也不要把 <code>api_base</code> 改成公网 URL。GraphRAG index 会处理原始文档和 text units，query 会把问题和检索上下文交给配置的模型；改成外部 provider 就可能造成资料外泄。</p>
         </section>
 
         <section id="verify" class="page-section">
@@ -438,7 +437,7 @@ node scripts/run-full-test-plan.mjs --run-id round-2
 # 外部 GraphRAG 验证，只能在允许外发脱敏 fixture 时使用
 GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
           <p><code>verify:init-policy</code> 验证初始化策略；<code>verify:ambiguity</code>、<code>verify:structure</code>、<code>verify:answer-audit</code> 验证机械质量审计与自动折叠；<code>verify:guardrails</code> 验证 deny 和上下文效率边界。<code>verify:docs-sync</code> 证明默认同步不触发重刷新，只有 <code>--index</code> 才执行索引。<code>verify:cockpit-build</code> 覆盖稳定 view model、Quality &amp; Token Metrics、安全复制、fallback 图和大图聚合预览。<code>verify:full-command-surface</code> 执行 74 个公开逻辑命令入口；<code>verify:skills-usability</code> 验证三种运行环境的 33 个 skill/prompt；<code>verify:docs-completeness</code> 验证命令手册 74 个详情锚点和 README 跳转；<code>verify:quality-closure</code> 是最终聚合门禁。</p>
-          <p>`dev:audit:full` 是维护者内部机制：它在 `.zl-audit/latest/` 生成 scorecard、命令/skills/feature 分表、Zhulong / GSD / Superpowers 对标、时间拆分和 token 统计边界，并把可提交摘要写到 `verification/reports/developer-audit-summary.md`。`Benchmark comparison` 是所有对标行的保守平均，不是 Zhulong 单体分；本轮 Zhulong 产品平均为 90 / A，scorecard 里的 87 反映了 graph-lite 低成本路径、full-local 无文档正确阻断、GSD / Superpowers replay 可信度上限。默认 benchmark 是 deterministic，不调用外部 AI，所以 token 写 `TOKEN_USAGE_UNAVAILABLE`；GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`，记录 instruction pack hash、fixture、代码改修、测试和证据文件。真实 Codex 子进程必须显式设置 `ZHULONG_AUDIT_REAL_AI=1`，并使用 `--ephemeral --ignore-rules --json`；需要完全不读用户配置时再加 `ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG=1`。本轮真实子进程已经尝试执行，但当前账号不支持默认 `gpt-5.3-codex` 模型，三个 subprocess 均在启动阶段失败，因此没有 usage events，token 没有数字化。</p>
+          <p><code>dev:audit:full</code> 是维护者内部机制：它在 <code>.zl-audit/latest/</code> 生成 scorecard、命令/skills/feature 分表、Zhulong / GSD / Superpowers 对标、时间拆分和 token 统计边界，并把可提交摘要写到 <code>verification/reports/developer-audit-summary.md</code>。<code>Benchmark comparison</code> 是所有对标行的保守平均，不是 Zhulong 单体分；本轮 Zhulong 产品平均为 90 / A，scorecard 里的 87 反映了 graph-lite 低成本路径、full-local 无文档正确阻断、GSD / Superpowers replay 可信度上限。默认 benchmark 是 deterministic，不调用外部 AI，所以 token 写 <code>TOKEN_USAGE_UNAVAILABLE</code>；GSD / Superpowers 使用本机真实 skill/plugin 文件做 <code>skill-pack-backed-replay</code>，记录 instruction pack hash、fixture、代码改修、测试和证据文件。真实 Codex 子进程必须显式设置 <code>ZHULONG_AUDIT_REAL_AI=1</code>，并使用 <code>--ephemeral --ignore-rules --json</code>；需要完全不读用户配置时再加 <code>ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG=1</code>。本轮真实子进程已经尝试执行，但当前账号不支持默认 <code>gpt-5.3-codex</code> 模型，三个 subprocess 均在启动阶段失败，因此没有 usage events，token 没有数字化。</p>
         </section>
 
         <section id="lifecycle" class="page-section">
@@ -447,7 +446,7 @@ GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag<
           <div class="tutorial-steps">
             <div class="tutorial-step">
               <h3>新项目：先建工作台，再让代码和文档长出来</h3>
-              <p>新项目可以没有大量源码，但也要从第一天开始写 `.planning/`。这样 AI 的计划、讨论、验证会自然沉淀。</p>
+              <p>新项目可以没有大量源码，但也要从第一天开始写 <code>.planning/</code>。这样 AI 的计划、讨论、验证会自然沉淀。</p>
               <pre class="code-block"><code>zl-init --target "$PWD" --template greenfield-app --name order_app --mode new --doc-policy reference --rag none
 zl-codebase-scan --target "$PWD"
 zl-docs-sync --target "$PWD"
@@ -455,14 +454,14 @@ zl-new-milestone --target "$PWD" "MVP1 注文管理"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>既存项目：初始化后立刻跑 codebase scan</h3>
-              <p>既存项目的风险在于 AI 对旧代码影响面不了解。`zl-init` 只叠加目录，`zl-codebase-scan` 才真正建立代码基线。</p>
+              <p>既存项目的风险在于 AI 对旧代码影响面不了解。<code>zl-init</code> 只叠加目录，<code>zl-codebase-scan</code> 才真正建立代码基线。</p>
               <pre class="code-block"><code>zl-init --target "$PWD" --template brownfield-monorepo --name legacy_order --mode existing --doc-policy reference --rag none
 zl-codebase-scan --target "$PWD"
 zl-codebase-status --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>第一次导入文档：sync、query、audit</h3>
-              <p>把 仕様書、QA、議事録、画面设计放到项目文档目录后，优先用 `zl-docs-sync` 建立文档索引，再查询并审计回答依据。</p>
+              <p>把 仕様書、QA、議事録、画面设计放到项目文档目录后，优先用 <code>zl-docs-sync</code> 建立文档索引，再查询并审计回答依据。</p>
               <pre class="code-block"><code>zl-docs-scan --target "$PWD"
 zl-docs-sync --target "$PWD"
 zl-docs-query --target "$PWD" "承認 上限 仕様"
@@ -470,7 +469,7 @@ zl-answer-audit --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>文档更新：不要只改文件，要刷新 Zhulong 的知识层</h3>
-              <p>新增 QA、更新議事録、替换仕様書后，先做 lightweight sync。默认只标记 `STALE_NEEDS_REFRESH`，不自动重建 GraphRAG；只有明确需要新索引时才加 `--index`。</p>
+              <p>新增 QA、更新議事録、替换仕様書后，先做 lightweight sync。默认只标记 <code>STALE_NEEDS_REFRESH</code>，不自动重建 GraphRAG；只有明确需要新索引时才加 <code>--index</code>。</p>
               <pre class="code-block"><code>zl-preflight --target "$PWD"
 zl-refresh-plan --target "$PWD"
 zl-docs-sync --target "$PWD"
@@ -491,7 +490,7 @@ zl-graph-risk --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
               <h3>任务闭环：workflow、人工 gate、evidence、completion</h3>
-              <p>Zhulong 严格流程不是靠一句 prompt，而是靠状态文件和 gate 检查。public workflow 会自动写 `WORKFLOW_FACADE.md`，把 preflight、policy、docs、graph、evidence 和下一步命令汇总给 AI，但不会自动重建 RAG 或 Graphify。实现后必须写 evidence 并回写工作记录。</p>
+              <p>Zhulong 严格流程不是靠一句 prompt，而是靠状态文件和 gate 检查。public workflow 会自动写 <code>WORKFLOW_FACADE.md</code>，把 preflight、policy、docs、graph、evidence 和下一步命令汇总给 AI，但不会自动重建 RAG 或 Graphify。实现后必须写 evidence 并回写工作记录。</p>
               <pre class="code-block"><code>zl-debug --target "$PWD" "代理承認上限が仕様と違う"
 zl-workflow-audit --target "$PWD"
 zl-workflow-continue --target "$PWD" --gate plan --evidence "PLAN.md reviewed"
@@ -507,11 +506,11 @@ zl-completion-check --target "$PWD"</code></pre>
 
         <section id="internals" class="page-section">
           <h2>14. CLI 内部机制</h2>
-          <p>Zhulong 的 runtime 适配不是为每个 AI 工具写一套业务逻辑，而是让它们统一落到本地 CLI。真正的命令路由在 `bin/zl.mjs`。</p>
+          <p>Zhulong 的 runtime 适配不是为每个 AI 工具写一套业务逻辑，而是让它们统一落到本地 CLI。真正的命令路由在 <code>bin/zl.mjs</code>。</p>
           <div class="grid two">
             <div class="panel panel-pad">
               <h3>命令 alias</h3>
-              <p>`zl-debug`、`zl-plan-phase` 这类公开命令会被路由到内部 workflow。这样以后即使替换 GSD 思路，也不需要暴露 `gsd-*`。</p>
+              <p><code>zl-debug</code>、<code>zl-plan-phase</code> 这类公开命令会被路由到内部 workflow。这样以后即使替换 GSD 思路，也不需要暴露 <code>gsd-*</code>。</p>
               <pre class="code-block"><code>zl-debug
   -> workflow run debug
 
@@ -526,13 +525,13 @@ zl-cockpit-build
             </div>
             <div class="panel panel-pad">
               <h3>Runtime command pack</h3>
-              <p>Codex、Claude Code、Copilot 只安装不同格式的“调用说明”。它们不会各自实现 Zhulong，只会引导 AI 调用同一套 `zl-*`。</p>
+              <p>Codex、Claude Code、Copilot 只安装不同格式的“调用说明”。它们不会各自实现 Zhulong，只会引导 AI 调用同一套 <code>zl-*</code>。</p>
               <pre class="code-block"><code>Codex: ~/.codex/skills/.../SKILL.md
 Claude Code: ~/.claude/skills/.../SKILL.md
 Copilot: .github/prompts/*.prompt.md</code></pre>
             </div>
           </div>
-          <div class="callout">所以“适配 Codex / Claude / Copilot”的本质是命令入口适配，不是三套功能分叉。可信能力仍以本地 CLI 和 `.planning/` 产物为准。</div>
+          <div class="callout">所以“适配 Codex / Claude / Copilot”的本质是命令入口适配，不是三套功能分叉。可信能力仍以本地 CLI 和 <code>.planning/</code> 产物为准。</div>
         </section>
 
         <section id="surface" class="page-section">
@@ -542,7 +541,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
             <table>
               <thead><tr><th>层</th><th>命令</th><th>验证关注点</th></tr></thead>
               <tbody>
-                <tr><td>初始化</td><td><code>zl</code>, <code>zl-init</code>, <code>zl-verify</code>, <code>zl-map</code></td><td>CLI 可用，目标项目有 `.planning/` 基础结构。</td></tr>
+                <tr><td>初始化</td><td><code>zl</code>, <code>zl-init</code>, <code>zl-verify</code>, <code>zl-map</code></td><td>CLI 可用，目标项目有 <code>.planning/</code> 基础结构。</td></tr>
                 <tr><td>Codebase</td><td><code>zl-codebase</code>, <code>zl-codebase-scan</code>, <code>zl-codebase-status</code></td><td>既存项目有 source/test/config baseline。</td></tr>
                 <tr><td>文档/RAG</td><td><code>zl-docs-scan</code>, <code>zl-docs-status</code>, <code>zl-docs-normalize</code>, <code>zl-docs-extract</code>, <code>zl-docs-diff</code>, <code>zl-docs-citations</code>, <code>zl-docs-sync</code>, <code>zl-citation-audit</code>, <code>zl-rag-init-local</code>, <code>zl-rag-golden-add</code>, <code>zl-rag-golden-run</code>, <code>zl-rag-eval</code>, <code>zl-docs-index</code>, <code>zl-docs-query</code>, <code>zl-answer-audit</code></td><td>文档来源、抽取、同步、citation、answer audit、golden、RAG eval 可复查。</td></tr>
                 <tr><td>Graphify</td><td><code>zl-graph-build</code>, <code>zl-graph-status</code>, <code>zl-graph-query</code>, <code>zl-graph-diff</code>, <code>zl-graph-impact</code>, <code>zl-graph-risk</code>, <code>zl-graph-freshness</code></td><td>代码图谱、影响面、风险和 stale 状态可检查。</td></tr>
@@ -551,7 +550,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
                 <tr><td>Evidence / Trace / Policy</td><td><code>zl-evidence-record</code>, <code>zl-evidence-status</code>, <code>zl-trace-build</code>, <code>zl-trace-query</code>, <code>zl-trace-audit</code>, <code>zl-policy-list</code>, <code>zl-policy-check</code>, <code>zl-policy-explain</code>, <code>zl-policy-lock</code>, <code>zl-policy-verify</code>, <code>zl-policy-diff</code>, <code>zl-help-skills</code></td><td>证据、追踪矩阵、策略检查、策略合同和命令推荐可落盘。</td></tr>
                 <tr><td>Runtime</td><td><code>zl-runtime-install</code>, <code>zl-runtime-status</code></td><td>Codex / Claude Code / GitHub Copilot 入口统一落到 CLI。</td></tr>
                 <tr><td>Workflow guard</td><td><code>zl-workflow-run</code>, <code>zl-workflow-status</code>, <code>zl-workflow-continue</code>, <code>zl-workflow-audit</code>, <code>zl-gate-check</code>, <code>zl-completion-check</code></td><td>gate 状态可读、可阻断、可继续。</td></tr>
-                <tr><td>Public workflow</td><td><code>zl-new-milestone</code>, <code>zl-spec-phase</code>, <code>zl-discuss-phase</code>, <code>zl-ui-phase</code>, <code>zl-debug</code>, <code>zl-plan-phase</code>, <code>zl-execute-phase</code>, <code>zl-code-review</code>, <code>zl-verify-work</code>, <code>zl-complete-milestone</code></td><td>日常工作流只暴露 `zl-*`，GSD 只作参考设计。</td></tr>
+                <tr><td>Public workflow</td><td><code>zl-new-milestone</code>, <code>zl-spec-phase</code>, <code>zl-discuss-phase</code>, <code>zl-ui-phase</code>, <code>zl-debug</code>, <code>zl-plan-phase</code>, <code>zl-execute-phase</code>, <code>zl-code-review</code>, <code>zl-verify-work</code>, <code>zl-complete-milestone</code></td><td>日常工作流只暴露 <code>zl-*</code>，GSD 只作参考设计。</td></tr>
                 <tr><td>Cockpit</td><td><code>zl-cockpit-build</code></td><td>生成本地静态项目驾驶舱，展示 Graphify、RAG、workflow、quality、privacy 和 evidence 状态。</td></tr>
                 <tr><td>Context</td><td><code>zl-context-debug</code>, <code>zl-context-execute</code></td><td>只生成 context packet，不启动完整 guard。</td></tr>
               </tbody>
@@ -563,7 +562,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
           <h2>16. Artifact contract</h2>
           <p>以后扩展 Zhulong 时，先定义 artifact contract。没有本地文件落点的能力，很难被 guard 检查，也很难证明真的接入。</p>
           <div class="artifact-grid">
-            <div class="artifact"><code>.planning/INIT_PROFILE.md</code><p>记录初始化模板、模式、项目名。`mode: existing` 会影响 codebase gate。</p></div>
+            <div class="artifact"><code>.planning/INIT_PROFILE.md</code><p>记录初始化模板、模式、项目名。<code>mode: existing</code> 会影响 codebase gate。</p></div>
             <div class="artifact"><code>.planning/codebase/CODEBASE_STATUS.md</code><p>代码基线。既存项目没有这个文件，workflow 不应该允许收口。</p></div>
             <div class="artifact"><code>.planning/knowledge/RAG_SOURCES.md</code><p>文档来源清单。证明文档不是靠聊天复制粘贴临时塞进去。</p></div>
             <div class="artifact"><code>.planning/knowledge/normalized/</code><p>本地查询使用的规范化文档。文档更新后需要刷新。</p></div>
@@ -578,7 +577,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
             <div class="artifact"><code>.planning/refresh/REFRESH_STATE.json</code><p>GraphRAG / Graphify 上次成功刷新 commit、corpus hash 和显式刷新命令。</p></div>
             <div class="artifact"><code>.planning/refresh/PREFLIGHT.md</code><p>轻量新鲜度提醒。普通 workflow 可读取它，但不能自动重建。</p></div>
             <div class="artifact"><code>.planning/policies/POLICY_LOCK.md</code><p>policy snapshot 和 hash。用于确认 local-only/profile/RAG/Graphify 配置没有漂移。</p></div>
-            <div class="artifact"><code>.planning/workflows/*/WORKFLOW_STATE.json</code><p>workflow 状态机源数据。`WORKFLOW_STATE.md` 是给人看的版本。</p></div>
+            <div class="artifact"><code>.planning/workflows/*/WORKFLOW_STATE.json</code><p>workflow 状态机源数据。<code>WORKFLOW_STATE.md</code> 是给人看的版本。</p></div>
             <div class="artifact"><code>.planning/workflows/*/WORKFLOW_FACADE.md</code><p>public workflow 的无感编排摘要。列出轻量 checks、四态 gate 和下一步建议命令。</p></div>
             <div class="artifact"><code>.planning/evidence/INDEX.md</code><p>验证证据索引。完成 milestone 前应该能找到当前任务证据。</p></div>
             <div class="artifact"><code>templates/cockpit/sample.html</code><p>稳定展示样例。使用假数据展示理想状态，适合先看页面目标形态。</p></div>
@@ -619,9 +618,9 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
           <p>新增能力时，遵守这个顺序：先定义本地 artifact，再接 CLI 命令，再接 runtime pack，最后补 verification。</p>
           <div class="diagram">
             <div class="node"><strong>1. Artifact contract</strong><br>明确文件落点、字段和通过条件。</div>
-            <div class="node"><strong>2. CLI command</strong><br>在 `bin/zl.mjs` 增加命令和 help。</div>
-            <div class="node"><strong>3. Runtime pack</strong><br>让 Codex/Claude/Copilot 通过 `zl-*` 调用。</div>
-            <div class="node"><strong>4. Verification</strong><br>在 `verification/run-full-validation.mjs` 中证明真实可用。</div>
+            <div class="node"><strong>2. CLI command</strong><br>在 <code>bin/zl.mjs</code> 增加命令和 help。</div>
+            <div class="node"><strong>3. Runtime pack</strong><br>让 Codex/Claude/Copilot 通过 <code>zl-*</code> 调用。</div>
+            <div class="node"><strong>4. Verification</strong><br>在 <code>verification/run-full-validation.mjs</code> 中证明真实可用。</div>
           </div>
           <h3>新增一个 Zhulong 命令的建议步骤</h3>
           <pre class="code-block"><code>1. 在 README / docs/changelog.md / docs/commands.html / docs/quality-plan.md 定义用户入口和目标 artifact。
@@ -642,7 +641,8 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
   </main>
 
   <footer class="footer">
-    <p>技术细节以当前 worktree、`bin/zl.mjs` 和 `verification/reports/latest.md` 为准。</p>
+    <p>技术细节以当前 worktree、<code>bin/zl.mjs</code> 和 <code>verification/reports/latest.md</code> 为准。</p>
   </footer>
+  <script src="assets/zl-site.js"></script>
 </body>
 </html>

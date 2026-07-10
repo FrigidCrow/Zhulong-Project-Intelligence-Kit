@@ -196,6 +196,8 @@ npm run verify:skills-usability
 npm run verify:ambiguity
 npm run verify:structure
 npm run verify:guardrails
+npm run verify:visual
+npm run verify:design
 ```
 
 发布级检查：
@@ -207,6 +209,8 @@ npm run verify:business-chain
 ```
 
 `verify:quality` 只包含 GitHub Actions 可重现的确定性检查。需要 Ollama 和本地 GraphRAG 的真实集成验证使用 `npm run verify:quality:local-rag`。
+
+`verify:visual` 使用 Playwright 检查文档与 cockpit 的桌面、移动端和暗色主题渲染。`verify:design` 固化品牌素材、信息层级、可访问性、动效边界和反模板化规则，防止后续修改退回通用 AI 产品页样式。
 
 ## 发布边界
 

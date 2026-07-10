@@ -5,6 +5,16 @@ Full name: **Zhulong Project Intelligence Kit**
 Documentation abbreviation: **Zhulong**
 Command namespace: **`zl-*`**
 
+## 2026-07-10：文档站与 cockpit 视觉系统重构
+
+- 文档站改为冷色技术档案视觉，使用烛龙主图标、炭黑文字、余烬橙主色和克制的青色状态色。
+- 产品页移除随机 canvas、假终端和通用 AI 光晕，首页首屏直接展示真实品牌素材与完整产品名。
+- commands、technical guide 和 quality dashboard 统一信息层级、目录状态、复制交互和移动端布局。
+- cockpit 改为高密度工程运行视图，合并旧样式并保留 `cockpit-viewmodel.v1` 数据契约。
+- 新增 `verify:design`，固化品牌素材、反模板化、可访问性和单样式块约束。
+- 扩展 `verify:visual`，覆盖 5 个页面、桌面、移动端与桌面暗色主题，并保存首屏和整页证据。
+- 五轮设计复核过程与结论记录在 `docs/design-review-log.md`。
+
 ## 2026-07-10：远程 CI、发布供应链与中性 Claude Code 模板
 
 - 新增 GitHub Actions `quality` job，固定 Node.js 24 和 npm 11.12.1，执行可重现质量 gate、全命令面审计和 npm pack 审计；所有 Actions 均固定完整 commit SHA。

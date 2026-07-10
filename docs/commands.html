@@ -22,9 +22,9 @@
 
   <main id="main">
     <section class="page-title">
-      <p class="eyebrow">Command Manual</p>
-      <h1>Zhulong 命令控制台。</h1>
-      <p>这里按“物理命令 + 逻辑用途”完整列出 74 个公开 CLI 入口。日常开发只需要记住 workflow 主循环，其他命令主要由 workflow、policy、quality gate 无感串联。</p>
+      <p class="eyebrow">命令手册</p>
+      <h1>74 条命令，一条工作路径。</h1>
+      <p>按物理命令和逻辑用途索引全部 CLI 入口。日常只需记住 workflow 主循环，其余能力由本地 gate 串联。</p>
     </section>
 
     <section class="section">
@@ -32,11 +32,10 @@
         <h2>开发者心智模型</h2>
         <p>新项目先接入，既有项目先建基线；日常通过 workflow 命令启动，文档/RAG、Graphify、policy、evidence 都作为本地 guard 和证据层参与。</p>
       </div>
-      <div class="console-mock" aria-label="Zhulong 执行管道路径">
-        <div class="window-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span>command-palette / execution pipeline</span>
-          <span class="status-pill" style="margin-left:auto">local-only 默认</span>
+      <div class="route-map" aria-label="Zhulong 执行管道路径">
+        <div class="route-map-header">
+          <span>日常执行路径</span>
+          <span class="status-pill">local-only 默认</span>
         </div>
         <div class="stage-flow command-flow">
           <code class="active">zl-init</code>
@@ -785,12 +784,12 @@ npm run verify:quality-closure</code></pre>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl --help
 node bin/zl.mjs --help</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--help: 查看命令帮助。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout help / command routing</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl --help
 node bin/zl.mjs --help</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -812,15 +811,15 @@ node bin/zl.mjs --help</code></pre></dd></div>
 zl-init --target &quot;$PWD&quot; --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
 zl-init --target &quot;$PWD&quot; --template brownfield-monorepo --mode existing --doc-policy strict --rag local --setup-rag skip
 zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-external-rag</code></pre></dd></div>
-                  <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--template &lt;name&gt;: 选择初始化模板。</li><li>--name &lt;name&gt;: 写入项目名。</li><li>--mode new|existing: 指定新项目或既存项目。</li><li>--doc-policy reference|strict: 选择文档是参考资料还是强约束依据。</li><li>--rag none|local|external: 选择不启用 RAG、本地 RAG 或外部 RAG。</li><li>--setup-rag ask|install|skip: 本地 RAG 依赖处理方式；默认 skip，只写 setup plan。</li><li>--allow-external-rag: 显式确认外部 RAG 可能导致文档内容离开本机。</li><li>--interactive: 强制进入 init wizard；真实终端只运行 `zl-init --target &lt;repo&gt;` 也会进入向导。</li><li>--no-interactive: 在真实终端中也跳过向导，使用显式参数或默认值。</li><li>--force: 覆盖已有模板文件。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>真实终端默认进入 init wizard；CI/非 TTY 默认使用 `reference + rag none + local_only`。只叠加 `.planning/` 和配置，不安装 RAG、不执行 GraphRAG index、不执行 Graphify build；strict 必须显式选择 local/external RAG。</dd></div>
+                  <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--template &lt;name&gt;: 选择初始化模板。</li><li>--name &lt;name&gt;: 写入项目名。</li><li>--mode new|existing: 指定新项目或既存项目。</li><li>--doc-policy reference|strict: 选择文档是参考资料还是强约束依据。</li><li>--rag none|local|external: 选择不启用 RAG、本地 RAG 或外部 RAG。</li><li>--setup-rag ask|install|skip: 本地 RAG 依赖处理方式；默认 skip，只写 setup plan。</li><li>--allow-external-rag: 显式确认外部 RAG 可能导致文档内容离开本机。</li><li>--interactive: 强制进入 init wizard；真实终端只运行 <code>zl-init --target &lt;repo&gt;</code> 也会进入向导。</li><li>--no-interactive: 在真实终端中也跳过向导，使用显式参数或默认值。</li><li>--force: 覆盖已有模板文件。</li></ul></dd></div>
+                  <div><dt>默认行为</dt><dd>真实终端默认进入 init wizard；CI/非 TTY 默认使用 <code>reference + rag none + local_only</code>。只叠加 <code>.planning/</code> 和配置，不安装 RAG、不执行 GraphRAG index、不执行 Graphify build；strict 必须显式选择 local/external RAG。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>AGENTS.md, project.manifest.yml, .planning/, .planning/INIT_PROFILE.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-init --target &quot;$PWD&quot; --interactive
 zl-init --target &quot;$PWD&quot; --template brownfield-monorepo --name existing_project --mode existing --doc-policy reference --rag none
 zl-init --target &quot;$PWD&quot; --template brownfield-monorepo --mode existing --doc-policy strict --rag local --setup-rag skip
 zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-external-rag</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -840,11 +839,11 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-verify --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout ok/missing 检查结果</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-verify --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -864,11 +863,11 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-map --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/codebase/STRUCTURE.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-map --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -888,11 +887,11 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-codebase --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/codebase/CODEBASE_STATUS.md, STRUCTURE.md, STACK.md, TESTING.md, ARCHITECTURE.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-codebase --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -912,11 +911,11 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-codebase-scan --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/codebase/CODEBASE_STATUS.md, STRUCTURE.md, STACK.md, TESTING.md, ARCHITECTURE.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-codebase-scan --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -936,11 +935,11 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-codebase-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout codebase inventory 和 graph 状态</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-codebase-status --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -960,7 +959,7 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-scan --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/RAG_SOURCES.md, DOC_RAG_STATUS.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-scan --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -984,7 +983,7 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout document context status</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-status --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -1008,7 +1007,7 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-normalize --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/normalized/</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-normalize --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -1032,7 +1031,7 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-extract --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/DOCUMENT_INDEX.json, DOCUMENT_EXTRACT_REPORT.md, extracted/</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-extract --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -1056,7 +1055,7 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/DOCUMENT_DIFF.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-diff --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -1080,7 +1079,7 @@ zl-init --target &quot;$PWD&quot; --doc-policy strict --rag external --allow-ext
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-citations --target &quot;$PWD&quot; &quot;代理承認 上限&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/CITATIONS.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-citations --target &quot;$PWD&quot; &quot;代理承認 上限&quot;</code></pre></dd></div>
@@ -1131,7 +1130,7 @@ zl-docs-index --target &quot;$PWD&quot; --run</code></pre></dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-docs-query --target &quot;$PWD&quot; &quot;代理承認 上限&quot;
 zl-docs-query --target &quot;$PWD&quot; --rag &quot;代理承認の仕様根拠は？&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--rag: 使用 configured RAG query command。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/DOCS_QUERY_RESULT.md/json 或 RAG_QUERY_RESULT.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-docs-query --target &quot;$PWD&quot; &quot;代理承認 上限&quot;
@@ -1235,12 +1234,12 @@ zl-structure-audit --target &quot;$PWD&quot; --strict</code></pre></dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-answer-audit --target &quot;$PWD&quot;
 zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_RESULT.md</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--from &lt;file&gt;: 指定回答来源文件。</li><li>--answer &lt;text&gt;: 调试用，直接传入回答文本。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/quality/ANSWER_AUDIT.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-answer-audit --target &quot;$PWD&quot;
 zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_RESULT.md</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-ambiguity-audit"><code>zl-ambiguity-audit</code></a> <a href="#cmd-zl-docs-query"><code>zl-docs-query</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-structure-audit"><code>zl-structure-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>文档更新循环、机械质量审计、规格依据确认和回答可信度检查。</dd></div>
                 </dl>
@@ -1260,11 +1259,11 @@ zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-rag-init-local --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>graphrag-workspace/settings.yaml, graphrag-workspace/input/, .planning/knowledge/LOCAL_RAG_STATUS.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-rag-init-local --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-ambiguity-audit"><code>zl-ambiguity-audit</code></a> <a href="#cmd-zl-docs-query"><code>zl-docs-query</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-structure-audit"><code>zl-structure-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>文档更新循环、机械质量审计、规格依据确认和回答可信度检查。</dd></div>
                 </dl>
@@ -1284,11 +1283,11 @@ zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-rag-golden-add --target &quot;$PWD&quot; --question &quot;代理承認の上限は？&quot; --expect &quot;30,000&quot; --citation &quot;docs/spec.md:12&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/rag-golden/*.json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-rag-golden-add --target &quot;$PWD&quot; --question &quot;代理承認の上限は？&quot; --expect &quot;30,000&quot; --citation &quot;docs/spec.md:12&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-ambiguity-audit"><code>zl-ambiguity-audit</code></a> <a href="#cmd-zl-docs-query"><code>zl-docs-query</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-structure-audit"><code>zl-structure-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>文档更新循环、机械质量审计、规格依据确认和回答可信度检查。</dd></div>
                 </dl>
@@ -1308,11 +1307,11 @@ zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-rag-golden-run --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/quality/RAG_GOLDEN_RUN.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-rag-golden-run --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-ambiguity-audit"><code>zl-ambiguity-audit</code></a> <a href="#cmd-zl-docs-query"><code>zl-docs-query</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-structure-audit"><code>zl-structure-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>文档更新循环、机械质量审计、规格依据确认和回答可信度检查。</dd></div>
                 </dl>
@@ -1332,11 +1331,11 @@ zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-rag-eval --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/quality/RAG_EVAL.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-rag-eval --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-ambiguity-audit"><code>zl-ambiguity-audit</code></a> <a href="#cmd-zl-docs-query"><code>zl-docs-query</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-structure-audit"><code>zl-structure-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>文档更新循环、机械质量审计、规格依据确认和回答可信度检查。</dd></div>
                 </dl>
@@ -1356,11 +1355,11 @@ zl-answer-audit --target &quot;$PWD&quot; --from .planning/knowledge/DOCS_QUERY_
                   <div><dt>什么时候用</dt><dd>需要查询或证明项目文档中的规格依据时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-citation-audit --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/quality/CITATION_AUDIT.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-citation-audit --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-ambiguity-audit"><code>zl-ambiguity-audit</code></a> <a href="#cmd-zl-docs-query"><code>zl-docs-query</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-structure-audit"><code>zl-structure-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1386,7 +1385,7 @@ zl-graph-build --target &quot;$PWD&quot; --run</code></pre></dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/graphs/GRAPH_BUILD_HANDOFF.md, 可选 graph.json / GRAPH_REPORT.md / GRAPH_BUILD_RESULT.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-build --target &quot;$PWD&quot;
 zl-graph-build --target &quot;$PWD&quot; --run</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1406,11 +1405,11 @@ zl-graph-build --target &quot;$PWD&quot; --run</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>改修前看影响面、改修后验证结构变化、或 graph gate 报 stale 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-graph-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout code map status</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-status --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1430,11 +1429,11 @@ zl-graph-build --target &quot;$PWD&quot; --run</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>改修前看影响面、改修后验证结构变化、或 graph gate 报 stale 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-graph-query --target &quot;$PWD&quot; &quot;PaymentService&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout code map matches</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-query --target &quot;$PWD&quot; &quot;PaymentService&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1455,12 +1454,12 @@ zl-graph-build --target &quot;$PWD&quot; --run</code></pre></dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-graph-diff --target &quot;$PWD&quot; --save-baseline
 zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/graphs/GRAPH_DIFF.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-diff --target &quot;$PWD&quot; --save-baseline
 zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1480,11 +1479,11 @@ zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>改修前看影响面、改修后验证结构变化、或 graph gate 报 stale 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-graph-impact --target &quot;$PWD&quot; --files &quot;src/approval.js&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--files &lt;paths&gt;: 逗号分隔的变更文件。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/graphs/GRAPH_IMPACT.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-impact --target &quot;$PWD&quot; --files &quot;src/approval.js&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1504,11 +1503,11 @@ zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>改修前看影响面、改修后验证结构变化、或 graph gate 报 stale 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-graph-risk --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/graphs/GRAPH_RISK.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-risk --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1528,11 +1527,11 @@ zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>改修前看影响面、改修后验证结构变化、或 graph gate 报 stale 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-graph-freshness --target &quot;$PWD&quot; --strict</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/graphs/GRAPH_FRESHNESS.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-graph-freshness --target &quot;$PWD&quot; --strict</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：<code>.planning/graphs/graph.json</code> 或 <code>GRAPH_REPORT.md</code> 缺失。先运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-build"><code>zl-graph-build</code></a> <a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-graph-query"><code>zl-graph-query</code></a> <a href="#cmd-zl-graph-freshness"><code>zl-graph-freshness</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>改修影响面、新规设计影响、代码审查前风险确认。</dd></div>
                 </dl>
@@ -1552,11 +1551,11 @@ zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>进入 debug、plan、execute 前，确认 RAG/Graphify 是否 stale。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-preflight --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/refresh/PREFLIGHT.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-preflight --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1576,11 +1575,11 @@ zl-graph-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-refresh-plan --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/refresh/REFRESH_PLAN.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-refresh-plan --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1606,7 +1605,7 @@ zl-refresh-run --target &quot;$PWD&quot; --rag</code></pre></dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/refresh/REFRESH_RUN.md, REFRESH_STATE.json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-refresh-run --target &quot;$PWD&quot; --graph
 zl-refresh-run --target &quot;$PWD&quot; --rag</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1626,11 +1625,11 @@ zl-refresh-run --target &quot;$PWD&quot; --rag</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-mode-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/refresh/MODE.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-mode-status --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1652,13 +1651,13 @@ zl-refresh-run --target &quot;$PWD&quot; --rag</code></pre></dd></div>
 zl-mode-set --target &quot;$PWD&quot; docs-strict
 zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>docs-reference|docs-strict: 推荐用户语义。</li><li>graph-lite|default-local-rag|full-strict: 兼容旧内部 profile。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/config.json, .planning/refresh/MODE.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-mode-set --target &quot;$PWD&quot; docs-reference
 zl-mode-set --target &quot;$PWD&quot; docs-strict
 zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1678,11 +1677,11 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-trace-build --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/trace/TRACE_MATRIX.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-trace-build --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1702,11 +1701,11 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-trace-query --target &quot;$PWD&quot; &quot;代理承認&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout trace query result</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-trace-query --target &quot;$PWD&quot; &quot;代理承認&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1726,11 +1725,11 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-trace-audit --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/trace/TRACE_AUDIT.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-trace-audit --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1750,11 +1749,11 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-evidence-record --target &quot;$PWD&quot; &quot;代理承認上限修正を検証済み&quot; --command &quot;npm test&quot; --result &quot;passed&quot; --writeback .planning/issues/CR-017.md</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--command &lt;cmd&gt;: 记录验证命令。</li><li>--result &lt;text&gt;: 记录验证结果。</li><li>--source &lt;paths&gt;: 记录依据来源。</li><li>--writeback &lt;file&gt;: 回写到工作记录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/evidence/*.md, .planning/evidence/INDEX.md, 可选 writeback</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-evidence-record --target &quot;$PWD&quot; &quot;代理承認上限修正を検証済み&quot; --command &quot;npm test&quot; --result &quot;passed&quot; --writeback .planning/issues/CR-017.md</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1774,11 +1773,11 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-evidence-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/evidence/INDEX.md 和 stdout summary</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-evidence-status --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -1795,7 +1794,7 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>命令物理名</dt><dd><code>zl-policy-list</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>策略列表</dd></div>
                   <div><dt>用途</dt><dd>锁定并验证 local-only、offline、policy 和 license 风险边界。</dd></div>
-                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 `.planning/config.json` 有变更后。</dd></div>
+                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 <code>.planning/config.json</code> 有变更后。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-policy-list --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>只做轻量 policy/privacy/preflight/citation/freshness 检查，不触发 GraphRAG index 或 Graphify build。</dd></div>
@@ -1819,7 +1818,7 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>命令物理名</dt><dd><code>zl-policy-check</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>策略检查</dd></div>
                   <div><dt>用途</dt><dd>锁定并验证 local-only、offline、policy 和 license 风险边界。</dd></div>
-                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 `.planning/config.json` 有变更后。</dd></div>
+                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 <code>.planning/config.json</code> 有变更后。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-policy-check --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>只做轻量 policy/privacy/preflight/citation/freshness 检查，不触发 GraphRAG index 或 Graphify build。</dd></div>
@@ -1843,7 +1842,7 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>命令物理名</dt><dd><code>zl-policy-explain</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>策略解释</dd></div>
                   <div><dt>用途</dt><dd>锁定并验证 local-only、offline、policy 和 license 风险边界。</dd></div>
-                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 `.planning/config.json` 有变更后。</dd></div>
+                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 <code>.planning/config.json</code> 有变更后。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-policy-explain --target &quot;$PWD&quot; privacy.local_only</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>只做轻量 policy/privacy/preflight/citation/freshness 检查，不触发 GraphRAG index 或 Graphify build。</dd></div>
@@ -1867,7 +1866,7 @@ zl-mode-set --target &quot;$PWD&quot; graph-lite</code></pre></dd></div>
                   <div><dt>命令物理名</dt><dd><code>zl-policy-lock</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>策略快照锁定</dd></div>
                   <div><dt>用途</dt><dd>锁定并验证 local-only、offline、policy 和 license 风险边界。</dd></div>
-                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 `.planning/config.json` 有变更后。</dd></div>
+                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 <code>.planning/config.json</code> 有变更后。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-offline-lock --target &quot;$PWD&quot;
 zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
@@ -1893,7 +1892,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>命令物理名</dt><dd><code>zl-policy-verify</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>策略锁验证</dd></div>
                   <div><dt>用途</dt><dd>锁定并验证 local-only、offline、policy 和 license 风险边界。</dd></div>
-                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 `.planning/config.json` 有变更后。</dd></div>
+                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 <code>.planning/config.json</code> 有变更后。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-policy-verify --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>只做轻量 policy/privacy/preflight/citation/freshness 检查，不触发 GraphRAG index 或 Graphify build。</dd></div>
@@ -1917,7 +1916,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>命令物理名</dt><dd><code>zl-policy-diff</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>策略漂移差分</dd></div>
                   <div><dt>用途</dt><dd>锁定并验证 local-only、offline、policy 和 license 风险边界。</dd></div>
-                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 `.planning/config.json` 有变更后。</dd></div>
+                  <div><dt>什么时候用</dt><dd>保密项目、交付前、或 <code>.planning/config.json</code> 有变更后。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-policy-diff --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>只做轻量 policy/privacy/preflight/citation/freshness 检查，不触发 GraphRAG index 或 Graphify build。</dd></div>
@@ -1944,11 +1943,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-privacy-audit --target &quot;$PWD&quot; --strict</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--strict: 以严格 profile 语义处理失败。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/knowledge/PRIVACY_AUDIT.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-privacy-audit --target &quot;$PWD&quot; --strict</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-offline-lock"><code>zl-offline-lock</code></a> <a href="#cmd-zl-privacy-audit"><code>zl-privacy-audit</code></a> <a href="#cmd-zl-policy-lock"><code>zl-policy-lock</code></a> <a href="#cmd-zl-policy-verify"><code>zl-policy-verify</code></a> <a href="#cmd-zl-policy-diff"><code>zl-policy-diff</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>保密项目、交付前检查、外发风险审计。</dd></div>
                 </dl>
@@ -1968,11 +1967,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-offline-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/privacy/OFFLINE_LOCK.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-offline-lock --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-offline-lock"><code>zl-offline-lock</code></a> <a href="#cmd-zl-privacy-audit"><code>zl-privacy-audit</code></a> <a href="#cmd-zl-policy-lock"><code>zl-policy-lock</code></a> <a href="#cmd-zl-policy-verify"><code>zl-policy-verify</code></a> <a href="#cmd-zl-policy-diff"><code>zl-policy-diff</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>保密项目、交付前检查、外发风险审计。</dd></div>
                 </dl>
@@ -1992,11 +1991,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-outbound-audit --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/privacy/OUTBOUND_AUDIT.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-outbound-audit --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -2016,11 +2015,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-license-audit --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>verification/reports/license-audit.md 或 .planning/license-audit.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-license-audit --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -2040,7 +2039,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要在 Codex、Claude Code、GitHub Copilot 中调用 Zhulong skills/prompts 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-runtime-install --runtime codex --dest ~/.codex/skills</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--runtime codex|claude-code|github-copilot: 目标 runtime。</li><li>--dest &lt;dir&gt;: 安装或检查目录。</li><li>--force: 安装时覆盖已有文件。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>Codex/Claude Code skills 或 GitHub Copilot prompts</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-runtime-install --runtime codex --dest ~/.codex/skills</code></pre></dd></div>
@@ -2064,7 +2063,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要在 Codex、Claude Code、GitHub Copilot 中调用 Zhulong skills/prompts 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-runtime-status --runtime codex --dest ~/.codex/skills</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--runtime codex|claude-code|github-copilot: 目标 runtime。</li><li>--dest &lt;dir&gt;: 安装或检查目录。</li><li>--force: 安装时覆盖已有文件。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout runtime pack 渲染状态</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-runtime-status --runtime codex --dest ~/.codex/skills</code></pre></dd></div>
@@ -2088,11 +2087,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-context-debug --target &quot;$PWD&quot; &quot;代理承認上限が仕様と違う&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*debug*.md 和 handoff</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-context-debug --target &quot;$PWD&quot; &quot;代理承認上限が仕様と違う&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -2112,11 +2111,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-context-execute --target &quot;$PWD&quot; &quot;承認上限チェックを実装&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*execute*.md 和 handoff</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-context-execute --target &quot;$PWD&quot; &quot;承認上限チェックを実装&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -2140,7 +2139,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-new-milestone --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2164,7 +2163,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-spec-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2188,7 +2187,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-discuss-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2212,7 +2211,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-ui-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2236,7 +2235,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-debug --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2260,7 +2259,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-plan-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2284,7 +2283,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-execute-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2308,7 +2307,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-code-review --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2332,7 +2331,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-verify-work --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2356,7 +2355,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-complete-milestone --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
                 </dl>
@@ -2376,7 +2375,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-run --target &quot;$PWD&quot; debug &quot;生产审批金额异常&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/workflows/&lt;id&gt;/WORKFLOW_STATE.md/json, WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-run --target &quot;$PWD&quot; debug &quot;生产审批金额异常&quot;</code></pre></dd></div>
@@ -2400,7 +2399,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout gate 状态</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-status --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -2424,7 +2423,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-continue --target &quot;$PWD&quot; --gate plan --evidence &quot;PLAN.md reviewed&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--gate plan|implementation|verification: 标记人工 gate。</li><li>--evidence &lt;text&gt;: gate 证据。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/workflows/&lt;id&gt;/WORKFLOW_STATE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-continue --target &quot;$PWD&quot; --gate plan --evidence &quot;PLAN.md reviewed&quot;</code></pre></dd></div>
@@ -2448,7 +2447,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-audit --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/workflows/&lt;id&gt;/WORKFLOW_AUDIT.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-audit --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -2472,7 +2471,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-gate-check --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout gate result</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-gate-check --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -2496,7 +2495,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>AI 或开发者准备声明任务完成前。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-completion-check --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout completion allowed/blocked</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-completion-check --target &quot;$PWD&quot;</code></pre></dd></div>
@@ -2520,11 +2519,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>需要给自己或 leader 看项目健康度、Graphify 影响面、RAG 证据链和质量闭环状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-cockpit-build --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取 `templates/cockpit/index.template.html`，注入目标项目的本地 `cockpit-data.json` 和稳定 `cockpit-viewmodel.v1`，生成带搜索、节点详情、legend 过滤和大图聚合的静态 HTML；默认不联网、不调用外部 LLM、不刷新 Graphify/RAG。稳定展示样例见 `templates/cockpit/sample.html`。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取 <code>templates/cockpit/index.template.html</code>，注入目标项目的本地 <code>cockpit-data.json</code> 和稳定 <code>cockpit-viewmodel.v1</code>，生成带搜索、节点详情、legend 过滤和大图聚合的静态 HTML；默认不联网、不调用外部 LLM、不刷新 Graphify/RAG。稳定展示样例见 <code>templates/cockpit/sample.html</code>。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只读取已有本地 artifact，生成静态 HTML，不执行 GraphRAG index 或 Graphify build。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/cockpit/index.html, cockpit-data.json, COCKPIT_REPORT.md, assets/</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-cockpit-build --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：真实项目 Graphify/RAG artifact 缺失会显示 WAIVED_WITH_RISK。先看 `templates/cockpit/sample.html` 确认目标形态；图过大时 cockpit 会自动使用 aggregated-community 预览；需要最新图时显式运行 `zl-graph-build --target &quot;$PWD&quot; --run`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：真实项目 Graphify/RAG artifact 缺失会显示 WAIVED_WITH_RISK。先看 <code>templates/cockpit/sample.html</code> 确认目标形态；图过大时 cockpit 会自动使用 aggregated-community 预览；需要最新图时显式运行 <code>zl-graph-build --target &quot;$PWD&quot; --run</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-graph-status"><code>zl-graph-status</code></a> <a href="#cmd-zl-docs-sync"><code>zl-docs-sync</code></a> <a href="#cmd-zl-answer-audit"><code>zl-answer-audit</code></a> <a href="#cmd-zl-privacy-audit"><code>zl-privacy-audit</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>leader 演示、项目状态自查、交付前展示 Graphify/RAG/evidence/quality 状态。</dd></div>
                 </dl>
@@ -2544,11 +2543,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>项目接入、开发循环或完成前检查需要对应状态时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-help-skills --target &quot;$PWD&quot; &quot;文档更新后确认影响面&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/help/HELP_SKILLS.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-help-skills --target &quot;$PWD&quot; &quot;文档更新后确认影响面&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -2572,7 +2571,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/help/NEXT.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-next --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target &quot;$PWD&quot;`。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-verify"><code>zl-verify</code></a> <a href="#cmd-zl-preflight"><code>zl-preflight</code></a> <a href="#cmd-zl-help-skills"><code>zl-help-skills</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>项目接入、日常状态确认和质量闭环。</dd></div>
                 </dl>
@@ -2587,5 +2586,6 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
   <footer class="footer">
     <p>命令覆盖以 <code>package.json</code> 的 <code>bin</code> 为准；本页由 <code>scripts/render-commands-doc.mjs</code> 生成。</p>
   </footer>
+  <script src="assets/zl-site.js"></script>
 </body>
 </html>

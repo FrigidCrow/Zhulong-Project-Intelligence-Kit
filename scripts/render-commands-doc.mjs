@@ -14,6 +14,10 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
+function formatInlineCode(value) {
+  return escapeHtml(value).replace(/`([^`\n]+)`/g, "<code>$1</code>");
+}
+
 function commandLink(command, label = command) {
   return `<a href="#cmd-${escapeHtml(command)}"><code>${escapeHtml(label)}</code></a>`;
 }
@@ -44,17 +48,17 @@ function detailSection(item) {
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>${escapeHtml(item.command)}</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>${escapeHtml(item.logicalName)}</dd></div>
-                  <div><dt>用途</dt><dd>${escapeHtml(item.purpose)}</dd></div>
-                  <div><dt>什么时候用</dt><dd>${escapeHtml(item.when)}</dd></div>
+                  <div><dt>用途</dt><dd>${formatInlineCode(item.purpose)}</dd></div>
+                  <div><dt>什么时候用</dt><dd>${formatInlineCode(item.when)}</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>${escapeHtml(item.usage)}</code></pre></dd></div>
-                  <div><dt>参数说明</dt><dd><ul>${item.params.map((param) => `<li>${escapeHtml(param)}</li>`).join("")}</ul></dd></div>
-                  <div><dt>默认行为</dt><dd>${escapeHtml(item.defaultBehavior)}</dd></div>
+                  <div><dt>参数说明</dt><dd><ul>${item.params.map((param) => `<li>${formatInlineCode(param)}</li>`).join("")}</ul></dd></div>
+                  <div><dt>默认行为</dt><dd>${formatInlineCode(item.defaultBehavior)}</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>${escapeHtml(item.heavyRefresh)}</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>${escapeHtml(item.outputs)}</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>${escapeHtml(item.successExample)}</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>${escapeHtml(item.failureExample)}</dd></div>
+                  <div><dt>常见失败示例</dt><dd>${formatInlineCode(item.failureExample)}</dd></div>
                   <div><dt>关联命令</dt><dd>${related}</dd></div>
-                  <div><dt>适用场景</dt><dd>${escapeHtml(item.scenario)}</dd></div>
+                  <div><dt>适用场景</dt><dd>${formatInlineCode(item.scenario)}</dd></div>
                 </dl>
               </div>
             </section>`;
@@ -84,9 +88,9 @@ const html = `<!doctype html>
 
   <main id="main">
     <section class="page-title">
-      <p class="eyebrow">Command Manual</p>
-      <h1>Zhulong 命令控制台。</h1>
-      <p>这里按“物理命令 + 逻辑用途”完整列出 ${catalog.length} 个公开 CLI 入口。日常开发只需要记住 workflow 主循环，其他命令主要由 workflow、policy、quality gate 无感串联。</p>
+      <p class="eyebrow">命令手册</p>
+      <h1>${catalog.length} 条命令，一条工作路径。</h1>
+      <p>按物理命令和逻辑用途索引全部 CLI 入口。日常只需记住 workflow 主循环，其余能力由本地 gate 串联。</p>
     </section>
 
     <section class="section">
@@ -94,11 +98,10 @@ const html = `<!doctype html>
         <h2>开发者心智模型</h2>
         <p>新项目先接入，既有项目先建基线；日常通过 workflow 命令启动，文档/RAG、Graphify、policy、evidence 都作为本地 guard 和证据层参与。</p>
       </div>
-      <div class="console-mock" aria-label="Zhulong 执行管道路径">
-        <div class="window-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span>command-palette / execution pipeline</span>
-          <span class="status-pill" style="margin-left:auto">local-only 默认</span>
+      <div class="route-map" aria-label="Zhulong 执行管道路径">
+        <div class="route-map-header">
+          <span>日常执行路径</span>
+          <span class="status-pill">local-only 默认</span>
         </div>
         <div class="stage-flow command-flow">
           <code class="active">zl-init</code>
@@ -238,6 +241,7 @@ ${catalog.map(detailSection).join("\n\n")}
   <footer class="footer">
     <p>命令覆盖以 <code>package.json</code> 的 <code>bin</code> 为准；本页由 <code>scripts/render-commands-doc.mjs</code> 生成。</p>
   </footer>
+  <script src="assets/zl-site.js"></script>
 </body>
 </html>
 `;
