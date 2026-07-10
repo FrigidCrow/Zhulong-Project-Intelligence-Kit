@@ -1,6 +1,6 @@
 ---
 name: zl-execute-phase
-description: Zhulong phase execution workflow grounded in task state, Japanese-style document evidence, code-map impact, tests, and evidence writeback.
+description: Zhulong phase execution workflow grounded in task state, source/test evidence, optional documents, code-map impact, and evidence writeback.
 ---
 
 # Zhulong Execute Phase
@@ -20,7 +20,9 @@ Treat the user text after `/zl-execute-phase` as the execution request.
 
 2. Read the generated `.planning/context/*execute*.md` packet and handoff.
 3. Read active phase, issue, debug, and plan records before editing.
-4. Verify relevant specification evidence with local docs or configured RAG.
+4. Verify expected behavior from the plan, active records, source, and tests.
+   Query local documents only when relevant sources exist; use RAG only when
+   `rag_backend` is not `none` and the backend is approved.
 5. Verify likely impact with code-map artifacts before editing. Refresh the graph
    with `{{ZL_CLI}} graph build --target . --run` only when direct graph
    execution is approved for the project.

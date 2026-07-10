@@ -49,6 +49,12 @@ function installReveals() {
     ".page-section",
     ".control-card",
     ".metric",
+    ".route-map",
+    ".comparison",
+    ".story-row",
+    ".signal",
+    ".tutorial-step",
+    ".visual-card",
   ].join(","));
 
   if (reduced || !("IntersectionObserver" in window)) {
@@ -68,6 +74,92 @@ function installReveals() {
     element.classList.add("reveal-ready");
     element.style.transitionDelay = `${Math.min(index % 5, 3) * 45}ms`;
     observer.observe(element);
+  });
+}
+
+function installReadingProgress() {
+  const progress = document.createElement("div");
+  progress.className = "reading-progress";
+  progress.setAttribute("aria-hidden", "true");
+  document.body.prepend(progress);
+}
+
+function installMetricCounters() {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const metrics = [...document.querySelectorAll(".metric strong")]
+    .map((element) => ({ element, value: Number(element.textContent.trim()) }))
+    .filter((item) => Number.isInteger(item.value) && item.value >= 0);
+  if (!metrics.length || reduced || !("IntersectionObserver" in window)) return;
+
+  metrics.forEach(({ element, value }) => {
+    element.dataset.metricValue = String(value);
+    element.setAttribute("aria-label", String(value));
+    element.textContent = "0";
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const element = entry.target;
+      const target = Number(element.dataset.metricValue);
+      const startedAt = performance.now();
+      const duration = 760;
+
+      function frame(now) {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        element.textContent = String(Math.round(target * eased));
+        if (progress < 1) window.requestAnimationFrame(frame);
+      }
+
+      window.requestAnimationFrame(frame);
+      observer.unobserve(element);
+    });
+  }, { threshold: 0.5 });
+
+  metrics.forEach(({ element }) => observer.observe(element));
+}
+
+function installFlowSequences() {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const flows = document.querySelectorAll(".stage-flow");
+  if (!flows.length || reduced || !("IntersectionObserver" in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-running");
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: "0px 0px -10%", threshold: 0.35 });
+
+  flows.forEach((flow) => observer.observe(flow));
+}
+
+function installHeroMotion() {
+  const emblem = document.querySelector(".hero-emblem");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  if (!emblem || reduced || !finePointer) return;
+
+  let frame = 0;
+  emblem.addEventListener("pointermove", (event) => {
+    const rect = emblem.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+    window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(() => {
+      emblem.style.setProperty("--tilt-x", `${(-y * 3.5).toFixed(2)}deg`);
+      emblem.style.setProperty("--tilt-y", `${(x * 3.5).toFixed(2)}deg`);
+      emblem.style.setProperty("--shift-x", `${(x * 5).toFixed(2)}px`);
+      emblem.style.setProperty("--shift-y", `${(y * 5).toFixed(2)}px`);
+    });
+  });
+  emblem.addEventListener("pointerleave", () => {
+    emblem.style.setProperty("--tilt-x", "0deg");
+    emblem.style.setProperty("--tilt-y", "0deg");
+    emblem.style.setProperty("--shift-x", "0px");
+    emblem.style.setProperty("--shift-y", "0px");
   });
 }
 
@@ -92,7 +184,11 @@ function installTocTracking() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  installReadingProgress();
   installCopyControls();
   installReveals();
+  installMetricCounters();
+  installFlowSequences();
+  installHeroMotion();
   installTocTracking();
 });

@@ -10,7 +10,9 @@ Use this when the user invokes `/zl-spec-phase`.
 1. Run `{{ZL_CLI}} workflow run spec-phase --target . "$ARGUMENTS"`.
 2. Read the generated context packet and handoff under `.planning/context/`.
 3. Follow `core/workflows/spec-phase.md`.
-4. Query local documents and approved RAG before business-rule claims.
+4. Ground business-rule claims in the request, active records, source, and
+   tests. Query local documents only when relevant sources exist; use RAG only
+   when `rag_backend` is not `none` and the backend is approved.
 5. Write confirmed facts, assumptions, contradictions, citations, and open
    questions to the active record.
 6. Suggest only `/zl-*` commands.

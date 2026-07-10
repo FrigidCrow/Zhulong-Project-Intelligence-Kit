@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T03:50:51.384Z",
+  "generated": "2026-07-10T04:45:26.916Z",
   "status": "PASS",
-  "workRoot": "<tmp>/zhulong-security-governance-XJzqwM",
-  "projectRoot": "<tmp>/zhulong-security-governance-XJzqwM/project",
+  "workRoot": "<tmp>/zhulong-security-governance-cHqIqv",
+  "projectRoot": "<tmp>/zhulong-security-governance-cHqIqv/project",
   "score": 100,
   "external_framework_mapping": {
     "owasp_agentic_top_10": "prompt injection, tool misuse, excessive agency, identity/privilege abuse",

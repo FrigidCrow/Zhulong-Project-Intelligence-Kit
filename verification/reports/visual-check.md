@@ -1,6 +1,6 @@
 # Zhulong Visual Verification
 
-生成时间: 2026-07-10T03:50:37.340Z
+生成时间: 2026-07-10T04:49:42.648Z
 
 ## 摘要
 
@@ -9,20 +9,20 @@
 
 ## Screenshots
 
-- docs/product.html desktop: `<kit-root>/.zl-tmp/visual/product-desktop.png` (1799117 bytes)
-- docs/commands.html desktop: `<kit-root>/.zl-tmp/visual/commands-desktop.png` (13190576 bytes)
-- docs/technical-guide.html desktop: `<kit-root>/.zl-tmp/visual/technical-guide-desktop.png` (3309464 bytes)
-- docs/quality-dashboard.html desktop: `<kit-root>/.zl-tmp/visual/quality-dashboard-desktop.png` (1364741 bytes)
+- docs/product.html desktop: `<kit-root>/.zl-tmp/visual/product-desktop.png` (1868833 bytes)
+- docs/commands.html desktop: `<kit-root>/.zl-tmp/visual/commands-desktop.png` (13710422 bytes)
+- docs/technical-guide.html desktop: `<kit-root>/.zl-tmp/visual/technical-guide-desktop.png` (3475251 bytes)
+- docs/quality-dashboard.html desktop: `<kit-root>/.zl-tmp/visual/quality-dashboard-desktop.png` (1363137 bytes)
 - templates/cockpit/sample.html desktop: `<kit-root>/.zl-tmp/visual/cockpit-sample-desktop.png` (463505 bytes)
-- docs/product.html mobile: `<kit-root>/.zl-tmp/visual/product-mobile.png` (1450380 bytes)
-- docs/commands.html mobile: `<kit-root>/.zl-tmp/visual/commands-mobile.png` (9952517 bytes)
-- docs/technical-guide.html mobile: `<kit-root>/.zl-tmp/visual/technical-guide-mobile.png` (2460846 bytes)
-- docs/quality-dashboard.html mobile: `<kit-root>/.zl-tmp/visual/quality-dashboard-mobile.png` (857147 bytes)
+- docs/product.html mobile: `<kit-root>/.zl-tmp/visual/product-mobile.png` (1521660 bytes)
+- docs/commands.html mobile: `<kit-root>/.zl-tmp/visual/commands-mobile.png` (10130059 bytes)
+- docs/technical-guide.html mobile: `<kit-root>/.zl-tmp/visual/technical-guide-mobile.png` (2574889 bytes)
+- docs/quality-dashboard.html mobile: `<kit-root>/.zl-tmp/visual/quality-dashboard-mobile.png` (858551 bytes)
 - templates/cockpit/sample.html mobile: `<kit-root>/.zl-tmp/visual/cockpit-sample-mobile.png` (427857 bytes)
-- docs/product.html desktop-dark: `<kit-root>/.zl-tmp/visual/product-desktop-dark.png` (1794537 bytes)
-- docs/commands.html desktop-dark: `<kit-root>/.zl-tmp/visual/commands-desktop-dark.png` (13213179 bytes)
-- docs/technical-guide.html desktop-dark: `<kit-root>/.zl-tmp/visual/technical-guide-desktop-dark.png` (3323515 bytes)
-- docs/quality-dashboard.html desktop-dark: `<kit-root>/.zl-tmp/visual/quality-dashboard-desktop-dark.png` (1365702 bytes)
+- docs/product.html desktop-dark: `<kit-root>/.zl-tmp/visual/product-desktop-dark.png` (1861768 bytes)
+- docs/commands.html desktop-dark: `<kit-root>/.zl-tmp/visual/commands-desktop-dark.png` (13696802 bytes)
+- docs/technical-guide.html desktop-dark: `<kit-root>/.zl-tmp/visual/technical-guide-desktop-dark.png` (3484424 bytes)
+- docs/quality-dashboard.html desktop-dark: `<kit-root>/.zl-tmp/visual/quality-dashboard-desktop-dark.png` (1363633 bytes)
 - templates/cockpit/sample.html desktop-dark: `<kit-root>/.zl-tmp/visual/cockpit-sample-desktop-dark.png` (463505 bytes)
 
 ## Issues

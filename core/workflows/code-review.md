@@ -7,7 +7,8 @@ Reference design: `$gsd-code-review`
 Required flow:
 
 1. Inspect the actual diff and changed files.
-2. Check whether each behavioral change has specification evidence.
+2. Check whether each behavioral change is supported by the request, issue,
+   source, tests, or optional document evidence.
 3. Use Graphify/code-map data to look for missed callers, shared modules, or
    unverified impact surfaces.
 4. Prioritize findings by severity, with file and line references.
@@ -20,4 +21,3 @@ Outputs:
 - Test gaps and residual risks.
 - Next command recommendation: `zl-execute-phase` for fixes or
   `zl-verify-work` when ready.
-

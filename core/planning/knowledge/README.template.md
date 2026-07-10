@@ -1,10 +1,11 @@
 # Knowledge Workspace: {{PROJECT_NAME}}
 
-This directory stores local specification context for Zhulong native workflows.
+This directory stores optional local document context for Zhulong native workflows.
 
-It is intended for document-heavy development projects where implementation
-depends on specs, design documents, QA records, meeting notes, test documents,
-terminology, and operational notes.
+Document-heavy projects use it when implementation depends on requirements,
+design documents, QA records, ADRs, meeting notes, test documents, terminology,
+or operational notes. Non-document-heavy projects can keep `rag_backend: none`;
+workflow, codebase, graph, policy, evidence, and completion gates remain active.
 
 ## Files
 

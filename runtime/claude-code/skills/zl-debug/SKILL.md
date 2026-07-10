@@ -19,10 +19,9 @@ Treat the user text after `/zl-debug` as the request.
    ```
 
 2. Read the generated `.planning/context/*debug*.md` packet and handoff.
-3. Check specification evidence before making business-rule claims:
-   - `.planning/knowledge/`
-   - source docs such as `docs/`, `documents/`, or `仕様書/`
-   - `{{ZL_CLI}} docs query --target . "<keywords>"` when local normalized docs exist
+3. Establish expected behavior from the request, active records, source, and
+   tests. Query `.planning/knowledge/` or local documents only when relevant
+   sources exist. Use RAG only when `rag_backend` is not `none` and approved.
 4. Check code-map evidence before risky edits:
    - `{{ZL_CLI}} graph status --target .`
    - `{{ZL_CLI}} graph query --target . "<entry point or symbol>"`

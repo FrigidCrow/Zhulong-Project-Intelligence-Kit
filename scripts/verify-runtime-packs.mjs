@@ -21,6 +21,12 @@ const runtimeSpecs = [
 const temp = tempRoot("zhulong-runtime-");
 const issues = [];
 const results = [];
+const ragConditionalItems = new Set([
+  "zl-spec-phase",
+  "zl-debug",
+  "zl-plan-phase",
+  "zl-execute-phase",
+]);
 
 function addIssue(runtime, file, detail) {
   issues.push({ runtime, file: file ? rel(file).startsWith("..") ? file : rel(file) : "", detail });
@@ -83,6 +89,11 @@ for (const spec of runtimeSpecs) {
     if (!/zl-/.test(text)) addIssue(spec.name, installedPath, "Runtime item does not expose zl-* command guidance.");
     if (/Current backend|Internal Backend Invocation/.test(text)) {
       addIssue(spec.name, installedPath, "Runtime item still contains active backend wording.");
+    }
+    if (ragConditionalItems.has(item.name)) {
+      if (!text.includes("rag_backend") || !/not `none`/.test(text)) {
+        addIssue(spec.name, installedPath, "Runtime item does not make document RAG conditional on rag_backend != none.");
+      }
     }
     if (hasUnsafeGsdLine(text)) {
       addIssue(spec.name, installedPath, "Runtime item contains unsafe gsd-* invocation guidance.");

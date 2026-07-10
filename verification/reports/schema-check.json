@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T03:49:50.413Z",
+  "generated": "2026-07-10T04:45:42.283Z",
   "status": "PASS",
-  "workRoot": "<tmp>/zhulong-schema-spi0s3",
-  "projectRoot": "<tmp>/zhulong-schema-spi0s3/project",
+  "workRoot": "<tmp>/zhulong-schema-qX0Vq0",
+  "projectRoot": "<tmp>/zhulong-schema-qX0Vq0/project",
   "evidence": [
     "workflow audit before gates: found workflow guard FAIL",
     "workflow audit next command: found next plan:",
@@ -27,7 +27,7 @@
     "workflow handoff: .planning/context/handoffs/debug-schema-validation-smoke-HANDOFF.md",
     "evidence index: .planning/evidence/INDEX.md",
     "evidence index: markdown sections checked",
-    "evidence record: .planning/evidence/20260710T034950Z-schema-validation-evidence.md",
+    "evidence record: .planning/evidence/20260710T044542Z-schema-validation-evidence.md",
     "evidence record: markdown sections checked",
     "debug writeback target: .planning/debug/schema-debug.md"
   ],

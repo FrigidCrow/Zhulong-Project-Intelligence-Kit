@@ -1,6 +1,6 @@
 ---
 name: zl-verify-work
-description: Zhulong public work verification command for Codex. Use when the user invokes $zl-verify-work or asks Zhulong Project Intelligence Kit to verify completed work with specification evidence, code-map checks, test/build/manual validation, risk notes, rollback, and evidence writeback.
+description: Zhulong public work verification command for Codex. Use when the user invokes $zl-verify-work or asks Zhulong Project Intelligence Kit to verify completed work with task/source evidence, optional documents, code-map checks, test/build/manual validation, risk notes, rollback, and evidence writeback.
 ---
 
 # Zhulong Verify Work
@@ -26,10 +26,10 @@ This is the Codex runtime entrypoint for `$zl-verify-work`.
 
 3. Read the generated verification context packet and handoff under
    `.planning/context/`.
-4. Confirm the claimed change against source files, specification evidence,
-   code-map impact, tests, build checks, logs, or manual checks.
-   Use `zl-docs-query --rag` only when the configured document RAG backend is
-   approved for the project documents being verified.
+4. Confirm the claimed change against the request, active records, source files,
+   code-map impact, tests, build checks, logs, and manual checks. Query optional
+   documents when present; use `zl-docs-query --rag` only when `rag_backend` is
+   not `none` and the backend is approved.
 5. Follow `core/workflows/verify-work.md` as the Zhulong native workflow contract.
 6. If structural relationships changed and direct graph refresh is approved,
    run `zl-graph-build --run` and inspect `zl-graph-diff`.

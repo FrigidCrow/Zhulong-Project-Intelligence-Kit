@@ -1,6 +1,6 @@
 # zl-debug
 
-Purpose: diagnose and fix a defect with specification evidence, code-map impact,
+Purpose: diagnose and fix a defect with project evidence, code-map impact,
 focused verification, and durable writeback.
 
 Reference design: `$gsd-debug`
@@ -10,7 +10,8 @@ Required flow:
 1. Reproduce or characterize the bug. If reproduction is impossible, record the
    missing condition instead of guessing.
 2. Read relevant issue/debug records and current state.
-3. Check specification evidence before deciding expected behavior.
+3. Establish expected behavior from the request, issue records, source, tests,
+   and available documents. Do not require document evidence in `rag none` mode.
 4. Use Graphify/code-map data and source search to identify likely entry points,
    call chains, dependencies, and blast radius.
 5. Form a root-cause hypothesis, then verify it with direct source reads or
@@ -25,4 +26,3 @@ Outputs:
 - Bug diagnosis and fix summary.
 - Verification record.
 - Next command recommendation: `zl-verify-work` or `zl-complete-milestone`.
-

@@ -1,6 +1,6 @@
 # Zhulong Document Extraction and Citation Verification
 
-生成时间: 2026-07-10T03:49:38.039Z
+生成时间: 2026-07-10T04:45:21.464Z
 
 ## 摘要
 
@@ -25,8 +25,8 @@
 
 ## Fixture Paths
 
-- Work root: `<tmp>/zhulong-docs-extract-TWI6PI`
-- Project root: `<tmp>/zhulong-docs-extract-TWI6PI/project`
+- Work root: `<tmp>/zhulong-docs-extract-tpAmxr`
+- Project root: `<tmp>/zhulong-docs-extract-tpAmxr/project`
 - Reproduce command: `node '<kit-root>/scripts/verify-docs-extract-citation.mjs'`
 
 ## Issues
