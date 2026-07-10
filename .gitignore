@@ -5,3 +5,5 @@ node_modules/
 ci-artifacts/
 dist/
 *.log
+verification/reports/*
+!verification/reports/.gitkeep

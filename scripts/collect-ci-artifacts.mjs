@@ -1,4 +1,3 @@
-import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -7,20 +6,18 @@ const outputRoot = path.join(root, "ci-artifacts");
 fs.rmSync(outputRoot, { recursive: true, force: true });
 fs.mkdirSync(outputRoot, { recursive: true });
 
-const porcelain = execFileSync("git", ["status", "--porcelain=v1", "-z", "--", "verification/reports"], {
-  cwd: root,
-  encoding: "utf8",
-});
 const copied = [];
-for (const entry of porcelain.split("\0").filter(Boolean)) {
-  const relative = entry.slice(3).split(" -> ").at(-1);
-  if (!relative || !/^verification\/reports\/.+\.(?:json|md)$/i.test(relative)) continue;
-  const source = path.join(root, relative);
-  if (!fs.existsSync(source)) continue;
-  const target = path.join(outputRoot, relative);
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.copyFileSync(source, target);
-  copied.push(relative);
+const reportRoot = path.join(root, "verification", "reports");
+if (fs.existsSync(reportRoot)) {
+  for (const entry of fs.readdirSync(reportRoot, { withFileTypes: true })) {
+    if (!entry.isFile() || !/\.(?:json|md)$/i.test(entry.name)) continue;
+    const relative = path.join("verification", "reports", entry.name);
+    const source = path.join(root, relative);
+    const target = path.join(outputRoot, relative);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.copyFileSync(source, target);
+    copied.push(relative);
+  }
 }
 
 const manifest = {

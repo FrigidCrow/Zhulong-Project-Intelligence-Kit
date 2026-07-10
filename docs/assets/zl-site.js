@@ -183,6 +183,15 @@ function installTocTracking() {
   sections.forEach((section) => observer.observe(section));
 }
 
+function installScrollableRegions() {
+  document.querySelectorAll(".table-wrap").forEach((region, index) => {
+    const heading = region.closest("section")?.querySelector("h2, h3")?.textContent?.trim();
+    region.tabIndex = 0;
+    region.setAttribute("role", "region");
+    region.setAttribute("aria-label", `${heading || `数据表 ${index + 1}`}，可横向滚动`);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   installReadingProgress();
   installCopyControls();
@@ -191,4 +200,5 @@ document.addEventListener("DOMContentLoaded", () => {
   installFlowSequences();
   installHeroMotion();
   installTocTracking();
+  installScrollableRegions();
 });

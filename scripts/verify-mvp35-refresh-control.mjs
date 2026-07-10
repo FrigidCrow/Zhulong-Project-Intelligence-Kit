@@ -218,7 +218,11 @@ function validateRagRelevantCommit() {
   const plan = runAlias("zl-refresh-plan", ["--target", projectRoot]);
   assertIncludes("doc update refresh plan", plan.output, "refresh plan WARN");
   assertIncludes("doc update refresh plan", plan.output, "rag refresh");
-  assertIncludes("doc update refresh plan", read(path.join(projectRoot, ".planning", "refresh", "REFRESH_PLAN.md")), "recommend differential refresh");
+  assertFileIncludes(
+    "doc update refresh plan",
+    path.join(projectRoot, ".planning", "refresh", "REFRESH_PLAN.md"),
+    "recommend differential refresh",
+  );
 
   const refresh = runAlias("zl-refresh-run", ["--target", projectRoot, "--rag"]);
   assertIncludes("rag refresh run", refresh.output, "rag refresh PASS");

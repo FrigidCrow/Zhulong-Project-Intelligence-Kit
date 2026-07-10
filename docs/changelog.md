@@ -5,6 +5,17 @@ Full name: **Zhulong Project Intelligence Kit**
 Documentation abbreviation: **Zhulong**
 Command namespace: **`zl-*`**
 
+## 2026-07-10：工程收口、CLI 契约与可追踪 Pages
+
+- `bin/zl.mjs` 缩为启动层，领域命令进入 `src/` 模块边界；新增 Node.js 内置测试覆盖参数、路由、策略、稳定 JSON 和验证 manifest。
+- `verify:ci`、`verify:release`、`verify:local-rag` 改由单一 DAG manifest 调度，一轮内不重复执行同一 verifier，并输出唯一汇总索引。
+- 新增统一 `--json`、`--quiet`、`--no-color`、稳定退出码、`zhulong doctor` 与 Bash/Zsh/Fish 补全生成。
+- 新增 `schemas/cli-output.schema.json` 与 `verify:cli-contract`，验证成功、用法错误、静默输出、无颜色和补全行为。
+- Pages 构建生成 `build-info.json`，注入版本、commit、部署时间、CSS/JS 内容 hash、canonical 和社交元数据。
+- `verify:visual` 接入 `@axe-core/playwright`；修复按钮对比度、移动端可滚动表格焦点、cockpit 次级文字对比度和 SVG 嵌套交互语义。
+- 临时验证报告和截图退出 Git/npm 包，稳定摘要迁入 `verification/baselines/`；npm tarball 设压缩、解包和最大单文件 gate。
+- 新增文档密集型与非文档密集型双项目画像，机械证明 `rag none` 不初始化或建议 RAG。
+
 ## 2026-07-10：Apache 2.0、GitHub Pages 与公开仓库治理
 
 - 项目许可证切换为 Apache-2.0，npm 包设置为公开发布并启用 provenance。

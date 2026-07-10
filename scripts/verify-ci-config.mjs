@@ -4,6 +4,7 @@ const issues = [];
 const ci = fs.readFileSync(".github/workflows/ci.yml", "utf8");
 const release = fs.readFileSync(".github/workflows/release.yml", "utf8");
 const pages = fs.readFileSync(".github/workflows/pages.yml", "utf8");
+const verificationManifest = fs.readFileSync("scripts/verification-manifest.mjs", "utf8");
 const ruleset = JSON.parse(fs.readFileSync(".github/rulesets/main.json", "utf8"));
 const actionPins = {
   "actions/checkout": "df4cb1c069e1874edd31b4311f1884172cec0e10",
@@ -26,8 +27,10 @@ for (const [label, content] of [["CI", ci], ["release", release]]) {
   expect(content.includes("npm@11.12.1"), `${label} must pin npm 11.12.1`);
   expect(content.includes("npm ci --ignore-scripts"), `${label} must use npm ci`);
 }
-expect(ci.includes("npm run verify:quality"), "CI must run verify:quality");
-expect(ci.includes("npm run verify:full-command-surface"), "CI must run verify:full-command-surface");
+expect(ci.includes("npm run verify:ci"), "CI must run the authoritative verification tier");
+expect(verificationManifest.includes('"full-command-surface"'), "CI verification manifest must include the full command surface");
+expect(ci.includes("macos-latest"), "CI must run the core smoke suite on macOS");
+expect(ci.includes("npm run verify:project-profiles"), "CI must verify document-heavy and non-document project profiles");
 expect(ci.includes("npm pack --dry-run --json"), "CI must run npm pack --dry-run --json");
 expect(ci.includes(`actions/upload-artifact@${actionPins["actions/upload-artifact"]}`), "CI must pin upload-artifact v7 by SHA");
 expect(ci.includes("retention-days: 7"), "CI report retention must be seven days");
@@ -37,6 +40,8 @@ expect(release.includes("id-token: write"), "release must request OIDC id-token 
 expect(release.includes("environment: npm"), "release must use the npm environment");
 expect(release.includes(`actions/attest@${actionPins["actions/attest"]}`), "release must pin attest v4 by SHA");
 expect(release.includes("ZL_RELEASE_REPOSITORY_PRIVATE"), "release must block when the current plan cannot attest a private repository");
+expect(release.includes("npm run verify:release"), "release must run the authoritative release verification tier");
+expect(!release.includes("npm run verify:full-command-surface"), "release must not repeat a verifier outside the release DAG");
 expect(!release.includes("NODE_AUTH_TOKEN"), "release must not depend on a long-lived npm token");
 expect(pages.includes(`actions/checkout@${actionPins["actions/checkout"]}`), "Pages must pin actions/checkout v6 by SHA");
 expect(pages.includes(`actions/setup-node@${actionPins["actions/setup-node"]}`), "Pages must pin actions/setup-node v6 by SHA");
@@ -45,11 +50,13 @@ expect(pages.includes(`actions/upload-pages-artifact@${actionPins["actions/uploa
 expect(pages.includes(`actions/deploy-pages@${actionPins["actions/deploy-pages"]}`), "Pages must pin deploy-pages v4 by SHA");
 expect(pages.includes("pages: write") && pages.includes("id-token: write"), "Pages must request deployment permissions");
 expect(pages.includes("npm run verify:pages"), "Pages must assemble the allowlisted static site through verify:pages");
+expect(pages.includes("ZL_PAGES_COMMIT_SHA"), "Pages must inject the deployed commit SHA");
 expect(fs.existsSync("package-lock.json"), "package-lock.json must be committed");
 
 const pullRequest = ruleset.rules.find((rule) => rule.type === "pull_request")?.parameters;
 const statusChecks = ruleset.rules.find((rule) => rule.type === "required_status_checks")?.parameters;
-expect(pullRequest?.required_approving_review_count >= 1, "ruleset must require an approving review");
+expect(pullRequest?.required_approving_review_count === 0, "solo-maintainer ruleset must not require an unavailable approving reviewer");
+expect(pullRequest?.require_last_push_approval === false, "solo-maintainer ruleset must not require last-push approval from another user");
 expect(pullRequest?.required_review_thread_resolution === true, "ruleset must require resolved review threads");
 expect(statusChecks?.required_status_checks?.some((check) => check.context === "quality"), "ruleset must require the quality job");
 expect(statusChecks?.strict_required_status_checks_policy === true, "ruleset must require an up-to-date branch");
