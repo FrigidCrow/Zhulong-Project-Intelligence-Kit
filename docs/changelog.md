@@ -15,6 +15,7 @@ Command namespace: **`zl-*`**
 - `verify:visual` 接入 `@axe-core/playwright`；修复按钮对比度、移动端可滚动表格焦点、cockpit 次级文字对比度和 SVG 嵌套交互语义。
 - 临时验证报告和截图退出 Git/npm 包，稳定摘要迁入 `verification/baselines/`；npm tarball 设压缩、解包和最大单文件 gate。
 - 新增文档密集型与非文档密集型双项目画像，机械证明 `rag none` 不初始化或建议 RAG。
+- GitHub 官方 action 更新到 `checkout v7`、`configure-pages v6`、`upload-pages-artifact v5` 与 `deploy-pages v5`，继续使用完整 commit SHA 固定供应链。
 
 ## 2026-07-10：Apache 2.0、GitHub Pages 与公开仓库治理
 
