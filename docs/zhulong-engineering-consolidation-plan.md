@@ -1,6 +1,6 @@
 # Zhulong Kit 工程收口与下一阶段优化计划
 
-> 计划状态：执行中（M0-M6 已完成；M7 本地与远端 CI、Pages 上线均完成，npm 发布与远端历史替换待所有者确认）
+> 计划状态：执行中（M0-M6 与远端历史瘦身已完成；M7 仅余 npm 首发、trusted publisher 收口和公开安装复验）
 > 制定日期：2026-07-10
 > 适用范围：`v0.1.0` 首次公开发布前至 `v0.2.0`
 > 历史依据：[截图提取稿与本地改造计划](zhulong-extraction-and-local-plan.md)
@@ -56,7 +56,7 @@ Zhulong 当前不缺新的产品能力。下一阶段应暂停扩充命令面，
 
 ### 3.1 `v0.1.0` 发布门槛
 
-- [ ] 经过历史瘦身后，完整仓库 clone 的 Git pack 不高于 20 MiB。
+- [x] 经过历史瘦身后，普通仓库 clone 的 Git pack 不高于 20 MiB（远端实测 3.30 MiB）。
 - [x] `npm pack --dry-run --json` 的压缩体积不高于 700 KiB。
 - [x] npm 包不包含验证截图、临时报告、图标候选和高分辨率设计源文件。
 - [x] 文档密集型和非文档密集型两套 fixture 均完成核心工作流验证。
@@ -120,6 +120,14 @@ M1 的实际执行顺序是：先完成当前工作树的图标候选归档、M1
 6. 获得所有者确认后再替换远端历史。
 7. 重新检查 Pages、ruleset、开放 PR 和本地工作副本。
 
+执行结果（2026-07-10）：
+
+- 原始 `main` `c6c7fbbb...` 已通过带 lease 的维护窗口替换为 `0351dc03...`，最终 tree 均为 `7837a558...`。
+- 原始完整 bundle 与 mirror 已保存在仓库外；候选 bundle 为 3,440,277 字节并通过完整性检查。
+- 从 GitHub 全新普通 clone 的 pack 为 3.30 MiB，Node.js 24 / npm 11.18 的 `verify:release` 为 40/40 PASS。
+- CI、CodeQL 与手动触发的 Pages 部署均在新 SHA 上成功，ruleset 已恢复为 `active`。
+- GitHub 只读的旧 `refs/pull/*` 仍可能使 mirror clone 保留旧大对象；本计划的 20 MiB 门槛明确针对普通开发者 clone。
+
 回滚：
 
 - 未确认前不修改远端。
@@ -141,7 +149,7 @@ M1 的实际执行顺序是：先完成当前工作树的图标候选归档、M1
 
 验收：
 
-- Git pack 不高于 20 MiB。
+- 普通 clone 的 Git pack 不高于 20 MiB。
 - npm tarball 不高于 700 KiB。
 - 普通功能 PR 的生成报告变更不超过 5 个文件。
 - `npm pack` 内容清单仍通过公开发布检查。
@@ -411,7 +419,7 @@ Git 历史重写不与普通 PR 混合。它应作为独立维护窗口执行，
 
 以下事项必须形成 ADR 或明确的仓库决策，不应只留在聊天记录中：
 
-1. Git 历史是否重写及其维护窗口。
+1. Git 历史是否重写及其维护窗口（已由 ADR 0004 记录并执行）。
 2. Windows 是正式支持、实验支持还是明确不支持。
 3. `.planning` schema version 和迁移兼容期。
 4. CLI 退出码与 JSON 输出契约。
@@ -440,7 +448,7 @@ Git 历史重写不与普通 PR 混合。它应作为独立维护窗口执行，
 - [x] PR-01：压缩 npm 图标并加入 pack size gate。
 - [x] PR-02：分离临时报告和稳定发布证据。
 - [x] PR-03：实现非文档密集型 `rag none` 端到端 fixture。
-- [ ] M1.1：在临时 clone 演练 Git 历史瘦身并提交体积对比，等待所有者确认。
+- [x] M1.1：完成临时演练、所有者确认、远端历史替换、3.30 MiB 普通 clone 与 CI/Pages 复验。
 - [x] PR-04：启用 CodeQL 和仓库安全能力。
 - [x] PR-05：增加 macOS 核心 smoke matrix，记录 Windows 决策。
 - [x] 完成 `v0.1.0` 发布就绪审查；正式发布仍待所有者确认。
