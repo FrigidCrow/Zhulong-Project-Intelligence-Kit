@@ -44,9 +44,7 @@ jobs:
         run: npm run verify:release-readiness
 
       - name: Run release gates
-        run: |
-          npm run verify:quality
-          npm run verify:full-command-surface
+        run: npm run verify:release
 
       - name: Build and audit tarball
         run: |

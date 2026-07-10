@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "zhulong-verification-baseline.v1",
+  "baseline": "engineering-consolidation-start",
+  "date": "2026-07-10",
+  "sourceCommit": "36d2fe20e651b06a03d00b477d46c382b9c638b8",
+  "status": "PASS",
+  "toolchain": {
+    "node": "24.14.0",
+    "npm": "11.12.1"
+  },
+  "checks": [
+    {
+      "id": "quality",
+      "command": "npm run verify:quality",
+      "status": "PASS"
+    },
+    {
+      "id": "full-command-surface",
+      "command": "npm run verify:full-command-surface",
+      "status": "PASS",
+      "passed": 74,
+      "total": 74
+    },
+    {
+      "id": "github-ci",
+      "status": "PASS",
+      "run": "29070642695"
+    }
+  ],
+  "metrics": {
+    "logicalCommands": 74,
+    "npmBins": 75,
+    "runtimeDependencies": 0,
+    "npmPackedBytes": 2152246,
+    "npmUnpackedBytes": 2577433,
+    "gitPackMiB": 170.78
+  },
+  "artifactPolicy": {
+    "stableSummary": "verification/baselines/",
+    "ephemeralReports": "verification/reports/",
+    "visualScreenshots": ".zl-tmp/visual/",
+    "ciRetentionDays": 7
+  }
+}

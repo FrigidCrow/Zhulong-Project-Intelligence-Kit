@@ -23,7 +23,7 @@
   · <a href="https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html">命令手册</a>
   · <a href="https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/technical-guide.html">技术指南</a>
   · <a href="docs/quality-plan.md">质量计划</a>
-  · <a href="verification/reports/latest.md">最新验证报告</a>
+  · <a href="verification/baselines/latest.md">稳定验证基线</a>
 </p>
 
 ## 这是什么
@@ -82,6 +82,12 @@ Zhulong 的名字来自掌管昼夜与秩序的烛龙。这个意象在产品中
 
 仓库提供 `.nvmrc` 和 `.node-version`，用于统一本地 Node.js 版本。
 
+| 平台 | 支持状态 | 验证范围 |
+| --- | --- | --- |
+| Linux | 正式支持 | Ubuntu 完整质量 gate 与双项目画像 smoke |
+| macOS | 正式支持 | Node.js 24、CLI、`rag none`、文档模式和 workflow smoke |
+| Windows | 暂未正式支持 | 当前仍有 POSIX shell 与路径假设，完成兼容改造前不作支持承诺 |
+
 ## 快速开始
 
 在仓库内直接运行：
@@ -122,6 +128,27 @@ zl-codebase-scan --target "$PWD"
 zl-preflight --target "$PWD"
 zl-completion-check --target "$PWD"
 ```
+
+## CLI 机器可读契约
+
+所有顶层命令都接受统一输出参数：
+
+```bash
+zhulong doctor --target "$PWD"
+zhulong doctor --target "$PWD" --json
+zhulong mode status --target "$PWD" --quiet
+zhulong completion bash
+zhulong completion zsh
+zhulong completion fish
+```
+
+- `--json` 只向 stdout 写一个符合 `schemas/cli-output.schema.json` 的 JSON 对象，并把命令诊断收进 `stderr` 数组。
+- `--quiet` 抑制正常 stdout，但不吞掉 stderr 错误。
+- `--no-color` 移除 ANSI 控制序列，适合 CI 和日志解析。
+- 退出码固定为：`0` 成功、`1` 命令或 gate 失败、`2` 用法错误、`3` 必需环境缺失、`70` 内部错误。
+- `doctor` 检查 Node.js、npm、Git、浏览器能力和项目 RAG 模式；本地 RAG 工具仍是按需项。
+
+完整决策见 [CLI 输出与退出码 ADR](docs/adr/0002-cli-output-and-exit-codes.md)。
 
 ## 核心能力
 
@@ -196,7 +223,9 @@ zl-completion-check --target "$PWD"
 | [开源发布五轮复核](docs/open-source-release-review.md) | Apache 2.0、Pages、治理、安全与发布证据 |
 | [运行环境包说明](docs/runtime-command-packs.md) | Codex、Claude Code 和 GitHub Copilot 安装方式 |
 | [提取与本地计划](docs/zhulong-extraction-and-local-plan.md) | 截图提取、工程基线和后续优化路线 |
-| [最新验证报告](verification/reports/latest.md) | 最近一次本地验证结果 |
+| [稳定验证基线](verification/baselines/latest.md) | 经确认、适合长期引用的质量与分发基线 |
+| [工程收口计划](docs/zhulong-engineering-consolidation-plan.md) | `v0.1.0` 发布门槛与 `v0.2.0` 架构演进路线 |
+| [架构决策记录](docs/adr/README.md) | 模块边界、CLI 契约和平台支持决策 |
 
 ## 开发与验证
 
@@ -215,19 +244,20 @@ npm run verify:visual
 npm run verify:design
 npm run verify:pages
 npm run verify:public-release
+npm run verify:cli-contract
 ```
 
 发布级检查：
 
 ```bash
-npm run verify:quality
-npm run verify:quality-closure
+npm run verify:ci
+npm run verify:release
 npm run verify:business-chain
 ```
 
-`verify:quality` 只包含 GitHub Actions 可重现的确定性检查。需要 Ollama 和本地 GraphRAG 的真实集成验证使用 `npm run verify:quality:local-rag`。
+`verify:ci` 只包含 GitHub Actions 可重现的确定性检查，`verify:release` 是发布前完整层；两者都由同一验证 manifest 调度，同一轮中每个 verifier 最多执行一次。需要 Ollama 和本地 GraphRAG 的真实集成验证使用 `npm run verify:local-rag`。
 
-`verify:visual` 使用 Playwright 检查文档与 cockpit 的桌面、移动端和暗色主题渲染。`verify:design` 固化品牌素材、信息层级、可访问性、动效边界和反模板化规则，防止后续修改退回通用 AI 产品页样式。
+`verify:visual` 使用 Playwright 和 axe 检查文档与 cockpit 的桌面、移动端、暗色主题、布局及 WCAG A/AA serious/critical 问题。`verify:design` 固化品牌素材、信息层级、动效边界和反模板化规则，防止后续修改退回通用 AI 产品页样式。
 
 ## 发布边界
 

@@ -3,6 +3,8 @@
 > 最近校对：2026-07-10。
 >
 > 当前结论：Zhulong 品牌基线已经统一。npm、CLI、runtime skills、文档、验证器、资源路径与生成报告统一使用 Zhulong / ZL 命名，Node.js 基线为 24，npm 发布内容由白名单控制。
+>
+> 后续执行：品牌迁移完成后的工程收口、通用项目验证、CLI 模块化与发布路线，统一以 [Zhulong Kit 工程收口与下一阶段优化计划](zhulong-engineering-consolidation-plan.md) 为准。
 
 > 来源：用户提供的 9 张截图，原截图顶部显示源文档为
 > `<legacy-kit-root>/docs/session-2026-07-09-changes-and-rationale.md`。
@@ -382,7 +384,7 @@ npm run verify:business-chain
 | ruleset | 配置已入库；GitHub Free 私有仓库 API 返回 403，尚未远程强制 |
 | npm 包 | 2,145,243 bytes，解包 2,555,440 bytes，共 101 个文件 |
 | 包安装 smoke | Node.js 24 下 `zhulong --help` 与 `zl --help` PASS |
-| 新能力打包 | 根词表、`bin/quality-audits.mjs` 与三个新 bin 均可从 tarball 安装运行 |
+| 新能力打包 | 根词表、`src/quality/audits.mjs` 与三个新 bin 均可从 tarball 安装运行 |
 | 发布排除 | 验证截图、验证报告、图标候选集均未进入 npm 包 |
 
 品牌基线和 Phase A-C 至此收口。当前产品特色、证据和表达规则统一记录在 `docs/brand.md`。

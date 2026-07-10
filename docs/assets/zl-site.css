@@ -9,6 +9,8 @@
   --line: #c2cac5;
   --line-strong: #7f8b85;
   --ember: #d94714;
+  --ember-solid: #ae340d;
+  --accent-on-inverse: #ff9b70;
   --ember-soft: #f3d5c8;
   --aqua: #167b81;
   --success: #187344;
@@ -37,6 +39,8 @@
     --line: #343b37;
     --line-strong: #69736d;
     --ember: #f15a24;
+    --ember-solid: #ae340d;
+    --accent-on-inverse: #992d0c;
     --ember-soft: #4b281c;
     --aqua: #55aeb1;
     --success: #55af7c;
@@ -268,8 +272,8 @@ pre {
 }
 
 .button.primary {
-  border-color: var(--ember);
-  background: var(--ember);
+  border-color: var(--ember-solid);
+  background: var(--ember-solid);
   color: #f7f4ef;
 }
 
@@ -825,7 +829,7 @@ td,
 
 .stage-flow code.active,
 .stage-flow code:first-child {
-  background: var(--ember);
+  background: var(--ember-solid);
   color: #f7f4ef;
 }
 
@@ -850,7 +854,7 @@ td,
 }
 
 .file-tree code.accent {
-  color: #ff8a54;
+  color: var(--accent-on-inverse);
 }
 
 .file-tree code.indent {
@@ -883,7 +887,7 @@ td,
 }
 
 .copy-control:hover {
-  background: var(--ember);
+  background: var(--ember-solid);
   color: #f7f4ef;
 }
 
@@ -1374,6 +1378,14 @@ th {
   .page-section {
     padding-bottom: 40px;
   }
+}
+
+.build-meta {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: .76rem;
+  overflow-wrap: anywhere;
 }
 
 @media (prefers-reduced-motion: reduce) {

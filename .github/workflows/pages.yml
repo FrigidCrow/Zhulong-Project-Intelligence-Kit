@@ -6,7 +6,7 @@ on:
     paths:
       - "docs/**"
       - "templates/cockpit/**"
-      - "verification/reports/**"
+      - "verification/baselines/**"
       - "site/**"
       - "LICENSE"
       - ".github/workflows/pages.yml"
@@ -43,6 +43,7 @@ jobs:
       - name: Assemble and verify static site
         env:
           ZL_PAGES_OUTPUT_DIR: _site
+          ZL_PAGES_COMMIT_SHA: ${{ github.sha }}
         run: npm run verify:pages
 
       - name: Upload GitHub Pages artifact

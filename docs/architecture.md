@@ -235,28 +235,13 @@ zl-policy-verify --target "$PWD"
 
 ## 8. 验证架构
 
-当前验证分三层：
+当前验证由单一 manifest 分为三层：
 
 ```bash
-npm run verify:mvp3
-npm run verify:mvp35
-npm run verify:workflow-facade
-npm run verify:policy-hardening
-npm run verify:init-policy
-npm run verify:ambiguity
-npm run verify:structure
-npm run verify:answer-audit
-npm run verify:guardrails
-npm run verify:cockpit-build
-npm run verify:full-command-surface
-npm run verify:skills-usability
-npm run verify:workflow-closure
-npm run verify:docs-completeness
-npm run verify:quality-closure
-npm run verify:dev-audit-harness
-npm run verify:quality
-npm run verify:integration
-npm run dev:audit:full
+npm test
+npm run verify:ci
+npm run verify:release
+npm run verify:local-rag
 ```
 
 - `verify:mvp3` 验证 golden、citation、trace、policy、help skills。
@@ -273,9 +258,9 @@ npm run dev:audit:full
 - `verify:skills-usability` 验证 Codex / Claude Code / GitHub Copilot 33 个 skill/prompt 都能指向本地 CLI 并保留 local-only / no hidden refresh / evidence writeback 约束。
 - `verify:workflow-closure` 验证新项目、既有项目、graph-lite、full-strict 四条闭环 fixture。
 - `verify:docs-completeness` 验证命令手册 74 个独立锚点、详情字段和 README 跳转。
-- `verify:quality-closure` 聚合质量闭环 gate。
+- `verify:release` 聚合质量闭环、安装 smoke 和发布就绪 gate。
 - `verify:dev-audit-harness` 验证维护者内部审计机制，`dev:audit:full` 生成命令/skills/feature/benchmark scorecard 和时间/token/隔离报告。
-- `verify:quality` 聚合 docs、RAG 命令、Graph hardening、privacy、license、schema、naming、runtime、visual 和 CI 配置；真实本地 GraphRAG / Ollama 由 `verify:quality:local-rag` 追加。
+- `verify:ci` 聚合 docs、RAG 命令、Graph hardening、privacy、license、schema、naming、runtime、visual 和 CI 配置；真实本地 GraphRAG / Ollama 由 `verify:local-rag` 追加。
 - `verify:integration` 验证完整 Zhulong workflow 和 Graphify / RAG 增强链路。
 
 完整测试计划在 [full-test-plan.md](full-test-plan.md)，阶段追踪在 [changelog.md](changelog.md)。
