@@ -5,5 +5,4 @@
 - [0001：模块化单体与依赖方向](0001-modular-monolith-boundaries.md)
 - [0002：CLI 输出与退出码](0002-cli-output-and-exit-codes.md)
 - [0003：平台支持范围](0003-platform-support.md)
-
-历史重写仍处于已演练、待所有者确认状态；远端历史未改变，因此暂不记录为已接受决策。
+- [0004：Git 历史瘦身与 clone 验收边界](0004-git-history-rewrite.md)
