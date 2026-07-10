@@ -5,6 +5,7 @@ const ci = fs.readFileSync(".github/workflows/ci.yml", "utf8");
 const release = fs.readFileSync(".github/workflows/release.yml", "utf8");
 const pages = fs.readFileSync(".github/workflows/pages.yml", "utf8");
 const verificationManifest = fs.readFileSync("scripts/verification-manifest.mjs", "utf8");
+const npmAuthSelector = fs.readFileSync("scripts/select-npm-auth-mode.mjs", "utf8");
 const ruleset = JSON.parse(fs.readFileSync(".github/rulesets/main.json", "utf8"));
 const actionPins = {
   "actions/checkout": "9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
@@ -24,7 +25,7 @@ for (const [label, content] of [["CI", ci], ["release", release]]) {
   expect(content.includes(`actions/checkout@${actionPins["actions/checkout"]}`), `${label} must pin actions/checkout v7 by SHA`);
   expect(content.includes(`actions/setup-node@${actionPins["actions/setup-node"]}`), `${label} must pin actions/setup-node v6 by SHA`);
   expect(/node-version:\s*24/.test(content), `${label} must pin Node.js 24`);
-  expect(content.includes("npm@11.12.1"), `${label} must pin npm 11.12.1`);
+  expect(content.includes("npm@11.18.0"), `${label} must pin npm 11.18.0`);
   expect(content.includes("npm ci --ignore-scripts"), `${label} must use npm ci`);
 }
 expect(ci.includes("npm run verify:ci"), "CI must run the authoritative verification tier");
@@ -42,7 +43,14 @@ expect(release.includes(`actions/attest@${actionPins["actions/attest"]}`), "rele
 expect(release.includes("ZL_RELEASE_REPOSITORY_PRIVATE"), "release must block when the current plan cannot attest a private repository");
 expect(release.includes("npm run verify:release"), "release must run the authoritative release verification tier");
 expect(!release.includes("npm run verify:full-command-surface"), "release must not repeat a verifier outside the release DAG");
-expect(!release.includes("NODE_AUTH_TOKEN"), "release must not depend on a long-lived npm token");
+expect(!release.includes("secrets.NPM_TOKEN"), "release must not depend on a general long-lived npm token");
+expect(release.includes("secrets.NPM_BOOTSTRAP_TOKEN"), "release must expose an explicit one-time first-publish bootstrap path");
+expect((release.match(/NODE_AUTH_TOKEN/g) || []).length === 1, "NODE_AUTH_TOKEN must be scoped to exactly one bootstrap publish step");
+expect(release.includes("steps.npm-auth.outputs.mode == 'bootstrap'"), "bootstrap token use must be conditional on a missing npm package");
+expect(release.includes("steps.npm-auth.outputs.mode == 'trusted'"), "existing packages must use the OIDC trusted-publishing path");
+expect(release.includes("node scripts/select-npm-auth-mode.mjs"), "release must use the tested npm authentication selector");
+expect(npmAuthSelector.includes("E404") && npmAuthSelector.includes("registry lookup failed"), "npm authentication selector must distinguish missing packages from registry failures");
+expect(npmAuthSelector.includes("Revoke and delete it immediately"), "bootstrap flow must require immediate token cleanup");
 expect(pages.includes(`actions/checkout@${actionPins["actions/checkout"]}`), "Pages must pin actions/checkout v7 by SHA");
 expect(pages.includes(`actions/setup-node@${actionPins["actions/setup-node"]}`), "Pages must pin actions/setup-node v6 by SHA");
 expect(pages.includes(`actions/configure-pages@${actionPins["actions/configure-pages"]}`), "Pages must pin configure-pages v6 by SHA");

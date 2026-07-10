@@ -271,7 +271,7 @@ npm 包通过 `files` 白名单只包含 CLI、模板、运行环境包、schema
 
 本项目使用 [Apache License 2.0](LICENSE)。该许可证包含明确的版权授权、专利授权、再分发条件和免责声明。外部工具与非内嵌材料的许可边界见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。
 
-npm 发布使用 GitHub OIDC trusted publishing，不保存长期 npm token。首次发布前仍需在 npm 为 `zhulong-kit` 配置 Trusted Publisher。
+npm 后续版本使用 GitHub OIDC trusted publishing，不保存长期发布 token。由于 npm 只允许给已经存在的包配置 trusted publisher，`zhulong-kit@0.1.0` 首发必须先由仓库所有者提供一个一次性 granular token；GitHub-hosted release workflow 会生成 provenance，发布成功后必须立即配置 Trusted Publisher、删除 GitHub secret 并撤销该 token。
 
 ## 参与和安全
 

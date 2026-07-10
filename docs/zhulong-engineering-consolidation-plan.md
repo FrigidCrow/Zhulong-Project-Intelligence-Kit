@@ -340,12 +340,13 @@ npm run verify:local-rag  # 需要本地 RAG 环境的可选检查
 发布步骤：
 
 1. 确认 npm 上 `zhulong-kit` 的名称所有权。
-2. 在 npm 配置 trusted publisher，并精确绑定当前 `release.yml`。
+2. 因为 npm 要求包已存在后才能配置 trusted publisher，首发前创建最小权限、一次性的 `NPM_BOOTSTRAP_TOKEN` environment secret。
 3. 从干净 clone 执行 `npm ci`、`verify:release` 和 pack 审计。
 4. 发布候选 tarball，在临时目录完成全局安装 smoke test。
-5. 创建签名或受保护的 `v0.1.0` tag，触发 release workflow。
-6. 检查 npm provenance、GitHub attestation、SHA-256 和 release metadata。
-7. 从公开 npm registry 再次安装并验证三个入口。
+5. 创建签名或受保护的 `v0.1.0` tag，触发 release workflow；首发仅在 registry 确认包不存在时使用 bootstrap token，并生成 provenance。
+6. 首发成功后立即配置 trusted publisher、删除 GitHub secret 并撤销一次性 token；后续发布只使用 OIDC。
+7. 检查 npm provenance、GitHub attestation、SHA-256 和 release metadata。
+8. 从公开 npm registry 再次安装并验证三个入口。
 
 发布后观察：
 

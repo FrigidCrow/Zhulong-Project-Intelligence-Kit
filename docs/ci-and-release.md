@@ -4,7 +4,7 @@
 
 `.github/workflows/ci.yml` 在 push、pull request 和手动触发时运行名为 `quality` 的 job：
 
-1. 固定 Node.js 24 和 npm 11.12.1。
+1. 固定 Node.js 24 和 npm 11.18.0。
 2. 用 `npm ci --ignore-scripts` 按 `package-lock.json` 安装。
 3. 执行权威 `verify:ci` 层；全命令面检查已经在 manifest 中，只运行一次。
 4. 执行 `npm pack --dry-run --json` 并用 `verify:pack-report` 检查发布边界。
@@ -50,7 +50,7 @@ GH_TOKEN="$(gh auth token -u FrigidCrow)" npm run github:ruleset
 
 ## npm 发布决策
 
-截至 2026-07-10，npm registry 查询中 `zhulong-kit` 返回 404，表示当时未查到同名公开包；这不等于已获得名称所有权。当前建议保留无 scope 包名 `zhulong-kit`，并在首次发布前用实际 npm 账户完成占位和 trusted publisher 绑定。
+截至 2026-07-10，npm registry 查询中 `zhulong-kit` 返回 404，表示当时未查到同名公开包；这不等于已获得名称所有权。npm 官方要求包已经存在才能配置 trusted publisher，所以不能在首次发布前直接绑定 OIDC。
 
 项目已经选择 Apache License 2.0。`package.json` 使用 SPDX 标识 `Apache-2.0`、`private: false`、公开 `publishConfig` 和 provenance；标准文本保存在根目录 `LICENSE`，第三方边界记录在 `THIRD_PARTY_LICENSES.md`。
 
@@ -58,14 +58,34 @@ GH_TOKEN="$(gh auth token -u FrigidCrow)" npm run github:ruleset
 
 ## Trusted Publishing
 
-`.github/workflows/release.yml` 仅在 GitHub Release 发布时运行，并绑定 `npm` environment。该 environment 已在远程创建，只允许 `v*` tag 部署；当前 GitHub 套餐不支持再加人工审批规则。npm 端需在目标包的 Trusted Publisher 中配置：
+`.github/workflows/release.yml` 仅在 GitHub Release 发布时运行，并绑定 `npm` environment。该 environment 已在远程创建，只允许 `v*` tag 部署；当前 GitHub 套餐不支持再加人工审批规则。
+
+### `v0.1.0` 首发引导
+
+1. 仓库所有者登录 npm，确认账户已启用 2FA，并创建只允许发布 `zhulong-kit` 的一次性 granular token。
+2. 把它临时保存为 GitHub `npm` environment secret：`NPM_BOOTSTRAP_TOKEN`。
+3. 发布 GitHub Release `v0.1.0`。workflow 只有在 npm registry 不存在该包时才允许 bootstrap 分支，并在 GitHub-hosted runner 上使用 `--provenance` 发布。
+4. 发布成功后，在 npm 为包配置 Trusted Publisher，然后立即删除 GitHub secret 并撤销一次性 token。
+
+后续版本的 Trusted Publisher 配置为：
 
 - GitHub owner：`FrigidCrow`
 - Repository：`Zhulong-Project-Intelligence-Kit`
 - Workflow：`release.yml`
 - Environment：`npm`
+- Allowed action：`npm publish`
 
-工作流只请求 GitHub OIDC 的 `id-token: write`，不读取 `NPM_TOKEN`。升级 GitHub 套餐后，再给 `npm` environment 增加所有者审批。
+使用 npm 11.18.0 登录后，也可以执行：
+
+```bash
+npm trust github zhulong-kit \
+  --file release.yml \
+  --repo FrigidCrow/Zhulong-Project-Intelligence-Kit \
+  --env npm \
+  --allow-publish
+```
+
+配置完成后，后续 release 只使用 GitHub OIDC 的短期凭据。workflow 不读取通用 `NPM_TOKEN`；`NODE_AUTH_TOKEN` 仅存在于首发 bootstrap step。升级 GitHub 套餐后，再给 `npm` environment 增加所有者审批。
 
 ## 制品证据
 
