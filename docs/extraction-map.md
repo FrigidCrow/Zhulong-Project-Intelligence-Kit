@@ -5,7 +5,7 @@ practice into a reusable template.
 
 ## Extracted As Generic
 
-| Original practice | Generic AI-PIKit concept |
+| Original practice | Generic Zhulong concept |
 | --- | --- |
 | Local AGENTS rules | `core/AGENTS.template.md` |
 | `.planning/PROJECT.md` | durable project memory |

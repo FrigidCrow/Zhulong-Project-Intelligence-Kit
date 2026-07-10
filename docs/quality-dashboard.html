@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Project Intelligence Kit - QA Dashboard</title>
-  <meta name="description" content="AI-PIKit 本地验证报告、质量脚本、截图证据和 runtime pack 状态。">
-  <link rel="stylesheet" href="assets/pik-site.css">
+  <title>Zhulong Project Intelligence Kit - QA Dashboard</title>
+  <meta name="description" content="Zhulong 本地验证报告、质量脚本、截图证据和 runtime pack 状态。">
+  <link rel="stylesheet" href="assets/zl-site.css">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
   <header class="topbar">
-    <a class="brand-mark" href="../README.md">AI Project Intelligence Kit</a>
+    <a class="brand-mark" href="../README.md">Zhulong Project Intelligence Kit</a>
     <nav class="nav" aria-label="主导航">
       <a href="product.html">产品</a>
       <a href="commands.html">命令</a>
@@ -23,7 +23,7 @@
   <main id="main">
     <section class="page-title">
       <p class="eyebrow">Quality Evidence</p>
-      <h1>AI-PIKit QA Dashboard。</h1>
+      <h1>Zhulong QA Dashboard。</h1>
       <p>这里集中查看 integration、docs、RAG、MVP3、workflow facade、policy hardening、cockpit、全命令面、skills usability、workflow closure、docs completeness、schema、naming、runtime、visual 和两轮正式测试的本地证据。绿色状态必须能追到具体报告或截图。</p>
     </section>
 
@@ -60,7 +60,7 @@
         </article>
         <article class="panel panel-pad">
           <h3>Developer Audit / Benchmark</h3>
-          <p>维护者专用对标产物：71 个命令、33 个 runtime skill/prompt、feature gate、AI-PIKit / GSD / Superpowers 同题比较、时间和 token 边界。完整审计 96 / A；最新 benchmark：AI-PIKit 90 / A，GSD 88 / B，Superpowers 82 / B。Benchmark comparison 87 是混合矩阵保守平均，不能当作 AI-PIKit 单体分。</p>
+          <p>维护者专用对标产物覆盖当前 74 个命令、33 个 runtime skill/prompt、功能门禁、同题比较、耗时和 token 边界。历史评分只代表当次 fixture，当前能力以最新 verifier 和 74 / 74 全命令面结果为准。</p>
           <p><a class="button" href="../verification/reports/developer-audit-summary.md">Audit Summary</a> <a class="button" href="internal/dev-audit.md">Audit Guide</a></p>
         </article>
         <article class="panel panel-pad">
@@ -74,7 +74,7 @@
     <section class="section alt">
       <div class="section-header">
         <h2>场景质量覆盖</h2>
-        <p>AI-PIKit 的说明书按场景组织，QA 也必须按场景证明：轻量项目、严格文档项目、既有项目、文档更新、leader 演示都要有可复跑报告。</p>
+        <p>Zhulong 的说明书按场景组织，QA 也必须按场景证明：轻量项目、严格文档项目、既有项目、文档更新、leader 演示都要有可复跑报告。</p>
       </div>
       <div class="table-wrap">
         <table>
@@ -83,8 +83,8 @@
             <tr><td>文档少 / 无文档</td><td><code>reference + rag none</code> 可以继续，缺文档必须写 <code>WAIVED_WITH_RISK</code>。</td><td><code>npm run verify:workflow-closure</code></td><td><code>workflow-closure-check.md</code></td></tr>
             <tr><td>对日 / 文档严格</td><td><code>strict + rag local</code> 要求本地 RAG、citation 和 stale 检查。</td><td><code>npm run verify:init-policy</code><br><code>npm run verify:rag-local</code><br><code>npm run verify:answer-audit</code></td><td><code>init-policy-check.md</code>、<code>rag-local-check.md</code>、<code>answer-audit-check.md</code></td></tr>
             <tr><td>既有项目改修</td><td>先建 codebase baseline 和 Graphify 影响面，再进入 workflow。</td><td><code>npm run verify:integration</code><br><code>npm run verify:graph-hardening</code></td><td><code>latest.md</code>、<code>graph-hardening-check.md</code></td></tr>
-            <tr><td>文档更新</td><td><code>pik-docs-sync</code> 默认轻量同步，只标记 stale；<code>--index</code> 才重建 RAG。</td><td><code>npm run verify:docs-sync</code><br><code>npm run verify:knowledge-reliability</code></td><td><code>docs-sync-check.md</code>、<code>knowledge-reliability-check.md</code></td></tr>
-            <tr><td>Runtime skills</td><td>Codex / Claude Code / Copilot 的 skill/prompt 都指向本地 <code>pik-*</code>。</td><td><code>npm run verify:skills-usability</code></td><td><code>skills-usability-check.md</code></td></tr>
+            <tr><td>文档更新</td><td><code>zl-docs-sync</code> 默认轻量同步，只标记 stale；<code>--index</code> 才重建 RAG。</td><td><code>npm run verify:docs-sync</code><br><code>npm run verify:knowledge-reliability</code></td><td><code>docs-sync-check.md</code>、<code>knowledge-reliability-check.md</code></td></tr>
+            <tr><td>Runtime skills</td><td>Codex / Claude Code / Copilot 的 skill/prompt 都指向本地 <code>zl-*</code>。</td><td><code>npm run verify:skills-usability</code></td><td><code>skills-usability-check.md</code></td></tr>
             <tr><td>Leader 演示</td><td>cockpit 只读取本地 artifact，展示 Graphify/RAG/evidence/policy 状态，不执行 heavy refresh。</td><td><code>npm run verify:cockpit-build</code></td><td><code>cockpit-build-check.md</code></td></tr>
           </tbody>
         </table>
@@ -101,23 +101,23 @@
           <thead><tr><th>命令</th><th>覆盖范围</th><th>报告</th></tr></thead>
           <tbody>
             <tr><td><code>npm run verify:docs</code></td><td>HTML/Markdown 本地链接、共享 CSS、命令手册覆盖。</td><td><a href="../verification/reports/docs-check.md">docs-check.md</a></td></tr>
-            <tr><td><code>npm run verify:docs-sync</code></td><td><code>pik-docs-sync</code> 默认轻量同步、文档新增/修改/删除 stale 标记、<code>--index</code> 显式重索引。</td><td><a href="../verification/reports/docs-sync-check.md">docs-sync-check.md</a></td></tr>
-            <tr><td><code>npm run verify:answer-audit</code></td><td><code>pik-answer-audit</code> 默认来源、<code>--from</code>、<code>--answer</code>、profile 状态和 workflow facade 建议。</td><td><a href="../verification/reports/answer-audit-check.md">answer-audit-check.md</a></td></tr>
+            <tr><td><code>npm run verify:docs-sync</code></td><td><code>zl-docs-sync</code> 默认轻量同步、文档新增/修改/删除 stale 标记、<code>--index</code> 显式重索引。</td><td><a href="../verification/reports/docs-sync-check.md">docs-sync-check.md</a></td></tr>
+            <tr><td><code>npm run verify:answer-audit</code></td><td><code>zl-answer-audit</code> 默认来源、<code>--from</code>、<code>--answer</code>、profile 状态和 workflow facade 建议。</td><td><a href="../verification/reports/answer-audit-check.md">answer-audit-check.md</a></td></tr>
             <tr><td><code>npm run verify:knowledge-reliability</code></td><td>Knowledge Reliability Lite 主路径：docs sync -> docs query -> answer audit。</td><td><a href="../verification/reports/knowledge-reliability-check.md">knowledge-reliability-check.md</a></td></tr>
             <tr><td><code>npm run verify:rag-local</code></td><td>Local GraphRAG、Ollama、LanceDB、no external API key、privacy audit；默认 index 300 秒、query 90 秒超时。</td><td><a href="../verification/reports/rag-local-check.md">rag-local-check.md</a></td></tr>
             <tr><td><code>npm run verify:mvp3</code></td><td>RAG golden、citation audit、trace matrix、policy、help skills。</td><td><a href="../verification/reports/mvp3-evidence-policy-check.md">mvp3-evidence-policy-check.md</a></td></tr>
             <tr><td><code>npm run verify:mvp35</code></td><td>preflight、refresh plan、显式 refresh-run、mode 切换、文档同步。</td><td><a href="../verification/reports/mvp35-refresh-control-check.md">mvp35-refresh-control-check.md</a></td></tr>
             <tr><td><code>npm run verify:workflow-facade</code></td><td>public workflow 自动写 facade、输出下一步建议、并证明不触发 heavy refresh。</td><td><a href="../verification/reports/workflow-facade-check.md">workflow-facade-check.md</a></td></tr>
             <tr><td><code>npm run verify:policy-hardening</code></td><td>policy lock/verify/diff、四态语义、profile 阻断和 no heavy refresh 约束。</td><td><a href="../verification/reports/policy-hardening-check.md">policy-hardening-check.md</a></td></tr>
-            <tr><td><code>npm run verify:init-policy</code></td><td><code>pik-init</code> 默认 reference + rag none、strict 必须选择 RAG、外部 RAG 必须 opt-in、rag none 阻断 GraphRAG 执行。</td><td><a href="../verification/reports/init-policy-check.md">init-policy-check.md</a></td></tr>
-            <tr><td><code>npm run verify:full-command-surface</code></td><td><code>package.json</code> 中全部 <code>pik-*</code> / <code>pik</code> bin 命令。</td><td><a href="../verification/reports/full-command-surface-check.md">full-command-surface-check.md</a></td></tr>
+            <tr><td><code>npm run verify:init-policy</code></td><td><code>zl-init</code> 默认 reference + rag none、strict 必须选择 RAG、外部 RAG 必须 opt-in、rag none 阻断 GraphRAG 执行。</td><td><a href="../verification/reports/init-policy-check.md">init-policy-check.md</a></td></tr>
+            <tr><td><code>npm run verify:full-command-surface</code></td><td><code>package.json</code> 中全部 <code>zl-*</code> / <code>zl</code> bin 命令。</td><td><a href="../verification/reports/full-command-surface-check.md">full-command-surface-check.md</a></td></tr>
             <tr><td><code>npm run verify:skills-usability</code></td><td>Codex / Claude Code / GitHub Copilot runtime pack 临时安装和 33 个 skill/prompt 内容检查。</td><td><a href="../verification/reports/skills-usability-check.md">skills-usability-check.md</a></td></tr>
             <tr><td><code>npm run verify:workflow-closure</code></td><td>新项目、既有项目、reference 无文档风险放行、strict stale/privacy 阻断四条 workflow closure fixture。</td><td><a href="../verification/reports/workflow-closure-check.md">workflow-closure-check.md</a></td></tr>
-            <tr><td><code>npm run verify:cockpit-build</code></td><td><code>pik-cockpit-build</code>、独立 cockpit 模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、搜索/详情/legend、本地图聚合、RAG 证据面板和 no hidden heavy refresh。</td><td><a href="../verification/reports/cockpit-build-check.md">cockpit-build-check.md</a></td></tr>
-            <tr><td><code>npm run verify:docs-completeness</code></td><td>命令手册 71 个独立锚点、详情字段、README 跳转和命名边界。</td><td><a href="../verification/reports/docs-completeness-check.md">docs-completeness-check.md</a></td></tr>
+            <tr><td><code>npm run verify:cockpit-build</code></td><td><code>zl-cockpit-build</code>、独立 cockpit 模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、搜索/详情/legend、本地图聚合、RAG 证据面板和 no hidden heavy refresh。</td><td><a href="../verification/reports/cockpit-build-check.md">cockpit-build-check.md</a></td></tr>
+            <tr><td><code>npm run verify:docs-completeness</code></td><td>命令手册 74 个独立锚点、详情字段、README 跳转和命名边界。</td><td><a href="../verification/reports/docs-completeness-check.md">docs-completeness-check.md</a></td></tr>
             <tr><td><code>npm run verify:business-chain</code></td><td>维护者级业务断链审计：init、全命令面、skills、workflow、policy、docs completeness 聚合。</td><td><a href="../verification/reports/business-chain-audit.md">business-chain-audit.md</a></td></tr>
             <tr><td><code>npm run verify:quality-closure</code></td><td>聚合 check、quality、integration、runtime、skills、workflow、cockpit、docs completeness。</td><td><a href="../verification/reports/quality-closure-check.md">quality-closure-check.md</a></td></tr>
-            <tr><td><code>npm run verify:dev-audit-harness</code><br><code>npm run dev:audit:full</code></td><td>维护者内部审计：命令评分、skills 评分、feature gate、AI-PIKit / GSD / Superpowers 对标、时间拆分、token 统计边界和记忆隔离。</td><td><a href="../verification/reports/developer-audit-summary.md">developer-audit-summary.md</a></td></tr>
+            <tr><td><code>npm run verify:dev-audit-harness</code><br><code>npm run dev:audit:full</code></td><td>维护者内部审计：命令评分、skills 评分、feature gate、Zhulong / GSD / Superpowers 对标、时间拆分、token 统计边界和记忆隔离。</td><td><a href="../verification/reports/developer-audit-summary.md">developer-audit-summary.md</a></td></tr>
             <tr><td><code>npm run verify:integration</code></td><td>init、docs、Graphify、runtime pack、workflow guard、evidence writeback。</td><td><a href="../verification/reports/latest.md">latest.md</a></td></tr>
           </tbody>
         </table>
@@ -133,18 +133,18 @@
         <table>
           <thead><tr><th>层</th><th>命令</th><th>主要报告</th></tr></thead>
           <tbody>
-            <tr><td>初始化</td><td><code>pik</code>, <code>pik-init</code>, <code>pik-verify</code>, <code>pik-map</code></td><td><code>full-command-surface-check.md</code></td></tr>
-            <tr><td>Codebase</td><td><code>pik-codebase</code>, <code>pik-codebase-scan</code>, <code>pik-codebase-status</code></td><td><code>latest.md</code></td></tr>
-            <tr><td>文档/RAG</td><td><code>pik-docs-scan</code>, <code>pik-docs-status</code>, <code>pik-docs-normalize</code>, <code>pik-docs-extract</code>, <code>pik-docs-diff</code>, <code>pik-docs-citations</code>, <code>pik-docs-sync</code>, <code>pik-citation-audit</code>, <code>pik-rag-init-local</code>, <code>pik-rag-golden-add</code>, <code>pik-rag-golden-run</code>, <code>pik-rag-eval</code>, <code>pik-docs-index</code>, <code>pik-docs-query</code>, <code>pik-answer-audit</code></td><td><code>docs-sync-check.md</code>, <code>answer-audit-check.md</code>, <code>rag-local-check.md</code>, <code>mvp3-evidence-policy-check.md</code></td></tr>
-            <tr><td>Graphify</td><td><code>pik-graph-build</code>, <code>pik-graph-status</code>, <code>pik-graph-query</code>, <code>pik-graph-diff</code>, <code>pik-graph-impact</code>, <code>pik-graph-risk</code>, <code>pik-graph-freshness</code></td><td><code>graph-hardening-check.md</code>, <code>latest.md</code></td></tr>
-            <tr><td>Refresh / Mode</td><td><code>pik-preflight</code>, <code>pik-refresh-plan</code>, <code>pik-refresh-run</code>, <code>pik-mode-status</code>, <code>pik-mode-set</code></td><td><code>mvp35-refresh-control-check.md</code></td></tr>
-            <tr><td>Privacy / License</td><td><code>pik-privacy-audit</code>, <code>pik-offline-lock</code>, <code>pik-outbound-audit</code>, <code>pik-license-audit</code></td><td><code>privacy-strict-check.md</code>, <code>license-audit-check.md</code></td></tr>
-            <tr><td>Evidence / Trace / Policy</td><td><code>pik-evidence-record</code>, <code>pik-evidence-status</code>, <code>pik-trace-build</code>, <code>pik-trace-query</code>, <code>pik-trace-audit</code>, <code>pik-policy-list</code>, <code>pik-policy-check</code>, <code>pik-policy-explain</code>, <code>pik-policy-lock</code>, <code>pik-policy-verify</code>, <code>pik-policy-diff</code>, <code>pik-help-skills</code></td><td><code>mvp3-evidence-policy-check.md</code>, <code>policy-hardening-check.md</code></td></tr>
-            <tr><td>Runtime</td><td><code>pik-runtime-install</code>, <code>pik-runtime-status</code></td><td><code>runtime-pack-status.md</code></td></tr>
-            <tr><td>Workflow guard</td><td><code>pik-workflow-run</code>, <code>pik-workflow-status</code>, <code>pik-workflow-continue</code>, <code>pik-workflow-audit</code>, <code>pik-gate-check</code>, <code>pik-completion-check</code></td><td><code>latest.md</code></td></tr>
-            <tr><td>Public workflow</td><td><code>pik-new-milestone</code>, <code>pik-spec-phase</code>, <code>pik-discuss-phase</code>, <code>pik-ui-phase</code>, <code>pik-debug</code>, <code>pik-plan-phase</code>, <code>pik-execute-phase</code>, <code>pik-code-review</code>, <code>pik-verify-work</code>, <code>pik-complete-milestone</code></td><td><code>latest.md</code>, <code>full-command-surface-check.md</code></td></tr>
-            <tr><td>Context</td><td><code>pik-context-debug</code>, <code>pik-context-execute</code></td><td><code>full-command-surface-check.md</code></td></tr>
-            <tr><td>Cockpit</td><td><code>pik-cockpit-build</code>, <code>templates/cockpit/sample.html</code></td><td><code>cockpit-build-check.md</code>, <code>full-command-surface-check.md</code></td></tr>
+            <tr><td>初始化</td><td><code>zl</code>, <code>zl-init</code>, <code>zl-verify</code>, <code>zl-map</code></td><td><code>full-command-surface-check.md</code></td></tr>
+            <tr><td>Codebase</td><td><code>zl-codebase</code>, <code>zl-codebase-scan</code>, <code>zl-codebase-status</code></td><td><code>latest.md</code></td></tr>
+            <tr><td>文档/RAG</td><td><code>zl-docs-scan</code>, <code>zl-docs-status</code>, <code>zl-docs-normalize</code>, <code>zl-docs-extract</code>, <code>zl-docs-diff</code>, <code>zl-docs-citations</code>, <code>zl-docs-sync</code>, <code>zl-citation-audit</code>, <code>zl-rag-init-local</code>, <code>zl-rag-golden-add</code>, <code>zl-rag-golden-run</code>, <code>zl-rag-eval</code>, <code>zl-docs-index</code>, <code>zl-docs-query</code>, <code>zl-answer-audit</code></td><td><code>docs-sync-check.md</code>, <code>answer-audit-check.md</code>, <code>rag-local-check.md</code>, <code>mvp3-evidence-policy-check.md</code></td></tr>
+            <tr><td>Graphify</td><td><code>zl-graph-build</code>, <code>zl-graph-status</code>, <code>zl-graph-query</code>, <code>zl-graph-diff</code>, <code>zl-graph-impact</code>, <code>zl-graph-risk</code>, <code>zl-graph-freshness</code></td><td><code>graph-hardening-check.md</code>, <code>latest.md</code></td></tr>
+            <tr><td>Refresh / Mode</td><td><code>zl-preflight</code>, <code>zl-refresh-plan</code>, <code>zl-refresh-run</code>, <code>zl-mode-status</code>, <code>zl-mode-set</code></td><td><code>mvp35-refresh-control-check.md</code></td></tr>
+            <tr><td>Privacy / License</td><td><code>zl-privacy-audit</code>, <code>zl-offline-lock</code>, <code>zl-outbound-audit</code>, <code>zl-license-audit</code></td><td><code>privacy-strict-check.md</code>, <code>license-audit-check.md</code></td></tr>
+            <tr><td>Evidence / Trace / Policy</td><td><code>zl-evidence-record</code>, <code>zl-evidence-status</code>, <code>zl-trace-build</code>, <code>zl-trace-query</code>, <code>zl-trace-audit</code>, <code>zl-policy-list</code>, <code>zl-policy-check</code>, <code>zl-policy-explain</code>, <code>zl-policy-lock</code>, <code>zl-policy-verify</code>, <code>zl-policy-diff</code>, <code>zl-help-skills</code></td><td><code>mvp3-evidence-policy-check.md</code>, <code>policy-hardening-check.md</code></td></tr>
+            <tr><td>Runtime</td><td><code>zl-runtime-install</code>, <code>zl-runtime-status</code></td><td><code>runtime-pack-status.md</code></td></tr>
+            <tr><td>Workflow guard</td><td><code>zl-workflow-run</code>, <code>zl-workflow-status</code>, <code>zl-workflow-continue</code>, <code>zl-workflow-audit</code>, <code>zl-gate-check</code>, <code>zl-completion-check</code></td><td><code>latest.md</code></td></tr>
+            <tr><td>Public workflow</td><td><code>zl-new-milestone</code>, <code>zl-spec-phase</code>, <code>zl-discuss-phase</code>, <code>zl-ui-phase</code>, <code>zl-debug</code>, <code>zl-plan-phase</code>, <code>zl-execute-phase</code>, <code>zl-code-review</code>, <code>zl-verify-work</code>, <code>zl-complete-milestone</code></td><td><code>latest.md</code>, <code>full-command-surface-check.md</code></td></tr>
+            <tr><td>Context</td><td><code>zl-context-debug</code>, <code>zl-context-execute</code></td><td><code>full-command-surface-check.md</code></td></tr>
+            <tr><td>Cockpit</td><td><code>zl-cockpit-build</code>, <code>templates/cockpit/sample.html</code></td><td><code>cockpit-build-check.md</code>, <code>full-command-surface-check.md</code></td></tr>
           </tbody>
         </table>
       </div>

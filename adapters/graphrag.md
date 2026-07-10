@@ -12,12 +12,12 @@ GraphRAG is the business and document knowledge adapter.
 
 ## Common Commands
 
-AI-PIKit facade:
+Zhulong facade:
 
 ```bash
-pik-docs-index --target <repo>
-pik-docs-index --target <repo> --run
-pik-docs-query --target <repo> --rag "<question>"
+zl-docs-index --target <repo>
+zl-docs-index --target <repo> --run
+zl-docs-query --target <repo> --rag "<question>"
 ```
 
 Adapter command examples:
@@ -32,8 +32,8 @@ graphrag query --root graphrag-workspace --method global --response-type "List o
 
 1. Use local queries for concrete project/business questions.
 2. Use global queries for broad system-wide summaries.
-3. Use `pik-docs-index` for handoff mode when privacy or model settings need review.
-4. Use `pik-docs-index --run` only when direct document RAG execution is approved.
+3. Use `zl-docs-index` for handoff mode when privacy or model settings need review.
+4. Use `zl-docs-index --run` only when direct document RAG execution is approved.
 5. Treat broad or surprising claims as hypotheses.
 6. Verify with source, SQL, logs, docs, or issue evidence.
 

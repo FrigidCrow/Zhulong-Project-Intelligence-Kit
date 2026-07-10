@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zhulong Execute Phase"
+  short_description: "Execute plans with Zhulong context"
+  default_prompt: "$zl-execute-phase"

@@ -1,4 +1,0 @@
-interface:
-  display_name: "AI-PIKit Execute Phase"
-  short_description: "Execute plans with AI-PIKit context"
-  default_prompt: "$pik-execute-phase"

@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-schema-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-schema-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -29,8 +29,8 @@ function read(filePath) {
   return fs.readFileSync(filePath, "utf8");
 }
 
-function pik(args, options = {}) {
-  return runCommand("pik", "node", [pikCli, ...args], {
+function zl(args, options = {}) {
+  return runCommand("zl", "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -118,7 +118,7 @@ function assertSchemaDocs() {
   ]);
 
   const issueText = read(path.join(kitRoot, "schemas", "issue-record.schema.md"));
-  for (const required of ["Summary", "Evidence", "Graph / RAG Analysis", "Verification Result", "AI-PIKit Evidence Writeback"]) {
+  for (const required of ["Summary", "Evidence", "Graph / RAG Analysis", "Verification Result", "Zhulong Evidence Writeback"]) {
     if (!issueText.includes(required)) addIssue(`issue-record schema missing required concept: ${required}`);
   }
 
@@ -194,24 +194,24 @@ function assertEvidenceShape() {
 
   const debugRecord = path.join(projectRoot, ".planning", "debug", "schema-debug.md");
   assertExists("debug writeback target", debugRecord);
-  if (!read(debugRecord).includes("AI-PIKit Evidence Writeback")) {
-    addIssue("debug writeback target missing AI-PIKit Evidence Writeback section");
+  if (!read(debugRecord).includes("Zhulong Evidence Writeback")) {
+    addIssue("debug writeback target missing Zhulong Evidence Writeback section");
   }
 }
 
 fs.mkdirSync(projectRoot, { recursive: true });
-write(path.join(projectRoot, "src", "index.js"), "export function schemaSmoke() { return 'AI-PIKit schema smoke'; }\n");
+write(path.join(projectRoot, "src", "index.js"), "export function schemaSmoke() { return 'Zhulong schema smoke'; }\n");
 write(path.join(projectRoot, "docs", "specs", "schema.md"), [
   "# Schema Smoke 仕様",
   "",
   "- SCHEMA_SENTINEL_20260625",
-  "- AI-PIKit workflow state, evidence, and manifest must be locally inspectable.",
+  "- Zhulong workflow state, evidence, and manifest must be locally inspectable.",
   "",
 ].join("\n"));
 
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "schema_fixture", "--mode", "new", "--force"]);
-pik(["codebase", "scan", "--target", projectRoot]);
-pik(["docs", "scan", "--target", projectRoot]);
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "schema_fixture", "--mode", "new", "--force"]);
+zl(["codebase", "scan", "--target", projectRoot]);
+zl(["docs", "scan", "--target", projectRoot]);
 write(path.join(projectRoot, ".planning", "graphs", "graph.json"), `${JSON.stringify({
   nodes: [{ id: "src/index.js", path: "src/index.js" }],
   edges: [],
@@ -230,14 +230,14 @@ write(path.join(projectRoot, ".planning", "debug", "schema-debug.md"), [
   "",
 ].join("\n"));
 
-pik(["workflow", "run", "debug", "--target", projectRoot, "schema validation smoke"]);
-const earlyAudit = pik(["workflow", "audit", "--target", projectRoot], { allowFailure: true });
+zl(["workflow", "run", "debug", "--target", projectRoot, "schema validation smoke"]);
+const earlyAudit = zl(["workflow", "audit", "--target", projectRoot], { allowFailure: true });
 assertOutputIncludes("workflow audit before gates", earlyAudit.output, "workflow guard FAIL");
 assertOutputIncludes("workflow audit next command", earlyAudit.output, "next plan:");
-pik(["workflow", "continue", "--target", projectRoot, "--gate", "plan", "--evidence", ".planning/workflows/*/PLAN.md reviewed"]);
-pik(["workflow", "continue", "--target", projectRoot, "--gate", "implementation", "--evidence", "schema fixture files generated"]);
-pik(["workflow", "continue", "--target", projectRoot, "--gate", "verification", "--evidence", "verify:schema structural checks"]);
-pik([
+zl(["workflow", "continue", "--target", projectRoot, "--gate", "plan", "--evidence", ".planning/workflows/*/PLAN.md reviewed"]);
+zl(["workflow", "continue", "--target", projectRoot, "--gate", "implementation", "--evidence", "schema fixture files generated"]);
+zl(["workflow", "continue", "--target", projectRoot, "--gate", "verification", "--evidence", "verify:schema structural checks"]);
+zl([
   "evidence",
   "record",
   "--target",
@@ -256,7 +256,7 @@ pik([
   "--rollback",
   "remove fixture temp directory",
 ]);
-const finalAudit = pik(["workflow", "audit", "--target", projectRoot]);
+const finalAudit = zl(["workflow", "audit", "--target", projectRoot]);
 assertOutputIncludes("workflow audit after evidence", finalAudit.output, "workflow guard PASS");
 
 assertManifestShape();
@@ -274,7 +274,7 @@ const data = {
 };
 
 writeJsonReport("schema-check.json", data);
-writeMarkdownReport("schema-check.md", "AI-PIKit Schema Check", summarizeIssues(issues), [
+writeMarkdownReport("schema-check.md", "Zhulong Schema Check", summarizeIssues(issues), [
   {
     title: "Evidence",
     body: evidence.length === 0 ? ["No evidence recorded."] : evidence.map((item) => `- ${item}`),

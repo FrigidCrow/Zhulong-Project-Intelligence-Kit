@@ -1,4 +1,4 @@
-# pik-code-review
+# zl-code-review
 
 Purpose: review changes against requirements, code impact, tests, and evidence.
 
@@ -18,6 +18,6 @@ Outputs:
 
 - Findings first, ordered by severity.
 - Test gaps and residual risks.
-- Next command recommendation: `pik-execute-phase` for fixes or
-  `pik-verify-work` when ready.
+- Next command recommendation: `zl-execute-phase` for fixes or
+  `zl-verify-work` when ready.
 

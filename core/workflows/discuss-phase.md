@@ -1,4 +1,4 @@
-# pik-discuss-phase
+# zl-discuss-phase
 
 Purpose: resolve ambiguity before planning or implementation.
 
@@ -18,6 +18,6 @@ Outputs:
 
 - Decision notes in the active phase or issue record.
 - Evidence record for important decisions.
-- Next command recommendation: `pik-spec-phase` if more source evidence is
-  needed, or `pik-plan-phase` when the decision is settled.
+- Next command recommendation: `zl-spec-phase` if more source evidence is
+  needed, or `zl-plan-phase` when the decision is settled.
 

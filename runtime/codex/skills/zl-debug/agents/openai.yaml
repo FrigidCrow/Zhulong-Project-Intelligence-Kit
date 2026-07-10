@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zhulong Debug"
+  short_description: "Debug defects with Zhulong context"
+  default_prompt: "$zl-debug"

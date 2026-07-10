@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-docs-update-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-docs-update-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -25,8 +25,8 @@ function write(filePath, text) {
   fs.writeFileSync(filePath, text);
 }
 
-function pik(args, options = {}) {
-  return runCommand("pik", "node", [pikCli, ...args], {
+function zl(args, options = {}) {
+  return runCommand("zl", "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -48,11 +48,11 @@ write(path.join(projectRoot, "docs", "qa", "QA-001_initial.md"), [
   "",
 ].join("\n"));
 
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "docs_update_fixture", "--mode", "new", "--force"]);
-pik(["docs", "scan", "--target", projectRoot]);
-pik(["docs", "normalize", "--target", projectRoot]);
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "docs_update_fixture", "--mode", "new", "--force"]);
+zl(["docs", "scan", "--target", projectRoot]);
+zl(["docs", "normalize", "--target", projectRoot]);
 
-const initialQuery = pik(["docs", "query", "--target", projectRoot, "INITIAL_APPROVAL_RULE"]);
+const initialQuery = zl(["docs", "query", "--target", projectRoot, "INITIAL_APPROVAL_RULE"]);
 assertIncludes("initial local docs query", initialQuery.output, "INITIAL_APPROVAL_RULE");
 
 const newDoc = path.join(projectRoot, "docs", "minutes", "2026-06-25_update.md");
@@ -64,13 +64,13 @@ write(newDoc, [
   "",
 ].join("\n"));
 
-pik(["docs", "scan", "--target", projectRoot]);
-pik(["docs", "normalize", "--target", projectRoot]);
+zl(["docs", "scan", "--target", projectRoot]);
+zl(["docs", "normalize", "--target", projectRoot]);
 
 const sources = fs.readFileSync(path.join(projectRoot, ".planning", "knowledge", "RAG_SOURCES.md"), "utf8");
 assertIncludes("RAG_SOURCES after update", sources, "2026-06-25_update.md");
 
-const updatedQuery = pik(["docs", "query", "--target", projectRoot, "DOC_UPDATE_SENTINEL_4242"]);
+const updatedQuery = zl(["docs", "query", "--target", projectRoot, "DOC_UPDATE_SENTINEL_4242"]);
 assertIncludes("updated local docs query", updatedQuery.output, "DOC_UPDATE_SENTINEL_4242");
 assertIncludes("updated local docs query source", updatedQuery.output, "2026-06-25_update");
 
@@ -88,7 +88,7 @@ const data = {
 };
 
 writeJsonReport("docs-update-fixture.json", data);
-writeMarkdownReport("docs-update-fixture.md", "AI-PIKit Docs Update Fixture", summarizeIssues(issues), [
+writeMarkdownReport("docs-update-fixture.md", "Zhulong Docs Update Fixture", summarizeIssues(issues), [
   {
     title: "Evidence",
     body: evidence.length === 0 ? ["No evidence recorded."] : evidence.map((item) => `- ${item}`),

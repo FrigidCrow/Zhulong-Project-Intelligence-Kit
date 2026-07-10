@@ -10,10 +10,10 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
 const pkg = JSON.parse(fs.readFileSync(path.join(kitRoot, "package.json"), "utf8"));
-const binCommands = Object.keys(pkg.bin).filter((name) => name === "pik" || name.startsWith("pik-")).sort();
-const workRoot = tempRoot("aipikit-full-command-surface-");
+const binCommands = Object.keys(pkg.bin).filter((name) => name === "zl" || name.startsWith("zl-")).sort();
+const workRoot = tempRoot("zhulong-full-command-surface-");
 const projectRoot = path.join(workRoot, "project");
 const aliasBin = path.join(workRoot, "bin");
 const issues = [];
@@ -55,7 +55,7 @@ function makeAliasBins() {
   for (const command of binCommands) {
     const aliasPath = path.join(aliasBin, command);
     if (fs.existsSync(aliasPath)) fs.rmSync(aliasPath);
-    fs.symlinkSync(pikCli, aliasPath);
+    fs.symlinkSync(zlCli, aliasPath);
   }
 }
 
@@ -75,10 +75,10 @@ function runAlias(alias, args = [], options = {}) {
   return record(command, result, options.expectedStatus ?? 0);
 }
 
-function runPik(args = [], options = {}) {
-  const command = `pik${args.length ? ` ${args.join(" ")}` : ""}`;
-  covered.add("pik");
-  const result = runCommand(command, "node", [pikCli, ...args], {
+function runZl(args = [], options = {}) {
+  const command = `zl${args.length ? ` ${args.join(" ")}` : ""}`;
+  covered.add("zl");
+  const result = runCommand(command, "node", [zlCli, ...args], {
     cwd: options.cwd || projectRoot,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -208,10 +208,10 @@ function prepareProject() {
 }
 
 function maybeRunLocalGraphRagInit() {
-  const result = runAlias("pik-rag-init-local", ["--target", projectRoot, "--force", "--skip-model-check"], {
+  const result = runAlias("zl-rag-init-local", ["--target", projectRoot, "--force", "--skip-model-check"], {
     timeout: 360000,
   });
-  assertIncludes("pik-rag-init-local", result.output, "Local GraphRAG default mode initialized");
+  assertIncludes("zl-rag-init-local", result.output, "Local GraphRAG default mode initialized");
 }
 
 function makeGraphFresh() {
@@ -228,58 +228,60 @@ function makeGraphFresh() {
 }
 
 function runDocumentAndRagCommands() {
-  runAlias("pik-docs-scan", ["--target", projectRoot]);
-  runAlias("pik-docs-status", ["--target", projectRoot]);
-  runAlias("pik-docs-normalize", ["--target", projectRoot]);
-  runAlias("pik-docs-extract", ["--target", projectRoot]);
-  runAlias("pik-docs-diff", ["--target", projectRoot]);
-  const citations = runAlias("pik-docs-citations", ["--target", projectRoot, "FULL_SURFACE_SENTINEL_7719"]);
-  assertIncludes("pik-docs-citations", citations.output, "FULL_SURFACE_SENTINEL_7719");
-  runAlias("pik-citation-audit", ["--target", projectRoot]);
-  const docsSync = runAlias("pik-docs-sync", ["--target", projectRoot]);
-  assertIncludes("pik-docs-sync", docsSync.output, "heavy refresh executed: no");
-  runAlias("pik-docs-index", ["--target", projectRoot]);
-  const indexRun = runAlias("pik-docs-index", ["--target", projectRoot, "--run"]);
-  assertIncludes("pik-docs-index --run", indexRun.output, "status success");
-  const localQuery = runAlias("pik-docs-query", ["--target", projectRoot, "FULL_SURFACE_SENTINEL_7719"]);
-  assertIncludes("pik-docs-query", localQuery.output, "FULL_SURFACE_SENTINEL_7719");
-  const answerAudit = runAlias("pik-answer-audit", ["--target", projectRoot]);
-  assertIncludes("pik-answer-audit", answerAudit.output, "answer audit PASS");
-  const ragQuery = runAlias("pik-docs-query", ["--target", projectRoot, "--rag", "FULL_SURFACE_SENTINEL_7719"]);
-  assertIncludes("pik-docs-query --rag", ragQuery.output, "FULL_SURFACE_SENTINEL_7719");
-  runAlias("pik-rag-golden-add", ["--target", projectRoot, "--question", "FULL_SURFACE_SENTINEL_7719", "--expect", "FULL_SURFACE_SENTINEL_7719", "--citation", "docs/specs/approval.md:3"]);
-  runAlias("pik-rag-golden-run", ["--target", projectRoot]);
-  runAlias("pik-rag-eval", ["--target", projectRoot]);
+  runAlias("zl-docs-scan", ["--target", projectRoot]);
+  runAlias("zl-docs-status", ["--target", projectRoot]);
+  runAlias("zl-docs-normalize", ["--target", projectRoot]);
+  runAlias("zl-docs-extract", ["--target", projectRoot]);
+  runAlias("zl-docs-diff", ["--target", projectRoot]);
+  const citations = runAlias("zl-docs-citations", ["--target", projectRoot, "FULL_SURFACE_SENTINEL_7719"]);
+  assertIncludes("zl-docs-citations", citations.output, "FULL_SURFACE_SENTINEL_7719");
+  runAlias("zl-citation-audit", ["--target", projectRoot]);
+  const docsSync = runAlias("zl-docs-sync", ["--target", projectRoot]);
+  assertIncludes("zl-docs-sync", docsSync.output, "heavy refresh executed: no");
+  runAlias("zl-ambiguity-audit", ["--target", projectRoot]);
+  runAlias("zl-docs-index", ["--target", projectRoot]);
+  const indexRun = runAlias("zl-docs-index", ["--target", projectRoot, "--run"]);
+  assertIncludes("zl-docs-index --run", indexRun.output, "status success");
+  const localQuery = runAlias("zl-docs-query", ["--target", projectRoot, "FULL_SURFACE_SENTINEL_7719"]);
+  assertIncludes("zl-docs-query", localQuery.output, "FULL_SURFACE_SENTINEL_7719");
+  const answerAudit = runAlias("zl-answer-audit", ["--target", projectRoot]);
+  assertIncludes("zl-answer-audit", answerAudit.output, "answer audit PASS");
+  const ragQuery = runAlias("zl-docs-query", ["--target", projectRoot, "--rag", "FULL_SURFACE_SENTINEL_7719"]);
+  assertIncludes("zl-docs-query --rag", ragQuery.output, "FULL_SURFACE_SENTINEL_7719");
+  runAlias("zl-answer-audit", ["--target", projectRoot, "--answer", "FULL_SURFACE_SENTINEL_7719 [docs/specs/approval.md:3]"]);
+  runAlias("zl-rag-golden-add", ["--target", projectRoot, "--question", "FULL_SURFACE_SENTINEL_7719", "--expect", "FULL_SURFACE_SENTINEL_7719", "--citation", "docs/specs/approval.md:3"]);
+  runAlias("zl-rag-golden-run", ["--target", projectRoot]);
+  runAlias("zl-rag-eval", ["--target", projectRoot]);
 }
 
 function runGraphCommands() {
-  runAlias("pik-graph-build", ["--target", projectRoot]);
-  const build = runAlias("pik-graph-build", ["--target", projectRoot, "--run"]);
-  assertIncludes("pik-graph-build --run", build.output, "status success");
+  runAlias("zl-graph-build", ["--target", projectRoot]);
+  const build = runAlias("zl-graph-build", ["--target", projectRoot, "--run"]);
+  assertIncludes("zl-graph-build --run", build.output, "status success");
   makeGraphFresh();
-  runAlias("pik-graph-status", ["--target", projectRoot]);
-  const query = runAlias("pik-graph-query", ["--target", projectRoot, "approvalLimit"]);
-  assertIncludes("pik-graph-query", query.output, "approval");
-  runAlias("pik-graph-diff", ["--target", projectRoot]);
-  runAlias("pik-graph-impact", ["--target", projectRoot, "--files", "src/approval.js"]);
-  runAlias("pik-graph-risk", ["--target", projectRoot]);
-  runAlias("pik-graph-freshness", ["--target", projectRoot, "--strict"]);
+  runAlias("zl-graph-status", ["--target", projectRoot]);
+  const query = runAlias("zl-graph-query", ["--target", projectRoot, "approvalLimit"]);
+  assertIncludes("zl-graph-query", query.output, "approval");
+  runAlias("zl-graph-diff", ["--target", projectRoot]);
+  runAlias("zl-graph-impact", ["--target", projectRoot, "--files", "src/approval.js"]);
+  runAlias("zl-graph-risk", ["--target", projectRoot]);
+  runAlias("zl-graph-freshness", ["--target", projectRoot, "--strict"]);
 }
 
 function runRefreshModeCommands() {
-  const preflight = runAlias("pik-preflight", ["--target", projectRoot]);
-  assertIncludes("pik-preflight", preflight.output, "heavy refresh executed: no");
-  runAlias("pik-refresh-plan", ["--target", projectRoot]);
-  runAlias("pik-refresh-run", ["--target", projectRoot, "--rag", "--force"]);
-  runAlias("pik-refresh-run", ["--target", projectRoot, "--graph", "--force"]);
-  runAlias("pik-mode-status", ["--target", projectRoot]);
-  const modeSet = runAlias("pik-mode-set", ["--target", projectRoot, "graph-lite"]);
-  assertIncludes("pik-mode-set", modeSet.output, "mode graph-lite");
-  runAlias("pik-mode-set", ["--target", projectRoot, "default-local-rag"]);
+  const preflight = runAlias("zl-preflight", ["--target", projectRoot]);
+  assertIncludes("zl-preflight", preflight.output, "heavy refresh executed: no");
+  runAlias("zl-refresh-plan", ["--target", projectRoot]);
+  runAlias("zl-refresh-run", ["--target", projectRoot, "--rag", "--force"]);
+  runAlias("zl-refresh-run", ["--target", projectRoot, "--graph", "--force"]);
+  runAlias("zl-mode-status", ["--target", projectRoot]);
+  const modeSet = runAlias("zl-mode-set", ["--target", projectRoot, "graph-lite"]);
+  assertIncludes("zl-mode-set", modeSet.output, "mode graph-lite");
+  runAlias("zl-mode-set", ["--target", projectRoot, "default-local-rag"]);
 }
 
 function runEvidenceTracePolicyAndPrivacyCommands() {
-  runAlias("pik-evidence-record", [
+  runAlias("zl-evidence-record", [
     "--target",
     projectRoot,
     "Full command surface evidence",
@@ -292,77 +294,79 @@ function runEvidenceTracePolicyAndPrivacyCommands() {
     "--writeback",
     ".planning/issues/full-command-surface.md",
   ]);
-  runAlias("pik-evidence-status", ["--target", projectRoot]);
-  runAlias("pik-trace-build", ["--target", projectRoot]);
-  const traceQuery = runAlias("pik-trace-query", ["--target", projectRoot, "FULL_SURFACE"]);
-  assertIncludes("pik-trace-query", traceQuery.output, "Trace query");
-  runAlias("pik-trace-audit", ["--target", projectRoot]);
-  runAlias("pik-offline-lock", ["--target", projectRoot]);
-  runAlias("pik-privacy-audit", ["--target", projectRoot, "--strict"]);
-  runAlias("pik-outbound-audit", ["--target", projectRoot]);
-  runAlias("pik-license-audit", ["--target", projectRoot]);
-  runAlias("pik-policy-list", ["--target", projectRoot]);
-  runAlias("pik-policy-explain", ["--target", projectRoot, "trace.matrix"]);
-  runAlias("pik-policy-check", ["--target", projectRoot, "--strict"]);
-  runAlias("pik-policy-lock", ["--target", projectRoot]);
-  runAlias("pik-policy-verify", ["--target", projectRoot]);
-  runAlias("pik-policy-diff", ["--target", projectRoot]);
-  runAlias("pik-help-skills", ["--target", projectRoot, "文档更新后想确认影响面和完成前检查"]);
+  runAlias("zl-evidence-status", ["--target", projectRoot]);
+  runAlias("zl-trace-build", ["--target", projectRoot]);
+  const traceQuery = runAlias("zl-trace-query", ["--target", projectRoot, "FULL_SURFACE"]);
+  assertIncludes("zl-trace-query", traceQuery.output, "Trace query");
+  runAlias("zl-trace-audit", ["--target", projectRoot]);
+  runAlias("zl-structure-audit", ["--target", projectRoot]);
+  runAlias("zl-offline-lock", ["--target", projectRoot]);
+  runAlias("zl-privacy-audit", ["--target", projectRoot, "--strict"]);
+  runAlias("zl-outbound-audit", ["--target", projectRoot]);
+  runAlias("zl-license-audit", ["--target", projectRoot]);
+  runAlias("zl-policy-list", ["--target", projectRoot]);
+  runAlias("zl-policy-explain", ["--target", projectRoot, "trace.matrix"]);
+  runAlias("zl-policy-check", ["--target", projectRoot, "--strict"]);
+  runAlias("zl-policy-lock", ["--target", projectRoot]);
+  runAlias("zl-policy-verify", ["--target", projectRoot]);
+  runAlias("zl-policy-diff", ["--target", projectRoot]);
+  runAlias("zl-help-skills", ["--target", projectRoot, "文档更新后想确认影响面和完成前检查"]);
+  runAlias("zl-next", ["--target", projectRoot]);
 }
 
 function runRuntimeAndContextCommands() {
   for (const runtime of ["codex", "claude-code", "github-copilot"]) {
     const dest = path.join(workRoot, "runtime", runtime);
-    runAlias("pik-runtime-install", ["--runtime", runtime, "--dest", dest, "--force"]);
-    runAlias("pik-runtime-status", ["--runtime", runtime, "--dest", dest]);
+    runAlias("zl-runtime-install", ["--runtime", runtime, "--dest", dest, "--force"]);
+    runAlias("zl-runtime-status", ["--runtime", runtime, "--dest", dest]);
   }
-  runAlias("pik-context-debug", ["--target", projectRoot, "FULL_SURFACE debug context"]);
-  runAlias("pik-context-execute", ["--target", projectRoot, "FULL_SURFACE execute context"]);
+  runAlias("zl-context-debug", ["--target", projectRoot, "FULL_SURFACE debug context"]);
+  runAlias("zl-context-execute", ["--target", projectRoot, "FULL_SURFACE execute context"]);
 }
 
 function runWorkflowCommands() {
-  runAlias("pik-workflow-run", ["--target", projectRoot, "debug", "FULL_SURFACE workflow"]);
-  runAlias("pik-workflow-continue", ["--target", projectRoot, "--gate", "plan", "--evidence", "PLAN.md reviewed"]);
-  runAlias("pik-workflow-continue", ["--target", projectRoot, "--gate", "implementation", "--evidence", "src/approval.js verified"]);
-  runAlias("pik-workflow-continue", ["--target", projectRoot, "--gate", "verification", "--evidence", "npm run verify:full-command-surface"]);
-  runAlias("pik-workflow-status", ["--target", projectRoot]);
-  runAlias("pik-workflow-audit", ["--target", projectRoot]);
-  runAlias("pik-gate-check", ["--target", projectRoot]);
-  runAlias("pik-completion-check", ["--target", projectRoot]);
+  runAlias("zl-workflow-run", ["--target", projectRoot, "debug", "FULL_SURFACE workflow"]);
+  runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", "plan", "--evidence", "PLAN.md reviewed"]);
+  runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", "implementation", "--evidence", "src/approval.js verified"]);
+  runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", "verification", "--evidence", "npm run verify:full-command-surface"]);
+  runAlias("zl-workflow-status", ["--target", projectRoot]);
+  runAlias("zl-workflow-audit", ["--target", projectRoot]);
+  runAlias("zl-gate-check", ["--target", projectRoot]);
+  runAlias("zl-completion-check", ["--target", projectRoot]);
 
   for (const command of [
-    "pik-new-milestone",
-    "pik-spec-phase",
-    "pik-discuss-phase",
-    "pik-ui-phase",
-    "pik-debug",
-    "pik-plan-phase",
-    "pik-execute-phase",
-    "pik-code-review",
-    "pik-verify-work",
-    "pik-complete-milestone",
+    "zl-new-milestone",
+    "zl-spec-phase",
+    "zl-discuss-phase",
+    "zl-ui-phase",
+    "zl-debug",
+    "zl-plan-phase",
+    "zl-execute-phase",
+    "zl-code-review",
+    "zl-verify-work",
+    "zl-complete-milestone",
   ]) {
     runAlias(command, ["--target", projectRoot, `FULL_SURFACE ${command}`]);
   }
 }
 
 function runCockpitCommand() {
-  const result = runAlias("pik-cockpit-build", ["--target", projectRoot]);
-  assertIncludes("pik-cockpit-build", result.output, "cockpit build");
-  assertIncludes("pik-cockpit-build", result.output, "heavy refresh executed: no");
+  const result = runAlias("zl-cockpit-build", ["--target", projectRoot]);
+  assertIncludes("zl-cockpit-build", result.output, "cockpit build");
+  assertIncludes("zl-cockpit-build", result.output, "heavy refresh executed: no");
   assertFileIncludes("cockpit report", path.join(projectRoot, ".planning", "cockpit", "COCKPIT_REPORT.md"), "Heavy refresh executed: no");
-  assertFileIncludes("cockpit html", path.join(projectRoot, ".planning", "cockpit", "index.html"), "AI-PIKit 项目驾驶舱");
+  assertFileIncludes("cockpit html", path.join(projectRoot, ".planning", "cockpit", "index.html"), "Zhulong 项目驾驶舱");
 }
 
 prepareProject();
 makeAliasBins();
-runPik([]);
-runAlias("pik-init", ["--target", projectRoot, "--template", "greenfield-app", "--name", "full_command_surface", "--mode", "new", "--force"]);
-runAlias("pik-verify", ["--target", projectRoot]);
-runAlias("pik-map", ["--target", projectRoot]);
-runAlias("pik-codebase", ["--target", projectRoot]);
-runAlias("pik-codebase-scan", ["--target", projectRoot]);
-runAlias("pik-codebase-status", ["--target", projectRoot]);
+runZl([]);
+runAlias("zl-init", ["--target", projectRoot, "--template", "greenfield-app", "--name", "full_command_surface", "--mode", "new", "--force"]);
+runAlias("zl-verify", ["--target", projectRoot]);
+runAlias("zl-map", ["--target", projectRoot]);
+runAlias("zl-codebase", ["--target", projectRoot]);
+runAlias("zl-codebase-scan", ["--target", projectRoot]);
+runAlias("zl-codebase-status", ["--target", projectRoot]);
 maybeRunLocalGraphRagInit();
 configureFakeRagAndGraph();
 runDocumentAndRagCommands();
@@ -401,7 +405,7 @@ const data = {
 };
 
 writeJsonReport("full-command-surface-check.json", data);
-writeMarkdownReport("full-command-surface-check.md", "AI-PIKit 全命令面验证", summarizeIssues(issues), [
+writeMarkdownReport("full-command-surface-check.md", "Zhulong 全命令面验证", summarizeIssues(issues), [
   {
     title: "命令覆盖",
     body: [

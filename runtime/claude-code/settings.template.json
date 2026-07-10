@@ -1,0 +1,25 @@
+{
+  "disableAllHooks": true,
+  "disableBypassPermissionsMode": "disable",
+  "disableAutoMode": "disable",
+  "permissions": {
+    "deny": [
+      "WebFetch",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(scp *)",
+      "Bash(sftp *)",
+      "Bash(ssh *)",
+      "Bash(rsync *)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Edit(./docs/**)",
+      "Write(./docs/**)",
+      "Edit(./documents/**)",
+      "Write(./documents/**)",
+      "Edit(./仕様書/**)",
+      "Write(./仕様書/**)"
+    ]
+  }
+}

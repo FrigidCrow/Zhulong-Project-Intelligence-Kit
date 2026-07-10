@@ -20,6 +20,6 @@ Minimum phase content:
 - Plan
 - Execution notes
 - Verification
-- AI-PIKit Evidence Writeback entries when evidence was recorded separately
+- Zhulong Evidence Writeback entries when evidence was recorded separately
 - Risks
 - Follow-ups

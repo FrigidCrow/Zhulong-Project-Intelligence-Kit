@@ -1,9 +1,13 @@
 # Zhulong（烛龙）截图提取稿与本地改造计划
 
+> 最近校对：2026-07-10。
+>
+> 当前结论：Zhulong 品牌基线已经统一。npm、CLI、runtime skills、文档、验证器、资源路径与生成报告统一使用 Zhulong / ZL 命名，Node.js 基线为 24，npm 发布内容由白名单控制。
+
 > 来源：用户提供的 9 张截图，原截图顶部显示源文档为
 > `/Users/di.l.wu/Downloads/cross-tech-wukong-kit/docs/session-2026-07-09-changes-and-rationale.md`。
 >
-> 说明：以下内容按截图可见文本去重、重排并人工校对。被截图裁切或遮挡、无法可靠恢复的极少量文字不做臆造；截图里的 `ct-wk-*` 是另一份 kit 的命令名，本地仓库当前对应入口是 `pik-*`。
+> 说明：以下内容按截图可见文本去重、重排并人工校对。被截图裁切或遮挡、无法可靠恢复的极少量文字不做臆造；截图里的 `ct-wk-*` 是另一份 kit 的命令名，本地仓库使用 `zhulong` / `zl` 根入口与 `zl-*` 直接命令。
 
 ## 0. Zhulong 命名方向
 
@@ -18,11 +22,13 @@
 
 - 产品展示名：`Zhulong（烛龙）`
 - npm/local package 名：`zhulong-kit`
-- 新 CLI 入口：`zhulong` / `zhulong-*`
-- 兼容入口：保留 `pik` / `pik-*`，至少一个版本周期不删除。
+- CLI 入口：`zhulong` / `zl`，功能通过根命令子命令暴露。
+- 直接命令：使用 `zl-*` 前缀。
 - 内部数据目录：继续使用 `.planning/`，不改成 `.zhulong/`，避免破坏已有项目工作台。
 
 ## 1. 图片文字提取
+
+> 本节是九张截图的历史原文转写，用于保留设计来源；其中的 `ct-wk-*`、旧路径、旧命令数量和当时环境限制不代表当前仓库。当前实现与验收以第 2 节之后的 `zhulong` / `zl-*` 映射为准。
 
 ### 0. 贯穿全程的设计红线（先立规矩，后面每条都遵守）
 
@@ -147,677 +153,267 @@
 | 配置 | `core/planning/config.template.json`（`knowledge.auto_answer_audit`） |
 | 文档 | `README.md`、`docs/architecture.md`、`docs/changelog.md`、`docs/product.html`、`docs/field-notes/*`、`docs/mechanical-audit-*.md` |
 
-## 2. 本地仓库现状映射
+## 2. 当前工程基线
 
-本地仓库当前是 AI Project Intelligence Kit / AI-PIKit，CLI 主入口为 `bin/pik.mjs`，命令面在 `package.json` 中以 `pik` / `pik-*` 暴露。与截图中的 `ct-wk-*` 方案相比，本地已有这些基础：
+2026-07-10 的品牌与工程约定如下：
 
-| 能力 | 本地现状 | 计划判断 |
-| --- | --- | --- |
-| CLI 单文件核心 | 已有 `bin/pik.mjs` | 新功能优先落在这里，避免引入新 runtime 依赖。 |
-| 命令目录生成 | 已有 `scripts/command-catalog.mjs`、`scripts/render-commands-doc.mjs`、`docs/commands.html` | 新命令和 `zhulong-*` alias 必须同步进目录。 |
-| 回答审计 | 已有 `pik-answer-audit` 和 `scripts/verify-answer-audit.mjs` | 不是新建，而是增强为 citation rate / value drift / USR。 |
-| docs sync / docs query | 已有 `pik-docs-sync`、`pik-docs-query` | 可折入只读 audit，但重命令仍保持显式。 |
-| cockpit | 已有 `pik-cockpit-build`、`templates/cockpit/index.template.html` | 增加 Quality & Token Metrics，并确认不嵌大 graph。 |
-| 命令全覆盖 | 当前报告文档显示 71 / 71 | 新增命令后更新为新的总数，不直接照搬截图的 74。 |
-| ambiguity / structure audit | 本地未发现对应命令与 verify 脚本 | 需要新建。 |
-| `runtime/claude-code/settings.template.json` | 本地未发现 | 需要新建，同时考虑 Codex runtime 是否也需要等价说明。 |
-| `docs/context-efficiency.md` | 本地未发现 | 需要新建。 |
-| `THIRD_PARTY_LICENSES.md` | 本地未发现 | 若 vendor 英文弱词表，必须新建。 |
-| `ambiguity-wordlists.json` | 本地未发现 | 需要放仓库根，目标项目扩展放 `.planning/knowledge/ambiguity-wordlists.json`。 |
-
-## 3. 本地完整修改计划
-
-### Phase 0：命名与兼容边界确认
-
-目标：让 `Zhulong（烛龙）` 成为新品牌，但不破坏现有 `pik-*` 项目。
-
-改动：
-
-- `package.json`
-  - `"name"` 从 `ai-project-intelligence-kit` 改为 `zhulong-kit`。
-  - `"description"` 改为 Zhulong 定位语。
-  - 新增 `zhulong` / `zhulong-*` bin aliases，先映射到 `./bin/pik.mjs`。
-  - 保留 `pik` / `pik-*` bin aliases，作为 legacy compatibility。
-- `bin/pik.mjs`
-  - 增加对 `zhulong-*` executable 名的 alias 解析。
-  - help 文案首屏显示 `Zhulong（烛龙）`，同时标注 `pik-*` 仍可用。
-- 文档命名
-  - README、product、architecture、quality-plan、runtime-command-packs 使用 `Zhulong（烛龙）` 作为主名。
-  - 首次出现处说明：formerly AI-PIKit / `pik-*`。
-- 不改：
-  - 不改 `.planning/`，不改已生成的历史 verification 报告目录。
-  - 不删除 `pik-*`，避免 runtime pack、旧项目脚本和验证报告断裂。
-
-验收：
-
-- `node --check bin/pik.mjs`
-- `node bin/pik.mjs --help`
-- `node bin/pik.mjs init --help` 或等价 help smoke
-- `npm run verify:naming`
-
-### Phase 1：命令目录与文档生成支持双命名
-
-目标：命令手册里展示 `zhulong-*` 为主入口，同时保留 `pik-*` 兼容入口。
-
-改动：
-
-- `scripts/command-catalog.mjs`
-  - 抽出 canonical command id，例如 `docs-sync`。
-  - 渲染时主命令为 `zhulong-docs-sync`，legacy alias 为 `pik-docs-sync`。
-  - `LOGICAL_NAMES` / `OUTPUTS` 不再和 `pik-*` 字符串强绑定。
-- `scripts/render-commands-doc.mjs`
-  - 更新锚点策略：推荐新锚点 `cmd-zhulong-*`，兼容旧锚点 `cmd-pik-*` 可保留跳转或别名说明。
-- `docs/commands.html`
-  - 重新生成。
-- `README.md`
-  - 快速开始命令改用 `zhulong-*`。
-  - 兼容段落说明旧 `pik-*` 可继续执行。
-
-验收：
-
-- `npm run verify:docs-completeness`
-- `npm run verify:full-command-surface`
-
-### Phase 2：新增机械式质量审计
-
-目标：实现截图里最关键的“机械式判定”能力，不调 LLM、不加 npm runtime 依赖。
-
-新增 / 修改：
-
-- `ambiguity-wordlists.json`
-  - 放仓库根。
-  - 结构建议：`languages.en.weak_terms`、`languages.ja.weak_terms`、`languages.zh.weak_terms`、`positive_terms`、`strict_only`、`metadata.licenses`。
-- `THIRD_PARTY_LICENSES.md`
-  - 如果 vendored `write-good` / `words-weasels` 的 MIT 弱词表，登记来源、license、截取范围。
-- `bin/pik.mjs`
-  - 新增 `ambiguity audit` 子命令。
-  - 新增 executable aliases：`zhulong-ambiguity-audit`、`pik-ambiguity-audit`。
-  - 输出 `.planning/quality/AMBIGUITY_AUDIT.json` 和 `.planning/quality/AMBIGUITY_AUDIT.md`。
-  - 支持 `--strict`、`--target`、`--from`。
-  - 按行语言检测，CJK 单字词默认关闭。
-- `scripts/verify-ambiguity.mjs`
-  - 覆盖 EN/JA/ZH 命中。
-  - 覆盖中文“应 / 应当 / 必须 / 不得”不误报。
-  - 覆盖项目扩展词表 `.planning/knowledge/ambiguity-wordlists.json` 追加合并。
-- `package.json`
-  - 增加 `verify:ambiguity`，纳入 `verify:quality`。
-
-验收：
-
-- `npm run verify:ambiguity`
-- `npm run verify:docs-sync`
-- `npm run verify:full-command-surface`
-
-### Phase 3：新增结构审计并接入 completion check
-
-目标：对 `.planning` 关键制品做 mini-schema 体检，先提示不阻断。
-
-新增 / 修改：
-
-- `bin/pik.mjs`
-  - 新增 `structure audit` 子命令。
-  - 新增 executable aliases：`zhulong-structure-audit`、`pik-structure-audit`。
-  - 输出 `.planning/quality/STRUCTURE_AUDIT.json` 和 `.planning/quality/STRUCTURE_AUDIT.md`。
-  - 校验对象：`DOCUMENT_INDEX`、`ANSWER_AUDIT`、`AMBIGUITY_AUDIT`、`TRACE_MATRIX`、`REFRESH_STATE`。
-  - 错误对象形状保持 `{keyword, dataPath, message}`。
-- `scripts/verify-structure.mjs`
-  - 覆盖缺文件、缺字段、合法结构、合规率计算。
-- `pik-completion-check`
-  - 完成前自动跑 structure audit。
-  - 默认只打印合规率，不改变原 gate exit。
-  - `--strict` 或 strict profile 下再考虑阻断。
-- `package.json`
-  - 增加 `verify:structure`，纳入 `verify:quality`。
-
-验收：
-
-- `npm run verify:structure`
-- `npm run verify:workflow-closure`
-- `npm run verify:full-command-surface`
-
-### Phase 4：增强 answer audit 的接地度量
-
-目标：把“是否有依据”从 citation 存在性升级为可量化的机械指标。
-
-修改：
-
-- `bin/pik.mjs`
-  - 在现有 `answerAudit()` 中增加：
-    - `citation_resolve_rate`
-    - `value_drift_count`
-    - `unsupported_sentence_ratio`
-  - 读取 `DOCUMENT_INDEX.json` 解析 citation。
-  - 从答案和引用源中抽取数字，做 value drift 比对。
-  - 用 TF-IDF / n-gram overlap 计算句子支持度，不引入 embeddings / transformer。
-  - 默认 `reference` 模式 advisory；strict profile 再收紧阈值。
-- `scripts/verify-answer-audit.mjs`
-  - 扩展覆盖 value drift、USR、citation resolve rate。
-- `templates/cockpit/sample-data.json`
-  - 增加 answer audit 新指标样例。
-
-验收：
-
-- `npm run verify:answer-audit`
-- `npm run verify:knowledge-reliability`
-- `npm run verify:cockpit-build`
-
-### Phase 5：把只读审计折进门面
-
-目标：减少用户需要记忆的命令，同时保持 no-surprise，不偷偷跑重命令。
-
-修改：
-
-- `docs-sync`
-  - 默认流程从 diff / extract / citation audit 扩展为 diff / extract / citation audit / ambiguity audit。
-  - 不触发 RAG index，除非 `--index`。
-- `docs-query`
-  - 查询后默认自动跑一次 answer audit。
-  - 新增配置 `knowledge.auto_answer_audit`，默认 `true`，可在 `.planning/config.json` 关闭。
-- `completion-check`
-  - 默认附带 structure audit summary。
-  - 不改变现有非 strict gate 退出行为。
-- `core/planning/config.template.json`
-  - 增加 `knowledge.auto_answer_audit: true`。
-- `scripts/verify-docs-sync.mjs`
-  - 增加 ambiguity audit 被触发、但不触发 heavy refresh 的断言。
-- `scripts/verify-knowledge-reliability.mjs`
-  - 增加 docs query -> answer audit 自动链路。
-
-验收：
-
-- `npm run verify:docs-sync`
-- `npm run verify:knowledge-reliability`
-- `npm run verify:workflow-facade`
-
-### Phase 6：新增 `zhulong-next` 与扩展 help-skills
-
-目标：提供“我现在该干嘛”的单一入口。
-
-修改：
-
-- `bin/pik.mjs`
-  - 新增 `next` 子命令。
-  - 新增 executable aliases：`zhulong-next`、`pik-next`。
-  - 读取 `.planning/config.json`、`.planning/codebase/CODEBASE_STATUS.md`、workflow state、graph freshness、docs status、quality reports。
-  - 输出 2-3 条 next commands。
-  - 写 `.planning/help/NEXT.md`。
-- `help-skills`
-  - 扩展场景：质量审计、缺陷调查、状态演示、切换 RAG 后端。
-  - 推荐命令以 `zhulong-*` 为主，括号提示 legacy `pik-*`。
-- `scripts/verify-skills-usability.mjs`
-  - 如果 runtime pack 改名，补新 skill/prompt 名称检查。
-
-验收：
-
-- `zhulong-next --target "$PWD"` smoke
-- `npm run verify:skills-usability`
-- `npm run verify:full-command-surface`
-
-### Phase 7：cockpit 质量与 token 面板
-
-目标：把新增审计结果可视化，同时确认 HTML 不嵌大 graph。
-
-修改：
-
-- `bin/pik.mjs` cockpit 区
-  - 收集 `AMBIGUITY_AUDIT.json`、`STRUCTURE_AUDIT.json`、`ANSWER_AUDIT.json`、可选 `TOKEN_USAGE.json`。
-  - 生成 Quality & Token Metrics view model。
-  - 确认 graph 只保留摘要、计数、聚合预览，不把完整大 `graph.json` 注入 HTML。
-- `templates/cockpit/index.template.html`
-  - 增加质量指标区域。
-- `scripts/render-cockpit-sample.mjs`
-  - 更新 sample 数据。
-- `scripts/verify-cockpit-build.mjs`
-  - 增加 HTML size 上限断言。
-  - 增加 quality metrics 渲染断言。
-
-验收：
-
-- `npm run verify:cockpit-build`
-- `npm run build:cockpit-sample`
-
-### Phase 8：护栏、token 约定与合规脱敏
-
-目标：把截图中的 guardrail 和合规文档落地。
-
-新增 / 修改：
-
-- `runtime/claude-code/settings.template.json`
-  - 设置 Permissions `deny`：`WebFetch`、出网 CLI、对需求源目录写入。
-  - 和本地 `FORBIDDEN_NETWORK_COMMANDS` 保持一致。
-- `docs/context-efficiency.md`
-  - 写明 B1 prompt-cache 稳定前缀、B2 引用而非全文、B3 制品交接、B6 可选 `TOKEN_USAGE.json`。
-- `scripts/verify-guardrails.mjs`
-  - 检查 settings template、deny 列表、无 hooks 依赖、文档存在。
-- `docs/field-notes/*`
-  - 搜索 DeepSeek / 中国产 provider 示例，替换为 `<external-provider>`。
-  - 在 field-notes README 标注 fixture 数据非真实客户数据。
-- `package.json`
-  - 新增 `verify:guardrails`，纳入 `verify:quality`。
-
-验收：
-
-- `npm run verify:guardrails`
-- `npm run verify:privacy-strict`
-- `npm run verify:security-governance`
-- `npm run verify:license`
-
-### Phase 9：README / product / architecture 收口
-
-目标：完成从 AI-PIKit 到 Zhulong 的体验层改名，并把新能力讲清楚。
-
-修改：
-
-- `README.md`
-  - 首屏改为 `# Zhulong（烛龙）`。
-  - 五大能力：工作流护栏、文档智能、代码地图、证据闭环、质量审计。
-  - 快速开始用 `zhulong-*`。
-  - 加一段“旧 `pik-*` 命令仍兼容”。
-- `docs/product.html`
-  - 加痛点 -> 解法表。
-  - 加 FAQ。
-  - 加“普通 AI coding 做不到的竞争力”栅格。
-  - 更新命令数量。
-- `docs/architecture.md`
-  - 更新架构名、命令名、质量审计链路。
-- `docs/changelog.md`
-  - 新增 Zhulong rename + quality audit milestone。
-- `docs/quality-plan.md`
-  - 增加 ambiguity / structure / guardrails / next 的验证矩阵。
-
-验收：
-
-- `npm run verify:docs`
-- `npm run verify:docs-completeness`
-- `npm run verify:naming`
-
-### Phase 10：最终验证矩阵
-
-目标：保证改名、命令新增、文档和质量审计没有断链。
-
-最小验证：
-
-```bash
-npm run check
-npm run verify:ambiguity
-npm run verify:structure
-npm run verify:answer-audit
-npm run verify:docs-sync
-npm run verify:knowledge-reliability
-npm run verify:cockpit-build
-npm run verify:docs-completeness
-npm run verify:full-command-surface
-```
-
-发布前验证：
-
-```bash
-npm run verify:quality
-npm run verify:quality-closure
-npm run verify:business-chain
-```
-
-风险点：
-
-- `zhulong-*` 与 `pik-*` 双命令会让命令面数量膨胀，`verify:full-command-surface` 需要支持“canonical 命令 + legacy alias”分组，否则验证成本会翻倍。
-- Runtime skills/prompt 文件目前大量以 `pik-*` 命名，建议先显示层改名，再决定是否重命名 skill 文件。
-- 历史 verification reports 含大量 `AI-PIKit` / `pik-*` 文本，不建议批量改历史报告；新报告从改名后自然生成。
-- 如果加入第三方弱词表，必须先写清 `THIRD_PARTY_LICENSES.md`，避免“零依赖”变成“隐形 license 债”。
-
-## 4. 建议实施顺序
-
-1. 先做 Phase 0-1：品牌与 `zhulong-*` alias。这一步能立刻让 kit 变成“烛龙”，但风险最低。
-2. 再做 Phase 2-4：ambiguity / structure / answer audit。这是截图里真正有技术杠杆的部分。
-3. 然后做 Phase 5-7：把只读审计折进门面、增加 `zhulong-next`、更新 cockpit。
-4. 最后做 Phase 8-10：护栏、脱敏、文档收口和全量验证。
-
-推荐第一批 PR / commit 只包含：
-
-- `package.json` 增加 `zhulong` / `zhulong-*` aliases，保留 `pik-*`。
-- `bin/pik.mjs` 支持 `zhulong-*` executable alias。
-- README / product 首屏改名。
-- 命令手册生成逻辑显示新主名 + 旧别名。
-- `npm run check && npm run verify:naming && npm run verify:docs-completeness` 通过。
-
-这样“名字先立住”，后面的质量审计可以逐块加，不会一次把命令面、runtime pack、docs、verify 全部搅在一起。
-
-## 5. 全工程改名计划：Zhulong Project Intelligence Kit
-
-这份计划专门覆盖“整个工程从 AI-PIKit / Project-Intelligence-Kit 迁移到 Zhulong（烛龙）”的改名工作。目标不是只改 README，而是让 GitHub 仓库、npm 包名、CLI、runtime skills、文档、验证脚本和本地文件夹都对齐。
-
-### 5.1 最终命名规范
-
-| 场景 | 使用名称 |
+| 区域 | 最终约定 |
 | --- | --- |
 | 主品牌 | `Zhulong（烛龙）` |
 | 完整名 | `Zhulong Project Intelligence Kit` |
-| 短名 | `Zhulong Kit` |
-| npm package | `zhulong-kit` |
-| GitHub repo | `zhulong-project-intelligence-kit` |
-| 主 CLI | `zhulong` |
-| 短 CLI | `zl` |
-| legacy CLI | `pik` / `pik-*`，保留一个兼容周期 |
-| runtime skill 前缀 | `zhulong-*` |
-| legacy skill 前缀 | `pik-*`，保留 wrapper 或迁移说明 |
-| 本地工作台目录 | `.planning/` 保持不变 |
+| npm 包 | `zhulong-kit` |
+| 主命令 | `zhulong` |
+| 短命令 | `zl` |
+| 直接命令 | `zl-*` |
+| CLI 核心 | `bin/zl.mjs` |
+| Codex skills | `runtime/codex/skills/zl-*` |
+| Claude Code skills | `runtime/claude-code/skills/zl-*` |
+| GitHub Copilot prompts | `runtime/github-copilot/prompts/zl-*.prompt.md` |
+| 共享前缀 | 环境变量、模板变量和内部标识使用 `ZL_*` |
+| Node.js | 24 LTS，`engines.node: >=24 <25` |
+| 本地工作台 | `.planning/`，作为稳定数据协议保持不变 |
+| 主图标 | `docs/assets/zhulong-icon.png` |
+| 许可证 | 私有包，`UNLICENSED` |
 
-不建议使用：
+命名规则是单向的：产品名只使用 Zhulong，技术短前缀只使用 ZL。仓库不提供其他品牌兼容入口，也不保留双命名文案。
 
-- `Dragon Kit`：太直译，工程感弱。
-- `Candle Dragon AI`：容易显得中二，不像开发者工具。
-- `ZLKit`：可作为内部缩写，不适合作为第一品牌。
+## 3. 已完成的全工程统一
 
-### 5.2 仓库与本地文件夹改名
+### 3.1 CLI 与 npm
 
-你会在 GitHub 上改仓库名；本地建议同步改成无空格、全小写、短横线形式。
+- `package.json` 仅暴露 `zhulong`、`zl` 和 `zl-*`。
+- 所有命令统一路由到 `bin/zl.mjs`。
+- 命令目录、帮助文本、错误恢复建议和生成报告统一输出 Zhulong / ZL 名称。
+- npm script 使用 `zl` 作为本地 CLI 入口。
+- 逻辑子命令继续支持 `zhulong docs sync`、`zl docs sync` 等根命令形式。
 
-当前本地路径是：
+### 3.2 Runtime packs
 
-```text
-/Users/frigidcrow/Documents/Project-Intelligence-Kit 
-```
-
-注意：这个文件夹名末尾看起来有一个空格。改名时建议顺手去掉。
-
-建议本地改名命令：
-
-```bash
-cd /Users/frigidcrow/Documents
-mv "Project-Intelligence-Kit " "zhulong-project-intelligence-kit"
-cd "zhulong-project-intelligence-kit"
-```
-
-GitHub 仓库改名后，更新 remote：
-
-```bash
-git remote set-url origin git@github.com:<owner>/zhulong-project-intelligence-kit.git
-git remote -v
-```
-
-如果你使用 HTTPS remote：
-
-```bash
-git remote set-url origin https://github.com/<owner>/zhulong-project-intelligence-kit.git
-```
-
-验收：
-
-```bash
-pwd
-git status --short
-git remote -v
-```
-
-### 5.3 package 与 CLI 迁移
-
-第一阶段采用“新主入口 + 旧兼容入口”：
-
-- `package.json`
-  - `"name": "zhulong-kit"`
-  - `"description": "Zhulong Project Intelligence Kit for local, evidence-grounded AI engineering."`
-  - 新增 bin：`zhulong` -> `./bin/pik.mjs`
-  - 新增 bin：`zl` -> `./bin/pik.mjs`
-  - 保留现有 `pik` / `pik-*` bin。
-
-推荐主命令形态：
-
-```bash
-zhulong init --target "$PWD"
-zhulong docs sync --target "$PWD"
-zhulong workflow completion-check --target "$PWD"
-zhulong cockpit build --target "$PWD"
-```
-
-推荐短命令形态：
-
-```bash
-zl docs sync --target "$PWD"
-zl cockpit build --target "$PWD"
-```
-
-暂不推荐第一阶段新增全部 `zhulong-*` / `zl-*` 短横线 bin，因为这会让 `package.json` 命令面立即从 70+ 翻倍到 140+，同时让 `verify:full-command-surface` 成本翻倍。等根命令稳定后再决定是否增加：
+三套运行环境使用相同的 11 个命令族：
 
 ```text
-zhulong-init
-zhulong-docs-sync
-zhulong-completion-check
-...
+zl-new-milestone
+zl-spec-phase
+zl-discuss-phase
+zl-ui-phase
+zl-debug
+zl-plan-phase
+zl-execute-phase
+zl-code-review
+zl-verify-work
+zl-complete-milestone
+zl-cockpit-build
 ```
 
-需要修改：
+- Skill frontmatter、展示名、默认 prompt、模板变量和安装器全部使用 ZL。
+- Codex 使用 `$zl-*`。
+- Claude Code 与 GitHub Copilot 使用 `/zl-*`。
+- Runtime install/status 和 usability 验证以 ZL 路径为唯一来源。
 
-- `package.json`
-- `bin/pik.mjs` 的 `usage()` 文案，显示 `Zhulong（烛龙）`。
-- `scripts/command-catalog.mjs`，把 canonical command 从 `pik-*` 字符串中抽离。
-- `scripts/render-commands-doc.mjs`，让命令手册主推 `zhulong <group> <command>`，兼容显示 `pik-*`。
-- `scripts/verify-full-command-surface.mjs`，增加 root CLI smoke：`zhulong --help`、`zl --help`、`zhulong docs status --target <fixture>`。
+### 3.3 资源、fixture 与验证
 
-验收：
+- 共享网页资源为 `docs/assets/zl-site.css` 和 `docs/assets/zl-site.js`。
+- 架构图资源使用 `docs/assets/visuals/zl-*.svg`。
+- 日文 fixture 使用 `zl.fixture.config.json` 和 `zl-seed/`。
+- 本地审计目录使用 `.zl-audit/`，临时目录使用 `.zl-tmp/`。
+- 验证脚本、质量报告、cockpit 模板与历史快照中的产品标识统一为 Zhulong / ZL。
+- 命名验证器应把任何非 Zhulong / ZL 的产品前缀视为失败。
+
+## 4. Node.js 24 与 npm 发布边界
+
+### 4.1 Node.js 基线
+
+仓库使用以下三处约束保持一致：
+
+```text
+package.json        engines.node = >=24 <25
+.nvmrc              24
+.node-version       24
+```
+
+示例 fixture 使用同一 Node.js 约束。验证时至少执行一次 Node.js 24 的语法检查和核心 smoke test。
+
+### 4.2 npm 文件白名单
+
+npm 包只包含运行所需内容：
+
+```text
+adapters/
+ambiguity-wordlists.json
+bin/zl.mjs
+bin/quality-audits.mjs
+core/
+docs/assets/zhulong-icon.png
+runtime/
+schemas/
+templates/
+README.md
+package.json
+```
+
+以下内容不进入 npm 包：
+
+- `verification/` 下的报告与截图。
+- `docs/assets/zhulong-icon-variants/` 和 `docs/assets/zhulong-selected-variants/`。
+- 产品 HTML、开发计划、field notes 和内部审计文档。
+- 本地 `.planning/`、`.zl-audit/`、`.zl-tmp/`。
+- 示例 fixture 和开发验证脚本。
+
+发布前固定运行 `npm pack --dry-run --json`，检查文件数、压缩体积、解包体积和最大文件。若发布内容新增目录，必须显式更新白名单。
+
+## 5. 能力实施路线与完成映射
+
+截图规划中的 Phase A-C 已全部落到当前 Zhulong 实现。Phase D 属于公开发布治理，需要仓库所有者先决定许可证和发布目标，不伪装成已完成。
+
+### Phase A：机械式质量审计（已完成）
+
+| 要求 | 当前实现 | 验证证据 |
+| --- | --- | --- |
+| 中英日 ambiguity audit | `zl-ambiguity-audit`；根词表与项目扩展合并；输出 hit、density 和逐行记录 | `verify:ambiguity` |
+| 词表归属 | 当前三语词表完全自研，不复制 `write-good` / `words-weasels`；`THIRD_PARTY_LICENSES.md` 明确记录无 vendored 词表 | `verify:license` |
+| 关键制品 structure audit | `zl-structure-audit`；检查五类关键 JSON 的确定性 mini-schema，输出合规率 | `verify:structure` |
+| answer audit 做硬 | `citation_resolve_rate`、`value_drift_count`、`unsupported_sentence_ratio` | `verify:answer-audit` |
+| 默认不误阻断 | 普通模式为 `WAIVED_WITH_RISK`，`--strict` 才把发现升级为失败 | ambiguity / structure fixture |
+| 零运行时依赖 | 规则位于 `bin/quality-audits.mjs`，只使用 Node.js 标准库且不会被初始化器复制进目标项目 | `npm ls --omit=dev` 与语法检查 |
+
+### Phase B：低心智负担门面（已完成）
+
+| 要求 | 当前实现 | 验证证据 |
+| --- | --- | --- |
+| docs sync 折叠 ambiguity | 抽取后自动运行，只读且不触发索引 | `verify:docs-sync`、`verify:ambiguity` |
+| docs query 折叠 answer audit | 查询命中后自动生成报告；`knowledge.auto_answer_audit=false` 可关闭 | `verify:answer-audit` |
+| completion-check 折叠 structure | 完成检查同时刷新结构审计报告；strict 可阻断 | `verify:structure`、workflow 验证 |
+| 重命令显式 | `docs-index --run`、`graph-build --run`、`refresh-run` 不被普通门面暗中调用 | `verify:mvp35`、`verify:workflow-facade` |
+| deny 与 token 约定 | Claude Code deny 模板、禁 hooks/绕过模式、B1/B2/B3/B6 上下文约定 | `verify:guardrails` |
+
+### Phase C：Discovery 与 cockpit（已完成）
+
+| 要求 | 当前实现 | 验证证据 |
+| --- | --- | --- |
+| 单一下一步入口 | `zl-next` 读取本地状态，写 `NEXT.md`，只推荐 2-3 条命令 | 74 命令全表面验证 |
+| help-skills 5 -> 9 | 新增机械质量审计、缺陷调查、状态演示、RAG 后端切换 | `verify:full-command-surface` |
+| Quality & Token Metrics | cockpit 展示引用解析率、漂移、无依据句、暧昧、结构与可选 token 槽位 | `verify:cockpit-build` |
+| HTML 瘦身 | cockpit 只保存节点/边计数和有限预览；大图切换聚合社区视图 | 大图 fixture 与 pack 体积检查 |
+
+### Phase D：发布治理（待所有者决策）
+
+- 先选择公开许可证，再移除 `private: true` 和 `UNLICENSED`。
+- 公开仓库增加 `LICENSE`、`CONTRIBUTING.md`、`SECURITY.md`、issue / PR 模板。
+- 建立 Node.js 24 持续集成、仓库 ruleset、受保护发布环境和 npm trusted publishing。
+- 发布制品增加 provenance 与 artifact attestation；attestation 证明来源，不等同于证明软件安全。
+
+## 6. 验收矩阵
+
+### 6.1 零残留检查
+
+```bash
+rg -n -i --hidden \
+  -g '!.git/**' \
+  -g '!*.png' -g '!*.jpg' -g '!*.jpeg' -g '!*.gif' -g '!*.pdf' \
+  '<forbidden-brand-token>' .
+```
+
+同时检查文件和目录名称。工作树中的品牌标识只允许 Zhulong、ZL、`zhulong` 和 `zl`。
+
+### 6.2 基础验证
 
 ```bash
 npm run check
-node bin/pik.mjs --help
-node bin/pik.mjs docs status --target "$PWD"
-```
-
-在本地 npm link 后：
-
-```bash
-zhulong --help
-zl --help
-```
-
-### 5.4 Skills 与 runtime packs 迁移
-
-现有 runtime pack 结构：
-
-```text
-runtime/codex/skills/pik-*/SKILL.md
-runtime/claude-code/skills/pik-*/SKILL.md
-runtime/github-copilot/prompts/pik-*.prompt.md
-```
-
-目标结构：
-
-```text
-runtime/codex/skills/zhulong-*/SKILL.md
-runtime/claude-code/skills/zhulong-*/SKILL.md
-runtime/github-copilot/prompts/zhulong-*.prompt.md
-```
-
-迁移策略：
-
-1. 新建 `zhulong-*` canonical skill/prompt。
-2. 保留 `pik-*` legacy wrapper 一个版本周期。
-3. `runtime install` 默认安装 `zhulong-*`。
-4. 增加 `--legacy-pik` 或 `--compat-pik` 选项，允许安装旧名。
-5. skills 内部文案全部改成 `Zhulong Kit` / `zhulong`。
-6. 如果 skill frontmatter 有 `name: pik-*`，改为 `name: zhulong-*`。
-7. GitHub Copilot prompt 文件同样改主名，但保留旧 prompt 文件并写 migration note。
-
-需要更新的验证：
-
-- `scripts/verify-skills-usability.mjs`
-  - 默认检查 `zhulong-*` skill/prompt。
-  - legacy 检查单独分组，避免主 gate 因旧名存在而失败。
-- `scripts/verify-runtime-packs.mjs`
-  - runtime install/status 输出新名。
-- `docs/runtime-command-packs.md`
-  - 主路径显示 `zhulong-*`。
-  - 增加从 `pik-*` 迁移到 `zhulong-*` 的段落。
-
-验收：
-
-```bash
+npm run verify:docs
+npm run verify:docs-completeness
+npm run verify:ambiguity
+npm run verify:structure
+npm run verify:answer-audit
+npm run verify:guardrails
+npm run verify:naming
 npm run verify:runtime
 npm run verify:skills-usability
+npm run verify:full-command-surface
 ```
 
-### 5.5 命名校验更新
-
-当前 `scripts/verify-naming.mjs` 是旧规则，专门强制 `AI-PIKit`，因此改 README 后它会自然失败。需要把它升级为 Zhulong 规则。
-
-新规则：
-
-- 允许主品牌：`Zhulong（烛龙）`
-- 允许完整名：`Zhulong Project Intelligence Kit`
-- 允许短名：`Zhulong Kit`
-- 禁止新增裸 `AI-PIKit`，除非在 migration / legacy 语境。
-- 禁止新增 `Project Intelligence Kit` 但没有 `Zhulong` 前缀。
-- 禁止用户文档主推 `pik-*`，除非标为 legacy compatibility。
-- 禁止 runtime skill 新增 `pik-*` canonical 名称。
-
-建议允许列表：
-
-- `docs/zhulong-extraction-and-local-plan.md` 中可以出现 `AI-PIKit` / `pik-*`，因为它是迁移说明。
-- 历史 `verification/reports/` 不扫描或作为历史报告跳过。
-- `bin/pik.mjs` 中允许 legacy alias 表。
-
-验收：
+### 6.3 发布验证
 
 ```bash
-npm run verify:naming
-```
-
-### 5.6 README 的 GitHub 风格
-
-README 首页目标：
-
-- 顶部居中 canonical PNG icon。
-- H1：`Zhulong（烛龙）`
-- 副标题：`Zhulong Project Intelligence Kit`
-- 一句话说明：local AI engineering intelligence for context-heavy software projects.
-- badges：Node、local-first、RAG optional、license status。
-- 快速开始：使用 `zhulong` / `zl` 根命令。
-- 表格化说明 capabilities、docs、runtime packs。
-- 明确 migration status：`pik-*` 是 legacy compatibility。
-- 放 GitHub repo rename checklist。
-- 放 icon 资产路径。
-
-已新增建议资产：
-
-```text
-docs/assets/zhulong-icon.png
-docs/assets/zhulong-icon-concept.png
-```
-
-GitHub 仓库头像建议用：
-
-```text
-docs/assets/zhulong-icon.png
-```
-
-README 顶部建议用：
-
-```text
-docs/assets/zhulong-icon.png
-```
-
-### 5.7 Icon 与视觉系统
-
-视觉方向：
-
-- 不是写实龙，不做游戏徽章。
-- 抽象“环形烛龙 + 发光竖瞳 / 火芯 + 电路节点”。
-- 表达：照亮上下文、证据链、代码影响面。
-
-建议颜色：
-
-| Token | Hex | 用途 |
-| --- | --- | --- |
-| `zhulong-bg` | `#0d1117` | GitHub dark / icon 背景 |
-| `zhulong-graphite` | `#151b23` | 主体石墨色 |
-| `zhulong-ember` | `#f59e0b` | 火芯、重点高亮 |
-| `zhulong-red` | `#b91c1c` | 深层热感 |
-| `zhulong-cyan` | `#22d3ee` | 代码 / 图谱 / 边缘光 |
-
-资产计划：
-
-- `docs/assets/zhulong-icon.png`：canonical 主图，README、docs、GitHub avatar 统一使用。
-- `docs/assets/zhulong-icon-concept.png`：兼容旧引用，内容同步为 canonical 主图。
-- `docs/assets/zhulong-selected-variants/zhulong-selected-final.png`：最终定稿在 selected variants 目录中的备份。
-- 后续可加 `docs/assets/zhulong-wordmark.svg`：横版 wordmark。
-- 后续可加 `docs/assets/zhulong-social-preview.png`：GitHub social preview 1280x640。
-
-### 5.8 文档全量替换顺序
-
-建议顺序：
-
-1. README：首页先完成，确定外部观感。
-2. `docs/product.html`：宣传页改品牌、痛点、FAQ、icon。
-3. `docs/architecture.md`：架构名和命令名切换。
-4. `docs/commands.html`：由命令目录重新生成，不手改 HTML。
-5. `docs/runtime-command-packs.md`：runtime skills 改名。
-6. `docs/quality-plan.md`：新增 rename / naming / skills gate。
-7. `docs/changelog.md`：记录 Zhulong rename milestone。
-8. `verification/reports/*`：不批量改历史报告，只让新报告自然使用新名。
-
-搜索命令：
-
-```bash
-rg -n "AI-PIKit|AI Project Intelligence Kit|Project Intelligence Kit|pik-|\\bpik\\b|PIK" \
-  README.md docs runtime core bin scripts package.json
-```
-
-### 5.9 GitHub 仓库设置建议
-
-你改 GitHub 仓库名时，建议同步改：
-
-- Repository name：`zhulong-project-intelligence-kit`
-- Description：`Local AI engineering intelligence for context-heavy software projects.`
-- Website：如果没有官网，先留空或指向 `docs/product.html` 的 GitHub Pages 地址。
-- Topics：
-  - `ai-engineering`
-  - `developer-tools`
-  - `local-first`
-  - `rag`
-  - `codex`
-  - `claude-code`
-  - `project-intelligence`
-  - `workflow-automation`
-- Social preview：后续用 `zhulong-social-preview.png`。
-- Avatar：使用 `docs/assets/zhulong-icon.png`。
-
-### 5.10 最小 PR 拆分
-
-建议不要一个 commit 全部改完。推荐拆成：
-
-1. `brand: introduce zhulong identity`
-   - README
-   - icon assets
-   - package name / root CLI aliases
-   - rename plan
-2. `cli: promote zhulong root command`
-   - usage 文案
-   - command catalog
-   - command docs
-   - full-command-surface root smoke
-3. `runtime: add zhulong skills`
-   - codex skills
-   - claude-code skills
-   - github-copilot prompts
-   - runtime verification
-4. `docs: migrate product and architecture docs`
-   - product page
-   - architecture
-   - runtime docs
-   - quality plan
-5. `verify: update naming rules for zhulong`
-   - `verify:naming`
-   - docs completeness
-   - business chain
-
-每个 PR 的最低验收：
-
-```bash
-npm run check
-npm run verify:docs-completeness
-```
-
-最终收口验收：
-
-```bash
+npm pack --dry-run --json
 npm run verify:quality
 npm run verify:quality-closure
 npm run verify:business-chain
 ```
+
+验收重点：
+
+- `zhulong --help`、`zl --help` 和一个 `zl-*` 直接命令均可运行。
+- 74 个公开逻辑命令全部进入命令手册与 full-command-surface。
+- 33 个 runtime skill / prompt 渲染项全部通过。
+- npm 包不包含验证截图和图标候选。
+- 文档链接、共享 CSS / JS 和 SVG 路径没有断链。
+- 生成报告不出现非 Zhulong / ZL 的产品标识。
+
+## 7. 官方实践依据
+
+- GitHub README 应聚焦项目用途、价值、开始方式、支持入口和维护信息，仓库内使用相对链接：[About READMEs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
+- GitHub 建议启用安全功能、受保护分支和大文件治理，并使用社区健康文件：[Best practices for repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/best-practices-for-repositories)
+- npm 的 `bin`、`files`、`engines`、`private` 和 `license` 字段共同定义 CLI 与发布边界：[package.json](https://docs.npmjs.com/files/package.json/)
+- npm 推荐使用 `files` 白名单限制 tarball；trusted publishing 可避免维护长期 npm token：[Trusted publishing](https://docs.npmjs.com/trusted-publishers/)
+- Node.js 生产环境应使用仍受支持的 LTS 版本，本工程固定到 24 LTS：[Node.js Releases](https://nodejs.org/en/about/previous-releases)
+- Claude Code 的 deny 规则优先于 ask/allow；`disableAllHooks` 和禁用 bypass/auto 模式适合作为保密项目模板边界：[Settings](https://code.claude.com/docs/en/settings)、[Permissions](https://code.claude.com/docs/en/permissions)
+- 发布制品后可使用 artifact attestation 证明制品的构建来源：[Artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations)
+- 品牌文档采用“定位、受众、支柱、交付物、边界和成功指标”的结构，参考 agency-agents 的 [Brand Guardian](https://github.com/msitarzewski/agency-agents/blob/main/design/design-brand-guardian.md)、[Product Manager](https://github.com/msitarzewski/agency-agents/blob/main/product/product-manager.md) 与 [Technical Writer](https://github.com/msitarzewski/agency-agents/blob/main/engineering/engineering-technical-writer.md) 角色模板。
+
+## 8. 本次执行结果
+
+2026-07-10 已完成并验证：
+
+| 项目 | 结果 |
+| --- | --- |
+| 本地目录 | `/Users/frigidcrow/Documents/Zhulong-Project-Intelligence-Kit` |
+| Node.js 验证 | Node.js 24.14.0 / npm 11.12.1（当前复核环境） |
+| CLI | `zhulong`、`zl`、`zl-*`，共 75 个 npm bin |
+| 全命令面 | 74 / 74 PASS |
+| 机械质量审计 | ambiguity / structure / answer 三组 verifier PASS |
+| 低心智门面 | 自动折叠、`zl-next`、9 类 help 场景 PASS |
+| Cockpit | Quality & Token Metrics 与大图聚合 fixture PASS |
+| Runtime packs | 3 套 runtime、33 个 skill / prompt PASS |
+| 质量聚合 | `verify:quality` PASS |
+| 质量收口 | `verify:quality-closure` PASS，12 项检查 |
+| 业务链 | `verify:business-chain` PASS，6 个 gate |
+| npm 包 | 2,145,021 bytes，解包 2,554,840 bytes，共 101 个文件 |
+| 包安装 smoke | Node.js 24 下 `zhulong --help` 与 `zl --help` PASS |
+| 新能力打包 | 根词表、`bin/quality-audits.mjs` 与三个新 bin 均可从 tarball 安装运行 |
+| 发布排除 | 验证截图、验证报告、图标候选集均未进入 npm 包 |
+
+品牌基线和 Phase A-C 至此收口。当前产品特色、证据和表达规则统一记录在 `docs/brand.md`。
+
+## 9. 2026-07-10 全工程复核与下一步优化
+
+### 已证明完成
+
+- 品牌、CLI、runtime skills、npm 发布路径和本地目录只使用 Zhulong / ZL。
+- README 为中文正文，必要品牌名、命令、状态词和技术缩写保持原样。
+- 机械审计、低心智门面、discovery、cockpit 和 deny/context 约定均有实现与独立 verifier。
+- 公开命令由 71 增至 74，命令目录、HTML 手册、full-command-surface 同步。
+- 验证截图、历史报告和图标候选不在 npm 白名单内。
+
+### 下一步 P0：建立远端持续集成
+
+1. 在 GitHub Actions 固定 Node.js 24 和 npm 11，运行 `npm ci`、`verify:quality`、`verify:full-command-surface` 与 `npm pack --dry-run --json`。
+2. 给默认分支配置 ruleset，要求质量 gate、review 和无未解决会话后才能合并。
+3. CI 上传 verifier 报告作为短期 artifact，但不把截图和报告装进 npm 包。
+
+### 下一步 P1：发布与供应链
+
+1. 决定许可证和 npm scope，确认 `zhulong-kit` 名称所有权。
+2. 使用 npm trusted publishing 和最小权限 GitHub 环境，不保存长期发布 token。
+3. 为 tarball 生成 provenance / attestation，并在 release notes 记录 SHA-256、Node/npm 版本和命令面数量。
+
+### 下一步 P2：真实项目校准
+
+1. 在至少三个不同语言和规模的真实项目上收集 ambiguity 误报、USR 分布和数值漂移样本。
+2. 阈值在拥有基线前继续默认不阻断；每次阈值变化都增加 fixture 和 changelog。
+3. 为 `zl-next` 记录推荐命中率：用户是否采用首条建议、是否仍需查询命令手册。
+
+### 下一步 P3：品牌与产品可观测性
+
+1. README 与产品页继续按五个特色支柱组织，不以命令数量或 MVP 编号替代价值。
+2. 每个新特色都补“问题、机制、产物、证据、边界”，并进入 `docs/brand.md` 的证明矩阵。
+3. cockpit 后续可增加趋势快照，但保持静态、本地、可删除，不引入遥测上报。

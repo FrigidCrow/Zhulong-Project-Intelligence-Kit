@@ -11,8 +11,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-init-policy-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-init-policy-");
 const issues = [];
 const evidence = [];
 const commandResults = [];
@@ -51,18 +51,18 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(cwd, args = [], expectedStatus = 0) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(cwd, args = [], expectedStatus = 0) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd,
     timeout: 240000,
     allowFailure: true,
   }), expectedStatus);
 }
 
-function pikInteractive(cwd, args = [], input = "", expectedStatus = 0) {
-  const command = `pik ${args.join(" ")} <interactive>`;
-  const result = spawnSync("node", [pikCli, ...args], {
+function zlInteractive(cwd, args = [], input = "", expectedStatus = 0) {
+  const command = `zl ${args.join(" ")} <interactive>`;
+  const result = spawnSync("node", [zlCli, ...args], {
     cwd,
     input,
     encoding: "utf8",
@@ -107,7 +107,7 @@ function assertConfig(command, root, predicate, detail) {
 
 function validateDefaultReferenceNone() {
   const root = project("reference-none");
-  const init = pik(root, ["init", "--target", root, "--template", "greenfield-app", "--name", "reference_none", "--mode", "new", "--force"]);
+  const init = zl(root, ["init", "--target", root, "--template", "greenfield-app", "--name", "reference_none", "--mode", "new", "--force"]);
   assertIncludes("default init policy", init.output, "Document policy: reference");
   assertIncludes("default init rag", init.output, "RAG backend: none");
   assertIncludes("default init heavy", init.output, "Heavy refresh executed: no");
@@ -119,32 +119,32 @@ function validateDefaultReferenceNone() {
   assertFileIncludes("default INIT_PROFILE", path.join(root, ".planning", "INIT_PROFILE.md"), "RAG backend: `none`");
   assertNotExists("default no graphrag workspace", path.join(root, "graphrag-workspace", "settings.yaml"));
 
-  const mode = pik(root, ["mode", "status", "--target", root]);
+  const mode = zl(root, ["mode", "status", "--target", root]);
   assertIncludes("default mode document policy", mode.output, "Document policy: reference");
   assertIncludes("default mode rag backend", mode.output, "RAG backend: none");
   assertIncludes("default mode internal profile", mode.output, "Internal profile: graph-lite");
 
-  const index = pik(root, ["docs", "index", "--target", root, "--run"], 1);
+  const index = zl(root, ["docs", "index", "--target", root, "--run"], 1);
   assertIncludes("rag none index blocked", index.output, "RAG backend disabled");
   assertFileIncludes("rag none index report", path.join(root, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "RAG backend disabled");
 
-  const query = pik(root, ["docs", "query", "--target", root, "--rag", "INIT_POLICY_SENTINEL"], 1);
+  const query = zl(root, ["docs", "query", "--target", root, "--rag", "INIT_POLICY_SENTINEL"], 1);
   assertIncludes("rag none query blocked", query.output, "RAG backend disabled");
 }
 
 function validateStrictRequiresRag() {
   const root = project("strict-none");
-  const init = pik(root, ["init", "--target", root, "--doc-policy", "strict", "--rag", "none", "--force"], 1);
+  const init = zl(root, ["init", "--target", root, "--doc-policy", "strict", "--rag", "none", "--force"], 1);
   assertIncludes("strict none rejected", init.output, "strict requires --rag local or --rag external");
 }
 
 function validateExternalRequiresOptIn() {
   const blocked = project("external-blocked");
-  const blockedInit = pik(blocked, ["init", "--target", blocked, "--doc-policy", "strict", "--rag", "external", "--force"], 1);
+  const blockedInit = zl(blocked, ["init", "--target", blocked, "--doc-policy", "strict", "--rag", "external", "--force"], 1);
   assertIncludes("external without opt-in rejected", blockedInit.output, "External RAG is disabled by default");
 
   const allowed = project("external-allowed");
-  const allowedInit = pik(allowed, ["init", "--target", allowed, "--doc-policy", "strict", "--rag", "external", "--allow-external-rag", "--force"]);
+  const allowedInit = zl(allowed, ["init", "--target", allowed, "--doc-policy", "strict", "--rag", "external", "--allow-external-rag", "--force"]);
   assertIncludes("external opt-in init", allowedInit.output, "RAG backend: external");
   assertConfig("external opt-in config", allowed, (c) => c.privacy?.allow_external_rag === true && c.rag_backend === "external", "external rag opt-in recorded");
   assertFileIncludes("external risk report", path.join(allowed, ".planning", "privacy", "EXTERNAL_RAG_RISK.md"), "project document content");
@@ -152,7 +152,7 @@ function validateExternalRequiresOptIn() {
 
 function validateStrictLocalSkip() {
   const root = project("strict-local");
-  const init = pik(root, [
+  const init = zl(root, [
     "init",
     "--target",
     root,
@@ -175,21 +175,21 @@ function validateStrictLocalSkip() {
   assertConfig("strict local provider", root, (c) => c.spec_context?.provider === "graphrag-local" && c.graphrag?.mode === "local", "local GraphRAG provider configured");
   assertFileIncludes("strict local setup plan", path.join(root, ".planning", "knowledge", "LOCAL_RAG_SETUP_PLAN.md"), "Heavy refresh executed: no");
 
-  const status = pik(root, ["mode", "status", "--target", root]);
+  const status = zl(root, ["mode", "status", "--target", root]);
   assertIncludes("strict local mode status", status.output, "Document policy: strict");
   assertIncludes("strict local mode profile", status.output, "Internal profile: full-strict");
 }
 
 function validateModeAliases() {
   const root = project("mode-aliases");
-  pik(root, ["init", "--target", root, "--doc-policy", "reference", "--rag", "none", "--force"]);
-  const strict = pik(root, ["mode", "set", "--target", root, "docs-strict"]);
+  zl(root, ["init", "--target", root, "--doc-policy", "reference", "--rag", "none", "--force"]);
+  const strict = zl(root, ["mode", "set", "--target", root, "docs-strict"]);
   assertIncludes("mode set docs-strict", strict.output, "Document policy: strict");
   assertIncludes("mode set docs-strict backend", strict.output, "RAG backend: local");
   assertIncludes("mode set docs-strict profile", strict.output, "Internal profile: full-strict");
   assertConfig("mode strict config", root, (c) => c.document_policy === "strict" && c.rag_backend === "local", "docs-strict maps to strict/local");
 
-  const reference = pik(root, ["mode", "set", "--target", root, "docs-reference"]);
+  const reference = zl(root, ["mode", "set", "--target", root, "docs-reference"]);
   assertIncludes("mode set docs-reference", reference.output, "Document policy: reference");
   assertIncludes("mode set docs-reference profile", reference.output, "Internal profile: graph-lite");
   assertConfig("mode reference config", root, (c) => c.document_policy === "reference" && c.execution_budget?.profile === "graph-lite", "docs-reference maps to graph-lite");
@@ -197,8 +197,8 @@ function validateModeAliases() {
 
 function validateInteractiveWizard() {
   const root = project("interactive-wizard");
-  const init = pikInteractive(root, ["init", "--target", root, "--interactive", "--force"], "2\n2\n1\n1\n");
-  assertIncludes("interactive wizard banner", init.output, "AI-PIKit init wizard");
+  const init = zlInteractive(root, ["init", "--target", root, "--interactive", "--force"], "2\n2\n1\n1\n");
+  assertIncludes("interactive wizard banner", init.output, "Zhulong init wizard");
   assertIncludes("interactive project prompt", init.output, "Project type");
   assertIncludes("interactive policy output", init.output, "Document policy: strict");
   assertIncludes("interactive rag output", init.output, "RAG backend: local");
@@ -224,7 +224,7 @@ const data = {
 };
 
 writeJsonReport("init-policy-check.json", data);
-writeMarkdownReport("init-policy-check.md", "AI-PIKit Init Policy Verification", summarizeIssues(issues), [
+writeMarkdownReport("init-policy-check.md", "Zhulong Init Policy Verification", summarizeIssues(issues), [
   {
     title: "覆盖场景",
     body: [
@@ -233,8 +233,8 @@ writeMarkdownReport("init-policy-check.md", "AI-PIKit Init Policy Verification",
       "- external RAG requires `--allow-external-rag`",
       "- `strict + rag local + setup-rag skip` writes local setup plan without heavy refresh",
       "- `docs-reference` / `docs-strict` aliases map to compatible internal profiles",
-      "- interactive `pik-init --interactive` prompts project type, document policy, RAG backend, and setup mode",
-      "- `rag none` blocks `pik-docs-index --run` and `pik-docs-query --rag`",
+      "- interactive `zl-init --interactive` prompts project type, document policy, RAG backend, and setup mode",
+      "- `rag none` blocks `zl-docs-index --run` and `zl-docs-query --rag`",
     ],
   },
   {

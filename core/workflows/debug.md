@@ -1,4 +1,4 @@
-# pik-debug
+# zl-debug
 
 Purpose: diagnose and fix a defect with specification evidence, code-map impact,
 focused verification, and durable writeback.
@@ -24,5 +24,5 @@ Outputs:
 
 - Bug diagnosis and fix summary.
 - Verification record.
-- Next command recommendation: `pik-verify-work` or `pik-complete-milestone`.
+- Next command recommendation: `zl-verify-work` or `zl-complete-milestone`.
 

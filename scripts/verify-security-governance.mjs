@@ -11,8 +11,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-security-governance-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-security-governance-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -31,8 +31,8 @@ function assertIncludes(label, text, expected) {
   else evidence.push(`${label}: found ${expected}`);
 }
 
-function pik(args, options = {}) {
-  return runCommand(`pik ${args.join(" ")}`, "node", [pikCli, ...args], {
+function zl(args, options = {}) {
+  return runCommand(`zl ${args.join(" ")}`, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -43,7 +43,7 @@ fs.mkdirSync(projectRoot, { recursive: true });
 write(path.join(projectRoot, "src", "index.js"), "export const securityGovernanceFixture = true;\n");
 write(path.join(projectRoot, "docs", "spec.md"), "# Security Governance Fixture\n\nLOCAL_ONLY_SENTINEL\n");
 
-const initDefault = pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "security_governance_fixture", "--mode", "existing", "--force"]);
+const initDefault = zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "security_governance_fixture", "--mode", "existing", "--force"]);
 assertIncludes("default init", initDefault.output, "RAG backend: none");
 const defaultConfig = JSON.parse(readText(path.join(projectRoot, ".planning", "config.json")));
 if (defaultConfig.privacy?.network_policy !== "local_only") addIssue("default config", `expected local_only, got ${defaultConfig.privacy?.network_policy}`);
@@ -53,18 +53,18 @@ else evidence.push("default config: allow_external_rag false");
 if (defaultConfig.privacy?.allow_external_tools !== false) addIssue("default config", "expected allow_external_tools false");
 else evidence.push("default config: allow_external_tools false");
 
-const offlineLock = pik(["privacy", "offline-lock", "--target", projectRoot]);
+const offlineLock = zl(["privacy", "offline-lock", "--target", projectRoot]);
 assertIncludes("offline lock", offlineLock.output, "privacy audit PASS");
 
-const strictAudit = pik(["privacy", "audit", "--target", projectRoot, "--strict"]);
+const strictAudit = zl(["privacy", "audit", "--target", projectRoot, "--strict"]);
 assertIncludes("strict privacy audit", strictAudit.output, "privacy audit PASS");
 
-const outboundAudit = pik(["privacy", "outbound", "--target", projectRoot]);
+const outboundAudit = zl(["privacy", "outbound", "--target", projectRoot]);
 assertIncludes("outbound audit", outboundAudit.output, "outbound audit PASS");
 
 const blockedExternalRoot = path.join(workRoot, "blocked-external");
 fs.mkdirSync(blockedExternalRoot, { recursive: true });
-const blockedExternal = runCommand("blocked external RAG init", "node", [pikCli, "init", "--target", blockedExternalRoot, "--template", "greenfield-app", "--name", "blocked_external", "--mode", "new", "--doc-policy", "strict", "--rag", "external", "--force"], {
+const blockedExternal = runCommand("blocked external RAG init", "node", [zlCli, "init", "--target", blockedExternalRoot, "--template", "greenfield-app", "--name", "blocked_external", "--mode", "new", "--doc-policy", "strict", "--rag", "external", "--force"], {
   cwd: workRoot,
   timeout: 120000,
   allowFailure: true,
@@ -74,7 +74,7 @@ assertIncludes("external RAG opt-in", blockedExternal.output, "External RAG is d
 
 const allowedExternalRoot = path.join(workRoot, "allowed-external");
 fs.mkdirSync(allowedExternalRoot, { recursive: true });
-const allowedExternal = runCommand("allowed external RAG init", "node", [pikCli, "init", "--target", allowedExternalRoot, "--template", "greenfield-app", "--name", "allowed_external", "--mode", "new", "--doc-policy", "strict", "--rag", "external", "--allow-external-rag", "--force"], {
+const allowedExternal = runCommand("allowed external RAG init", "node", [zlCli, "init", "--target", allowedExternalRoot, "--template", "greenfield-app", "--name", "allowed_external", "--mode", "new", "--doc-policy", "strict", "--rag", "external", "--allow-external-rag", "--force"], {
   cwd: workRoot,
   timeout: 120000,
   allowFailure: true,
@@ -115,14 +115,14 @@ const data = {
 };
 
 writeJsonReport("security-governance-check.json", data);
-writeMarkdownReport("security-governance-check.md", "AI-PIKit Security Governance Verification", summarizeIssues(issues), [
+writeMarkdownReport("security-governance-check.md", "Zhulong Security Governance Verification", summarizeIssues(issues), [
   {
     title: "质量边界",
     body: [
       "- 默认 `privacy.network_policy = local_only`。",
       "- 默认 `privacy.allow_external_rag = false`。",
       "- 外部 RAG 必须显式 `--allow-external-rag`，并生成风险报告。",
-      "- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 AI-PIKit 命令默认本地边界。",
+      "- Codex、Claude Code、GitHub Copilot 是用户主动使用的 coding runtime 例外，不改变 Zhulong 命令默认本地边界。",
     ],
   },
   {

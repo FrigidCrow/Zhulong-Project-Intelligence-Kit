@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-graph-hardening-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-graph-hardening-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -38,8 +38,8 @@ function assertFileIncludes(label, filePath, expected) {
   assertIncludes(label, fs.readFileSync(filePath, "utf8"), expected);
 }
 
-function pik(args, options = {}) {
-  return runCommand(`pik ${args.join(" ")}`, "node", [pikCli, ...args], {
+function zl(args, options = {}) {
+  return runCommand(`zl ${args.join(" ")}`, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -51,7 +51,7 @@ write(path.join(projectRoot, "src", "approval.js"), "export function approve() {
 write(path.join(projectRoot, "src", "service.js"), "import { approve } from './approval.js'; export function service(){ return approve(); }\n");
 write(path.join(projectRoot, "test", "approval.test.js"), "import { approve } from '../src/approval.js'; console.log(approve());\n");
 
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "graph_hardening_fixture", "--mode", "existing", "--force"]);
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "graph_hardening_fixture", "--mode", "existing", "--force"]);
 const graphPath = path.join(projectRoot, ".planning", "graphs", "graph.json");
 const reportPath = path.join(projectRoot, ".planning", "graphs", "GRAPH_REPORT.md");
 write(graphPath, `${JSON.stringify({
@@ -70,25 +70,25 @@ const future = new Date(Date.now() + 5000);
 fs.utimesSync(graphPath, future, future);
 fs.utimesSync(reportPath, future, future);
 
-const fresh = pik(["graph", "freshness", "--target", projectRoot, "--strict"]);
-assertIncludes("pik graph freshness", fresh.output, "Freshness: fresh");
+const fresh = zl(["graph", "freshness", "--target", projectRoot, "--strict"]);
+assertIncludes("zl graph freshness", fresh.output, "Freshness: fresh");
 assertFileIncludes("GRAPH_FRESHNESS", path.join(projectRoot, ".planning", "graphs", "GRAPH_FRESHNESS.md"), "State: fresh");
 
-const impact = pik(["graph", "impact", "--target", projectRoot, "--files", "src/approval.js"]);
-assertIncludes("pik graph impact", impact.output, "matched 1");
-assertIncludes("pik graph impact", impact.output, "impacted nodes");
+const impact = zl(["graph", "impact", "--target", projectRoot, "--files", "src/approval.js"]);
+assertIncludes("zl graph impact", impact.output, "matched 1");
+assertIncludes("zl graph impact", impact.output, "impacted nodes");
 assertFileIncludes("GRAPH_IMPACT", path.join(projectRoot, ".planning", "graphs", "GRAPH_IMPACT.md"), "src/service.js");
 
-const risk = pik(["graph", "risk", "--target", projectRoot]);
-assertIncludes("pik graph risk", risk.output, "high coupling");
+const risk = zl(["graph", "risk", "--target", projectRoot]);
+assertIncludes("zl graph risk", risk.output, "high coupling");
 assertFileIncludes("GRAPH_RISK", path.join(projectRoot, ".planning", "graphs", "GRAPH_RISK.md"), "src/approval.js");
 assertFileIncludes("GRAPH_RISK", path.join(projectRoot, ".planning", "graphs", "GRAPH_RISK.md"), "approval.test.js");
 
 const newer = new Date(Date.now() + 15000);
 fs.utimesSync(path.join(projectRoot, "src", "approval.js"), newer, newer);
-const stale = pik(["graph", "freshness", "--target", projectRoot, "--strict"], { allowFailure: true });
-if (stale.status === 0) addIssue("pik graph freshness stale", "expected non-zero for stale graph in strict mode");
-assertIncludes("pik graph freshness stale", stale.output, "Freshness: STALE");
+const stale = zl(["graph", "freshness", "--target", projectRoot, "--strict"], { allowFailure: true });
+if (stale.status === 0) addIssue("zl graph freshness stale", "expected non-zero for stale graph in strict mode");
+assertIncludes("zl graph freshness stale", stale.output, "Freshness: STALE");
 
 const data = {
   generated: new Date().toISOString(),
@@ -100,7 +100,7 @@ const data = {
 };
 
 writeJsonReport("graph-hardening-check.json", data);
-writeMarkdownReport("graph-hardening-check.md", "AI-PIKit Graph Impact/Risk/Freshness Verification", summarizeIssues(issues), [
+writeMarkdownReport("graph-hardening-check.md", "Zhulong Graph Impact/Risk/Freshness Verification", summarizeIssues(issues), [
   { title: "Evidence", body: evidence.length ? evidence.map((item) => `- ${item}`) : ["No evidence recorded."] },
   {
     title: "Fixture Paths",

@@ -12,13 +12,13 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
 const runtimeSpecs = [
   { name: "codex", kind: "skill", glob: "SKILL.md" },
   { name: "claude-code", kind: "skill", glob: "SKILL.md" },
   { name: "github-copilot", kind: "prompt", glob: ".prompt.md" },
 ];
-const temp = tempRoot("aipikit-runtime-");
+const temp = tempRoot("zhulong-runtime-");
 const issues = [];
 const results = [];
 
@@ -55,13 +55,13 @@ for (const spec of runtimeSpecs) {
   const install = runCommand(
     `runtime install ${spec.name}`,
     "node",
-    [pikCli, "runtime", "install", "--runtime", spec.name, "--dest", dest, "--force"],
+    [zlCli, "runtime", "install", "--runtime", spec.name, "--dest", dest, "--force"],
     { timeout: 120000 },
   );
   const status = runCommand(
     `runtime status ${spec.name}`,
     "node",
-    [pikCli, "runtime", "status", "--runtime", spec.name, "--dest", dest],
+    [zlCli, "runtime", "status", "--runtime", spec.name, "--dest", dest],
     { timeout: 120000 },
   );
 
@@ -76,11 +76,11 @@ for (const spec of runtimeSpecs) {
       continue;
     }
     const text = readText(installedPath);
-    if (text.includes("{{PIK_CLI}}") || text.includes("{{PIK_KIT_ROOT}}") || text.includes("{{PIK_GENERATED_AT}}")) {
+    if (text.includes("{{ZL_CLI}}") || text.includes("{{ZL_KIT_ROOT}}") || text.includes("{{ZL_GENERATED_AT}}")) {
       addIssue(spec.name, installedPath, "Runtime template placeholder was not rendered.");
     }
-    if (!text.includes("bin/pik.mjs")) addIssue(spec.name, installedPath, "Rendered runtime item does not point at local bin/pik.mjs.");
-    if (!/pik-/.test(text)) addIssue(spec.name, installedPath, "Runtime item does not expose pik-* command guidance.");
+    if (!text.includes("bin/zl.mjs")) addIssue(spec.name, installedPath, "Rendered runtime item does not point at local bin/zl.mjs.");
+    if (!/zl-/.test(text)) addIssue(spec.name, installedPath, "Runtime item does not expose zl-* command guidance.");
     if (/Current backend|Internal Backend Invocation/.test(text)) {
       addIssue(spec.name, installedPath, "Runtime item still contains active backend wording.");
     }
@@ -114,7 +114,7 @@ const data = {
 };
 
 writeJsonReport("runtime-pack-status.json", data);
-writeMarkdownReport("runtime-pack-status.md", "AI-PIKit Runtime Pack Verification", summarizeIssues(issues), [
+writeMarkdownReport("runtime-pack-status.md", "Zhulong Runtime Pack Verification", summarizeIssues(issues), [
   {
     title: "Runtime Installs",
     body: results.flatMap((result) => [
@@ -133,7 +133,7 @@ writeMarkdownReport("runtime-pack-status.md", "AI-PIKit Runtime Pack Verificatio
   },
   {
     title: "Rendered CLI",
-    body: [`Expected local command path: \`node ${shellQuote(pikCli)}\``],
+    body: [`Expected local command path: \`node ${shellQuote(zlCli)}\``],
   },
 ]);
 

@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-workflow-facade-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-workflow-facade-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -43,9 +43,9 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(args = [], options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(args = [], options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: options.cwd || projectRoot,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -85,11 +85,11 @@ function prepareProject() {
   write(path.join(projectRoot, "src", "approval.js"), "export const approvalLimit = 42000;\n");
   write(path.join(projectRoot, "test", "approval.test.js"), "console.log('WORKFLOW_FACADE_TEST');\n");
   write(path.join(projectRoot, "docs", "spec.md"), "# Spec\n\nWORKFLOW_FACADE_SPEC citation target.\n");
-  pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "workflow_facade_fixture", "--mode", "new", "--force"]);
-  pik(["codebase", "scan", "--target", projectRoot]);
-  pik(["docs", "scan", "--target", projectRoot]);
-  pik(["docs", "extract", "--target", projectRoot]);
-  pik(["docs", "citations", "--target", projectRoot, "WORKFLOW_FACADE_SPEC"]);
+  zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "workflow_facade_fixture", "--mode", "new", "--force"]);
+  zl(["codebase", "scan", "--target", projectRoot]);
+  zl(["docs", "scan", "--target", projectRoot]);
+  zl(["docs", "extract", "--target", projectRoot]);
+  zl(["docs", "citations", "--target", projectRoot, "WORKFLOW_FACADE_SPEC"]);
   const graphDir = path.join(projectRoot, ".planning", "graphs");
   write(path.join(graphDir, "graph.json"), JSON.stringify({
     nodes: [{ id: "src/approval.js", path: "src/approval.js" }],
@@ -108,22 +108,22 @@ function makeGraphStale() {
 
 prepareProject();
 
-const debug = pik(["workflow", "run", "--target", projectRoot, "debug", "WORKFLOW_FACADE debug"]);
-assertIncludes("pik-debug facade output", debug.output, "facade");
-assertIncludes("pik-debug no heavy refresh", debug.output, "heavy refresh executed: no");
+const debug = zl(["workflow", "run", "--target", projectRoot, "debug", "WORKFLOW_FACADE debug"]);
+assertIncludes("zl-debug facade output", debug.output, "facade");
+assertIncludes("zl-debug no heavy refresh", debug.output, "heavy refresh executed: no");
 let facade = newestFacadeFile();
-assertFileIncludes("debug WORKFLOW_FACADE", facade, "AI-PIKit Workflow Facade");
+assertFileIncludes("debug WORKFLOW_FACADE", facade, "Zhulong Workflow Facade");
 assertFileIncludes("debug WORKFLOW_FACADE heavy", facade, "Heavy refresh executed: no");
 assertFileIncludes("debug WORKFLOW_FACADE policy", facade, "## Policy");
 
-const plan = pik(["workflow", "run", "--target", projectRoot, "plan-phase", "WORKFLOW_FACADE plan"]);
-assertIncludes("pik-plan-phase facade output", plan.output, "facade");
+const plan = zl(["workflow", "run", "--target", projectRoot, "plan-phase", "WORKFLOW_FACADE plan"]);
+assertIncludes("zl-plan-phase facade output", plan.output, "facade");
 facade = newestFacadeFile();
-assertFileIncludes("plan WORKFLOW_FACADE", facade, "pik-plan-phase");
+assertFileIncludes("plan WORKFLOW_FACADE", facade, "zl-plan-phase");
 
 makeGraphStale();
-const execute = pik(["workflow", "run", "--target", projectRoot, "execute-phase", "WORKFLOW_FACADE execute"]);
-assertIncludes("pik-execute-phase stale facade", execute.output, "STALE_NEEDS_REFRESH");
+const execute = zl(["workflow", "run", "--target", projectRoot, "execute-phase", "WORKFLOW_FACADE execute"]);
+assertIncludes("zl-execute-phase stale facade", execute.output, "STALE_NEEDS_REFRESH");
 facade = newestFacadeFile();
 assertFileIncludes("execute WORKFLOW_FACADE stale", facade, "STALE_NEEDS_REFRESH");
 assertFileIncludes("execute WORKFLOW_FACADE no refresh", facade, "Heavy refresh executed: no");
@@ -144,7 +144,7 @@ const data = {
 };
 
 writeJsonReport("workflow-facade-check.json", data);
-writeMarkdownReport("workflow-facade-check.md", "AI-PIKit Workflow Facade Verification", summarizeIssues(issues), [
+writeMarkdownReport("workflow-facade-check.md", "Zhulong Workflow Facade Verification", summarizeIssues(issues), [
   {
     title: "证据",
     body: evidence.length ? evidence.map((item) => `- ${item}`) : ["未记录证据。"],

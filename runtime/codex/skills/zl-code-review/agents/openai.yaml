@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zhulong Code Review"
+  short_description: "Review code with Zhulong evidence"
+  default_prompt: "$zl-code-review"

@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-docs-sync-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-docs-sync-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -43,9 +43,9 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(args = [], options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(args = [], options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -86,7 +86,7 @@ write(path.join(projectRoot, "docs", "spec.md"), [
   "",
 ].join("\n"));
 
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "docs_sync_fixture", "--mode", "new", "--force"]);
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "docs_sync_fixture", "--mode", "new", "--force"]);
 
 write(path.join(projectRoot, ".planning", "fixtures", "fake-rag-index.mjs"), [
   "import fs from 'node:fs';",
@@ -113,14 +113,14 @@ updateConfig((config) => {
   };
 });
 
-const firstSync = pik(["docs", "sync", "--target", projectRoot]);
+const firstSync = zl(["docs", "sync", "--target", projectRoot]);
 assertIncludes("first docs sync", firstSync.output, "docs sync STALE_NEEDS_REFRESH");
 assertIncludes("first docs sync heavy", firstSync.output, "heavy refresh executed: no");
 assertFileIncludes("DOCS_SYNC first", path.join(projectRoot, ".planning", "knowledge", "DOCS_SYNC.md"), "Status: STALE_NEEDS_REFRESH");
 assertFileMissing("default docs sync no RAG index", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"));
 
-pik(["docs", "citations", "--target", projectRoot, "DOCS_SYNC_SENTINEL_4101"]);
-const cleanSync = pik(["docs", "sync", "--target", projectRoot]);
+zl(["docs", "citations", "--target", projectRoot, "DOCS_SYNC_SENTINEL_4101"]);
+const cleanSync = zl(["docs", "sync", "--target", projectRoot]);
 assertIncludes("clean docs sync", cleanSync.output, "docs sync PASS");
 assertFileIncludes("DOCS_SYNC clean", path.join(projectRoot, ".planning", "knowledge", "DOCS_SYNC.md"), "Citation audit: PASS");
 
@@ -131,18 +131,18 @@ write(path.join(projectRoot, "docs", "spec.md"), [
   "DOCS_SYNC_SENTINEL_4102 changed.",
   "",
 ].join("\n"));
-const modifiedSync = pik(["docs", "sync", "--target", projectRoot]);
+const modifiedSync = zl(["docs", "sync", "--target", projectRoot]);
 assertIncludes("modified docs sync", modifiedSync.output, "docs sync STALE_NEEDS_REFRESH");
 assertIncludes("modified docs sync count", modifiedSync.output, "modified 1");
 
-pik(["docs", "citations", "--target", projectRoot, "DOCS_SYNC_SENTINEL_4102"]);
-const indexedSync = pik(["docs", "sync", "--target", projectRoot, "--index"], { timeout: 300000 });
+zl(["docs", "citations", "--target", projectRoot, "DOCS_SYNC_SENTINEL_4102"]);
+const indexedSync = zl(["docs", "sync", "--target", projectRoot, "--index"], { timeout: 300000 });
 assertIncludes("indexed docs sync heavy", indexedSync.output, "heavy refresh executed: yes");
 assertIncludes("indexed docs sync status", indexedSync.output, "index success");
 assertFileIncludes("RAG index result", path.join(projectRoot, ".planning", "knowledge", "RAG_INDEX_RESULT.md"), "Status: success");
 
 fs.rmSync(path.join(projectRoot, "docs", "spec.md"));
-const removedSync = pik(["docs", "sync", "--target", projectRoot]);
+const removedSync = zl(["docs", "sync", "--target", projectRoot]);
 assertIncludes("removed docs sync", removedSync.output, "docs sync STALE_NEEDS_REFRESH");
 assertIncludes("removed docs sync count", removedSync.output, "removed 1");
 
@@ -157,7 +157,7 @@ const data = {
 };
 
 writeJsonReport("docs-sync-check.json", data);
-writeMarkdownReport("docs-sync-check.md", "AI-PIKit Docs Sync Verification", summarizeIssues(issues), [
+writeMarkdownReport("docs-sync-check.md", "Zhulong Docs Sync Verification", summarizeIssues(issues), [
   { title: "证据", body: evidence.length ? evidence.map((item) => `- ${item}`) : ["未记录证据。"] },
   {
     title: "Fixture 路径",

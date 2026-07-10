@@ -11,8 +11,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-docs-extract-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-docs-extract-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -39,8 +39,8 @@ function assertFileIncludes(label, filePath, expected) {
   assertIncludes(label, fs.readFileSync(filePath, "utf8"), expected);
 }
 
-function pik(args, options = {}) {
-  return runCommand(`pik ${args.join(" ")}`, "node", [pikCli, ...args], {
+function zl(args, options = {}) {
+  return runCommand(`zl ${args.join(" ")}`, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: 120000,
     ...options,
@@ -138,22 +138,22 @@ write(path.join(projectRoot, "documents", "book.xlsx"), makeZip({
   "xl/worksheets/sheet1.xml": "<worksheet><sheetData><row><c t=\"s\"><v>0</v></c><c t=\"s\"><v>1</v></c></row></sheetData></worksheet>",
 }));
 
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "docs_extract_fixture", "--mode", "new", "--force"]);
-const extract = pik(["docs", "extract", "--target", projectRoot]);
-assertIncludes("pik docs extract", extract.output, "extracted 6");
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "docs_extract_fixture", "--mode", "new", "--force"]);
+const extract = zl(["docs", "extract", "--target", projectRoot]);
+assertIncludes("zl docs extract", extract.output, "extracted 6");
 assertFileIncludes("DOCUMENT_EXTRACT_REPORT", path.join(projectRoot, ".planning", "knowledge", "DOCUMENT_EXTRACT_REPORT.md"), "docx-zip-xml");
 assertFileIncludes("DOCUMENT_EXTRACT_REPORT", path.join(projectRoot, ".planning", "knowledge", "DOCUMENT_EXTRACT_REPORT.md"), "xlsx-zip-xml");
 assertFileIncludes("DOCUMENT_INDEX", path.join(projectRoot, ".planning", "knowledge", "DOCUMENT_INDEX.json"), "word.docx");
 
 for (const sentinel of ["MD_SENTINEL_2101", "TXT_SENTINEL_2102", "CSV_SENTINEL_2103", "PDF_SENTINEL_2104", "DOCX_SENTINEL_2105", "XLSX_SENTINEL_2106"]) {
-  const result = pik(["docs", "citations", "--target", projectRoot, sentinel]);
-  assertIncludes(`pik docs citations ${sentinel}`, result.output, sentinel);
+  const result = zl(["docs", "citations", "--target", projectRoot, sentinel]);
+  assertIncludes(`zl docs citations ${sentinel}`, result.output, sentinel);
 }
 assertFileIncludes("CITATIONS", path.join(projectRoot, ".planning", "knowledge", "CITATIONS.md"), "XLSX_SENTINEL_2106");
 
 write(path.join(projectRoot, "docs", "specs", "md.md"), "# MD Spec\n\nMD_SENTINEL_2101 approval amount changed.\nDOC_DIFF_SENTINEL_2199\n");
-const diff = pik(["docs", "diff", "--target", projectRoot]);
-assertIncludes("pik docs diff", diff.output, "modified 1");
+const diff = zl(["docs", "diff", "--target", projectRoot]);
+assertIncludes("zl docs diff", diff.output, "modified 1");
 assertFileIncludes("DOCUMENT_DIFF", path.join(projectRoot, ".planning", "knowledge", "DOCUMENT_DIFF.md"), "md.md");
 
 const data = {
@@ -166,7 +166,7 @@ const data = {
 };
 
 writeJsonReport("docs-extract-citation-check.json", data);
-writeMarkdownReport("docs-extract-citation-check.md", "AI-PIKit Document Extraction and Citation Verification", summarizeIssues(issues), [
+writeMarkdownReport("docs-extract-citation-check.md", "Zhulong Document Extraction and Citation Verification", summarizeIssues(issues), [
   { title: "Evidence", body: evidence.length ? evidence.map((item) => `- ${item}`) : ["No evidence recorded."] },
   {
     title: "Fixture Paths",

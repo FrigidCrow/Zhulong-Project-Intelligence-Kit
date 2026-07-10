@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">既存项目接入后的目录结构</title>
+  <desc id="desc">Zhulong 不搬动原项目源码，而是在目标项目根目录叠加 AGENTS.md、project.manifest.yml 和 .planning。</desc>
+  <rect width="1200" height="680" fill="#080a0f"/>
+  <text x="64" y="78" fill="#eef4ff" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="850">既存项目接入：不搬原结构，只叠加 intelligence layer</text>
+  <text x="64" y="116" fill="#a9b7c8" font-family="Inter, Arial, sans-serif" font-size="18">`zl-init` 之后必须执行 `zl-codebase-scan`，否则旧项目没有 codebase baseline。</text>
+
+  <g font-family="SFMono-Regular, Consolas, monospace">
+    <rect x="78" y="168" width="430" height="420" rx="10" fill="#10151d" stroke="#2b3a4d" stroke-width="2"/>
+    <text x="112" y="214" fill="#eef4ff" font-size="23" font-weight="800">existing-project/</text>
+    <text x="136" y="258" fill="#a9b7c8" font-size="20">src/</text>
+    <text x="166" y="292" fill="#6f7f92" font-size="18">controllers/</text>
+    <text x="166" y="322" fill="#6f7f92" font-size="18">services/</text>
+    <text x="166" y="352" fill="#6f7f92" font-size="18">models/</text>
+    <text x="136" y="394" fill="#a9b7c8" font-size="20">tests/</text>
+    <text x="136" y="436" fill="#a9b7c8" font-size="20">docs/</text>
+    <text x="166" y="470" fill="#6f7f92" font-size="18">仕様書/ QA/ 議事録</text>
+    <text x="136" y="522" fill="#a9b7c8" font-size="20">package.json</text>
+  </g>
+
+  <g>
+    <rect x="622" y="168" width="500" height="420" rx="10" fill="#10151d" stroke="#66e8ff" stroke-width="3"/>
+    <text x="656" y="214" fill="#eef4ff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="850">Zhulong adds</text>
+    <g font-family="SFMono-Regular, Consolas, monospace" font-size="18">
+      <text x="656" y="258" fill="#87f7b5">AGENTS.md</text>
+      <text x="656" y="292" fill="#87f7b5">project.manifest.yml</text>
+      <text x="656" y="336" fill="#87f7b5">.planning/</text>
+      <text x="690" y="370" fill="#a9b7c8">INIT_PROFILE.md</text>
+      <text x="690" y="400" fill="#a9b7c8">codebase/ CODEBASE_STATUS.md</text>
+      <text x="690" y="430" fill="#a9b7c8">knowledge/ RAG_SOURCES.md</text>
+      <text x="690" y="460" fill="#a9b7c8">graphs/ GRAPH_REPORT.md</text>
+      <text x="690" y="490" fill="#a9b7c8">workflows/ WORKFLOW_STATE.json</text>
+      <text x="690" y="520" fill="#a9b7c8">evidence/ INDEX.md</text>
+    </g>
+  </g>
+
+  <path d="M520 360 C560 360 572 360 610 360" fill="none" stroke="#ffd166" stroke-width="4"/>
+  <path d="M598 348 L618 360 L598 372 Z" fill="#ffd166"/>
+  <text x="540" y="334" fill="#ffd166" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="750">overlay</text>
+
+  <rect x="78" y="612" width="1044" height="42" rx="8" fill="#121922" stroke="#2b3a4d"/>
+  <text x="106" y="640" fill="#a9b7c8" font-family="Inter, Arial, sans-serif" font-size="17">不会把目标项目复制进 Zhulong 仓库；默认产物留在目标项目本地。</text>
+</svg>

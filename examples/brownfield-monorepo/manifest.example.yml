@@ -13,61 +13,61 @@ execution_runtime:
     codex:
       status: "implemented"
       skills_path: "runtime/codex/skills"
-      install_command: "pik-runtime-install --runtime codex"
+      install_command: "zl-runtime-install --runtime codex"
     claude-code:
       status: "implemented"
       skills_path: "runtime/claude-code/skills"
-      install_command: "pik-runtime-install --runtime claude-code"
+      install_command: "zl-runtime-install --runtime claude-code"
     github-copilot:
       status: "implemented"
       prompts_path: "runtime/github-copilot/prompts"
-      install_command: "pik-runtime-install --runtime github-copilot"
+      install_command: "zl-runtime-install --runtime github-copilot"
 
 command_facade:
-  public_prefix: "pik"
+  public_prefix: "zl"
   workflow_kernel:
-    provider: "pik-native"
-    prefix: "pik"
+    provider: "zl-native"
+    prefix: "zl"
     reference_design: "gsd"
   command_map:
     new_milestone:
-      public: "$pik-new-milestone"
+      public: "$zl-new-milestone"
       workflow_doc: "core/workflows/new-milestone.md"
       reference: "$gsd-new-milestone"
     spec_phase:
-      public: "$pik-spec-phase"
+      public: "$zl-spec-phase"
       workflow_doc: "core/workflows/spec-phase.md"
       reference: "$gsd-spec-phase"
     discuss_phase:
-      public: "$pik-discuss-phase"
+      public: "$zl-discuss-phase"
       workflow_doc: "core/workflows/discuss-phase.md"
       reference: "$gsd-discuss-phase"
     ui_phase:
-      public: "$pik-ui-phase"
+      public: "$zl-ui-phase"
       workflow_doc: "core/workflows/ui-phase.md"
       reference: "$gsd-ui-phase"
     debug:
-      public: "$pik-debug"
+      public: "$zl-debug"
       workflow_doc: "core/workflows/debug.md"
       reference: "$gsd-debug"
     plan_phase:
-      public: "$pik-plan-phase"
+      public: "$zl-plan-phase"
       workflow_doc: "core/workflows/plan-phase.md"
       reference: "$gsd-plan-phase"
     execute_phase:
-      public: "$pik-execute-phase"
+      public: "$zl-execute-phase"
       workflow_doc: "core/workflows/execute-phase.md"
       reference: "$gsd-execute-phase"
     code_review:
-      public: "$pik-code-review"
+      public: "$zl-code-review"
       workflow_doc: "core/workflows/code-review.md"
       reference: "$gsd-code-review"
     verify_work:
-      public: "$pik-verify-work"
+      public: "$zl-verify-work"
       workflow_doc: "core/workflows/verify-work.md"
       reference: "$gsd-verify-work"
     complete_milestone:
-      public: "$pik-complete-milestone"
+      public: "$zl-complete-milestone"
       workflow_doc: "core/workflows/complete-milestone.md"
       reference: "$gsd-complete-milestone"
 

@@ -10,8 +10,8 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const workRoot = tempRoot("aipikit-knowledge-reliability-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const workRoot = tempRoot("zhulong-knowledge-reliability-");
 const projectRoot = path.join(workRoot, "project");
 const issues = [];
 const evidence = [];
@@ -43,9 +43,9 @@ function record(command, result, expectedStatus = 0) {
   return result;
 }
 
-function pik(args = [], options = {}) {
-  const command = `pik ${args.join(" ")}`;
-  return record(command, runCommand(command, "node", [pikCli, ...args], {
+function zl(args = [], options = {}) {
+  const command = `zl ${args.join(" ")}`;
+  return record(command, runCommand(command, "node", [zlCli, ...args], {
     cwd: projectRoot,
     timeout: options.timeout || 240000,
     allowFailure: true,
@@ -74,16 +74,16 @@ write(path.join(projectRoot, "docs", "qa", "QA-900.md"), [
   "",
 ].join("\n"));
 
-pik(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "knowledge_reliability_fixture", "--mode", "new", "--force"]);
-const sync = pik(["docs", "sync", "--target", projectRoot]);
+zl(["init", "--target", projectRoot, "--template", "greenfield-app", "--name", "knowledge_reliability_fixture", "--mode", "new", "--force"]);
+const sync = zl(["docs", "sync", "--target", projectRoot]);
 assertIncludes("knowledge docs sync status", sync.output, "docs sync STALE_NEEDS_REFRESH");
 assertIncludes("knowledge docs sync light", sync.output, "heavy refresh executed: no");
 
-const query = pik(["docs", "query", "--target", projectRoot, "KNOWLEDGE_RELIABILITY_SENTINEL_4301"]);
+const query = zl(["docs", "query", "--target", projectRoot, "KNOWLEDGE_RELIABILITY_SENTINEL_4301"]);
 assertIncludes("knowledge docs query writes result", query.output, "DOCS_QUERY_RESULT.md");
 assertFileIncludes("DOCS_QUERY_RESULT", path.join(projectRoot, ".planning", "knowledge", "DOCS_QUERY_RESULT.md"), "KNOWLEDGE_RELIABILITY_SENTINEL_4301");
 
-const audit = pik(["answer", "audit", "--target", projectRoot]);
+const audit = zl(["answer", "audit", "--target", projectRoot]);
 assertIncludes("knowledge answer audit", audit.output, "answer audit PASS");
 assertIncludes("knowledge answer audit light", audit.output, "heavy refresh executed: no");
 assertFileIncludes("ANSWER_AUDIT", path.join(projectRoot, ".planning", "quality", "ANSWER_AUDIT.md"), "Status: PASS");
@@ -99,7 +99,7 @@ const data = {
 };
 
 writeJsonReport("knowledge-reliability-check.json", data);
-writeMarkdownReport("knowledge-reliability-check.md", "AI-PIKit Knowledge Reliability Lite Verification", summarizeIssues(issues), [
+writeMarkdownReport("knowledge-reliability-check.md", "Zhulong Knowledge Reliability Lite Verification", summarizeIssues(issues), [
   { title: "证据", body: evidence.length ? evidence.map((item) => `- ${item}`) : ["未记录证据。"] },
   {
     title: "Fixture 路径",

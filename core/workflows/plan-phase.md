@@ -1,4 +1,4 @@
-# pik-plan-phase
+# zl-plan-phase
 
 Purpose: create an implementation plan grounded in requirements, code impact,
 verification expectations, and rollback notes.
@@ -10,7 +10,7 @@ Required flow:
 1. Read active phase/issue records and the generated context packet.
 2. Confirm requirements through `.planning/knowledge/`, local docs, or approved
    RAG query.
-3. Confirm code impact through `.planning/graphs/`, `pik-graph-query`, and
+3. Confirm code impact through `.planning/graphs/`, `zl-graph-query`, and
    direct source reads.
 4. Break work into ordered steps with dependencies and verification after each
    risky step.
@@ -23,5 +23,5 @@ Outputs:
 - Implementation plan.
 - Impact surface.
 - Verification checklist.
-- Next command recommendation: `pik-execute-phase`.
+- Next command recommendation: `zl-execute-phase`.
 

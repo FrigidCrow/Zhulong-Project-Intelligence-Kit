@@ -55,7 +55,7 @@ function checkCommandCoverage() {
   const pkg = JSON.parse(readText(path.join(kitRoot, "package.json")));
   const commandDoc = readText(path.join(kitRoot, "docs", "commands.html"));
   const missing = Object.keys(pkg.bin)
-    .filter((name) => name === "pik" || name.startsWith("pik-"))
+    .filter((name) => name === "zl" || name.startsWith("zl-"))
     .filter((name) => !commandDoc.includes(name));
   for (const command of missing) addIssue(path.join(kitRoot, "docs", "commands.html"), `Command not documented: ${command}`);
 }
@@ -64,8 +64,8 @@ function checkCoreHtmlPages() {
   for (const relPath of ["docs/product.html", "docs/commands.html", "docs/technical-guide.html", "docs/quality-dashboard.html"]) {
     const filePath = path.join(kitRoot, relPath);
     const text = readText(filePath);
-    if (!text.includes('href="assets/pik-site.css"')) addIssue(filePath, "HTML page does not include shared CSS.");
-    if (!text.includes("AI Project Intelligence Kit")) addIssue(filePath, "HTML page does not expose full product name.");
+    if (!text.includes('href="assets/zl-site.css"')) addIssue(filePath, "HTML page does not include shared CSS.");
+    if (!text.includes("Zhulong Project Intelligence Kit")) addIssue(filePath, "HTML page does not expose full product name.");
     if (!/<h1>[\s\S]+<\/h1>/.test(text)) addIssue(filePath, "HTML page is missing an H1.");
   }
 }
@@ -92,7 +92,7 @@ const data = {
 };
 
 writeJsonReport("docs-check.json", data);
-writeMarkdownReport("docs-check.md", "AI-PIKit Docs Verification", summarizeIssues(issues), [
+writeMarkdownReport("docs-check.md", "Zhulong Docs Verification", summarizeIssues(issues), [
   {
     title: "Checked Files",
     body: checkedFiles.map((file) => `- \`${file}\``),

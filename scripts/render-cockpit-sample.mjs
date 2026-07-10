@@ -54,6 +54,14 @@ function buildSampleViewModel(data) {
       { id: "workflow", label: "Workflow", status: data.workflow.status, detail: `${data.workflow.states.length} workflow states` },
       { id: "privacy", label: "Privacy", status: data.privacy.status, detail: "local-only / offline lock" },
     ],
+    qualityMetrics: [
+      { label: "Citation Resolve", value: data.quality.metrics.citationResolveRate, detail: "resolved citations / all citations" },
+      { label: "Value Drift", value: data.quality.metrics.valueDriftCount, detail: "numeric values absent from cited sources" },
+      { label: "Unsupported", value: data.quality.metrics.unsupportedSentenceRatio, detail: "unsupported sentence ratio" },
+      { label: "Ambiguity", value: data.quality.metrics.ambiguityHits, detail: `density ${data.quality.metrics.ambiguityDensity}` },
+      { label: "Structure", value: data.quality.metrics.structureComplianceRate, detail: "valid key artifacts / required artifacts" },
+      { label: "Token Usage", value: data.quality.metrics.tokenUsage.input + data.quality.metrics.tokenUsage.output, detail: "input + output tokens" },
+    ],
     impactGraph: {
       ...graph,
       mode: graph.mode || "node",
@@ -86,9 +94,9 @@ if (!sampleData.viewModel) {
   sampleData.viewModel = buildSampleViewModel(sampleData);
 }
 
-const html = template.replace("__AI_PIKIT_COCKPIT_DATA__", jsonForHtmlScript(sampleData));
+const html = template.replace("__ZHULONG_COCKPIT_DATA__", jsonForHtmlScript(sampleData));
 
-if (html.includes("__AI_PIKIT_COCKPIT_DATA__")) {
+if (html.includes("__ZHULONG_COCKPIT_DATA__")) {
   throw new Error("Cockpit sample placeholder was not replaced.");
 }
 

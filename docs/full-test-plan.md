@@ -1,19 +1,19 @@
-# AI-PIKit 全量测试计划
+# Zhulong 全量测试计划
 
 Generated: 2026-06-25
 
 ## 1. 目的
 
-这份计划用于验证 AI-PIKit 每个阶段的核心能力是否真实可用，而不是只看文档或命令是否存在。
+这份计划用于验证 Zhulong 每个阶段的核心能力是否真实可用，而不是只看文档或命令是否存在。
 
 测试目标：
 
-- 覆盖所有 `pik-*` public command。
+- 覆盖所有 `zl-*` public command。
 - 覆盖所有 public workflow。
 - 覆盖文档抽取、citation、RAG、GraphRAG、本地隐私、Graphify、workflow gate、evidence、runtime pack、license、policy、help skills、project cockpit。
 - 连续执行两轮全量测试，观察结果是否稳定。
 - 正式测试阶段如出现失败，只记录失败，不在同一测试轮内修复。
-- 维护者在大改或发布前额外运行 `npm run dev:audit:full`，生成命令/skills/feature scorecard、AI-PIKit / GSD / Superpowers 对标、时间拆分和 token 统计边界；它补充正式测试轮，不替代 Round 1 / Round 2。
+- 维护者在大改或发布前额外运行 `npm run dev:audit:full`，生成命令/skills/feature scorecard、Zhulong / GSD / Superpowers 对标、时间拆分和 token 统计边界；它补充正式测试轮，不替代 Round 1 / Round 2。
 
 ## 2. 测试阶段规则
 
@@ -49,11 +49,11 @@ verification/reports/full-test-round-2.json
 维护者内部审计产物固定在：
 
 ```text
-.pik-audit/latest/
+.zl-audit/latest/
 verification/reports/developer-audit-summary.md
 ```
 
-`.pik-audit/` 已被 git ignore，只保留可提交摘要。最近一次完整审计为 `PASS 96 / A`，覆盖 71 个命令、33 个 runtime skill/prompt 和 feature gates；最新三方 benchmark 为 AI-PIKit `90 / A`、GSD `88 / B`、Superpowers `82 / B`，其中 GSD / Superpowers 使用本机真实 skill/plugin 文件做 `skill-pack-backed-replay`。`Benchmark comparison: 87` 是 12 行混合对标矩阵的平均值，不是 AI-PIKit 单体能力分。
+`.zl-audit/` 已被 git ignore，只保留可提交摘要。当前公开命令面为 74 个，runtime skill/prompt 为 33 个；历史完整审计分数仅代表当次基线，不能替代当前 verifier 结果。最新三方 benchmark 也属于历史对标证据，不作为 Zhulong 的永久能力分。
 
 ## 3. 命令覆盖矩阵
 
@@ -61,119 +61,119 @@ verification/reports/developer-audit-summary.md
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik` | help 可输出命令总览 |
-| `pik-init` | 新项目、既存项目均可生成 `.planning/`，并写入 `reference/strict` 文档策略和 `none/local/external` RAG 后端 |
-| `pik-verify` | 检查必需文件和目录 |
-| `pik-map` | 生成轻量代码结构说明 |
+| `zl` | help 可输出命令总览 |
+| `zl-init` | 新项目、既存项目均可生成 `.planning/`，并写入 `reference/strict` 文档策略和 `none/local/external` RAG 后端 |
+| `zl-verify` | 检查必需文件和目录 |
+| `zl-map` | 生成轻量代码结构说明 |
 
 ### Codebase
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-codebase` | alias 等价于 `pik-codebase-scan` |
-| `pik-codebase-scan` | 生成 source/test/config inventory |
-| `pik-codebase-status` | 输出 codebase 与 graph 状态 |
+| `zl-codebase` | alias 等价于 `zl-codebase-scan` |
+| `zl-codebase-scan` | 生成 source/test/config inventory |
+| `zl-codebase-status` | 输出 codebase 与 graph 状态 |
 
 ### 文档 / RAG
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-docs-scan` | 生成 `RAG_SOURCES.md` |
-| `pik-docs-status` | 输出文档状态 |
-| `pik-docs-normalize` | 归一化文本类文档 |
-| `pik-docs-extract` | 本地抽取 md/txt/csv/pdf/docx/xlsx |
-| `pik-docs-diff` | 识别文档新增、变更、删除 |
-| `pik-docs-citations` | 生成 source citation |
-| `pik-docs-index` | 生成 RAG handoff |
-| `pik-docs-index --run` | 执行本地 RAG index，并通过 privacy guard |
-| `pik-docs-query` | 本地关键词查询 |
-| `pik-docs-query --rag` | 执行本地 GraphRAG query |
-| `pik-rag-init-local` | 初始化 Ollama + LanceDB 本地 GraphRAG |
+| `zl-docs-scan` | 生成 `RAG_SOURCES.md` |
+| `zl-docs-status` | 输出文档状态 |
+| `zl-docs-normalize` | 归一化文本类文档 |
+| `zl-docs-extract` | 本地抽取 md/txt/csv/pdf/docx/xlsx |
+| `zl-docs-diff` | 识别文档新增、变更、删除 |
+| `zl-docs-citations` | 生成 source citation |
+| `zl-docs-index` | 生成 RAG handoff |
+| `zl-docs-index --run` | 执行本地 RAG index，并通过 privacy guard |
+| `zl-docs-query` | 本地关键词查询 |
+| `zl-docs-query --rag` | 执行本地 GraphRAG query |
+| `zl-rag-init-local` | 初始化 Ollama + LanceDB 本地 GraphRAG |
 
 ### MVP3 Evidence Quality
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-rag-golden-add` | 增加 golden case |
-| `pik-rag-golden-run` | 跑 golden case，输出 PASS/FAIL |
-| `pik-rag-eval` | 汇总 RAG/citation 质量 |
-| `pik-citation-audit` | 校验 citation 指向存在的源文件 |
-| `pik-trace-build` | 建立 文档 -> 代码 -> 测试 -> evidence trace matrix |
-| `pik-trace-query` | 查询 trace matrix |
-| `pik-trace-audit` | 校验 trace matrix 完整性 |
+| `zl-rag-golden-add` | 增加 golden case |
+| `zl-rag-golden-run` | 跑 golden case，输出 PASS/FAIL |
+| `zl-rag-eval` | 汇总 RAG/citation 质量 |
+| `zl-citation-audit` | 校验 citation 指向存在的源文件 |
+| `zl-trace-build` | 建立 文档 -> 代码 -> 测试 -> evidence trace matrix |
+| `zl-trace-query` | 查询 trace matrix |
+| `zl-trace-audit` | 校验 trace matrix 完整性 |
 
 ### MVP3.5 Refresh Control
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-preflight` | 只做轻量检查，输出 commit distance 和 `heavy refresh executed: no` |
-| `pik-refresh-plan` | 区分无关 commit 与文档/代码相关 commit |
-| `pik-refresh-run` | 显式刷新 RAG/Graphify 后更新 `REFRESH_STATE.json` |
-| `pik-mode-status` | 输出当前执行预算模式 |
-| `pik-mode-set` | 可切换 `docs-reference`、`docs-strict`，并兼容 `default-local-rag`、`graph-lite`、`full-strict` |
+| `zl-preflight` | 只做轻量检查，输出 commit distance 和 `heavy refresh executed: no` |
+| `zl-refresh-plan` | 区分无关 commit 与文档/代码相关 commit |
+| `zl-refresh-run` | 显式刷新 RAG/Graphify 后更新 `REFRESH_STATE.json` |
+| `zl-mode-status` | 输出当前执行预算模式 |
+| `zl-mode-set` | 可切换 `docs-reference`、`docs-strict`，并兼容 `default-local-rag`、`graph-lite`、`full-strict` |
 
 ### Graphify / 代码地图
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-graph-build` | 生成 Graphify handoff |
-| `pik-graph-build --run` | 执行 Graphify command 前通过 privacy guard |
-| `pik-graph-status` | 输出 graph 状态 |
-| `pik-graph-query` | 查询 graph/report |
-| `pik-graph-diff` | 比较 baseline 和当前 graph |
-| `pik-graph-diff --save-baseline` | 保存 baseline |
-| `pik-graph-impact` | 生成影响面 |
-| `pik-graph-risk` | 生成风险报告 |
-| `pik-graph-freshness --strict` | stale graph 返回非 0 |
+| `zl-graph-build` | 生成 Graphify handoff |
+| `zl-graph-build --run` | 执行 Graphify command 前通过 privacy guard |
+| `zl-graph-status` | 输出 graph 状态 |
+| `zl-graph-query` | 查询 graph/report |
+| `zl-graph-diff` | 比较 baseline 和当前 graph |
+| `zl-graph-diff --save-baseline` | 保存 baseline |
+| `zl-graph-impact` | 生成影响面 |
+| `zl-graph-risk` | 生成风险报告 |
+| `zl-graph-freshness --strict` | stale graph 返回非 0 |
 
 ### Privacy / Policy / License
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-privacy-audit` | local-only 配置通过，外部配置失败 |
-| `pik-offline-lock` | 写入 offline lock |
-| `pik-outbound-audit` | 默认无外发行为 |
-| `pik-license-audit` | 输出 license 风险 |
-| `pik-policy-list` | 列出 policy |
-| `pik-policy-check` | 执行 policy 并写报告 |
-| `pik-policy-explain` | 解释指定 policy |
-| `pik-policy-lock` | 生成 policy snapshot 和 hash |
-| `pik-policy-verify` | 验证当前配置未偏离 lock，并执行轻量 policy checks |
-| `pik-policy-diff` | 输出 lock 与当前配置的字段级差异 |
+| `zl-privacy-audit` | local-only 配置通过，外部配置失败 |
+| `zl-offline-lock` | 写入 offline lock |
+| `zl-outbound-audit` | 默认无外发行为 |
+| `zl-license-audit` | 输出 license 风险 |
+| `zl-policy-list` | 列出 policy |
+| `zl-policy-check` | 执行 policy 并写报告 |
+| `zl-policy-explain` | 解释指定 policy |
+| `zl-policy-lock` | 生成 policy snapshot 和 hash |
+| `zl-policy-verify` | 验证当前配置未偏离 lock，并执行轻量 policy checks |
+| `zl-policy-diff` | 输出 lock 与当前配置的字段级差异 |
 
 ### Evidence / Runtime / Help
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-evidence-record` | 写 evidence record |
-| `pik-evidence-record --writeback` | 写回 issue/debug/phase |
-| `pik-evidence-status` | 输出 evidence 状态 |
-| `pik-runtime-install` | 三种 runtime pack 可安装 |
-| `pik-runtime-status` | 三种 runtime pack 可检查 |
-| `pik-help-skills` | 根据提问推荐合适 `pik-*` 命令 |
-| `pik help skills` | canonical help skills 路径可用 |
-| `pik-cockpit-build` | 基于 `templates/cockpit/index.template.html` 和 `cockpit-viewmodel.v1` 生成 `.planning/cockpit/index.html`，展示 Graphify/RAG/workflow/quality/privacy 状态；支持搜索、节点详情、legend 过滤和大图聚合；稳定样例见 `templates/cockpit/sample.html` |
+| `zl-evidence-record` | 写 evidence record |
+| `zl-evidence-record --writeback` | 写回 issue/debug/phase |
+| `zl-evidence-status` | 输出 evidence 状态 |
+| `zl-runtime-install` | 三种 runtime pack 可安装 |
+| `zl-runtime-status` | 三种 runtime pack 可检查 |
+| `zl-help-skills` | 根据提问推荐合适 `zl-*` 命令 |
+| `zl help skills` | canonical help skills 路径可用 |
+| `zl-cockpit-build` | 基于 `templates/cockpit/index.template.html` 和 `cockpit-viewmodel.v1` 生成 `.planning/cockpit/index.html`，展示 Graphify/RAG/workflow/quality/privacy 状态；支持搜索、节点详情、legend 过滤和大图聚合；稳定样例见 `templates/cockpit/sample.html` |
 
 ### Workflow
 
 | 命令 | 验证点 |
 | --- | --- |
-| `pik-new-milestone` | 生成 native workflow state / handoff |
-| `pik-spec-phase` | 生成 native workflow state / handoff |
-| `pik-discuss-phase` | 生成 native workflow state / handoff |
-| `pik-ui-phase` | 生成 native workflow state / handoff |
-| `pik-debug` | 生成 native workflow state / handoff |
-| `pik-plan-phase` | 生成 native workflow state / handoff |
-| `pik-execute-phase` | 生成 native workflow state / handoff |
-| `pik-code-review` | 生成 native workflow state / handoff |
-| `pik-verify-work` | 生成 native workflow state / handoff |
-| `pik-complete-milestone` | 生成 native workflow state / handoff |
-| `pik-workflow-run` | 通用 workflow 入口 |
-| `pik-workflow-status` | 输出 gate 状态 |
-| `pik-workflow-continue` | 标记人工 gate |
-| `pik-workflow-audit` | 输出失败原因和下一条命令 |
-| `pik-gate-check` | gate 完整时通过 |
-| `pik-completion-check` | 完成前硬检查 |
+| `zl-new-milestone` | 生成 native workflow state / handoff |
+| `zl-spec-phase` | 生成 native workflow state / handoff |
+| `zl-discuss-phase` | 生成 native workflow state / handoff |
+| `zl-ui-phase` | 生成 native workflow state / handoff |
+| `zl-debug` | 生成 native workflow state / handoff |
+| `zl-plan-phase` | 生成 native workflow state / handoff |
+| `zl-execute-phase` | 生成 native workflow state / handoff |
+| `zl-code-review` | 生成 native workflow state / handoff |
+| `zl-verify-work` | 生成 native workflow state / handoff |
+| `zl-complete-milestone` | 生成 native workflow state / handoff |
+| `zl-workflow-run` | 通用 workflow 入口 |
+| `zl-workflow-status` | 输出 gate 状态 |
+| `zl-workflow-continue` | 标记人工 gate |
+| `zl-workflow-audit` | 输出失败原因和下一条命令 |
+| `zl-gate-check` | gate 完整时通过 |
+| `zl-completion-check` | 完成前硬检查 |
 
 ## 4. 质量脚本覆盖
 
@@ -225,14 +225,14 @@ verify:docs-completeness
 
 - `FAIL = 0`
 - 新增报告均存在
-- `pik-help-skills` 输出至少 3 条推荐
-- `pik-policy-check` 输出 PASS
-- `pik-rag-golden-run` 至少 1 条 golden PASS
-- `pik-trace-audit` 输出 PASS
-- `pik-completion-check` 对完整 fixture 输出 `completion allowed`
+- `zl-help-skills` 输出至少 3 条推荐
+- `zl-policy-check` 输出 PASS
+- `zl-rag-golden-run` 至少 1 条 golden PASS
+- `zl-trace-audit` 输出 PASS
+- `zl-completion-check` 对完整 fixture 输出 `completion allowed`
 - `verify:skills-usability` 证明 33 个 runtime skill/prompt 可用
 - `verify:cockpit-build` 证明 project cockpit 独立模板、假数据样例和 `cockpit-viewmodel.v1` 可用，不触发 GraphRAG/Graphify 重刷新，并能处理 Graphify HTML、fallback 图、大图聚合和 RAG 缺失风险
-- `verify:docs-completeness` 证明命令手册 71 个独立锚点和 README 跳转完整
+- `verify:docs-completeness` 证明命令手册 74 个独立锚点和 README 跳转完整
 - `verify:quality-closure` 聚合 gate 输出 PASS
 
 两轮测试成功条件：

@@ -12,20 +12,20 @@ import {
   writeMarkdownReport,
 } from "./quality-utils.mjs";
 
-const pikCli = path.join(kitRoot, "bin", "pik.mjs");
-const temp = tempRoot("aipikit-skills-usability-");
+const zlCli = path.join(kitRoot, "bin", "zl.mjs");
+const temp = tempRoot("zhulong-skills-usability-");
 const coreSkills = [
-  "pik-new-milestone",
-  "pik-spec-phase",
-  "pik-discuss-phase",
-  "pik-ui-phase",
-  "pik-plan-phase",
-  "pik-execute-phase",
-  "pik-verify-work",
-  "pik-complete-milestone",
-  "pik-debug",
-  "pik-code-review",
-  "pik-cockpit-build",
+  "zl-new-milestone",
+  "zl-spec-phase",
+  "zl-discuss-phase",
+  "zl-ui-phase",
+  "zl-plan-phase",
+  "zl-execute-phase",
+  "zl-verify-work",
+  "zl-complete-milestone",
+  "zl-debug",
+  "zl-code-review",
+  "zl-cockpit-build",
 ];
 const runtimeSpecs = [
   { name: "codex", kind: "skill", ext: "SKILL.md" },
@@ -60,13 +60,13 @@ for (const spec of runtimeSpecs) {
   const install = runCommand(
     `runtime install ${spec.name}`,
     "node",
-    [pikCli, "runtime", "install", "--runtime", spec.name, "--dest", dest, "--force"],
+    [zlCli, "runtime", "install", "--runtime", spec.name, "--dest", dest, "--force"],
     { timeout: 120000, allowFailure: true },
   );
   const status = runCommand(
     `runtime status ${spec.name}`,
     "node",
-    [pikCli, "runtime", "status", "--runtime", spec.name, "--dest", dest],
+    [zlCli, "runtime", "status", "--runtime", spec.name, "--dest", dest],
     { timeout: 120000, allowFailure: true },
   );
   if (install.status !== 0) addIssue(spec.name, "", `runtime install exited ${install.status}`);
@@ -82,16 +82,16 @@ for (const spec of runtimeSpecs) {
       continue;
     }
     const text = readText(filePath);
-    if (text.includes("{{PIK_CLI}}") || text.includes("{{PIK_KIT_ROOT}}") || text.includes("{{PIK_GENERATED_AT}}")) {
+    if (text.includes("{{ZL_CLI}}") || text.includes("{{ZL_KIT_ROOT}}") || text.includes("{{ZL_GENERATED_AT}}")) {
       addIssue(spec.name, filePath, "Runtime template placeholder was not rendered.");
     }
-    if (!text.includes("bin/pik.mjs")) addIssue(spec.name, filePath, "Rendered item does not point at local bin/pik.mjs.");
+    if (!text.includes("bin/zl.mjs")) addIssue(spec.name, filePath, "Rendered item does not point at local bin/zl.mjs.");
     if (!text.includes(skill)) addIssue(spec.name, filePath, `Rendered item does not include its public command example: ${skill}`);
-    if (skill === "pik-cockpit-build") {
-      if (!/cockpit build|pik-cockpit-build/.test(text)) addIssue(spec.name, filePath, "Rendered cockpit item does not call AI-PIKit cockpit build.");
+    if (skill === "zl-cockpit-build") {
+      if (!/cockpit build|zl-cockpit-build/.test(text)) addIssue(spec.name, filePath, "Rendered cockpit item does not call Zhulong cockpit build.");
       if (!/leader|驾驶舱|可视化|project health|项目健康度/i.test(text)) addIssue(spec.name, filePath, "Rendered cockpit item does not expose visualization/demo trigger context.");
-    } else if (!/workflow run|pik-workflow-run/.test(text)) {
-      addIssue(spec.name, filePath, "Rendered item does not call AI-PIKit workflow.");
+    } else if (!/workflow run|zl-workflow-run/.test(text)) {
+      addIssue(spec.name, filePath, "Rendered item does not call Zhulong workflow.");
     }
     if (!/local-only|local_only/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose local-only privacy constraint.");
     if (!/heavy refresh/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose no heavy refresh constraint.");
@@ -123,7 +123,7 @@ const data = {
 };
 
 writeJsonReport("skills-usability-check.json", data);
-writeMarkdownReport("skills-usability-check.md", "AI-PIKit Skills Usability Verification", summarizeIssues(issues), [
+writeMarkdownReport("skills-usability-check.md", "Zhulong Skills Usability Verification", summarizeIssues(issues), [
   {
     title: "覆盖范围",
     body: [

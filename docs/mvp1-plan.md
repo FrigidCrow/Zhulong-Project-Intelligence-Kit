@@ -1,4 +1,4 @@
-# MVP1 Plan: AI-PIKit Command Facade and Context
+# MVP1 Plan: Zhulong Command Facade and Context
 
 Status: planned  
 Date: 2026-06-25  
@@ -6,11 +6,11 @@ Mode: MVP vertical slice
 
 ## Objective
 
-MVP1 turns AI Project Intelligence Kit from a template-only prototype into a
+MVP1 turns Zhulong Project Intelligence Kit from a template-only prototype into a
 usable AI engineering context kit for document-heavy development projects.
 
-The user should invoke AI-PIKit commands such as `$pik-debug` and
-`$pik-execute-phase`. AI-PIKit's role is to make generated project instructions and
+The user should invoke Zhulong commands such as `$zl-debug` and
+`$zl-execute-phase`. Zhulong's role is to make generated project instructions and
 local artifacts guide those commands through a consistent context protocol while
 the current backend may still map to GSD:
 
@@ -29,10 +29,10 @@ GSD task state
 MVP1 includes:
 
 - revised project positioning in `README.md`
-- generated `AGENTS.md` protocol for AI-PIKit public commands
+- generated `AGENTS.md` protocol for Zhulong public commands
 - `.planning/knowledge/` templates for specification context
 - manifest/config fields for agent runtime, spec context, code map, and evidence loop
-- `pik-docs-scan` and `pik-docs-status` commands
+- `zl-docs-scan` and `zl-docs-status` commands
 - end-to-end verification with a temporary target project
 
 MVP1 does not include:
@@ -41,7 +41,7 @@ MVP1 does not include:
 - real Graphify build/query wrappers
 - direct patching or forking of installed GSD skills
 - Office/PDF text extraction
-- automatic insertion into live `$pik-debug` backend internals
+- automatic insertion into live `$zl-debug` backend internals
 
 ## Plan
 
@@ -56,7 +56,7 @@ MVP1 does not include:
 
 <action>
 
-Update `README.md` so AI-PIKit is described as an AI engineering context kit for
+Update `README.md` so Zhulong is described as an AI engineering context kit for
 document-heavy development. Replace the old `GraphRAG + Graphify + GSD` center
 with a GSD-command-centered flow enhanced by spec context, Graphify code maps,
 verification evidence, and Claude Code / Copilot / Codex usage.
@@ -66,7 +66,7 @@ verification evidence, and Claude Code / Copilot / Codex usage.
 <acceptance_criteria>
 
 - `README.md` contains `AI Engineering Context Kit`.
-- `README.md` includes the AI-PIKit native workflow flow with GraphRAG and Graphify enhancement gates.
+- `README.md` includes the Zhulong native workflow flow with GraphRAG and Graphify enhancement gates.
 - `README.md` names Claude Code, GitHub Copilot, and Codex.
 - `README.md` states that GraphRAG is an adapter for spec context, not the whole product.
 
@@ -85,7 +85,7 @@ verification evidence, and Claude Code / Copilot / Codex usage.
 <action>
 
 Update `core/AGENTS.template.md` so generated agent instructions define a
-AI-PIKit command facade protocol. Agents should first read workflow state, then
+Zhulong command facade protocol. Agents should first read workflow state, then
 check `.planning/knowledge/` and spec context, then check Graphify/code-map
 evidence before risky edits, then verify and write evidence back.
 
@@ -93,8 +93,8 @@ evidence before risky edits, then verify and write evidence back.
 
 <acceptance_criteria>
 
-- `core/AGENTS.template.md` contains `AI-PIKit Command Facade`.
-- The protocol explicitly mentions `$pik-debug` and `$pik-execute-phase`.
+- `core/AGENTS.template.md` contains `Zhulong Command Facade`.
+- The protocol explicitly mentions `$zl-debug` and `$zl-execute-phase`.
 - The protocol names Claude Code, GitHub Copilot, and Codex as execution environments.
 - The protocol requires source verification and evidence writeback.
 
@@ -162,7 +162,7 @@ backward compatibility during MVP1.
 
 <read_first>
 
-- `bin/pik.mjs`
+- `bin/zl.mjs`
 - `core/planning/knowledge/RAG_SOURCES.template.md`
 - `core/planning/knowledge/DOC_RAG_STATUS.template.md`
 
@@ -170,7 +170,7 @@ backward compatibility during MVP1.
 
 <action>
 
-Add `pik-docs-scan --target <repo>` and `pik-docs-status --target <repo>`.
+Add `zl-docs-scan --target <repo>` and `zl-docs-status --target <repo>`.
 The scan command should find common project document formats under likely
 document directories, write `.planning/knowledge/RAG_SOURCES.md`, and write
 `.planning/knowledge/DOC_RAG_STATUS.md`. The status command should summarize
@@ -180,8 +180,8 @@ the latest scan if present.
 
 <acceptance_criteria>
 
-- `pik-docs-scan --target <tmp>` exits 0 after `pik-init`.
-- `pik-docs-status --target <tmp>` exits 0 after scan.
+- `zl-docs-scan --target <tmp>` exits 0 after `zl-init`.
+- `zl-docs-status --target <tmp>` exits 0 after scan.
 - `RAG_SOURCES.md` includes discovered `.md`, `.txt`, `.csv`, `.pdf`, `.docx`, or `.xlsx` files.
 - `DOC_RAG_STATUS.md` includes total document count and generation timestamp.
 - `npm run check` passes.
@@ -199,29 +199,29 @@ npm run check
 Then run an end-to-end smoke test in a temporary directory:
 
 ```bash
-pik-init --target <tmp> --template brownfield-monorepo --name mvp1_test
-pik-docs-scan --target <tmp>
-pik-docs-status --target <tmp>
-pik-graph-status --target <tmp>
-pik-evidence-status --target <tmp>
-pik-verify --target <tmp>
+zl-init --target <tmp> --template brownfield-monorepo --name mvp1_test
+zl-docs-scan --target <tmp>
+zl-docs-status --target <tmp>
+zl-graph-status --target <tmp>
+zl-evidence-status --target <tmp>
+zl-verify --target <tmp>
 ```
 
 ## Risks
 
-- The MVP does not yet install real `$pik-debug` skills in every runtime. It
+- The MVP does not yet install real `$zl-debug` skills in every runtime. It
   relies on generated agent instructions, command mapping, and project artifacts.
 - Document scanning is metadata-only in MVP1; it does not extract Office/PDF text.
 - GraphRAG and direct Graphify execution remain adapter concepts until later
-  milestones. MVP1 exposes local `pik-docs-*` and `pik-graph-*` helpers plus
+  milestones. MVP1 exposes local `zl-docs-*` and `zl-graph-*` helpers plus
   backend handoff records.
 
 ## MVP1 Success Criteria
 
-- A new target project initialized by AI-PIKit has a visible knowledge workspace.
-- Generated agent instructions explain how normal AI-PIKit commands should consume
+- A new target project initialized by Zhulong has a visible knowledge workspace.
+- Generated agent instructions explain how normal Zhulong commands should consume
   spec context, code maps, and evidence.
-- AI-PIKit can produce a first document-source inventory for document-heavy projects.
-- AI-PIKit can create local code-map status/query handoffs and durable evidence
-  records through `pik-*` commands.
+- Zhulong can produce a first document-source inventory for document-heavy projects.
+- Zhulong can create local code-map status/query handoffs and durable evidence
+  records through `zl-*` commands.
 - The existing CLI still passes syntax and smoke verification.

@@ -14,7 +14,7 @@ For confidential projects, use the pure local profile by default:
 - Input documents: local Markdown under `graphrag-workspace/input`.
 - No external model API should be configured.
 
-DeepSeek/OpenAI/Claude/etc. are external model services. If completion is configured to DeepSeek, the text sent to GraphRAG completion steps can leave the machine. That includes indexing prompts such as entity extraction and community report generation, and query prompts such as final answer generation. For a strict confidential project, do not use external completion models.
+<external-provider>/OpenAI/Claude/etc. are external model services. If completion is configured to <external-provider>, the text sent to GraphRAG completion steps can leave the machine. That includes indexing prompts such as entity extraction and community report generation, and query prompts such as final answer generation. For a strict confidential project, do not use external completion models.
 
 API keys must be stored only in `graphrag-workspace/.env`, referenced as `${GRAPHRAG_API_KEY}`, and never written into Markdown docs, git commits, issue records, logs, or summaries.
 
@@ -449,7 +449,7 @@ graphrag query --root graphrag-workspace --method local --response-type "List of
 graphrag query --root graphrag-workspace --method global --response-type "List of 8 concise points with data references" "<global overview question>"
 ```
 
-### 7.3 DeepSeek External Completion Profile
+### 7.3 <external-provider> External Completion Profile
 
 Use this only when external model calls are allowed.
 
@@ -489,9 +489,9 @@ embedding_models:
 
 This profile means:
 
-- entity extraction can be sent to DeepSeek;
-- community report generation can be sent to DeepSeek;
-- query answer generation can be sent to DeepSeek;
+- entity extraction can be sent to <external-provider>;
+- community report generation can be sent to <external-provider>;
+- query answer generation can be sent to <external-provider>;
 - embeddings and LanceDB remain local.
 
 It is not a pure local or strict confidential profile.
@@ -888,9 +888,9 @@ To verify the configured model provider:
 grep -n "model_provider\\|model:\\|api_base" -A4 -B2 graphrag-workspace/settings.yaml
 ```
 
-### 14.5 DeepSeek is faster but not confidential
+### 14.5 <external-provider> is faster but not confidential
 
-DeepSeek can make full standard indexing more practical, but it is external. If used, treat all GraphRAG input documents and query context as data that may leave the machine.
+<external-provider> can make full standard indexing more practical, but it is external. If used, treat all GraphRAG input documents and query context as data that may leave the machine.
 
 For strict confidential projects, keep completion and embedding both on Ollama.
 
@@ -911,7 +911,7 @@ Pure local full standard index, run overnight or on a stronger machine
 For non-confidential speed:
 
 ```text
-DeepSeek completion + Ollama embedding + full standard index
+<external-provider> completion + Ollama embedding + full standard index
 ```
 
 For this repository, keep GraphRAG artifacts local-only unless the team creates an explicit secure artifact distribution policy.

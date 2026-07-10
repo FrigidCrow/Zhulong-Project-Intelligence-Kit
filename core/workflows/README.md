@@ -1,10 +1,10 @@
-# AI-PIKit Native Workflow Contract
+# Zhulong Native Workflow Contract
 
-AI-PIKit workflow commands are the public control surface for document-heavy
+Zhulong workflow commands are the public control surface for document-heavy
 development projects. GSD is kept as a reference design, not as the required
 runtime backend.
 
-Every `pik-*` workflow follows the same loop:
+Every `zl-*` workflow follows the same loop:
 
 1. Read the generated `.planning/context/<kind>-*.md` context packet.
 2. Check current project state in `.planning/STATE.md`, `.planning/issues/`,
@@ -15,8 +15,8 @@ Every `pik-*` workflow follows the same loop:
 6. Verify with focused commands, source reads, tests, logs, screenshots, or
    manual checks appropriate to the request.
 7. Write decisions, evidence, risks, and follow-ups back with
-   `pik-evidence-record` when work is non-trivial.
-8. Recommend only `pik-*` commands to the user.
+   `zl-evidence-record` when work is non-trivial.
+8. Recommend only `zl-*` commands to the user.
 
 GraphRAG and Graphify are workflow gates:
 

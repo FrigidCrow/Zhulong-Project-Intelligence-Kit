@@ -13,19 +13,19 @@ const gates = [
   {
     id: "init-policy",
     script: "verify:init-policy",
-    proves: "pik-init can select reference/strict document policy and none/local/external RAG without hidden refresh.",
+    proves: "zl-init can select reference/strict document policy and none/local/external RAG without hidden refresh.",
     report: "verification/reports/init-policy-check.md",
   },
   {
     id: "full-command-surface",
     script: "verify:full-command-surface",
-    proves: "Every public pik-* bin declared in package.json can execute.",
+    proves: "Every public zl-* bin declared in package.json can execute.",
     report: "verification/reports/full-command-surface-check.md",
   },
   {
     id: "skills-usability",
     script: "verify:skills-usability",
-    proves: "Codex / Claude Code / GitHub Copilot runtime packs point to local pik-* workflow commands.",
+    proves: "Codex / Claude Code / GitHub Copilot runtime packs point to local zl-* workflow commands.",
     report: "verification/reports/skills-usability-check.md",
   },
   {
@@ -126,7 +126,7 @@ const businessChains = [
       "Codex skills render",
       "Claude Code skills render",
       "GitHub Copilot prompts render",
-      "skills point to local bin/pik.mjs and pik-* examples",
+      "skills point to local bin/zl.mjs and zl-* examples",
     ],
   },
   {
@@ -158,7 +158,7 @@ const data = {
 };
 
 writeJsonReport("business-chain-audit.json", data);
-writeMarkdownReport("business-chain-audit.md", "AI-PIKit Business Chain Audit", summarizeIssues(issues), [
+writeMarkdownReport("business-chain-audit.md", "Zhulong Business Chain Audit", summarizeIssues(issues), [
   {
     title: "业务链结果",
     body: businessChains.map((chain) => [

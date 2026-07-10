@@ -21,9 +21,9 @@ Every non-trivial change should answer:
 - What remains risky?
 - How can it be rolled back?
 
-AI-PIKit facade:
+Zhulong facade:
 
 ```bash
-pik-evidence-record --target <repo> "<summary>" --command "<command>" --result "<result>"
-pik-evidence-record --target <repo> "<summary>" --writeback .planning/issues/<issue>.md
+zl-evidence-record --target <repo> "<summary>" --command "<command>" --result "<result>"
+zl-evidence-record --target <repo> "<summary>" --writeback .planning/issues/<issue>.md
 ```

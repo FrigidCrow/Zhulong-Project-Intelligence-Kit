@@ -1,4 +1,0 @@
-interface:
-  display_name: "AI-PIKit Plan Phase"
-  short_description: "Plan work with AI-PIKit project context"
-  default_prompt: "$pik-plan-phase"
