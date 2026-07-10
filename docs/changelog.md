@@ -5,6 +5,16 @@ Full name: **Zhulong Project Intelligence Kit**
 Documentation abbreviation: **Zhulong**
 Command namespace: **`zl-*`**
 
+## 2026-07-10：远程 CI、发布供应链与中性 Claude Code 模板
+
+- 新增 GitHub Actions `quality` job，固定 Node.js 24 和 npm 11.12.1，执行可重现质量 gate、全命令面审计和 npm pack 审计；所有 Actions 均固定完整 commit SHA。
+- verifier 的 JSON / Markdown 报告作为 7 天 CI artifact 上传；截图、历史报告和图标候选不进入 npm tarball。
+- 新增 release workflow，使用 GitHub OIDC / npm trusted publishing，不保存长期 npm token。
+- 发布制品记录 SHA-256、Node/npm 版本、74 条命令面与 commit；公开仓库时使用 `actions/attest@v4` 生成 attestation。
+- 新增可声明式应用的默认分支 ruleset：要求 `quality`、一次批准和解决全部 review 会话。
+- `verify:quality` 不再隐式依赖 Ollama / GraphRAG；真实本地集成改由 `verify:quality:local-rag` 执行。
+- Claude Code 模板改为中性权限起点，不再强制 deny、禁用 hooks、禁用 bypass 或禁用 auto；高保密边界留给组织策略。
+
 ## 2026-07-10：机械质量审计、低心智门面与品牌特色收口
 
 本阶段把截图规划中的 Phase A-C 从设计稿落成可运行、可复跑、可证明的 Zhulong 能力，并建立统一的特色功能记载规范。
@@ -27,7 +37,7 @@ Command namespace: **`zl-*`**
 
 - cockpit 新增 Quality & Token Metrics，读取回答、暧昧、结构和可选 `TOKEN_USAGE.json` 指标。
 - 大图保持聚合社区预览，不嵌入完整原始 graph。
-- 新增 Claude Code deny 模板，禁止 WebFetch、常见外发 CLI、敏感文件读取和需求源目录写入，并关闭 hooks、bypass 与 auto 模式。
+- 当时新增过 Claude Code deny 模板；同日后续复核后已改为中性权限模板，以上方最新记录为准。
 - 新增 `docs/context-efficiency.md`，定义稳定前缀、引用优先、制品交接和 token 槽位。
 
 品牌与文档：

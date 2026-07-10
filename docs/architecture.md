@@ -267,7 +267,7 @@ npm run dev:audit:full
 - `verify:ambiguity` 验证中英日词表、规范性关键词不误报、strict 阻断和项目词表合并。
 - `verify:structure` 验证五类关键制品 mini-schema、合规率和默认/strict 状态语义。
 - `verify:answer-audit` 验证引用解析率、数值漂移、无依据句比例和自动审计开关。
-- `verify:guardrails` 验证 Claude Code deny 模板与 B1/B2/B3/B6 上下文效率约定。
+- `verify:guardrails` 验证 Claude Code 中性权限模板与 B1/B2/B3/B6 上下文效率约定。
 - `verify:policy-hardening` 验证 policy lock/verify/diff、四态语义、profile 阻断和 no heavy refresh。
 - `verify:cockpit-build` 验证 cockpit 独立模板、假数据样例、稳定 `cockpit-viewmodel.v1` 和 `zl-cockpit-build` 真实项目快照；真实快照能生成本地静态驾驶舱，安全处理 Graphify HTML，并展示 RAG/workflow/quality/privacy/evidence 状态。Graphify impact 预览借鉴 Graphify viewer 的固定图模型，支持搜索、节点详情、legend 过滤和大图 community 聚合。
 - `verify:full-command-surface` 执行 `package.json` 中全部 `zl-*` / `zl` 命令。
@@ -276,7 +276,7 @@ npm run dev:audit:full
 - `verify:docs-completeness` 验证命令手册 74 个独立锚点、详情字段和 README 跳转。
 - `verify:quality-closure` 聚合质量闭环 gate。
 - `verify:dev-audit-harness` 验证维护者内部审计机制，`dev:audit:full` 生成命令/skills/feature/benchmark scorecard 和时间/token/隔离报告。
-- `verify:quality` 聚合 docs、RAG、本地 GraphRAG、Graph hardening、privacy、license、schema、naming、runtime、visual。
+- `verify:quality` 聚合 docs、RAG 命令、Graph hardening、privacy、license、schema、naming、runtime、visual 和 CI 配置；真实本地 GraphRAG / Ollama 由 `verify:quality:local-rag` 追加。
 - `verify:integration` 验证完整 Zhulong workflow 和 Graphify / RAG 增强链路。
 
 完整测试计划在 [full-test-plan.md](full-test-plan.md)，阶段追踪在 [changelog.md](changelog.md)。
