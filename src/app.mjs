@@ -30,6 +30,7 @@ import {
   profileNameForDocumentPolicy,
 } from "./project/policy-config.mjs";
 import { sha256Text, stableJson, stableValue } from "./shared/stable-json.mjs";
+import { markdownCell, xmlDecode } from "./shared/text.mjs";
 import { WORKFLOW_COMMANDS } from "./workflow/catalog.mjs";
 import { runtime as runRuntimeCommand } from "./runtime/pack.mjs";
 import {
@@ -1563,10 +1564,6 @@ function fileCategory(ext) {
   return "Other";
 }
 
-function markdownCell(value) {
-  return String(value).replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
-}
-
 function formatBytes(size) {
   if (size < 1024) return `${size} B`;
   if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
@@ -1692,15 +1689,6 @@ function isTextDocument(file) {
 
 function sha256File(filePath) {
   return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
-}
-
-function xmlDecode(value) {
-  return String(value || "")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'");
 }
 
 function decodePdfString(value) {
