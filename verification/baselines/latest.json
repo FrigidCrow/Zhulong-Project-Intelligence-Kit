@@ -1,8 +1,8 @@
 {
   "schemaVersion": "zhulong-verification-baseline.v1",
-  "baseline": "v0.1.0-engineering-consolidation-candidate",
+  "baseline": "v0.1.0-engineering-consolidation-main",
   "date": "2026-07-10",
-  "sourceCommit": "5043f6d04ea20e4cb520d4e9d94e95f99de7b8e2",
+  "sourceCommit": "e0420311bbaf914673fe83bfe350834abc2a5954",
   "status": "PASS",
   "toolchain": {
     "node": "24",
@@ -53,13 +53,13 @@
     {
       "id": "github-ci",
       "status": "PASS",
-      "run": "29082499192",
+      "run": "29082908708",
       "platforms": ["ubuntu-latest", "macos-latest"]
     },
     {
       "id": "codeql",
       "status": "PASS",
-      "run": "29082497034"
+      "run": "29082908287"
     }
   ],
   "metrics": {

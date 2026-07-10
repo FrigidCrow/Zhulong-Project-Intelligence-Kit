@@ -1,6 +1,6 @@
 # Zhulong Kit 工程收口与下一阶段优化计划
 
-> 计划状态：执行中（M0-M6 已完成；M7 本地与远端 CI 审计通过，Pages 上线、npm 发布与远端历史替换待完成）
+> 计划状态：执行中（M0-M6 已完成；M7 本地与远端 CI、Pages 上线均完成，npm 发布与远端历史替换待所有者确认）
 > 制定日期：2026-07-10
 > 适用范围：`v0.1.0` 首次公开发布前至 `v0.2.0`
 > 历史依据：[截图提取稿与本地改造计划](zhulong-extraction-and-local-plan.md)
@@ -63,7 +63,7 @@ Zhulong 当前不缺新的产品能力。下一阶段应暂停扩充命令面，
 - [x] `rag none` fixture 不初始化 RAG，也不会收到错误的 RAG 建议。
 - [x] Ubuntu 完整质量流程通过，macOS 核心 smoke test 通过。
 - [x] CodeQL、Dependabot security updates、secret scanning 和 push protection 已配置。
-- [x] Pages 构建产物可直接显示当前版本或短 commit SHA；线上部署待合并到 `main` 后核验。
+- [x] Pages 页面可直接显示当前版本和短 commit SHA，线上 `build-info.json` 与 main commit 一致。
 - [ ] 首个 release 可从 npm 安装并运行 `zhulong --help`、`zl --help` 和一条核心命令。
 
 ### 3.2 `v0.2.0` 完成门槛

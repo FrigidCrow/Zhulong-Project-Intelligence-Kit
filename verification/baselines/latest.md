@@ -2,9 +2,9 @@
 
 ## 基线身份
 
-- 名称：`v0.1.0-engineering-consolidation-candidate`
+- 名称：`v0.1.0-engineering-consolidation-main`
 - 日期：2026-07-10
-- 来源 commit：`5043f6d04ea20e4cb520d4e9d94e95f99de7b8e2`
+- 来源 commit：`e0420311bbaf914673fe83bfe350834abc2a5954`
 - 状态：PASS
 - Node.js：24（远端 CI）
 - npm：11.12.1
@@ -17,8 +17,8 @@
 - 全命令面：PASS，74 / 74；npm bin 入口 75 个。
 - 双项目画像：PASS，文档密集型与非文档密集型 `rag none` 各 1 套。
 - tarball 安装 smoke：PASS，验证 `zhulong`、`zl`、`zl-init` 与 `zl-codebase-scan`。
-- GitHub Actions：PASS，run `29082499192`；Ubuntu/macOS smoke 与 Ubuntu quality 均通过。
-- CodeQL：PASS，run `29082497034`；JavaScript/TypeScript、GitHub Actions 与聚合检查均通过。
+- GitHub Actions：PASS，run `29082908708`；Ubuntu/macOS smoke 与 Ubuntu quality 均通过。
+- CodeQL：PASS，run `29082908287`；JavaScript/TypeScript、GitHub Actions 与聚合检查均通过。
 - 运行时 npm 依赖：0。
 
 ## 分发体积
