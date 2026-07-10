@@ -59,6 +59,28 @@ function makeAliasBins() {
   }
 }
 
+function makeFakeLocalRagTools() {
+  const graphragPath = path.join(aliasBin, "graphrag");
+  write(graphragPath, [
+    "#!/usr/bin/env node",
+    "import fs from 'node:fs';",
+    "import path from 'node:path';",
+    "const args = process.argv.slice(2);",
+    "const rootIndex = args.indexOf('--root');",
+    "if (args[0] !== 'init' || rootIndex < 0 || !args[rootIndex + 1]) process.exit(2);",
+    "const root = path.resolve(args[rootIndex + 1]);",
+    "fs.mkdirSync(root, { recursive: true });",
+    "fs.writeFileSync(path.join(root, 'settings.yaml'), 'models:\\n');",
+    "console.log('FULL_SURFACE_GRAPHRAG_INIT_OK');",
+    "",
+  ].join("\n"));
+  fs.chmodSync(graphragPath, 0o755);
+
+  const ollamaPath = path.join(aliasBin, "ollama");
+  write(ollamaPath, "#!/usr/bin/env node\nconsole.log('FULL_SURFACE_OLLAMA_OK');\n");
+  fs.chmodSync(ollamaPath, 0o755);
+}
+
 function runAlias(alias, args = [], options = {}) {
   const aliasPath = path.join(aliasBin, alias);
   const command = `${alias}${args.length ? ` ${args.join(" ")}` : ""}`;
@@ -360,6 +382,7 @@ function runCockpitCommand() {
 
 prepareProject();
 makeAliasBins();
+makeFakeLocalRagTools();
 runZl([]);
 runAlias("zl-init", ["--target", projectRoot, "--template", "greenfield-app", "--name", "full_command_surface", "--mode", "new", "--force"]);
 runAlias("zl-verify", ["--target", projectRoot]);
