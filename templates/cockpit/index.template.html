@@ -15,7 +15,7 @@
       --line-strong: #697269;
       --text: #edf1ed;
       --muted: #9aa49b;
-      --muted-2: #727c73;
+      --muted-2: #818b82;
       --cyan: #52a6aa;
       --green: #58ae7c;
       --amber: #d9a052;
@@ -766,7 +766,7 @@
           <title>${escapeHtml(node.id)} / ${escapeHtml(node.kind || "")}</title>
         </g>`;
       }).join("");
-      return `<svg class="cockpit-graph" viewBox="0 0 560 360" role="img" aria-label="Graphify impact graph">
+      return `<svg class="cockpit-graph" viewBox="0 0 560 360" role="group" aria-label="Graphify impact graph">
         <g class="graph-edges">${edges}</g>
         <g>${nodes}</g>
       </svg>`;

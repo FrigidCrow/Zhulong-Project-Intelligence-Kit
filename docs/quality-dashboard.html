@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zhulong Project Intelligence Kit - QA Dashboard</title>
-  <meta name="description" content="Zhulong 本地验证报告、质量脚本、截图证据和 runtime pack 状态。">
+  <title>Zhulong Project Intelligence Kit - 质量证据</title>
+  <meta name="description" content="Zhulong 稳定验证基线、质量门禁、项目画像与临时 CI 证据策略。">
   <link rel="stylesheet" href="assets/zl-site.css">
 </head>
 <body>
@@ -16,76 +16,70 @@
       <a href="commands.html">命令</a>
       <a href="technical-guide.html">技术教程</a>
       <a href="quality-dashboard.html" aria-current="page">QA</a>
-      <a href="../verification/reports/latest.md">验证报告</a>
+      <a href="../verification/baselines/latest.md">验证基线</a>
     </nav>
   </header>
 
   <main id="main">
     <section class="page-title">
       <p class="eyebrow">质量证据</p>
-      <h1>每个 PASS 都有来源。</h1>
-      <p>集中查看 integration、docs、RAG、workflow、policy、cockpit、runtime 与全命令面报告。状态必须能追回具体制品。</p>
+      <h1>稳定结论与当次明细，分别保存。</h1>
+      <p>长期基线进入 Git 和 Pages；每次 verifier 的详细报告进入短期 CI artifact；视觉截图只留在临时目录。绿色状态必须能够复跑，但不再靠提交生成文件来证明。</p>
     </section>
 
     <section class="section">
       <div class="section-header">
-        <h2>质量状态</h2>
-        <p>日常先跑 <code>npm run verify:quality</code>、<code>npm run verify:full-command-surface</code>；收口时跑 <code>npm run verify:quality-closure</code>。当前命令面以 <code>package.json</code> 为准，最近一次全命令面为 74 / 74。</p>
+        <h2>当前稳定基线</h2>
+        <p>页面只读取经过确认的 <code>verification/baselines/latest.json</code>。它没有运行时绝对路径、随机目录或生成时间戳。</p>
       </div>
       <div class="grid">
         <article class="panel panel-pad">
-          <h3>Integration</h3>
-          <p id="integration-summary">读取 <code>latest.json</code> 中...</p>
-          <p><a class="button" href="../verification/reports/latest.md">打开 Markdown 报告</a></p>
+          <h3>整体状态</h3>
+          <p class="status-pill" id="baseline-status">PASS</p>
+          <p id="baseline-identity">engineering-consolidation-start</p>
         </article>
         <article class="panel panel-pad">
-          <h3>Docs / RAG / Schema / Naming</h3>
-          <p id="docs-summary">读取 docs/RAG/schema/naming 报告中...</p>
-          <p><a class="button" href="../verification/reports/docs-check.md">Docs</a> <a class="button" href="../verification/reports/docs-update-fixture.md">Docs Update</a> <a class="button" href="../verification/reports/docs-sync-check.md">Docs Sync</a> <a class="button" href="../verification/reports/answer-audit-check.md">Answer Audit</a> <a class="button" href="../verification/reports/knowledge-reliability-check.md">Knowledge</a> <a class="button" href="../verification/reports/rag-command-check.md">RAG Matrix</a> <a class="button" href="../verification/reports/rag-local-check.md">Local RAG</a> <a class="button" href="../verification/reports/schema-check.md">Schema</a> <a class="button" href="../verification/reports/naming-check.md">Naming</a></p>
+          <h3>命令面</h3>
+          <p><strong id="command-surface">74 / 74</strong></p>
+          <p>每个公开逻辑命令都必须进入 full-command-surface。</p>
         </article>
         <article class="panel panel-pad">
-          <h3>Runtime / Visual / Release</h3>
-          <p id="runtime-summary">读取 runtime、visual 和 release 报告中...</p>
-          <p><a class="button" href="../verification/reports/runtime-pack-status.md">Runtime</a> <a class="button" href="../verification/reports/visual-check.md">Visual</a> <a class="button" href="../verification/reports/design-quality-check.md">Design</a> <a class="button" href="../verification/reports/pages-site-check.md">Pages</a> <a class="button" href="../verification/reports/public-release-check.md">Public Release</a></p>
+          <h3>工具链</h3>
+          <p><strong id="toolchain">Node.js 24.14.0 / npm 11.12.1</strong></p>
+          <p>CI 与发布工作流固定到 Node.js 24 和 npm 11。</p>
         </article>
         <article class="panel panel-pad">
-          <h3>MVP3 / MVP3.5 / MVP6 / Full Surface</h3>
-          <p id="mvp3-summary">读取 MVP3 和全命令面报告中...</p>
-          <p><a class="button" href="../verification/reports/mvp3-evidence-policy-check.md">MVP3</a> <a class="button" href="../verification/reports/mvp35-refresh-control-check.md">MVP3.5</a> <a class="button" href="../verification/reports/workflow-facade-check.md">Facade</a> <a class="button" href="../verification/reports/policy-hardening-check.md">Policy</a> <a class="button" href="../verification/reports/init-policy-check.md">Init Policy</a> <a class="button" href="../verification/reports/full-command-surface-check.md">Command Surface</a></p>
-        </article>
-        <article class="panel panel-pad">
-          <h3>MVP4.2 Closure</h3>
-          <p>skills、workflow、cockpit、docs completeness 和最终质量闭环 gate。</p>
-          <p><a class="button" href="../verification/reports/skills-usability-check.md">Skills</a> <a class="button" href="../verification/reports/workflow-closure-check.md">Workflow Closure</a> <a class="button" href="../verification/reports/cockpit-build-check.md">Cockpit</a> <a class="button" href="../verification/reports/docs-completeness-check.md">Docs Completeness</a> <a class="button" href="../verification/reports/business-chain-audit.md">Business Chain</a> <a class="button" href="../verification/reports/quality-closure-check.md">Quality Closure</a></p>
-        </article>
-        <article class="panel panel-pad">
-          <h3>Developer Audit / Benchmark</h3>
-          <p>维护者专用对标产物覆盖当前 74 个命令、33 个 runtime skill/prompt、功能门禁、同题比较、耗时和 token 边界。历史评分只代表当次 fixture，当前能力以最新 verifier 和 74 / 74 全命令面结果为准。</p>
-          <p><a class="button" href="../verification/reports/developer-audit-summary.md">Audit Summary</a> <a class="button" href="internal/dev-audit.md">Audit Guide</a></p>
-        </article>
-        <article class="panel panel-pad">
-          <h3>Formal Test Rounds</h3>
-          <p id="round-summary">读取两轮全量测试报告中...</p>
-          <p><a class="button" href="../verification/reports/full-test-round-1.md">Round 1</a> <a class="button" href="../verification/reports/full-test-round-2.md">Round 2</a> <a class="button" href="full-test-plan.md">测试计划</a></p>
+          <h3>运行时依赖</h3>
+          <p><strong id="runtime-dependencies">0</strong></p>
+          <p>默认路径只依赖 Node.js 标准库。</p>
         </article>
       </div>
+      <p><a class="button" href="../verification/baselines/latest.md">打开稳定基线</a> <a class="button" href="https://github.com/FrigidCrow/Zhulong-Project-Intelligence-Kit/actions/workflows/ci.yml">查看 CI 明细</a></p>
     </section>
 
     <section class="section alt">
       <div class="section-header">
-        <h2>场景质量覆盖</h2>
-        <p>Zhulong 的说明书按场景组织，QA 也必须按场景证明：轻量项目、严格文档项目、既有项目、文档更新、leader 演示都要有可复跑报告。</p>
+        <h2>两种项目画像，共用一套核心闭环</h2>
+        <p>文档与 RAG 是按项目需要启用的能力，不是 Zhulong 运行的前提。</p>
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>场景</th><th>设计预期</th><th>主要验证入口</th><th>看什么报告</th></tr></thead>
+          <thead>
+            <tr><th>项目画像</th><th>推荐配置</th><th>必须证明</th><th>禁止副作用</th></tr>
+          </thead>
           <tbody>
-            <tr><td>文档少 / 无文档</td><td><code>reference + rag none</code> 可以继续，缺文档必须写 <code>WAIVED_WITH_RISK</code>。</td><td><code>npm run verify:workflow-closure</code></td><td><code>workflow-closure-check.md</code></td></tr>
-            <tr><td>文档密集 / 规格严格</td><td><code>strict + rag local</code> 要求本地 RAG、citation 和 stale 检查。</td><td><code>npm run verify:init-policy</code><br><code>npm run verify:rag-local</code><br><code>npm run verify:answer-audit</code></td><td><code>init-policy-check.md</code>、<code>rag-local-check.md</code>、<code>answer-audit-check.md</code></td></tr>
-            <tr><td>既有项目改修</td><td>先建 codebase baseline 和 Graphify 影响面，再进入 workflow。</td><td><code>npm run verify:integration</code><br><code>npm run verify:graph-hardening</code></td><td><code>latest.md</code>、<code>graph-hardening-check.md</code></td></tr>
-            <tr><td>文档更新</td><td><code>zl-docs-sync</code> 默认轻量同步，只标记 stale；<code>--index</code> 才重建 RAG。</td><td><code>npm run verify:docs-sync</code><br><code>npm run verify:knowledge-reliability</code></td><td><code>docs-sync-check.md</code>、<code>knowledge-reliability-check.md</code></td></tr>
-            <tr><td>Runtime skills</td><td>Codex / Claude Code / Copilot 的 skill/prompt 都指向本地 <code>zl-*</code>。</td><td><code>npm run verify:skills-usability</code></td><td><code>skills-usability-check.md</code></td></tr>
-            <tr><td>Leader 演示</td><td>cockpit 只读取本地 artifact，展示 Graphify/RAG/evidence/policy 状态，不执行 heavy refresh。</td><td><code>npm run verify:cockpit-build</code></td><td><code>cockpit-build-check.md</code></td></tr>
+            <tr>
+              <td>非文档密集型</td>
+              <td><code>reference + rag none</code></td>
+              <td>codebase、workflow、policy、evidence、completion 正常闭环</td>
+              <td>不安装、不索引、不查询 RAG，不给出错误 RAG 建议</td>
+            </tr>
+            <tr>
+              <td>文档密集型</td>
+              <td><code>strict + rag local</code></td>
+              <td>文档新鲜度、引用、answer audit 与严格 gate</td>
+              <td>不使用未经批准的外部服务，不隐藏执行重建</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -93,177 +87,82 @@
 
     <section class="section">
       <div class="section-header">
-        <h2>验证脚本覆盖了什么</h2>
-        <p>Dashboard 的绿色状态必须能追到具体脚本和报告。下面这张表说明每个质量入口到底在证明哪一类能力。</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>命令</th><th>覆盖范围</th><th>报告</th></tr></thead>
-          <tbody>
-            <tr><td><code>npm run verify:docs</code></td><td>HTML/Markdown 本地链接、共享 CSS、命令手册覆盖。</td><td><a href="../verification/reports/docs-check.md">docs-check.md</a></td></tr>
-            <tr><td><code>npm run verify:docs-sync</code></td><td><code>zl-docs-sync</code> 默认轻量同步、文档新增/修改/删除 stale 标记、<code>--index</code> 显式重索引。</td><td><a href="../verification/reports/docs-sync-check.md">docs-sync-check.md</a></td></tr>
-            <tr><td><code>npm run verify:answer-audit</code></td><td><code>zl-answer-audit</code> 默认来源、<code>--from</code>、<code>--answer</code>、profile 状态和 workflow facade 建议。</td><td><a href="../verification/reports/answer-audit-check.md">answer-audit-check.md</a></td></tr>
-            <tr><td><code>npm run verify:knowledge-reliability</code></td><td>Knowledge Reliability Lite 主路径：docs sync -> docs query -> answer audit。</td><td><a href="../verification/reports/knowledge-reliability-check.md">knowledge-reliability-check.md</a></td></tr>
-            <tr><td><code>npm run verify:rag-local</code></td><td>Local GraphRAG、Ollama、LanceDB、no external API key、privacy audit；默认 index 300 秒、query 90 秒超时。</td><td><a href="../verification/reports/rag-local-check.md">rag-local-check.md</a></td></tr>
-            <tr><td><code>npm run verify:mvp3</code></td><td>RAG golden、citation audit、trace matrix、policy、help skills。</td><td><a href="../verification/reports/mvp3-evidence-policy-check.md">mvp3-evidence-policy-check.md</a></td></tr>
-            <tr><td><code>npm run verify:mvp35</code></td><td>preflight、refresh plan、显式 refresh-run、mode 切换、文档同步。</td><td><a href="../verification/reports/mvp35-refresh-control-check.md">mvp35-refresh-control-check.md</a></td></tr>
-            <tr><td><code>npm run verify:workflow-facade</code></td><td>public workflow 自动写 facade、输出下一步建议、并证明不触发 heavy refresh。</td><td><a href="../verification/reports/workflow-facade-check.md">workflow-facade-check.md</a></td></tr>
-            <tr><td><code>npm run verify:policy-hardening</code></td><td>policy lock/verify/diff、四态语义、profile 阻断和 no heavy refresh 约束。</td><td><a href="../verification/reports/policy-hardening-check.md">policy-hardening-check.md</a></td></tr>
-            <tr><td><code>npm run verify:init-policy</code></td><td><code>zl-init</code> 默认 reference + rag none、strict 必须选择 RAG、外部 RAG 必须 opt-in、rag none 阻断 GraphRAG 执行。</td><td><a href="../verification/reports/init-policy-check.md">init-policy-check.md</a></td></tr>
-            <tr><td><code>npm run verify:full-command-surface</code></td><td><code>package.json</code> 中全部 <code>zl-*</code> / <code>zl</code> bin 命令。</td><td><a href="../verification/reports/full-command-surface-check.md">full-command-surface-check.md</a></td></tr>
-            <tr><td><code>npm run verify:skills-usability</code></td><td>Codex / Claude Code / GitHub Copilot runtime pack 临时安装和 33 个 skill/prompt 内容检查。</td><td><a href="../verification/reports/skills-usability-check.md">skills-usability-check.md</a></td></tr>
-            <tr><td><code>npm run verify:workflow-closure</code></td><td>新项目、既有项目、reference 无文档风险放行、strict stale/privacy 阻断四条 workflow closure fixture。</td><td><a href="../verification/reports/workflow-closure-check.md">workflow-closure-check.md</a></td></tr>
-            <tr><td><code>npm run verify:cockpit-build</code></td><td><code>zl-cockpit-build</code>、独立 cockpit 模板、假数据样例、<code>cockpit-viewmodel.v1</code>、Graphify HTML 安全复制/阻断、搜索/详情/legend、本地图聚合、RAG 证据面板和 no hidden heavy refresh。</td><td><a href="../verification/reports/cockpit-build-check.md">cockpit-build-check.md</a></td></tr>
-            <tr><td><code>npm run verify:docs-completeness</code></td><td>命令手册 74 个独立锚点、详情字段、README 跳转和命名边界。</td><td><a href="../verification/reports/docs-completeness-check.md">docs-completeness-check.md</a></td></tr>
-            <tr><td><code>npm run verify:pages</code></td><td>GitHub Pages 允许列表、渲染入口、无源码目录和无符号链接。</td><td><a href="../verification/reports/pages-site-check.md">pages-site-check.md</a></td></tr>
-            <tr><td><code>npm run verify:public-release</code></td><td>Apache-2.0、npm 公开元数据、社区治理、安全报告和常见密钥模式。</td><td><a href="../verification/reports/public-release-check.md">public-release-check.md</a></td></tr>
-            <tr><td><code>npm run verify:business-chain</code></td><td>维护者级业务断链审计：init、全命令面、skills、workflow、policy、docs completeness 聚合。</td><td><a href="../verification/reports/business-chain-audit.md">business-chain-audit.md</a></td></tr>
-            <tr><td><code>npm run verify:quality-closure</code></td><td>聚合 check、quality、integration、runtime、skills、workflow、cockpit、docs completeness。</td><td><a href="../verification/reports/quality-closure-check.md">quality-closure-check.md</a></td></tr>
-            <tr><td><code>npm run verify:dev-audit-harness</code><br><code>npm run dev:audit:full</code></td><td>维护者内部审计：命令评分、skills 评分、feature gate、Zhulong / GSD / Superpowers 对标、时间拆分、token 统计边界和记忆隔离。</td><td><a href="../verification/reports/developer-audit-summary.md">developer-audit-summary.md</a></td></tr>
-            <tr><td><code>npm run verify:integration</code></td><td>init、docs、Graphify、runtime pack、workflow guard、evidence writeback。</td><td><a href="../verification/reports/latest.md">latest.md</a></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="section alt">
-      <div class="section-header">
-        <h2>命令覆盖矩阵</h2>
-        <p>这不是使用手册，而是 QA 视角的覆盖表：这些命令都必须在全命令面验证中被执行，不能只是写在文档里。</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>层</th><th>命令</th><th>主要报告</th></tr></thead>
-          <tbody>
-            <tr><td>初始化</td><td><code>zl</code>, <code>zl-init</code>, <code>zl-verify</code>, <code>zl-map</code></td><td><code>full-command-surface-check.md</code></td></tr>
-            <tr><td>Codebase</td><td><code>zl-codebase</code>, <code>zl-codebase-scan</code>, <code>zl-codebase-status</code></td><td><code>latest.md</code></td></tr>
-            <tr><td>文档/RAG</td><td><code>zl-docs-scan</code>, <code>zl-docs-status</code>, <code>zl-docs-normalize</code>, <code>zl-docs-extract</code>, <code>zl-docs-diff</code>, <code>zl-docs-citations</code>, <code>zl-docs-sync</code>, <code>zl-citation-audit</code>, <code>zl-rag-init-local</code>, <code>zl-rag-golden-add</code>, <code>zl-rag-golden-run</code>, <code>zl-rag-eval</code>, <code>zl-docs-index</code>, <code>zl-docs-query</code>, <code>zl-answer-audit</code></td><td><code>docs-sync-check.md</code>, <code>answer-audit-check.md</code>, <code>rag-local-check.md</code>, <code>mvp3-evidence-policy-check.md</code></td></tr>
-            <tr><td>Graphify</td><td><code>zl-graph-build</code>, <code>zl-graph-status</code>, <code>zl-graph-query</code>, <code>zl-graph-diff</code>, <code>zl-graph-impact</code>, <code>zl-graph-risk</code>, <code>zl-graph-freshness</code></td><td><code>graph-hardening-check.md</code>, <code>latest.md</code></td></tr>
-            <tr><td>Refresh / Mode</td><td><code>zl-preflight</code>, <code>zl-refresh-plan</code>, <code>zl-refresh-run</code>, <code>zl-mode-status</code>, <code>zl-mode-set</code></td><td><code>mvp35-refresh-control-check.md</code></td></tr>
-            <tr><td>Privacy / License</td><td><code>zl-privacy-audit</code>, <code>zl-offline-lock</code>, <code>zl-outbound-audit</code>, <code>zl-license-audit</code></td><td><code>privacy-strict-check.md</code>, <code>license-audit-check.md</code></td></tr>
-            <tr><td>Evidence / Trace / Policy</td><td><code>zl-evidence-record</code>, <code>zl-evidence-status</code>, <code>zl-trace-build</code>, <code>zl-trace-query</code>, <code>zl-trace-audit</code>, <code>zl-policy-list</code>, <code>zl-policy-check</code>, <code>zl-policy-explain</code>, <code>zl-policy-lock</code>, <code>zl-policy-verify</code>, <code>zl-policy-diff</code>, <code>zl-help-skills</code></td><td><code>mvp3-evidence-policy-check.md</code>, <code>policy-hardening-check.md</code></td></tr>
-            <tr><td>Runtime</td><td><code>zl-runtime-install</code>, <code>zl-runtime-status</code></td><td><code>runtime-pack-status.md</code></td></tr>
-            <tr><td>Workflow guard</td><td><code>zl-workflow-run</code>, <code>zl-workflow-status</code>, <code>zl-workflow-continue</code>, <code>zl-workflow-audit</code>, <code>zl-gate-check</code>, <code>zl-completion-check</code></td><td><code>latest.md</code></td></tr>
-            <tr><td>Public workflow</td><td><code>zl-new-milestone</code>, <code>zl-spec-phase</code>, <code>zl-discuss-phase</code>, <code>zl-ui-phase</code>, <code>zl-debug</code>, <code>zl-plan-phase</code>, <code>zl-execute-phase</code>, <code>zl-code-review</code>, <code>zl-verify-work</code>, <code>zl-complete-milestone</code></td><td><code>latest.md</code>, <code>full-command-surface-check.md</code></td></tr>
-            <tr><td>Context</td><td><code>zl-context-debug</code>, <code>zl-context-execute</code></td><td><code>full-command-surface-check.md</code></td></tr>
-            <tr><td>Cockpit</td><td><code>zl-cockpit-build</code>, <code>templates/cockpit/sample.html</code></td><td><code>cockpit-build-check.md</code>, <code>full-command-surface-check.md</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="section alt">
-      <div class="section-header">
-        <h2>截图证据</h2>
-        <p>这些截图由 <code>npm run verify:visual</code> 生成，用来确认页面没有空白、错位、横向溢出或命令块不齐。</p>
+        <h2>证据分层</h2>
+        <p>不同寿命的证据放在不同位置，减少仓库噪声，也避免发布页展示已经过期的截图。</p>
       </div>
       <div class="grid">
         <article class="panel panel-pad">
-          <h3>Product</h3>
-          <a href="../verification/reports/product-desktop.png"><img class="dashboard-shot" src="../verification/reports/product-desktop.png" alt="Product desktop screenshot"></a>
+          <h3>稳定基线</h3>
+          <p><code>verification/baselines/</code></p>
+          <p>进入 Git，记录 commit、工具链、关键 gate 和分发体积。</p>
         </article>
         <article class="panel panel-pad">
-          <h3>Commands</h3>
-          <a href="../verification/reports/commands-desktop.png"><img class="dashboard-shot" src="../verification/reports/commands-desktop.png" alt="Commands desktop screenshot"></a>
+          <h3>当次报告</h3>
+          <p><code>verification/reports/</code></p>
+          <p>本地生成并忽略；CI 上传 Markdown/JSON，保留 7 天。</p>
         </article>
         <article class="panel panel-pad">
-          <h3>Technical Guide</h3>
-          <a href="../verification/reports/technical-guide-desktop.png"><img class="dashboard-shot" src="../verification/reports/technical-guide-desktop.png" alt="Technical guide desktop screenshot"></a>
+          <h3>视觉截图</h3>
+          <p><code>.zl-tmp/visual/</code></p>
+          <p>用于 Playwright 判断空白、溢出与裁切，不进入 Git、Pages 或 npm 包。</p>
         </article>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="section-header">
+        <h2>发布级验证入口</h2>
+        <p>表格说明每一层证明什么。详细输出从对应 CI run 的 artifact 获取。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>入口</th><th>覆盖范围</th><th>证据位置</th></tr></thead>
+          <tbody>
+            <tr><td><code>npm test</code></td><td>纯函数、参数解析、状态迁移与策略判定</td><td>CI 日志与测试 reporter</td></tr>
+            <tr><td><code>npm run verify:ci</code></td><td>文档、RAG 边界、质量审计、runtime、Pages 与发布治理</td><td>7 天 CI artifact</td></tr>
+            <tr><td><code>npm run verify:project-profiles</code></td><td>文档密集型和非文档密集型核心闭环</td><td>7 天 CI artifact</td></tr>
+            <tr><td><code>manifest: full-command-surface</code></td><td>全部公开逻辑命令与 npm bin；在当前 tier 中只运行一次</td><td>7 天 CI artifact</td></tr>
+            <tr><td><code>npm run verify:visual</code></td><td>桌面、移动端、暗色模式、布局和品牌资源</td><td>本地临时截图与文本摘要</td></tr>
+            <tr><td><code>npm run verify:release</code></td><td>完整 gate、pack 清单、体积和供应链元数据</td><td>Release 与 attestation</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
     <section class="section">
       <div class="section-header">
-        <h2>本地命令</h2>
-        <p>dashboard 只展示结果，不替代命令。任何绿色状态都必须能由下面命令重新生成。</p>
+        <h2>本地复跑</h2>
+        <p>稳定基线是摘要，不替代命令。任何结论都必须能够在干净环境中重新生成。</p>
       </div>
-      <pre class="code-block"><code>npm run check
-npm run verify:rag-local
-npm run verify:docs-extract
-npm run verify:docs-sync
-npm run verify:answer-audit
-npm run verify:knowledge-reliability
-npm run verify:graph-hardening
-npm run verify:privacy-strict
-npm run verify:license
-npm run verify:mvp3
-npm run verify:mvp35
-npm run verify:workflow-facade
-npm run verify:policy-hardening
-npm run verify:cockpit-build
-npm run verify:full-command-surface
-npm run verify:skills-usability
-npm run verify:workflow-closure
-npm run verify:docs-completeness
-npm run verify:quality-closure
-npm run verify:dev-audit-harness
-npm run verify:quality
-npm run verify:integration
-
-# 维护者内部审计 / 对标
-npm run dev:audit:full
-
-node scripts/run-full-test-plan.mjs --run-id round-1
-node scripts/run-full-test-plan.mjs --run-id round-2
-
-# 外部 GraphRAG 验证，只能用于允许外发的脱敏 fixture
-GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
+      <pre class="code-block"><code>npm ci --ignore-scripts
+npm run verify:ci
+npm run verify:release
+npm pack --dry-run --json</code></pre>
     </section>
   </main>
 
   <footer class="footer">
-    <p>QA dashboard 读取 <code>verification/reports/</code> 中的本地报告。使用 <code>file://</code> 打开时如果浏览器限制 JSON 读取，请直接打开对应 Markdown 报告。</p>
+    <p>Zhulong 只长期保存稳定结论。详细报告属于当次运行，源代码仓库不再承担临时制品仓库的职责。</p>
   </footer>
 
   <script src="assets/zl-site.js"></script>
   <script>
-    async function readJson(path) {
-      const response = await fetch(path);
-      if (!response.ok) throw new Error(path);
-      return response.json();
-    }
-
-    function statusText(data) {
-      if (!data) return "当前浏览器未读取 JSON，请打开链接报告";
-      if (data.summary) return `PASS ${data.summary.pass} / FAIL ${data.summary.fail} / WARN ${data.summary.warn}`;
-      return `${data.status || "UNKNOWN"} / issues ${Array.isArray(data.issues) ? data.issues.length : "?"}`;
-    }
-
-    Promise.allSettled([
-      readJson("../verification/reports/latest.json"),
-      readJson("../verification/reports/docs-check.json"),
-      readJson("../verification/reports/docs-update-fixture.json"),
-      readJson("../verification/reports/docs-sync-check.json"),
-      readJson("../verification/reports/answer-audit-check.json"),
-      readJson("../verification/reports/knowledge-reliability-check.json"),
-      readJson("../verification/reports/rag-command-check.json"),
-      readJson("../verification/reports/rag-local-check.json"),
-      readJson("../verification/reports/schema-check.json"),
-      readJson("../verification/reports/naming-check.json"),
-      readJson("../verification/reports/runtime-pack-status.json"),
-      readJson("../verification/reports/visual-check.json"),
-      readJson("../verification/reports/design-quality-check.json"),
-      readJson("../verification/reports/pages-site-check.json"),
-      readJson("../verification/reports/public-release-check.json"),
-      readJson("../verification/reports/mvp3-evidence-policy-check.json"),
-      readJson("../verification/reports/mvp35-refresh-control-check.json"),
-      readJson("../verification/reports/workflow-facade-check.json"),
-      readJson("../verification/reports/policy-hardening-check.json"),
-      readJson("../verification/reports/full-command-surface-check.json"),
-      readJson("../verification/reports/cockpit-build-check.json"),
-      readJson("../verification/reports/full-test-round-1.json"),
-      readJson("../verification/reports/full-test-round-2.json"),
-    ]).then((results) => {
-      const values = results.map((item) => item.status === "fulfilled" ? item.value : null);
-      document.getElementById("integration-summary").textContent = statusText(values[0]);
-      document.getElementById("docs-summary").textContent = `Docs ${statusText(values[1])}; Docs Update ${statusText(values[2])}; Docs Sync ${statusText(values[3])}; Answer Audit ${statusText(values[4])}; Knowledge ${statusText(values[5])}; RAG Matrix ${statusText(values[6])}; Local RAG ${statusText(values[7])}; Schema ${statusText(values[8])}; Naming ${statusText(values[9])}`;
-      document.getElementById("runtime-summary").textContent = `Runtime ${statusText(values[10])}; Visual ${statusText(values[11])}; Design ${statusText(values[12])}; Pages ${statusText(values[13])}; Public Release ${statusText(values[14])}`;
-      document.getElementById("mvp3-summary").textContent = `MVP3 ${statusText(values[15])}; MVP3.5 ${statusText(values[16])}; Facade ${statusText(values[17])}; Policy ${statusText(values[18])}; Full Surface ${statusText(values[19])}; Cockpit ${statusText(values[20])}`;
-      document.getElementById("round-summary").textContent = `Round 1 ${statusText(values[21])}; Round 2 ${statusText(values[22])}`;
-    }).catch(() => {
-      document.getElementById("integration-summary").textContent = "浏览器阻止本地 JSON 读取，请打开 Markdown 报告。";
-    });
+    fetch("../verification/baselines/latest.json")
+      .then((response) => {
+        if (!response.ok) throw new Error("baseline unavailable");
+        return response.json();
+      })
+      .then((baseline) => {
+        document.getElementById("baseline-status").textContent = baseline.status || "UNKNOWN";
+        document.getElementById("baseline-identity").textContent = `${baseline.baseline || "unknown"} / ${baseline.date || "unknown"}`;
+        const surface = baseline.checks?.find((check) => check.id === "full-command-surface");
+        if (surface) document.getElementById("command-surface").textContent = `${surface.passed} / ${surface.total}`;
+        document.getElementById("toolchain").textContent = `Node.js ${baseline.toolchain?.node || "?"} / npm ${baseline.toolchain?.npm || "?"}`;
+        document.getElementById("runtime-dependencies").textContent = String(baseline.metrics?.runtimeDependencies ?? "?");
+      })
+      .catch(() => {
+        document.getElementById("baseline-identity").textContent = "浏览器未读取 JSON，请打开 Markdown 基线。";
+      });
   </script>
 </body>
 </html>

@@ -6,24 +6,27 @@
 
 1. 固定 Node.js 24 和 npm 11.12.1。
 2. 用 `npm ci --ignore-scripts` 按 `package-lock.json` 安装。
-3. 执行 `verify:quality` 和 `verify:full-command-surface`。
+3. 执行权威 `verify:ci` 层；全命令面检查已经在 manifest 中，只运行一次。
 4. 执行 `npm pack --dry-run --json` 并用 `verify:pack-report` 检查发布边界。
-5. 仅上传当次变更的 Markdown / JSON verifier 报告，保留 7 天；中转目录使用非隐藏的 `ci-artifacts/`，避免 upload action 默认忽略。
+5. 上传当次生成的 Markdown / JSON verifier 报告，保留 7 天；中转目录使用非隐藏的 `ci-artifacts/`，避免 upload action 默认忽略。
+6. 在 Ubuntu 与 macOS 上运行 CLI help 与 `verify:project-profiles` 轻量 smoke；完整视觉与发布 gate 只在 Ubuntu 运行。
 
 所有 GitHub Actions 依赖均固定到完整 commit SHA，版本号仅作为行尾注释，避免可移动 tag 在未审查时改变构建内容。
 
-视觉验证截图写入 `.zl-tmp/visual/`，不上传为 CI artifact，也不进入 npm 包。真实 Ollama / GraphRAG 集成需要本地服务和模型，使用 `npm run verify:quality:local-rag`，不和可重现 CI gate 混在一起。
+视觉验证截图写入 `.zl-tmp/visual/`，不上传为 CI artifact，也不进入 npm 包。真实 Ollama / GraphRAG 集成需要本地服务和模型，使用 `npm run verify:local-rag`，不和可重现 CI gate 混在一起。
+
+Windows 当前未进入正式支持矩阵。CLI 仍有 POSIX shell、`command -v` 和路径语义假设；在这些调用被替换并加入 Windows CI 前，README 必须明确该限制。
 
 ## 默认分支规则
 
 `.github/rulesets/main.json` 定义了默认分支的目标状态：
 
 - `quality` 必须通过，且分支必须与默认分支同步。
-- 至少一个 approving review，最后一次 push 需由其他审核者批准。
+- 单人仓库不强制 approving review，也不要求最后一次 push 由其他人批准。
 - 所有 review 会话必须解决。
 - 禁止删除分支和 non-fast-forward 更新。
 
-该 review 策略需要至少一名其他协作者；如果仓库始终由单人维护，启用前需将评审人数调整为可实际执行的策略。
+当前策略保留 PR、质量 gate 和会话解决要求，同时避免单人仓库被无法满足的自审规则永久阻断。增加协作者后，可以再把批准人数提高到 1。
 
 应用命令：
 
@@ -39,10 +42,11 @@ GH_TOKEN="$(gh auth token -u FrigidCrow)" npm run github:ruleset
 
 - `docs/` 产品、命令、技术与质量页面。
 - `templates/cockpit/sample.html` 驾驶舱样例。
-- `verification/reports/` 公开验证证据。
+- `verification/baselines/` 中经过确认的稳定验证摘要。
 - Apache 2.0 `LICENSE`。
+- `build-info.json`，记录版本、完整 commit SHA、部署时间和 CSS/JS 内容 hash。
 
-站点不会包含 `bin/`、`core/`、`runtime/`、`scripts/`、`node_modules/`、`.git/`、图标候选或符号链接。README 中的 HTML 链接使用 `https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/`，因此在 GitHub 点击会打开渲染网页，而不是 blob 源码视图。
+站点构建会给 CSS/JS 加内容 hash 查询参数，并在公开页面页脚注入版本、短 commit SHA 和部署时间，同时补齐 canonical、Open Graph 与 Twitter card 元数据。站点不会包含 `bin/`、`core/`、`runtime/`、`scripts/`、`node_modules/`、`.git/`、图标候选、临时 verifier 报告或符号链接。README 中的 HTML 链接使用 `https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/`，因此在 GitHub 点击会打开渲染网页，而不是 blob 源码视图。
 
 ## npm 发布决策
 
@@ -82,14 +86,14 @@ GH_TOKEN="$(gh auth token -u FrigidCrow)" npm run github:ruleset
 - `.github/dependabot.yml` 每周检查 npm 与 GitHub Actions 更新。
 - `verify:public-release` 检查许可证、公开包元数据、Pages 链接、社区文件和常见密钥模式。
 
-`verify:quality:release` 与 `verify:quality-closure` 都把 `verify:public-release` 放在最后，确保前面步骤刚生成的报告也经过路径和密钥扫描。
+`verify:release` 通过单一 manifest 在发布层执行 `verify:public-release`、全命令面、安装 smoke 与其余完整 gate。同一 verifier 每轮只执行一次；当次报告位于被忽略的 `verification/reports/`，只进入短期 CI artifact。
 
 ## Kit 本体的后续优化
 
 按工程收益排序，下一轮不需要扩展产品方向，应先改造 kit 自身：
 
-1. 拆分 `bin/zl.mjs`。当前约 8,800 行、370 余个函数，应先抽出 CLI router、docs、graph、policy、workflow、cockpit 六个域模块，保持命令兼容。
-2. 降低验证制品对 Git 的污染。报告中的时间戳、临时绝对路径和全量 stdout 会造成大量无语义 diff；应改为确定性摘要，并只跟踪必要的 latest 基线。
-3. 清理仓库体积。当前大量历史截图和图标候选已进入 Git 历史；先停止新增生成截图，再由所有者单独批准历史改写或 Git LFS 迁移。
-4. 为拆分后的纯函数增加 Node test runner 单元测试和覆盖率阈值，减少当前过度依赖端到端脚本的反馈时间。
-5. 给 `.planning` 制品引入显式 schema version 和向前迁移器，避免后续字段演进只能靠兼容分支堆叠。
+1. 继续把 `src/app.mjs` 中的领域服务迁入现有 docs、rag、graph、policy、workflow、cockpit 边界，但保持 `bin/zl.mjs` 薄启动层与全部兼容入口。
+2. 给 `.planning` 制品引入显式 schema version 和向前迁移器，避免后续字段演进只能靠兼容分支堆叠。
+3. 为 CLI JSON 输出增加命令级结构化 `data`，但保持 `zhulong-cli-output.v1` 信封向后兼容。
+4. 在不引入运行时依赖的前提下，继续提高纯函数单测的分支覆盖率。
+5. 活跃仓库继续不跟踪生成截图和图标候选；历史对象清理由所有者在维护窗口单独批准。

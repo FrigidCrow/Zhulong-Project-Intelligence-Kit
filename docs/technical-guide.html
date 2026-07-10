@@ -16,7 +16,7 @@
       <a href="commands.html">命令</a>
       <a href="technical-guide.html" aria-current="page">技术教程</a>
       <a href="quality-dashboard.html">QA</a>
-      <a href="../verification/reports/latest.md">验证报告</a>
+      <a href="../verification/baselines/latest.md">验证基线</a>
     </nav>
   </header>
 
@@ -97,6 +97,7 @@
         <a href="#surface">命令面总览</a>
         <a href="#artifacts">Artifact contract</a>
         <a href="#troubleshooting">排障方法</a>
+        <a href="#cli-contract">CLI 契约</a>
         <a href="#extend">扩展方法</a>
       </aside>
 
@@ -151,7 +152,8 @@ zl command
             <table>
               <thead><tr><th>路径</th><th>职责</th></tr></thead>
               <tbody>
-                <tr><td><code>bin/zl.mjs</code></td><td>Zhulong CLI 主实现，包含命令路由、alias、guard、adapter 调用。</td></tr>
+                <tr><td><code>bin/zl.mjs</code></td><td>稳定的 npm 可执行入口，只负责启动 <code>src/app.mjs</code>。</td></tr>
+                <tr><td><code>src/</code></td><td>CLI 参数与路由、项目策略、工作流目录、质量审计和领域实现。</td></tr>
                 <tr><td><code>core/</code></td><td>初始化目标项目时复制的核心模板。</td></tr>
                 <tr><td><code>core/workflows/</code></td><td>Zhulong native workflow contract，GSD 只作为参考设计。</td></tr>
                 <tr><td><code>templates/</code></td><td>不同项目类型模板，如新项目、既存 monorepo、后端、前端。</td></tr>
@@ -406,27 +408,10 @@ zl-policy-diff --target "$PWD"</code></pre>
         <section id="verify" class="page-section">
           <h2>12. 验证方法</h2>
           <p>Zhulong 的可信度来自可复跑验证，不是口头说明。</p>
-          <pre class="code-block"><code>npm run check
-npm run verify:rag-local
-npm run verify:docs-extract
-npm run verify:docs-sync
-npm run verify:answer-audit
-npm run verify:knowledge-reliability
-npm run verify:graph-hardening
-npm run verify:privacy-strict
-npm run verify:license
-npm run verify:mvp3
-npm run verify:mvp35
-npm run verify:workflow-facade
-npm run verify:policy-hardening
-npm run verify:full-command-surface
-npm run verify:skills-usability
-npm run verify:workflow-closure
-npm run verify:cockpit-build
-npm run verify:docs-completeness
-npm run verify:quality-closure
-npm run verify:dev-audit-harness
-npm run verify:integration
+          <pre class="code-block"><code>npm test
+npm run verify:ci
+npm run verify:release
+npm run verify:local-rag
 
 # 维护者内部审计 / 对标
 npm run dev:audit:full
@@ -436,7 +421,7 @@ node scripts/run-full-test-plan.mjs --run-id round-2
 
 # 外部 GraphRAG 验证，只能在允许外发脱敏 fixture 时使用
 GRAPHRAG_API_KEY=&lt;your key&gt; npm run verify:integration -- --live-graphrag</code></pre>
-          <p><code>verify:init-policy</code> 验证初始化策略；<code>verify:ambiguity</code>、<code>verify:structure</code>、<code>verify:answer-audit</code> 验证机械质量审计与自动折叠；<code>verify:guardrails</code> 验证 deny 和上下文效率边界。<code>verify:docs-sync</code> 证明默认同步不触发重刷新，只有 <code>--index</code> 才执行索引。<code>verify:cockpit-build</code> 覆盖稳定 view model、Quality &amp; Token Metrics、安全复制、fallback 图和大图聚合预览。<code>verify:full-command-surface</code> 执行 74 个公开逻辑命令入口；<code>verify:skills-usability</code> 验证三种运行环境的 33 个 skill/prompt；<code>verify:docs-completeness</code> 验证命令手册 74 个详情锚点和 README 跳转；<code>verify:quality-closure</code> 是最终聚合门禁。</p>
+          <p><code>scripts/verification-manifest.mjs</code> 是唯一任务目录：<code>verify:ci</code> 运行可重现 PR gate，<code>verify:release</code> 运行完整发布层，<code>verify:local-rag</code> 追加真实本地 RAG smoke。同一 verifier 在一个 tier 中最多运行一次，最终索引写入忽略的 <code>verification/reports/verification-&lt;tier&gt;-index.*</code>。</p>
           <p><code>dev:audit:full</code> 是维护者内部机制：它在 <code>.zl-audit/latest/</code> 生成 scorecard、命令/skills/feature 分表、Zhulong / GSD / Superpowers 对标、时间拆分和 token 统计边界，并把可提交摘要写到 <code>verification/reports/developer-audit-summary.md</code>。<code>Benchmark comparison</code> 是所有对标行的保守平均，不是 Zhulong 单体分；本轮 Zhulong 产品平均为 90 / A，scorecard 里的 87 反映了 graph-lite 低成本路径、full-local 无文档正确阻断、GSD / Superpowers replay 可信度上限。默认 benchmark 是 deterministic，不调用外部 AI，所以 token 写 <code>TOKEN_USAGE_UNAVAILABLE</code>；GSD / Superpowers 使用本机真实 skill/plugin 文件做 <code>skill-pack-backed-replay</code>，记录 instruction pack hash、fixture、代码改修、测试和证据文件。真实 Codex 子进程必须显式设置 <code>ZHULONG_AUDIT_REAL_AI=1</code>，并使用 <code>--ephemeral --ignore-rules --json</code>；需要完全不读用户配置时再加 <code>ZHULONG_AUDIT_CODEX_IGNORE_USER_CONFIG=1</code>。本轮真实子进程已经尝试执行，但当前账号不支持默认 <code>gpt-5.3-codex</code> 模型，三个 subprocess 均在启动阶段失败，因此没有 usage events，token 没有数字化。</p>
         </section>
 
@@ -506,7 +491,7 @@ zl-completion-check --target "$PWD"</code></pre>
 
         <section id="internals" class="page-section">
           <h2>14. CLI 内部机制</h2>
-          <p>Zhulong 的 runtime 适配不是为每个 AI 工具写一套业务逻辑，而是让它们统一落到本地 CLI。真正的命令路由在 <code>bin/zl.mjs</code>。</p>
+          <p>Zhulong 的 runtime 适配不是为每个 AI 工具写一套业务逻辑，而是让它们统一落到本地 CLI。<code>bin/zl.mjs</code> 是稳定入口，参数和路由实现位于 <code>src/cli/</code>。</p>
           <div class="grid two">
             <div class="panel panel-pad">
               <h3>命令 alias</h3>
@@ -613,22 +598,45 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
           </div>
         </section>
 
+        <section id="cli-contract" class="page-section">
+          <h2>18. CLI 输出与环境诊断</h2>
+          <p>Zhulong 的所有顶层命令共享同一机器输出信封。普通结果进入 stdout，诊断进入 stderr；开启 <code>--json</code> 后，只输出一个符合 <code>schemas/cli-output.schema.json</code> 的 JSON 对象。</p>
+          <pre class="code-block"><code>zhulong doctor --target "$PWD"
+zhulong doctor --target "$PWD" --json
+zhulong mode status --target "$PWD" --quiet
+zhulong completion bash
+zhulong completion zsh
+zhulong completion fish</code></pre>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>退出码</th><th>含义</th><th>调用方动作</th></tr></thead>
+              <tbody>
+                <tr><td><code>0</code></td><td>成功</td><td>读取 stdout 或 JSON 信封。</td></tr>
+                <tr><td><code>1</code></td><td>命令或 gate 失败</td><td>按报告修复项目状态。</td></tr>
+                <tr><td><code>2</code></td><td>用法错误</td><td>修正命令或参数。</td></tr>
+                <tr><td><code>3</code></td><td>必需环境缺失</td><td>运行 <code>zhulong doctor</code> 补齐环境。</td></tr>
+                <tr><td><code>70</code></td><td>内部错误</td><td>保留 stderr 与复现步骤后报告缺陷。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section id="extend" class="page-section">
-          <h2>18. 如何扩展</h2>
+          <h2>19. 如何扩展</h2>
           <p>新增能力时，遵守这个顺序：先定义本地 artifact，再接 CLI 命令，再接 runtime pack，最后补 verification。</p>
           <div class="diagram">
             <div class="node"><strong>1. Artifact contract</strong><br>明确文件落点、字段和通过条件。</div>
-            <div class="node"><strong>2. CLI command</strong><br>在 <code>bin/zl.mjs</code> 增加命令和 help。</div>
+            <div class="node"><strong>2. CLI command</strong><br>在 <code>src/cli/</code> 与对应领域模块增加命令和 help。</div>
             <div class="node"><strong>3. Runtime pack</strong><br>让 Codex/Claude/Copilot 通过 <code>zl-*</code> 调用。</div>
             <div class="node"><strong>4. Verification</strong><br>在 <code>verification/run-full-validation.mjs</code> 中证明真实可用。</div>
           </div>
           <h3>新增一个 Zhulong 命令的建议步骤</h3>
           <pre class="code-block"><code>1. 在 README / docs/changelog.md / docs/commands.html / docs/quality-plan.md 定义用户入口和目标 artifact。
-2. 在 bin/zl.mjs 增加 COMMAND_ALIASES 和实际 handler。
+2. 在 src/cli/args.mjs 增加 alias，并在对应领域模块增加 handler。
 3. 在 handler 中只写目标项目内的文件，不把数据散落到 Zhulong 仓库。
 4. 如果是 workflow 或 cockpit 这类 AI runtime 可直接触发的命令，更新 runtime/codex、runtime/claude-code、runtime/github-copilot 的调用说明。
 5. 增加专项 verification；命令面还要进入 verify:full-command-surface。
-6. 跑 npm run check && npm run verify:docs-completeness && npm run verify:full-command-surface && npm run verify:quality-closure。</code></pre>
+6. 跑 npm run check && npm test && npm run verify:ci；发布相关变更再跑 npm run verify:release。</code></pre>
           <h3>新增一个外部工具适配器的建议步骤</h3>
           <pre class="code-block"><code>1. 在 .planning/config.json 定义 command，例如 update_command 或 query_command。
 2. 不带 --run 时先生成 handoff，让用户能审查会执行什么。
@@ -641,7 +649,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
   </main>
 
   <footer class="footer">
-    <p>技术细节以当前 worktree、<code>bin/zl.mjs</code> 和 <code>verification/reports/latest.md</code> 为准。</p>
+    <p>技术细节以当前 worktree、<code>src/</code> 和 <code>verification/baselines/latest.md</code> 为准。</p>
   </footer>
   <script src="assets/zl-site.js"></script>
 </body>

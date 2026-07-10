@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/schemas/cli-output.schema.json",
+  "title": "Zhulong CLI output envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "command", "status", "exitCode", "stdout", "stderr"],
+  "properties": {
+    "schemaVersion": { "const": "zhulong-cli-output.v1" },
+    "command": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["ok", "error"] },
+    "exitCode": { "type": "integer", "minimum": 0, "maximum": 255 },
+    "stdout": { "type": "array", "items": { "type": "string" } },
+    "stderr": { "type": "array", "items": { "type": "string" } }
+  }
+}

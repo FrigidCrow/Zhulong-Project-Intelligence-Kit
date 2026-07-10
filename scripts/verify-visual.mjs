@@ -38,6 +38,15 @@ function loadPlaywright() {
   }
 }
 
+function loadAxeBuilder() {
+  try {
+    return require("@axe-core/playwright").default;
+  } catch {
+    const bundled = path.join(os.homedir(), ".cache", "codex-runtimes", "codex-primary-runtime", "dependencies", "node", "node_modules");
+    return require(require.resolve("@axe-core/playwright", { paths: [bundled] })).default;
+  }
+}
+
 function chromeExecutable() {
   const candidates = [
     process.env.CHROME_PATH,
@@ -52,6 +61,7 @@ function addIssue(page, viewport, detail) {
 }
 
 const { chromium } = loadPlaywright();
+const AxeBuilder = loadAxeBuilder();
 const launchOptions = { headless: true };
 const chromePath = chromeExecutable();
 if (chromePath) launchOptions.executablePath = chromePath;
@@ -69,6 +79,13 @@ try {
       const url = `file://${path.join(kitRoot, item.file)}`;
       await page.goto(url, { waitUntil: "networkidle" });
       await page.waitForTimeout(350);
+      const accessibility = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      const blockingAccessibility = accessibility.violations.filter((violation) => ["serious", "critical"].includes(violation.impact));
+      for (const violation of blockingAccessibility) {
+        addIssue(item.file, viewport.label, `Accessibility ${violation.impact}: ${violation.id} (${violation.nodes.length} node(s)).`);
+      }
       const foldScreenshot = path.join(screenshotRoot, `${item.name}-${viewport.label}-fold.png`);
       await page.screenshot({ path: foldScreenshot, fullPage: false });
       const documentHeight = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -136,6 +153,21 @@ try {
         foldScreenshot,
         bytes,
         metrics,
+        accessibility: {
+          violations: accessibility.violations.length,
+          blocking: blockingAccessibility.length,
+          items: accessibility.violations.map((violation) => ({
+            id: violation.id,
+            impact: violation.impact,
+            nodes: violation.nodes.length,
+            help: violation.help,
+            targets: violation.nodes.map((node) => ({
+              target: node.target,
+              html: node.html,
+              failureSummary: node.failureSummary,
+            })),
+          })),
+        },
       });
       await page.close();
     }

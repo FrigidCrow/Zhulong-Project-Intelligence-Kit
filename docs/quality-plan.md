@@ -427,14 +427,14 @@ MVP1 可以发布的最低标准：
 - README、commands、technical-guide、runtime-command-packs 全部使用 Zhulong / `zl-*` 命名。
 - `docs/commands.html` 覆盖 package bin 中所有 `zl-*`。
 - 三个 HTML 页面桌面渲染无横向 overflow。
-- `verification/reports/latest.md` 是最新脚本生成，不是手写伪报告。
+- `verification/reports/latest.md` 由脚本生成并作为临时报告；`verification/baselines/latest.md` 是经过确认的长期摘要。
 
 ### MVP2 gate
 
 MVP2 应增加：
 
 - `verify:docs`：检查文档链接、命令覆盖、命名一致性。
-- `verify:visual`：Playwright 渲染 product、commands、technical-guide、quality-dashboard 和 cockpit，覆盖桌面、移动端与桌面暗色主题并保存截图。
+- `verify:visual`：Playwright 渲染 product、commands、technical-guide、quality-dashboard 和 cockpit，覆盖桌面、移动端与桌面暗色主题，截图只写入 `.zl-tmp/visual/`。
 - `verify:design`：检查真实品牌素材、单一 H1、共享视觉系统、可访问性、动效边界和反模板化约束。
 - `verify:pages`：组装 GitHub Pages 允许列表并阻止源码、runtime、依赖目录和符号链接进入静态站。
 - `verify:public-release`：检查 Apache-2.0、npm 公开元数据、Pages 链接、社区治理文件和常见密钥模式。
@@ -456,7 +456,7 @@ MVP3 当前完成：
 - `zl-help-skills`。
 - `npm run verify:mvp3`。
 - `npm run verify:full-command-surface`。
-- `docs/full-test-plan.md` 和两轮正式测试报告入口。
+- `docs/full-test-plan.md` 和两轮正式测试的 CI artifact 入口。
 
 MVP3 完成标准：
 
@@ -464,7 +464,7 @@ MVP3 完成标准：
 - `verify:full-command-surface` 必须覆盖 `package.json` 中所有 bin 命令。
 - `zl-policy-check --strict` 在 fixture 上必须 PASS。
 - `zl-help-skills` 必须能按问题推荐至少 3 组 `zl-*` 命令。
-- 正式测试轮失败时，先写入 `verification/reports/full-test-round-*.md`，不得在同一轮里修复并覆盖事实。
+- 正式测试轮失败时，先写入当次 `verification/reports/full-test-round-*.md` 并上传 CI artifact，不得在同一轮里修复并覆盖事实。
 
 ## 7. 增强路线
 
@@ -700,21 +700,21 @@ Status: implemented
 
 ### Loop 7: 可视化 QA 和报告
 
-Status: partially implemented
+Status: implemented
 
 目标：让质量状态一眼能看懂。
 
 要做：
 
-- validation 输出 `latest.json`。已实现。
-- 新增 `docs/quality-dashboard.html`。已实现。
-- 展示 PASS/FAIL/WARN、最近截图、runtime pack 状态、fixture 覆盖率。
-- 支持打开 artifact 路径。
+- validation 输出临时 `latest.json`。已实现。
+- `verification/baselines/latest.json` 保存稳定、无时间戳的长期摘要。已实现。
+- `docs/quality-dashboard.html` 展示稳定状态、双项目画像和证据分层。已实现。
+- 当次 Markdown/JSON 报告通过 7 天 CI artifact 提供，视觉截图只保存在 `.zl-tmp/visual/`。已实现。
 
 完成定义：
 
 - dashboard 不是营销页面，而是 QA 操作台。
-- 每个绿色状态都能点到对应证据。
+- 每个绿色状态都能追到稳定基线或对应 CI run。
 
 ## 8. 证据标准
 
@@ -736,8 +736,9 @@ Status: partially implemented
 报告位置：
 
 ```text
+verification/baselines/latest.md
+verification/baselines/latest.json
 verification/reports/latest.md
-verification/reports/*.png
 verification/reports/latest.json
 verification/reports/docs-check.md
 verification/reports/docs-update-fixture.md
@@ -750,7 +751,10 @@ verification/reports/schema-check.md
 verification/reports/naming-check.md
 verification/reports/runtime-pack-status.md
 verification/reports/visual-check.md
+.zl-tmp/visual/*.png
 ```
+
+`verification/baselines/` 进入 Git 和 Pages；`verification/reports/` 与 `.zl-tmp/visual/` 默认被 Git 忽略，前者由 CI 上传为 7 天 artifact，后者不上传。
 
 ## 9. 每次开发的推荐质量循环
 
@@ -807,7 +811,7 @@ npm run verify:integration
 
 ## 10. MVP4.1 Quality Closure & Documentation Completeness Freeze
 
-MVP4.1 是 cockpit 加入前的 70 命令历史基线，MVP4.2 加入 cockpit 后为 71 个。当前 Phase A-C 完成后，公开逻辑命令面为 74 个，runtime skill/prompt 为 33 个；当前状态以最新验证报告为准。
+MVP4.1 是 cockpit 加入前的 70 命令历史基线，MVP4.2 加入 cockpit 后为 71 个。当前 Phase A-C 完成后，公开逻辑命令面为 74 个，runtime skill/prompt 为 33 个；长期状态以稳定验证基线为准，当次细节以 CI artifact 为准。
 
 新增质量入口：
 
@@ -826,6 +830,8 @@ verification/reports/workflow-closure-check.md/json
 verification/reports/docs-completeness-check.md/json
 verification/reports/quality-closure-check.md/json
 ```
+
+这些路径是本地和 CI 的临时输出，不进入 Git；发布级结论汇总到 `verification/baselines/`。
 
 验证范围：
 
@@ -860,6 +866,8 @@ npm run verify:cockpit-build
 ```text
 verification/reports/cockpit-build-check.md/json
 ```
+
+该报告是本地和 CI 的临时输出，不进入 Git。
 
 验证范围：
 

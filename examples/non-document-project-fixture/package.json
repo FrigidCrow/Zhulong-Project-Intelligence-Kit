@@ -1,0 +1,14 @@
+{
+  "name": "zl-non-document-project-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Code-first fixture for the Zhulong rag none project profile.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "graphify:fake": "node scripts/fake-graphify.mjs"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

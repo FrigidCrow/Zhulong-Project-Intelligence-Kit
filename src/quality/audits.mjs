@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const TEXT_EXTENSIONS = new Set([".md", ".markdown", ".txt", ".csv"]);
 const IGNORE_NAMES = new Set([".git", ".planning", "node_modules", "dist", "build", "coverage"]);
 
