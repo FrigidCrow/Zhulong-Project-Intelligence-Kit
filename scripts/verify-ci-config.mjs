@@ -7,13 +7,13 @@ const pages = fs.readFileSync(".github/workflows/pages.yml", "utf8");
 const verificationManifest = fs.readFileSync("scripts/verification-manifest.mjs", "utf8");
 const ruleset = JSON.parse(fs.readFileSync(".github/rulesets/main.json", "utf8"));
 const actionPins = {
-  "actions/checkout": "df4cb1c069e1874edd31b4311f1884172cec0e10",
+  "actions/checkout": "9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
   "actions/setup-node": "48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
   "actions/upload-artifact": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
   "actions/attest": "a1948c3f048ba23858d222213b7c278aabede763",
-  "actions/configure-pages": "983d7736d9b0ae728b81ab479565c72886d7745b",
-  "actions/upload-pages-artifact": "7b1f4a764d45c48632c6b24a0339c27f5614fb0b",
-  "actions/deploy-pages": "d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e",
+  "actions/configure-pages": "45bfe0192ca1faeb007ade9deae92b16b8254a0d",
+  "actions/upload-pages-artifact": "fc324d3547104276b827a68afc52ff2a11cc49c9",
+  "actions/deploy-pages": "cd2ce8fcbc39b97be8ca5fce6e763baed58fa128",
 };
 
 function expect(condition, detail) {
@@ -21,7 +21,7 @@ function expect(condition, detail) {
 }
 
 for (const [label, content] of [["CI", ci], ["release", release]]) {
-  expect(content.includes(`actions/checkout@${actionPins["actions/checkout"]}`), `${label} must pin actions/checkout v6 by SHA`);
+  expect(content.includes(`actions/checkout@${actionPins["actions/checkout"]}`), `${label} must pin actions/checkout v7 by SHA`);
   expect(content.includes(`actions/setup-node@${actionPins["actions/setup-node"]}`), `${label} must pin actions/setup-node v6 by SHA`);
   expect(/node-version:\s*24/.test(content), `${label} must pin Node.js 24`);
   expect(content.includes("npm@11.12.1"), `${label} must pin npm 11.12.1`);
@@ -43,11 +43,11 @@ expect(release.includes("ZL_RELEASE_REPOSITORY_PRIVATE"), "release must block wh
 expect(release.includes("npm run verify:release"), "release must run the authoritative release verification tier");
 expect(!release.includes("npm run verify:full-command-surface"), "release must not repeat a verifier outside the release DAG");
 expect(!release.includes("NODE_AUTH_TOKEN"), "release must not depend on a long-lived npm token");
-expect(pages.includes(`actions/checkout@${actionPins["actions/checkout"]}`), "Pages must pin actions/checkout v6 by SHA");
+expect(pages.includes(`actions/checkout@${actionPins["actions/checkout"]}`), "Pages must pin actions/checkout v7 by SHA");
 expect(pages.includes(`actions/setup-node@${actionPins["actions/setup-node"]}`), "Pages must pin actions/setup-node v6 by SHA");
-expect(pages.includes(`actions/configure-pages@${actionPins["actions/configure-pages"]}`), "Pages must pin configure-pages v5 by SHA");
-expect(pages.includes(`actions/upload-pages-artifact@${actionPins["actions/upload-pages-artifact"]}`), "Pages must pin upload-pages-artifact v4 by SHA");
-expect(pages.includes(`actions/deploy-pages@${actionPins["actions/deploy-pages"]}`), "Pages must pin deploy-pages v4 by SHA");
+expect(pages.includes(`actions/configure-pages@${actionPins["actions/configure-pages"]}`), "Pages must pin configure-pages v6 by SHA");
+expect(pages.includes(`actions/upload-pages-artifact@${actionPins["actions/upload-pages-artifact"]}`), "Pages must pin upload-pages-artifact v5 by SHA");
+expect(pages.includes(`actions/deploy-pages@${actionPins["actions/deploy-pages"]}`), "Pages must pin deploy-pages v5 by SHA");
 expect(pages.includes("pages: write") && pages.includes("id-token: write"), "Pages must request deployment permissions");
 expect(pages.includes("npm run verify:pages"), "Pages must assemble the allowlisted static site through verify:pages");
 expect(pages.includes("ZL_PAGES_COMMIT_SHA"), "Pages must inject the deployed commit SHA");
