@@ -171,7 +171,7 @@
         <div class="grid four">
           <article class="panel panel-pad">
             <h3>Workflow guard</h3>
-            <p>用 Zhulong native workflow 复刻 GSD 的严格流程思路。<code>zl-debug</code>、<code>zl-plan-phase</code>、<code>zl-execute-phase</code> 都会进入 gate 检查。</p>
+            <p>用 Zhulong native workflow 复刻 GSD 的严格流程思路。前端任务先由 <code>zl-ui-phase</code> 在 preserve、evolve、create、system 间路由，再把条件化 Taste 设计合同交给计划、实施和验证。</p>
           </article>
           <article class="panel panel-pad">
             <h3>Document intelligence</h3>
@@ -206,6 +206,10 @@
             <div class="story-row">
               <strong>既存改修</strong>
               <p>既有项目初始化后必须跑 <code>zl-codebase-scan</code>。没有 codebase baseline，guard 不允许轻易完成。</p>
+            </div>
+            <div class="story-row">
+              <strong>前端设计</strong>
+              <p><code>zl-ui-phase</code> 先查品牌、token、组件和既有页面。新营销页面可由 Taste 增强；成熟设计系统保持原样；Dashboard 使用产品设计系统。</p>
             </div>
             <div class="story-row">
               <strong>文档更新</strong>

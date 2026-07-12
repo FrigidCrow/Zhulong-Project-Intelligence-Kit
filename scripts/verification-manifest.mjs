@@ -31,6 +31,7 @@ export const VERIFICATION_TASKS = [
   task("schema", "verify:schema", SHARED_TIERS, ["syntax"]),
   task("naming", "verify:naming", SHARED_TIERS, ["syntax"]),
   task("runtime", "verify:runtime", SHARED_TIERS, ["naming"]),
+  task("taste-adapter", "verify:taste-adapter", SHARED_TIERS, ["runtime"]),
   task("visual", "verify:visual", SHARED_TIERS, ["docs"]),
   task("design", "verify:design", SHARED_TIERS, ["docs"]),
   task("pages", "verify:pages", SHARED_TIERS, ["design"]),

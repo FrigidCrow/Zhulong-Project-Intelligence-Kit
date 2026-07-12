@@ -24,6 +24,10 @@ execution_runtime:
       prompts_path: "runtime/github-copilot/prompts"
       install_command: "zl-runtime-install --runtime github-copilot"
 
+frontend_design:
+  strategy: "auto"
+  taste: "auto"
+
 command_facade:
   public_prefix: "zl"
   workflow_kernel:

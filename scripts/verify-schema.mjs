@@ -100,8 +100,11 @@ function assertManifestShape() {
   for (const key of required) {
     if (!topLevelKeys.has(key)) addIssue(`project.manifest.yml missing schema-required top-level key: ${key}`);
   }
-  for (const requiredLine of ["project:", "knowledge:", "workflow:", "privacy:", "execution_runtime:", "command_facade:"]) {
+  for (const requiredLine of ["project:", "knowledge:", "workflow:", "privacy:", "execution_runtime:", "frontend_design:", "command_facade:"]) {
     if (!manifest.includes(requiredLine)) addIssue(`project.manifest.yml missing expected block: ${requiredLine}`);
+  }
+  for (const requiredLine of ['strategy: "auto"', 'taste: "auto"']) {
+    if (!manifest.includes(requiredLine)) addIssue(`project.manifest.yml missing frontend design default: ${requiredLine}`);
   }
   for (const requiredLine of ['name: "schema_fixture"', 'type: "greenfield-app"', "root:"]) {
     if (!manifest.includes(requiredLine)) addIssue(`project.manifest.yml missing project field: ${requiredLine}`);

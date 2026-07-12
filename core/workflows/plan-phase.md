@@ -12,11 +12,15 @@ Required flow:
    Use `.planning/knowledge/`, local docs, or approved RAG only when available.
 3. Confirm code impact through `.planning/graphs/`, `zl-graph-query`, and
    direct source reads.
-4. Break work into ordered steps with dependencies and verification after each
+4. For frontend work, carry the `Frontend Design Decision` from `$zl-ui-phase`
+   into the plan. Name preserved contracts, allowed visual changes, Taste
+   authority, dependency limits, and visual verification. If it is missing,
+   route back to `$zl-ui-phase` rather than inventing a design mode.
+5. Break work into ordered steps with dependencies and verification after each
    risky step.
-5. Identify files likely to change, tests to run, migration/data risks, and
+6. Identify files likely to change, tests to run, migration/data risks, and
    rollback strategy.
-6. Write the plan back to the active phase record.
+7. Write the plan back to the active phase record.
 
 Outputs:
 

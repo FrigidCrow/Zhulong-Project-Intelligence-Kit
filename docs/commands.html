@@ -2198,17 +2198,17 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-ui-phase</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>UI 范围阶段</dd></div>
-                  <div><dt>用途</dt><dd>面向日常开发的公开工作流入口，内部会写 context、handoff、workflow facade 和 gate 状态。</dd></div>
-                  <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
+                  <div><dt>用途</dt><dd>读取项目设计证据，定义 UI 状态与数据合同，并在 preserve、evolve、create、system 间选择条件化 Taste 权限。</dd></div>
+                  <div><dt>什么时候用</dt><dd>创建前端、自然演进、重设计或修改既有 UI 前；必须先确定是否继承现有设计以及 Taste 的权限。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-ui-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>默认读取 manifest、依赖、设计资料、token、组件和现有页面，生成 Frontend Design Decision；不自动安装 Taste，不改变既有设计，不触发 heavy refresh。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-ui-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：目标项目未初始化或缺少 <code>.planning/</code>。先运行 <code>zl-init --target &quot;$PWD&quot;</code>。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺少足以区分 preserve/evolve/create/system 的设计证据。只有模式差异会实质影响结果时才询问一个设计方向问题。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
-                  <div><dt>适用场景</dt><dd>从需求、调查、计划、实施、验证到完成的开发主循环。</dd></div>
+                  <div><dt>适用场景</dt><dd>greenfield 营销页、自然演进前端、既存设计维护、Dashboard 与管理后台的设计权限路由。</dd></div>
                 </dl>
               </div>
             </section>

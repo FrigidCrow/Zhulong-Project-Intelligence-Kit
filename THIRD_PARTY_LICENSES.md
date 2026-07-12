@@ -14,6 +14,17 @@ open-ended wording, optional conditions, and unquantified qualities. It does
 not copy `write-good`, `words-weasels`, standards text, or proprietary review
 checklists.
 
+## Vendored Taste Skill snapshot
+
+- Component: `design-taste-frontend` from `leonxlnx/taste-skill`
+- Source: https://github.com/leonxlnx/taste-skill
+- Commit: `b17742737e796305d829b3ad39eda3add0d79060`
+- License: MIT
+- Copied files: `third_party/taste-skill/SKILL.md` and `LICENSE`
+- Provenance: `third_party/taste-skill/UPSTREAM.md`
+- Runtime policy: Zhulong loads `core/design/taste-adapter.md`; the full
+  upstream snapshot is retained for traceability and reviewed updates.
+
 ## External tools and runtimes
 
 GraphRAG, Graphify, Codex, Claude Code, and GitHub Copilot are optional external

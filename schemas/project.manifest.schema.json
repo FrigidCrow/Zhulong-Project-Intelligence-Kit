@@ -36,6 +36,20 @@
         }
       }
     },
+    "frontend_design": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["auto", "preserve", "evolve", "create", "system"]
+        },
+        "taste": {
+          "type": "string",
+          "enum": ["auto", "enabled", "disabled"]
+        }
+      }
+    },
     "command_facade": {
       "type": "object",
       "properties": {

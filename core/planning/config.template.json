@@ -105,6 +105,10 @@
       }
     }
   },
+  "frontend_design": {
+    "strategy": "auto",
+    "taste": "auto"
+  },
   "spec_context": {
     "enabled": false,
     "provider": "none",

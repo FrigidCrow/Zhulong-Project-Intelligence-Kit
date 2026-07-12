@@ -150,6 +150,17 @@ zl-runtime-status --runtime github-copilot --dest .github/prompts
 - workflow 命令不得隐藏触发 heavy refresh；GraphRAG index、Graphify build、refresh-run 必须来自显式 `--run`、`--index` 或 `zl-refresh-run`。
 - meaningful verification 必须用 `zl-evidence-record` 和 `--writeback` 留证。
 
+### 内置 Taste Adapter
+
+`zl-ui-phase` runtime 会读取 Zhulong 内置的 `core/design/taste-adapter.md`，不要求用户单独安装 `design-taste-frontend`。它先读取项目 manifest、依赖、设计证据、token、组件和既有页面，再选择：
+
+- `create`：新营销页面，Taste 可完整参与。
+- `evolve`：自然演进项目，Taste 只在保留品牌基础上增强。
+- `preserve`：成熟设计系统，Taste 只审计。
+- `system`：Dashboard 和密集产品 UI，关闭营销页 Taste。
+
+三种 runtime 都必须生成同样的 Frontend Design Decision。用户明确要求与项目设计证据高于 Taste；`preserve` 禁止无批准增加字体、颜色体系、圆角体系、组件库、图标库或动效依赖。
+
 ## 5. Help skills
 
 Shell 中可以直接问 Zhulong 当前情况适合跑什么命令：
@@ -209,7 +220,7 @@ verification/reports/skills-usability-check.md
 verification/reports/skills-usability-check.json
 ```
 
-`verify:skills-usability` 会把 Codex、Claude Code、GitHub Copilot 三套 pack 安装到临时目录，检查 11 个核心 skill/prompt 是否都存在、是否指向本地 CLI、是否没有模板变量、是否没有可执行意义的 `gsd-*` 指令，以及是否包含 local-only、no hidden heavy refresh、evidence writeback 约束。三种 runtime 合计应为 33 个渲染项。
+`verify:skills-usability` 会把 Codex、Claude Code、GitHub Copilot 三套 pack 安装到临时目录，检查 11 个核心 skill/prompt 是否都存在、是否指向本地 CLI、是否没有模板变量、是否没有可执行意义的 `gsd-*` 指令，以及是否包含 local-only、no hidden heavy refresh、evidence writeback 约束。它还检查 `zl-ui-phase` 是否引用内置 Adapter、四种设计模式、Frontend Design Decision 和 preserve 保护边界。三种 runtime 合计应为 33 个渲染项。
 
 `dev:audit:full` 是维护者内部审计，会把这 33 个 runtime skill/prompt 纳入 scorecard。最近一次完整审计中 Runtime skills 为 100 / A，摘要见 `verification/reports/developer-audit-summary.md`；原始安装检查和评分表在 `.zl-audit/latest/SKILL_SCORES.md`。注意：scorecard 的 `Benchmark comparison` 是 Zhulong、GSD、Superpowers 多场景混合平均，不是 runtime pack 单独评分；runtime pack 可用性看 Runtime skills 和 `verify:skills-usability`。
 

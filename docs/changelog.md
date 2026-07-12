@@ -5,6 +5,15 @@ Full name: **Zhulong Project Intelligence Kit**
 Documentation abbreviation: **Zhulong**
 Command namespace: **`zl-*`**
 
+## 2026-07-12：条件化 Taste 前端设计能力
+
+- 固定 vendored `design-taste-frontend` 上游快照到 commit `b17742737e796305d829b3ad39eda3add0d79060`，保留 MIT License、来源与升级规则。
+- 新增 Zhulong Taste Adapter；`zl-ui-phase` 在 `preserve`、`evolve`、`create`、`system` 间路由并生成 Frontend Design Decision。
+- `project.manifest.yml` 新增 `frontend_design.strategy` 与 `frontend_design.taste`，默认 `auto/auto`，保持既有项目兼容。
+- Codex、Claude Code、GitHub Copilot runtime 统一引用内置 Adapter，不要求用户另装 Taste。
+- plan、execute、code review、verify workflow 传播并验证设计合同，尤其阻止 preserve 模式下的无依据视觉漂移。
+- README、产品页、命令页、技术指南、runtime、架构、质量与测试文档同步更新。
+
 ## 2026-07-10：工程收口、CLI 契约与可追踪 Pages
 
 - 修复首发 release gate 对维护者本机 `graphify` CLI 的隐式依赖：默认 integration 使用仓库内 fixture，真实 Graphify 改为显式 `--live-graphify`，并把 hermetic integration 纳入 `verify:ci`，保证 GitHub Hosted Runner 与每个 PR 都可复现。

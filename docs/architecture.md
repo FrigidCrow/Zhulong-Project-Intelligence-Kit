@@ -100,7 +100,24 @@ zl-answer-audit --target "$PWD"
 
 默认 `zl-docs-sync` 只做 scan / diff / extract / citation audit，并写 `STALE_NEEDS_REFRESH`；需要重建本地 GraphRAG index 时才显式运行 `zl-docs-sync --target "$PWD" --index`。
 
-## 3. Graphify Code Map Layer
+## 3. Conditional Frontend Design Layer
+
+前端设计能力属于 workflow 决策层，而不是独立美术生成器。`zl-ui-phase` 读取 `project.manifest.yml`、依赖、设计资料、token、组件和现有页面，通过 `core/design/taste-adapter.md` 输出 `preserve`、`evolve`、`create` 或 `system` 的 Frontend Design Decision。后续 plan、execute、review 和 verify 只消费这份合同，不重新选择风格。
+
+上游 `design-taste-frontend` 以固定 commit 保存在 `third_party/taste-skill/`，用于许可证追溯与升级差异检查；runtime 只加载 Zhulong Adapter，避免上游硬规则与项目事实形成第二套权威。Codex、Claude Code 和 GitHub Copilot 的 `zl-ui-phase` 都通过渲染后的 `ZL_KIT_ROOT` 指向同一 Adapter。
+
+```mermaid
+flowchart LR
+  U["User + project evidence"] --> UI["zl-ui-phase"]
+  M["frontend_design config"] --> UI
+  T["Zhulong Taste Adapter"] --> UI
+  UI --> D["Frontend Design Decision"]
+  D --> P["plan"]
+  P --> X["execute"]
+  X --> R["code review + verify"]
+```
+
+## 4. Graphify Code Map Layer
 
 Graphify 是代码地图后端。Zhulong 不重写 Graphify，而是负责：
 
@@ -119,7 +136,7 @@ zl-graph-risk --target "$PWD"
 zl-graph-freshness --target "$PWD" --strict
 ```
 
-## 4. Evidence Quality & Policy Mode
+## 5. Evidence Quality & Policy Mode
 
 MVP3 增加了一层证据质量控制。它不只记录 evidence，还检查 evidence 是否可靠。
 
@@ -165,7 +182,7 @@ zl-help-skills --target "$PWD" "我现在是文档更新情况，有没有适合
 
 MVP6 开始，workflow / policy gate 使用四态语义：`PASS`、`FAIL`、`WAIVED_WITH_RISK`、`STALE_NEEDS_REFRESH`。公开语义是 `reference` / `strict`：`reference` 可以带风险跳过文档并写 `WAIVED_WITH_RISK`，`strict` 对 stale、missing citation 和外部 provider 硬阻断。内部 profile `graph-lite`、`default-local-rag`、`full-strict` 继续兼容，但不作为新用户的一层概念。policy lock/verify/diff 只做轻量检查，不触发 GraphRAG index 或 Graphify build。
 
-## 5. Runtime Adapter Layer
+## 6. Runtime Adapter Layer
 
 Codex、Claude Code、GitHub Copilot 的适配方式不同，但功能不分叉：
 
@@ -185,7 +202,7 @@ zl-runtime-install --runtime github-copilot --dest .github/prompts
 
 可信边界仍然是本地 `zl-*` 命令和 `.planning/` artifact。
 
-## 6. Developer Audit Layer
+## 7. Developer Audit Layer
 
 Developer Audit 是维护者专用质量控制面，不属于普通项目运行时，也不写入目标项目 `.planning/`。它读取仓库命令、runtime pack、verification reports 和 synthetic benchmark fixture，生成 `.zl-audit/latest/` 下的 scorecard。
 
@@ -209,7 +226,7 @@ flowchart LR
 
 当前公开命令面为 74 个，runtime skill/prompt 为 33 个。历史 scorecard 与三方 benchmark 只代表当次 fixture，不作为当前能力的替代证明；当前状态以 full-command-surface、skills usability 和各功能 verifier 为准。Zhulong `graph-lite` 继续提供低成本 “Zhulong + Graphify” 模式；full-local 在无文档场景输出 `EXPECTED_BLOCK`，作为正确安全边界记录。
 
-## 7. Local-only 安全边界
+## 8. Local-only 安全边界
 
 Zhulong 默认不主动上传项目数据。风险主要来自你把配置改成外部 provider。
 
@@ -233,7 +250,7 @@ zl-policy-lock --target "$PWD"
 zl-policy-verify --target "$PWD"
 ```
 
-## 8. 验证架构
+## 9. 验证架构
 
 当前验证由单一 manifest 分为三层：
 

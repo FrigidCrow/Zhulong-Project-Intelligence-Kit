@@ -6434,6 +6434,37 @@ function referenceInvocation(route, request) {
   return `${route.referenceCommand}${request ? ` ${request}` : ""}`;
 }
 
+function frontendDesignDecisionTemplate(kind) {
+  if (kind !== "ui") return "";
+  return `## Frontend Design Decision
+
+Complete this decision before frontend implementation. Follow
+\`core/design/taste-adapter.md\` and write the completed block to the active
+phase when one exists.
+
+\`\`\`yaml
+mode: preserve | evolve | create | system
+confidence: high | medium | low
+taste_applied: full | constrained | audit-only | disabled
+evidence: []
+preserve: []
+allowed_changes: []
+design_read:
+  page_kind: ""
+  audience: ""
+  visual_language: ""
+dials:
+  design_variance: 1
+  motion_intensity: 1
+  visual_density: 1
+verification: []
+\`\`\`
+
+If automatic evidence is low-confidence and different modes would materially
+change the result, ask exactly one design-direction question.
+`;
+}
+
 function writeContextPacket(target, kind, request, route = routeForPacketKind(kind)) {
   const generatedAt = new Date().toISOString();
   const contextDir = path.join(target, ".planning", "context");
@@ -6444,6 +6475,7 @@ function writeContextPacket(target, kind, request, route = routeForPacketKind(ki
   const outPath = path.join(contextDir, `${slug}.md`);
 
   const state = readOptional(target, ".planning/STATE.md");
+  const manifest = readOptional(target, "project.manifest.yml");
   const sources = readOptional(target, ".planning/knowledge/RAG_SOURCES.md");
   const docStatus = readOptional(target, ".planning/knowledge/DOC_RAG_STATUS.md");
   const glossary = readOptional(target, ".planning/knowledge/GLOSSARY.md");
@@ -6474,6 +6506,10 @@ ${request || "No request text provided."}
 
 ${packetSourceBlock("State", state, 60)}
 
+## Project Configuration
+
+${packetSourceBlock("Project Manifest", manifest, 100)}
+
 ## Specification Context
 
 ${packetSourceBlock("Document RAG Status", docStatus, 40)}
@@ -6503,6 +6539,8 @@ ${packetSourceBlock("Architecture", architecture, 60)}
 ## Verification Context
 
 ${packetSourceBlock("Testing", testing, 60)}
+
+${frontendDesignDecisionTemplate(kind)}
 
 ## Verification Plan
 

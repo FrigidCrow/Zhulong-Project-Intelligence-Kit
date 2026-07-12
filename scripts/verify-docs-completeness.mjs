@@ -42,6 +42,7 @@ const README_KEY_COMMANDS = [
   "zl-rag-init-local",
   "zl-graph-build",
   "zl-new-milestone",
+  "zl-ui-phase",
   "zl-debug",
   "zl-answer-audit",
   "zl-completion-check",

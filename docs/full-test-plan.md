@@ -161,7 +161,7 @@ verification/reports/developer-audit-summary.md
 | `zl-new-milestone` | 生成 native workflow state / handoff |
 | `zl-spec-phase` | 生成 native workflow state / handoff |
 | `zl-discuss-phase` | 生成 native workflow state / handoff |
-| `zl-ui-phase` | 生成 native workflow state / handoff |
+| `zl-ui-phase` | 生成 native workflow state / handoff；greenfield landing 为 `create/full`，自然演进为 `evolve/constrained`，成熟设计为 `preserve/audit-only`，Dashboard 为 `system/disabled`；用户请求覆盖 manifest，manifest 覆盖自动判断 |
 | `zl-debug` | 生成 native workflow state / handoff |
 | `zl-plan-phase` | 生成 native workflow state / handoff |
 | `zl-execute-phase` | 生成 native workflow state / handoff |
@@ -185,6 +185,7 @@ npm run verify:quality
 npm run verify:integration
 npm run verify:full-command-surface
 npm run verify:skills-usability
+npm run verify:taste-adapter
 npm run verify:workflow-closure
 npm run verify:cockpit-build
 npm run verify:docs-completeness
