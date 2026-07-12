@@ -10,7 +10,13 @@ Run Zhulong Project Intelligence Kit UI phase for the current workspace.
 1. Run `{{ZL_CLI}} workflow run ui-phase --target . "<UI scope>"`.
 2. Read the generated `.planning/context/` packet and handoff.
 3. Follow `core/workflows/ui-phase.md`.
-4. Identify routes, components, states, contracts, permissions, validation,
+4. Read `{{ZL_KIT_ROOT}}/core/design/taste-adapter.md`, project/dependency
+   manifests, design evidence, tokens, components, and existing screens.
+   Classify the surface as `preserve`, `evolve`, `create`, or `system`.
+5. Record a `Frontend Design Decision` before implementation. In `preserve`,
+   do not introduce a new visual system or UI/motion dependency without
+   approval. Taste is bundled and needs no separate installation.
+6. Identify routes, components, states, contracts, permissions, validation,
    accessibility, and verification needs.
-5. Use Graphify/code-map context before risky UI edits.
-6. Suggest only `/zl-*` commands. GSD is reference design only.
+7. Use Graphify/code-map context before risky UI edits.
+8. Suggest only `/zl-*` commands. GSD is reference design only.

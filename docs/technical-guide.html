@@ -291,6 +291,23 @@ ollama pull bge-m3</code></pre>
         <section id="runtime" class="page-section">
           <h2>7. Runtime command pack</h2>
           <p>Runtime pack 只是让不同 AI 工具知道如何调用 Zhulong。核心命令仍然是本地 <code>zl</code> CLI。</p>
+          <h3>条件化 Taste 前端设计</h3>
+          <p><code>zl-ui-phase</code> 会读取项目 manifest、依赖、品牌资料、design token、组件和既有页面，生成 Frontend Design Decision。Taste Adapter 已内置，不需要另外运行 <code>npx skills add</code>。</p>
+          <pre class="code-block"><code>frontend_design:
+  strategy: auto       # auto | preserve | evolve | create | system
+  taste: auto          # auto | enabled | disabled</code></pre>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>模式</th><th>默认判断</th><th>Taste 权限</th></tr></thead>
+              <tbody>
+                <tr><td><code>create</code></td><td>全新营销页、官网、portfolio</td><td>完整应用相关规则</td></tr>
+                <tr><td><code>evolve</code></td><td>已有风格但不完整或不一致</td><td>在保留品牌基础上增强</td></tr>
+                <tr><td><code>preserve</code></td><td>稳定 token、组件库、视觉稿或品牌规范</td><td>只审计，不引入新视觉系统</td></tr>
+                <tr><td><code>system</code></td><td>Dashboard、后台、表格和多步骤产品 UI</td><td>关闭营销页规则，服从产品设计系统</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>优先级固定为：用户明确要求、正式设计与规格证据、合规与可访问性约束、现有源码约定、Taste Adapter、模型自由选择。greenfield 营销页通常进入 <code>create</code>；brownfield 项目只有在风格确实零散时才进入 <code>evolve</code>。设置 <code>taste: disabled</code> 可以完全关闭 Taste。</p>
           <div class="table-wrap">
             <table>
               <thead><tr><th>Runtime</th><th>安装目录</th><th>文件类型</th><th>内部调用</th></tr></thead>

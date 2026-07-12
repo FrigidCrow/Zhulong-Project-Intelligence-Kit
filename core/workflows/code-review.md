@@ -12,8 +12,12 @@ Required flow:
 3. Use Graphify/code-map data to look for missed callers, shared modules, or
    unverified impact surfaces.
 4. Prioritize findings by severity, with file and line references.
-5. Identify missing tests and residual risks.
-6. Record review evidence when the review gates a delivery decision.
+5. For frontend changes, compare the diff with the `Frontend Design Decision`
+   and `core/design/taste-adapter.md`. Report style drift, Taste overreach,
+   unjustified dependencies, broken preserved contracts, accessibility gaps,
+   and templated AI-default patterns relevant to the selected mode.
+6. Identify missing tests and residual risks.
+7. Record review evidence when the review gates a delivery decision.
 
 Outputs:
 

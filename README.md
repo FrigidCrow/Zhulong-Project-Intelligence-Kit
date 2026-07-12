@@ -160,6 +160,7 @@ zhulong completion fish
 | 本地检索 | 显式初始化本地 RAG，不在日常命令中执行隐藏重建 | [`zhulong rag init-local`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-rag-init-local) |
 | 影响分析 | 构建代码图并分析变更影响和风险 | [`zhulong graph build`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-graph-build) |
 | 里程碑工作流 | 从需求、计划、实现到验证组织完整闭环 | [`zhulong workflow run new-milestone`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-new-milestone) |
+| 条件化前端设计 | 通过 `$zl-ui-phase` 在继承现有设计与 Taste 视觉增强之间路由 | [`zl-ui-phase`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-ui-phase) |
 | 缺陷调查 | 结合规格证据和代码地图定位问题 | [`zhulong workflow run debug`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-debug) |
 | 回答审计 | 检查引用、数值漂移和答案接地情况 | [`zhulong answer audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-answer-audit) |
 | 暧昧审计 | 检查多语言需求与验收条件中的不可验证表达 | [`zhulong ambiguity audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-ambiguity-audit) |
@@ -179,6 +180,19 @@ zhulong completion fish
 | 发布或交接 | 执行完成检查、策略检查和质量收口 | 不把缺失证据视为已完成 |
 
 多语言能力只是审计覆盖，不是使用前提。内置中、英、日词表用于验证不同语言的需求表达；Zhulong 的项目模型、工作流和门禁对地域与语言保持中立。
+
+## 条件化 Taste 前端设计
+
+Zhulong 内置经过约束的 Taste Adapter，用于减少新前端的模板化 AI 味，但 Taste 不是所有 UI 的默认美术风格。`$zl-ui-phase` 会先读取品牌资料、设计 token、组件库、依赖和现有页面，再记录 Frontend Design Decision：
+
+| 模式 | 场景 | Taste 权限 |
+| --- | --- | --- |
+| `create` | 全新 landing page、官网、portfolio | 完整应用与项目匹配的 Taste 规则 |
+| `evolve` | 风格已出现但仍零散的自然演进项目 | 保留品牌基础，增强层级、节奏、版式和交互 |
+| `preserve` | 已有成熟设计系统、视觉稿或品牌规范 | 只审计，不擅自替换字体、颜色、圆角和组件库 |
+| `system` | Dashboard、后台、数据表和多步骤产品 UI | 关闭营销页面 Taste，服从产品设计系统 |
+
+项目可在 `project.manifest.yml` 使用 `frontend_design.strategy` 和 `frontend_design.taste` 覆盖自动判断。Taste 已随 Zhulong 分发，不需要另行安装上游 skill；用户明确要求和项目设计证据始终优先。
 
 ## 本地优先原则
 

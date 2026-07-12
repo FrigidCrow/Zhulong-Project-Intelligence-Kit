@@ -93,6 +93,12 @@ for (const spec of runtimeSpecs) {
     } else if (!/workflow run|zl-workflow-run/.test(text)) {
       addIssue(spec.name, filePath, "Rendered item does not call Zhulong workflow.");
     }
+    if (skill === "zl-ui-phase") {
+      for (const expected of ["core/design/taste-adapter.md", "preserve", "evolve", "create", "system", "Frontend Design Decision", "bundled"]) {
+        if (!text.includes(expected)) addIssue(spec.name, filePath, `Rendered UI item missing Taste contract: ${expected}`);
+      }
+      if (text.includes("{{ZL_KIT_ROOT}}")) addIssue(spec.name, filePath, "Rendered UI item contains an unresolved kit root.");
+    }
     if (!/local-only|local_only/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose local-only privacy constraint.");
     if (!/heavy refresh/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose no heavy refresh constraint.");
     if (!/evidence|writeback/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose evidence/writeback constraint.");

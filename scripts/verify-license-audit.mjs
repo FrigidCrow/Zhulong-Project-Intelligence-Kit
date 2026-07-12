@@ -49,6 +49,9 @@ if (!fs.existsSync(noticesPath)) {
   assertIncludes("third-party notices", notices, "Vendored ambiguity wordlists");
   assertIncludes("third-party notices", notices, "None.");
   assertIncludes("third-party notices", notices, "ambiguity-wordlists.json");
+  assertIncludes("third-party notices", notices, "Vendored Taste Skill snapshot");
+  assertIncludes("third-party notices", notices, "b17742737e796305d829b3ad39eda3add0d79060");
+  assertIncludes("third-party notices", notices, "MIT");
 }
 
 const data = {

@@ -305,6 +305,7 @@ function paramsFor(command) {
 }
 
 function purposeFor(command) {
+  if (command === "zl-ui-phase") return "读取项目设计证据，定义 UI 状态与数据合同，并在 preserve、evolve、create、system 间选择条件化 Taste 权限。";
   const category = categoryFor(command);
   if (category === "接入 / 初始化") return "把 Zhulong 本地 intelligence layer 接入项目，或检查接入状态是否完整。";
   if (category === "Codebase") return "建立或读取代码基线，让后续 AI 修改先知道项目结构、技术栈、测试入口和源码数量。";
@@ -321,6 +322,7 @@ function purposeFor(command) {
 }
 
 function whenFor(command) {
+  if (command === "zl-ui-phase") return "创建前端、自然演进、重设计或修改既有 UI 前；必须先确定是否继承现有设计以及 Taste 的权限。";
   if (command === "zl-docs-sync") return "文档第一次导入、需求/ADR/QA/运行资料更新，或文档 gate 需要重新确认时。";
   if (command === "zl-answer-audit") return "做完 docs/RAG query 后，或 AI 给出带规格结论的回答后。";
   if (command === "zl-ambiguity-audit") return "规格、验收条件、QA 或会议结论更新后。";
@@ -340,6 +342,7 @@ function whenFor(command) {
 }
 
 function defaultBehaviorFor(command) {
+  if (command === "zl-ui-phase") return "默认读取 manifest、依赖、设计资料、token、组件和现有页面，生成 Frontend Design Decision；不自动安装 Taste，不改变既有设计，不触发 heavy refresh。";
   if (command === "zl-docs-sync") return "默认只跑 scan / diff / extract / citation audit，发现变更只写 STALE_NEEDS_REFRESH，不自动重建 index。";
   if (command === "zl-ambiguity-audit" || command === "zl-structure-audit") return "默认使用纯 Node 确定性规则生成报告，不联网、不调用 LLM、不阻断；--strict 才硬失败。";
   if (command === "zl-next") return "只读取本地状态并给出 2-3 条命令，不自动执行建议，也不运行重型刷新。";
@@ -354,6 +357,7 @@ function defaultBehaviorFor(command) {
 }
 
 function failureFor(command) {
+  if (command === "zl-ui-phase") return "常见失败：缺少足以区分 preserve/evolve/create/system 的设计证据。只有模式差异会实质影响结果时才询问一个设计方向问题。";
   if (command.startsWith("zl-docs") || command === "zl-ambiguity-audit" || command === "zl-structure-audit") return "常见失败：缺文档抽取、关键制品缺失，或 --strict 下发现不合规。按审计报告中的 artifact 路径补齐。";
   if (command.startsWith("zl-graph")) return "常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target \"$PWD\" --run`。";
   if (command.startsWith("zl-policy")) return "常见失败：offline lock 缺失、配置漂移、外部 provider、API key 形态或 stale 在 strict profile 下被阻断。";
@@ -374,6 +378,7 @@ function relatedFor(command) {
 }
 
 function scenarioFor(command) {
+  if (command === "zl-ui-phase") return "greenfield 营销页、自然演进前端、既存设计维护、Dashboard 与管理后台的设计权限路由。";
   if (command.startsWith("zl-docs") || command.startsWith("zl-rag") || command === "zl-answer-audit" || command === "zl-ambiguity-audit" || command === "zl-structure-audit") return "文档更新循环、机械质量审计、规格依据确认和回答可信度检查。";
   if (command.startsWith("zl-graph")) return "改修影响面、新规设计影响、代码审查前风险确认。";
   if (command.startsWith("zl-policy") || command.startsWith("zl-privacy") || command.startsWith("zl-offline")) return "保密项目、交付前检查、外发风险审计。";

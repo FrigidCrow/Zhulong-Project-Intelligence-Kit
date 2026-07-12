@@ -36,6 +36,7 @@
     "runtime/",
     "schemas/",
     "src/",
+    "third_party/",
     "templates/"
   ],
   "bin": {
@@ -169,6 +170,7 @@
     "verify:schema": "node scripts/verify-schema.mjs",
     "verify:naming": "node scripts/verify-naming.mjs",
     "verify:runtime": "node scripts/verify-runtime-packs.mjs",
+    "verify:taste-adapter": "node scripts/verify-taste-adapter.mjs",
     "verify:visual": "node scripts/verify-visual.mjs",
     "verify:design": "node scripts/verify-design-quality.mjs",
     "verify:pages": "node scripts/verify-pages-site.mjs",

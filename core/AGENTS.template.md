@@ -110,6 +110,7 @@ Core public workflow commands:
 | --- | --- |
 | Bug report with an error, class, function, route, screen, or job | Use `$zl-debug` flow. Read state, check relevant spec/QA/minutes, then use code-map/source search for impact and root cause. |
 | New feature or change request | Use `$zl-plan-phase` or `$zl-execute-phase` flow. Confirm specification evidence before planning implementation. |
+| Frontend creation, redesign, or visual evolution | Use `$zl-ui-phase` first. Read `core/design/taste-adapter.md`, classify `preserve`, `evolve`, `create`, or `system`, and record a Frontend Design Decision before planning or editing. |
 | Business rule, acceptance condition, screen behavior, API contract, DB rule, or terminology question | Check `.planning/knowledge/`, `zl-docs-query`, and configured document RAG before answering. Cite source documents or mark as hypothesis. |
 | Call-chain, dependency, entry point, or impact question | Use `zl-graph-query` or the configured code-map adapter, then verify against source files. |
 | Before editing a high-impact module | Do an impact check with `zl-graph-status`, code-map artifacts, and source search. |
@@ -163,6 +164,15 @@ the public `zl-*` command names. Do not tell the user to run `gsd-*` directly;
 `gsd-*` is not the active Zhulong command surface.
 
 ## Evidence Rules
+
+### Frontend Design Authority
+
+For frontend work, explicit user direction and project design evidence outrank
+the bundled Taste guidance. Mature existing design systems use `preserve`;
+naturally evolving styles use `evolve`; greenfield marketing surfaces may use
+`create`; dashboards and dense product UI use `system`. Taste is not a global
+visual default and must not silently replace project tokens, dependencies, or
+approved designs.
 
 - Treat graph and RAG output as orientation, not final proof.
 - Verify claims against source documents, source files, SQL/schema, tests, logs,
