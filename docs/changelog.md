@@ -5,6 +5,22 @@ Full name: **Zhulong Project Intelligence Kit**
 Documentation abbreviation: **Zhulong**
 Command namespace: **`zl-*`**
 
+## 2026-07-14：交互门禁与有界多 MVP 自动执行
+
+- 修复 public workflow 的系统性授权绕过：默认 `interactive + auto_advance: false`，后续命令只能推荐，不能因为前一阶段完成而自动调用。
+- `$zl-debug` 的调查、分析和诊断默认变为 diagnose-only；只有明确 fix/implementation 意图或匹配的 Goal 授权才允许修改。
+- 新增本地 bounded-autonomy Goal 合同：用户可以用一次自然语言授权多个具名 milestone，所有 child workflow 继承 authorization ID、当前 milestone、动作/依赖/提交/推送权限和停止条件，并支持撤销。
+- plan、implementation、verification gate 改为当前 workflow 的类型化 artifact；durable evidence 和 writeback 必须绑定当前 workflow，历史文件和任意字符串不再通过。
+- spec、discuss、ui 增加结构化 decision gate；重大 open question、contradiction 和未接受的 proposed decision 阻塞完成。
+- 当前用户请求只授权当前工作，不预先验收结果；新增独立 acceptance gate，只有明确完成/关闭意图、后续用户验收或匹配 Goal 才通过。
+- `workflow completion-check` 改为只读资格检查；新增显式 `workflow complete` 状态转换。
+- Codex、Claude Code、GitHub Copilot runtime 统一注入相同授权合同；README、架构、技术指南、命令手册、AGENTS 模板和全量测试计划同步更新。
+- 新增 `verify:workflow-governance`，覆盖交互阻塞、多 MVP 继承、越界拒绝、授权撤销和完成状态不可伪造。
+- PR 复核后移除 workflow alias 的隐式 `--source user-message` 注入；三套 runtime 只在直接响应当前用户消息时声明来源，并明确该边界属于 runtime assertion。
+- bounded Goal 升级到 `zhulong.authorization.v2`：逐 milestone 保存 exact objective、actions、paths、acceptance、permissions 与 digest；修改型 child 必须携带匹配 digest，旧式 milestone-only grant 限制为非修改型工作。
+- 新增 `zl workflow permission-check`，在 Goal 下消费 dependencies、commit、push、merge、release 权限；修复 full validation evidence 状态导致的 CI 回归。
+- Taste policy 接入真实 `zl-ui-phase` context 生成路径，自动写入具体 mode、Taste 权限、证据、dials、验证项与低置信度单一问题，并增加 create/evolve/preserve/system/override 端到端验证。
+
 ## 2026-07-12：条件化 Taste 前端设计能力
 
 - 固定 vendored `design-taste-frontend` 上游快照到 commit `b17742737e796305d829b3ad39eda3add0d79060`，保留 MIT License、来源与升级规则。

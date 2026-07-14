@@ -102,6 +102,18 @@ for (const spec of runtimeSpecs) {
     if (!/local-only|local_only/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose local-only privacy constraint.");
     if (!/heavy refresh/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose no heavy refresh constraint.");
     if (!/evidence|writeback/i.test(text)) addIssue(spec.name, filePath, "Rendered item does not expose evidence/writeback constraint.");
+    for (const expected of ["core/workflows/authorization.md", "suggested next", "bounded-autonomy", "diagnose-only", "--source user-message", "--accept-completion"]) {
+      if (!text.toLowerCase().includes(expected.toLowerCase())) addIssue(spec.name, filePath, `Rendered item missing authorization boundary: ${expected}`);
+    }
+    if (/workflow run[^\n`]*--source user-message/i.test(text)) {
+      addIssue(spec.name, filePath, "Rendered workflow command unconditionally claims user-message origin.");
+    }
+    if (skill === "zl-debug" && !/explicitly asks for a fix|explicit fix/i.test(text)) {
+      addIssue(spec.name, filePath, "Rendered debug item does not require explicit fix intent or a Goal grant.");
+    }
+    if (skill === "zl-debug" && !/--intent fix/.test(text)) {
+      addIssue(spec.name, filePath, "Rendered debug item does not propagate explicit fix intent into workflow state.");
+    }
     if (hasUnsafeGsdLine(text)) addIssue(spec.name, filePath, "Rendered item contains unsafe gsd-* invocation guidance.");
     evidence.push(`${spec.name}:${skill} installed and inspected`);
   }

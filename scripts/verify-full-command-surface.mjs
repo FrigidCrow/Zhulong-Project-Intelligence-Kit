@@ -348,13 +348,19 @@ function runRuntimeAndContextCommands() {
 
 function runWorkflowCommands() {
   runAlias("zl-workflow-run", ["--target", projectRoot, "debug", "FULL_SURFACE workflow"]);
-  runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", "plan", "--evidence", "PLAN.md reviewed"]);
-  runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", "implementation", "--evidence", "src/approval.js verified"]);
-  runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", "verification", "--evidence", "npm run verify:full-command-surface"]);
+  const active = JSON.parse(read(path.join(projectRoot, ".planning", "workflows", "ACTIVE.json")));
+  for (const [gate, name] of [["plan", "PLAN.md"], ["verification", "VERIFICATION.md"]]) {
+    const artifact = path.join(projectRoot, ".planning", "workflows", active.id, name);
+    write(artifact, `# ${gate}: ${active.id}\n\nStatus: complete\n\nEvidence:\n\n- full command surface fixture\n`);
+    runAlias("zl-workflow-continue", ["--target", projectRoot, "--gate", gate, "--evidence", path.relative(projectRoot, artifact)]);
+  }
+  runAlias("zl-evidence-record", ["--target", projectRoot, "workflow command surface", "--command", "fixture", "--result", "passed", "--writeback", ".planning/issues/full-command-surface.md"]);
+  runAlias("zl", ["workflow", "accept", "--target", projectRoot, "--source", "user-message", "--request", "full command surface accepted"]);
   runAlias("zl-workflow-status", ["--target", projectRoot]);
   runAlias("zl-workflow-audit", ["--target", projectRoot]);
   runAlias("zl-gate-check", ["--target", projectRoot]);
   runAlias("zl-completion-check", ["--target", projectRoot]);
+  runAlias("zl", ["workflow", "complete", "--target", projectRoot]);
 
   for (const command of [
     "zl-new-milestone",

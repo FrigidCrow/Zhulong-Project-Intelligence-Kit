@@ -10,6 +10,8 @@ Run Zhulong Project Intelligence Kit debugging for the current workspace.
 Use the text typed after `/zl-debug` as the bug description.
 
 1. Run `{{ZL_CLI}} workflow run debug --target . "<bug description>"`.
+   If the current user message explicitly requests a fix, implementation,
+   patch, or repair, append `--intent fix`; otherwise keep diagnose-only.
 2. Read the generated `.planning/context/` packet and handoff.
 3. Establish expected behavior from `.planning/STATE.md`, relevant issue/debug
    records, source, tests, and the user request.
@@ -18,7 +20,9 @@ Use the text typed after `/zl-debug` as the bug description.
    `rag_backend` is not `none` and the backend is approved.
 5. Use `{{ZL_CLI}} graph status --target .` and `{{ZL_CLI}} graph query
    --target . "<symbol>"` before risky edits.
-6. Follow `core/workflows/debug.md` and execute the debug workflow inline.
+6. Follow `core/workflows/debug.md` and default to diagnose-only. Implement only
+   when the user explicitly asks for a fix or a matching bounded-autonomy Goal
+   permits `debug_fix`.
 7. Verify with focused tests or source checks, then run `{{ZL_CLI}} evidence
    record --target . "<summary>" --command "<command>" --result "<result>"
    --writeback <active-record>`.

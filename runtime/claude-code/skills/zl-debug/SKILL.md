@@ -18,6 +18,9 @@ Treat the user text after `/zl-debug` as the request.
    {{ZL_CLI}} workflow run debug --target . "$ARGUMENTS"
    ```
 
+   If the current user message explicitly requests a fix, implementation,
+   patch, or repair, append `--intent fix`; otherwise keep diagnose-only.
+
 2. Read the generated `.planning/context/*debug*.md` packet and handoff.
 3. Establish expected behavior from the request, active records, source, and
    tests. Query `.planning/knowledge/` or local documents only when relevant
@@ -27,7 +30,9 @@ Treat the user text after `/zl-debug` as the request.
    - `{{ZL_CLI}} graph query --target . "<entry point or symbol>"`
 5. Follow `core/workflows/debug.md` and execute the debugging workflow inline
    using the same packet and verification gates.
-6. After verification, record durable evidence:
+6. Default to diagnose-only. Implement only when the user explicitly asks for
+   a fix or a matching bounded-autonomy Goal permits `debug_fix`.
+7. After verification, record durable evidence:
 
    ```bash
    {{ZL_CLI}} evidence record --target . "<summary>" --command "<verification command>" --result "<result>" --writeback <active-record>

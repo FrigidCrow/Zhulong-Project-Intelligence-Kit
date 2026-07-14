@@ -87,6 +87,21 @@ for (const spec of runtimeSpecs) {
     }
     if (!text.includes("bin/zl.mjs")) addIssue(spec.name, installedPath, "Rendered runtime item does not point at local bin/zl.mjs.");
     if (!/zl-/.test(text)) addIssue(spec.name, installedPath, "Runtime item does not expose zl-* command guidance.");
+    for (const expected of ["core/workflows/authorization.md", "suggested next", "bounded-autonomy", "diagnose-only", "--source user-message", "--accept-completion"]) {
+      if (!text.toLowerCase().includes(expected.toLowerCase())) addIssue(spec.name, installedPath, `Runtime item missing authorization boundary: ${expected}`);
+    }
+    if (/workflow run[^\n`]*--source user-message/i.test(text)) {
+      addIssue(spec.name, installedPath, "Runtime workflow command unconditionally claims user-message origin.");
+    }
+    if (item.name === "zl-debug" && !/explicitly asks for a fix|explicit fix/i.test(text)) {
+      addIssue(spec.name, installedPath, "Debug runtime does not require explicit fix intent or a Goal grant.");
+    }
+    if (item.name === "zl-debug" && !/--intent fix/.test(text)) {
+      addIssue(spec.name, installedPath, "Debug runtime does not propagate explicit fix intent into workflow state.");
+    }
+    if (item.name === "zl-discuss-phase" && !/proposed or open/i.test(text)) {
+      addIssue(spec.name, installedPath, "Discussion runtime can still self-promote decisions to accepted.");
+    }
     if (/Current backend|Internal Backend Invocation/.test(text)) {
       addIssue(spec.name, installedPath, "Runtime item still contains active backend wording.");
     }

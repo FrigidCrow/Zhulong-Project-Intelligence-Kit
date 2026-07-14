@@ -59,12 +59,35 @@ Core public workflow commands:
 | `$zl-spec-phase` | Clarify requirements and source evidence |
 | `$zl-discuss-phase` | Resolve decisions, options, and open questions |
 | `$zl-ui-phase` | Define UI scope, states, contracts, and verification |
-| `$zl-debug` | Diagnose and fix defects |
+| `$zl-debug` | Diagnose defects; fix only when explicitly authorized |
 | `$zl-plan-phase` | Plan implementation with evidence and impact surface |
 | `$zl-execute-phase` | Implement planned work |
 | `$zl-code-review` | Review changes against evidence and impact |
 | `$zl-verify-work` | Verify completed work |
 | `$zl-complete-milestone` | Close a milestone with evidence and follow-ups |
+
+### Authorization Boundary
+
+- Default to the current user-requested Skill only. A recommended next `zl-*`
+  command is not authorization to run it.
+- Treat investigate, analyze, and diagnose requests as diagnose-only. Do not
+  modify code unless the user explicitly requests a fix/implementation or the
+  workflow carries a matching active bounded-autonomy Goal grant.
+- A user may authorize several named milestones in natural language. Compile
+  each named objective into a structured milestone contract. Every child uses
+  the contract's exact objective and carries its authorization ID, milestone,
+  and contract digest. Check explicit permissions before dependencies or Git
+  publication. Do not ask for approval at routine in-contract transitions.
+- Workflow aliases never infer user origin. Append `--source user-message` only
+  when the current Skill directly answers the current user message; never add
+  it to an agent-selected downstream Skill.
+- Stop when the grant is revoked, the next milestone/action/permission is out
+  of scope, or a material open decision/contradiction requires user judgment.
+- Never treat agent-authored evidence as user acceptance. `completion-check`
+  only reports eligibility; the current request authorizes work but does not
+  pre-accept its result. Only later user acceptance, explicit completion intent,
+  or a matching Goal can let `workflow complete` change state.
+- Read `core/workflows/authorization.md` for the full local contract.
 
 ### Required Flow
 
@@ -172,7 +195,8 @@ the bundled Taste guidance. Mature existing design systems use `preserve`;
 naturally evolving styles use `evolve`; greenfield marketing surfaces may use
 `create`; dashboards and dense product UI use `system`. Taste is not a global
 visual default and must not silently replace project tokens, dependencies, or
-approved designs.
+approved designs. Read the concrete Frontend Design Decision generated in the
+UI context; if it is low-confidence, ask its single recorded direction question.
 
 - Treat graph and RAG output as orientation, not final proof.
 - Verify claims against source documents, source files, SQL/schema, tests, logs,

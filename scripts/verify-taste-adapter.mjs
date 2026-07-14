@@ -51,25 +51,84 @@ for (const doc of ["README.md", "docs/product.html", "docs/technical-guide.html"
 const pkg = JSON.parse(read("package.json"));
 check(pkg.files.includes("third_party/"), "npm package files omit third_party");
 
-const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "zhulong-taste-adapter-"));
 const cli = path.join(kitRoot, "bin", "zl.mjs");
 const run = (args) => spawnSync(process.execPath, [cli, ...args], { cwd: kitRoot, encoding: "utf8" });
-const init = run(["init", "--target", fixture, "--template", "greenfield-app", "--name", "taste_fixture", "--mode", "new", "--doc-policy", "reference", "--rag", "none", "--no-interactive"]);
-check(init.status === 0, `Taste fixture init failed: ${init.stderr || init.stdout}`);
-const workflow = run(["workflow", "run", "ui-phase", "--target", fixture, "greenfield landing page"]);
-check([0, 1].includes(workflow.status), `Taste UI workflow failed unexpectedly: ${workflow.stderr || workflow.stdout}`);
-const contextDir = path.join(fixture, ".planning", "context");
-const packetName = fs.existsSync(contextDir)
-  ? fs.readdirSync(contextDir).find((name) => name.startsWith("ui-") && name.endsWith(".md"))
-  : null;
-check(Boolean(packetName), "UI workflow did not create a context packet");
-if (packetName) {
-  const packet = fs.readFileSync(path.join(contextDir, packetName), "utf8");
-  for (const expected of ["Project Manifest", "frontend_design:", "Frontend Design Decision", "taste_applied", "allowed_changes", "design_variance"]) {
-    check(packet.includes(expected), `generated UI context missing ${expected}`);
+
+function routingCase({ label, mode, request, setup, activePhase, extraArgs = [], expected }) {
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), `zhulong-taste-${label}-`));
+  const init = run(["init", "--target", fixture, "--template", "greenfield-app", "--name", `taste_${label}`, "--mode", mode, "--doc-policy", "reference", "--rag", "none", "--no-interactive"]);
+  check(init.status === 0, `${label} Taste fixture init failed: ${init.stderr || init.stdout}`);
+  if (activePhase) {
+    const statePath = path.join(fixture, ".planning", "STATE.md");
+    fs.writeFileSync(statePath, fs.readFileSync(statePath, "utf8").replace(/^current_phase:\s*.*$/m, `current_phase: ${activePhase}`));
   }
+  setup?.(fixture);
+  const workflow = run(["workflow", "run", "ui-phase", "--target", fixture, request, ...extraArgs]);
+  check([0, 1].includes(workflow.status), `${label} Taste UI workflow failed unexpectedly: ${workflow.stderr || workflow.stdout}`);
+  const contextDir = path.join(fixture, ".planning", "context");
+  const packetName = fs.existsSync(contextDir)
+    ? fs.readdirSync(contextDir).find((name) => name.startsWith("ui-") && name.endsWith(".md"))
+    : null;
+  check(Boolean(packetName), `${label} UI workflow did not create a context packet`);
+  if (packetName) {
+    const packet = fs.readFileSync(path.join(contextDir, packetName), "utf8");
+    for (const marker of ["Project Manifest", "frontend_design:", "Frontend Design Decision", "allowed_changes", "design_variance", ...expected]) {
+      check(packet.includes(marker), `${label} generated UI context missing ${marker}`);
+    }
+  }
+  if (activePhase) {
+    const recordPath = path.join(fixture, ".planning", "phases", activePhase.toLowerCase(), "FRONTEND_DESIGN_DECISION.md");
+    check(fs.existsSync(recordPath), `${label} UI workflow did not write the active phase design decision`);
+    if (fs.existsSync(recordPath)) {
+      const record = fs.readFileSync(recordPath, "utf8");
+      for (const marker of expected) check(record.includes(marker), `${label} active phase decision missing ${marker}`);
+    }
+  }
+  fs.rmSync(fixture, { recursive: true, force: true });
 }
-fs.rmSync(fixture, { recursive: true, force: true });
+
+routingCase({
+  label: "create",
+  mode: "new",
+  request: "greenfield landing page",
+  activePhase: "MVP-UI",
+  expected: ["mode: create", "taste_applied: full", "needs_clarification: false"],
+});
+routingCase({
+  label: "evolve",
+  mode: "existing",
+  request: "evolve the existing frontend",
+  setup: (fixture) => {
+    fs.mkdirSync(path.join(fixture, "src", "components"), { recursive: true });
+    fs.writeFileSync(path.join(fixture, "src", "components", "Hero.tsx"), "export const Hero = () => null;\n");
+  },
+  expected: ["mode: evolve", "taste_applied: constrained"],
+});
+routingCase({
+  label: "preserve",
+  mode: "existing",
+  request: "continue the existing product UI",
+  setup: (fixture) => {
+    const packagePath = path.join(fixture, "package.json");
+    const pkg = fs.existsSync(packagePath) ? JSON.parse(fs.readFileSync(packagePath, "utf8")) : { name: "taste-preserve-fixture" };
+    pkg.dependencies = { ...(pkg.dependencies || {}), "@mui/material": "7.0.0" };
+    fs.writeFileSync(packagePath, `${JSON.stringify(pkg, null, 2)}\n`);
+  },
+  expected: ["mode: preserve", "taste_applied: audit-only"],
+});
+routingCase({
+  label: "system",
+  mode: "new",
+  request: "admin dashboard with dense tables",
+  expected: ["mode: system", "taste_applied: disabled"],
+});
+routingCase({
+  label: "override",
+  mode: "new",
+  request: "landing page",
+  extraArgs: ["--design-strategy", "preserve", "--taste", "disabled"],
+  expected: ["mode: preserve", "taste_applied: disabled", "source: user"],
+});
 
 console.log(`taste adapter verification ${issues.length ? "FAIL" : "PASS"} issues=${issues.length}`);
 for (const issue of issues) console.error(`- ${issue}`);

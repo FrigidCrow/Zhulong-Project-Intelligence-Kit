@@ -53,8 +53,10 @@ low, ask exactly one design-direction question before implementation.
 
 ## Frontend Design Decision
 
-Before frontend implementation, write this block to the UI context or active
-phase record:
+`zl-ui-phase` first computes this block from the manifest, request, dependency
+manifest, and bounded project-path evidence. Before frontend implementation,
+verify it against brand/design evidence, complete any missing product detail,
+and keep the final block in the UI context or active phase record:
 
 ```yaml
 mode: preserve | evolve | create | system

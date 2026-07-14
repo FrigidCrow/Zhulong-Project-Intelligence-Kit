@@ -207,12 +207,16 @@ function prepareGraphLiteProject() {
 function testGraphLiteWaiver() {
   const run = zl(graphLiteRoot, ["workflow", "run", "--target", graphLiteRoot, "debug", "GRAPH_LITE no docs"]);
   assertIncludes("graph-lite workflow", run.output, "WAIVED_WITH_RISK");
-  zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "plan", "--evidence", "graph-lite plan accepted"]);
-  zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "implementation", "--evidence", "graph-lite implementation accepted"]);
-  zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", "verification", "--evidence", "graph-lite verification accepted"]);
+  const active = JSON.parse(read(path.join(graphLiteRoot, ".planning", "workflows", "ACTIVE.json")));
+  for (const [gate, name] of [["plan", "PLAN.md"], ["verification", "VERIFICATION.md"]]) {
+    const artifact = path.join(graphLiteRoot, ".planning", "workflows", active.id, name);
+    write(artifact, `# ${gate}: ${active.id}\n\nStatus: complete\n\nEvidence:\n\n- graph-lite fixture passed\n`);
+    zl(graphLiteRoot, ["workflow", "continue", "--target", graphLiteRoot, "--gate", gate, "--evidence", path.relative(graphLiteRoot, artifact)]);
+  }
   zl(graphLiteRoot, ["evidence", "record", "--target", graphLiteRoot, "graph-lite evidence", "--command", "manual", "--result", "passed", "--writeback", ".planning/issues/graph-lite.md"]);
+  zl(graphLiteRoot, ["workflow", "accept", "--target", graphLiteRoot, "--source", "user-message", "--request", "graph-lite fixture accepted"]);
   const completion = zl(graphLiteRoot, ["workflow", "completion-check", "--target", graphLiteRoot]);
-  assertIncludes("graph-lite completion allowed", completion.output, "completion allowed");
+  assertIncludes("graph-lite completion eligible", completion.output, "completion eligible");
   assertIncludes("graph-lite completion waiver", completion.output, "WAIVED_WITH_RISK");
   assertFileIncludes("graph-lite workflow audit waiver", path.join(graphLiteRoot, ".planning", "workflows", "debug-graph-lite-no-docs", "WORKFLOW_STATE.md"), "WAIVED_WITH_RISK");
 }

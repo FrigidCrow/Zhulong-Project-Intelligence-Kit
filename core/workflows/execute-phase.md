@@ -7,18 +7,20 @@ Reference design: `$gsd-execute-phase`
 
 Required flow:
 
-1. Read the active plan and context packet before editing.
-2. Re-check stale requirement or code-map evidence if the task records,
+1. Follow `core/workflows/authorization.md`. Do not edit without an explicit
+   implementation request or a matching bounded-autonomy Goal grant.
+2. Read the active plan and context packet before editing.
+3. Re-check stale requirement or code-map evidence if the task records,
    optional documents, tests, or code changed since planning.
-3. Make scoped edits that match the plan. If the plan is wrong, stop and update
+4. Make scoped edits that match the plan. If the plan is wrong, stop and update
    the plan or decision record before continuing.
-4. For frontend work, enforce `core/design/taste-adapter.md` and the recorded
+5. For frontend work, enforce `core/design/taste-adapter.md` and the recorded
    `Frontend Design Decision`. In `preserve`, do not add a font, palette,
    radius system, UI/icon library, or motion dependency without approval.
-5. Run focused verification as soon as meaningful checkpoints exist.
-6. Refresh Graphify with `zl-graph-build --run` when structural relationships
+6. Run focused verification as soon as meaningful checkpoints exist.
+7. Refresh Graphify with `zl-graph-build --run` when structural relationships
    changed and direct Graphify execution is approved.
-7. Record commands, results, changed files, design-contract deviations, and risks.
+8. Record commands, results, changed files, design-contract deviations, and risks.
 
 Outputs:
 

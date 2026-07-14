@@ -132,9 +132,17 @@ const html = `<!doctype html>
       <div>
         <section id="rules" class="page-section">
           <h2>通用规则</h2>
-          <p>安装 bin 后推荐直接使用 <code>zl-*</code>。未安装全局 bin 时，可以在 Zhulong 仓库里使用 <code>node bin/zl.mjs &lt;subcommand&gt;</code>。默认流程必须是 local-only、no hidden heavy refresh；只有显式 <code>--run</code>、<code>--index</code> 或 <code>zl-refresh-run</code> 才允许重任务。</p>
+          <p>安装 bin 后推荐直接使用 <code>zl-*</code>。未安装全局 bin 时，可以在 Zhulong 仓库里使用 <code>node bin/zl.mjs &lt;subcommand&gt;</code>。默认流程必须是 local-only、interactive、no hidden heavy refresh：只执行当前 Skill，后续命令只能推荐；调查和诊断默认不修改。只有显式 <code>--run</code>、<code>--index</code> 或 <code>zl-refresh-run</code> 才允许重任务。</p>
           <pre class="code-block"><code>zl-docs-sync --target /path/to/repo
 node bin/zl.mjs docs sync --target /path/to/repo</code></pre>
+          <p>当前用户消息只授权它明确要求的工作，不提前接受结果；workflow alias 不会自动伪装成用户来源，只有直接响应当前用户消息的 runtime 才能附加 <code>--source user-message</code>。多 milestone 自动执行会先生成逐 MVP 的结构化合同，child workflow 必须携带 authorization ID、milestone、contract digest，并使用合同中的精确 objective；越界或撤销后停止。完成检查只读，显式 complete 才改变状态。</p>
+          <pre class="code-block"><code>zl workflow authorize --target "$PWD" --source user-message \
+  --request "自动执行 MVP4.0 到 MVP4.7，完成后停止" \
+  --goal "MVP4 delivery" --contract-file ".planning/goals/MVP4_CONTRACTS.json"
+zl workflow authorization-status --target "$PWD"
+zl workflow permission-check --target "$PWD" --permission push
+zl workflow revoke --target "$PWD" --reason "用户停止自动执行"
+zl workflow complete --target "$PWD"</code></pre>
         </section>
 
         <section id="new-project" class="page-section">

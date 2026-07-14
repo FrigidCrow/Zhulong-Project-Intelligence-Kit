@@ -10,7 +10,7 @@ Skill and command namespace: **`zl-*`**
 
 Zhulong 的质量目标不是“命令能跑起来”这么低，而是证明它真的能让 AI 在项目状态、代码影响面、按需文档依据和验证闭环里工作。
 
-目标能力可以拆成 6 条：
+目标能力可以拆成 8 条：
 
 1. 用户在 Codex、Claude Code、GitHub Copilot 或 shell 中调用 `zl-*`，不会被引导回 `gsd-*`。
 2. 新项目和既存项目都能接入，且不会搬动原项目源码。
@@ -19,6 +19,7 @@ Zhulong 的质量目标不是“命令能跑起来”这么低，而是证明它
 5. Workflow guard 能真实阻断未完成工作，不是只在 prompt 里提醒。
 6. 每次“完成”都有 evidence、writeback、测试/验证记录和可复跑报告。
 7. 前端任务必须先产生可追踪的设计模式与权限合同；Taste 不得覆盖成熟项目设计或误用于 Dashboard。
+8. Workflow 默认只执行当前 Skill；alias 不推断用户来源，当前工作授权与结果验收分离；多 milestone 自动执行必须来自用户原始消息生成的逐 milestone objective/digest 合同，完成资格检查不能自行改变状态。
 
 质量判断原则：
 
@@ -331,7 +332,9 @@ tmp/new-order-app
 - `.planning/INIT_PROFILE.md` 记录 `Mode: new`。
 - workflow state 存在。
 - evidence index 存在。
-- completion check 对未补齐 gate 的情况会失败。
+- completion check 对未补齐 gate、缺当前工作授权、缺结果验收/Goal、重大开放决策、历史/任意字符串 evidence 的情况会失败。
+- completion check 前后 workflow status 不变，只有显式 `workflow complete` 才写入完成。
+- `verify:workflow-governance` 覆盖默认 interactive、直接用户意图、多 MVP 继承、越界拒绝和撤销。
 
 ### 5.3 既存项目继续开发场景
 
@@ -915,6 +918,7 @@ P0：
 P1：
 
 - 保持 workflow closure fixture 覆盖新项目、既有项目、graph-lite、full-strict。
+- 保持 workflow governance fixture 覆盖 Codex、Claude Code、Copilot 的同一授权合同，以及当前 workflow 证据绑定。
 - 扩展 docs completeness 到更多 README 入口和 HTML 页面一致性。
 - 将 QA dashboard 接入 future `latest.json` 历史趋势。
 

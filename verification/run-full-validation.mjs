@@ -284,9 +284,12 @@ function validateWorkflowGuard() {
   zl(projectRoot, `docs normalize --target ${shell(projectRoot)}`);
   zl(projectRoot, `docs query --target ${shell(projectRoot)} --rag ${shell("代理承認の上限金額")}`);
   zl(projectRoot, `graph build --target ${shell(projectRoot)} --run`);
-  zlAlias(projectRoot, "zl-workflow-continue", `--target ${shell(projectRoot)} --gate plan --evidence ${shell("PLAN.md reviewed with CR-017 scope")}`);
-  zlAlias(projectRoot, "zl-workflow-continue", `--target ${shell(projectRoot)} --gate implementation --evidence ${shell("src/approvalPolicy.js implementation reviewed")}`);
-  zlAlias(projectRoot, "zl-workflow-continue", `--target ${shell(projectRoot)} --gate verification --evidence ${shell("npm test and npm run test:task recorded")}`);
+  const active = JSON.parse(read(path.join(projectRoot, ".planning", "workflows", "ACTIVE.json")));
+  for (const [gate, name] of [["plan", "PLAN.md"], ["verification", "VERIFICATION.md"]]) {
+    const artifact = path.join(projectRoot, ".planning", "workflows", active.id, name);
+    fs.writeFileSync(artifact, `# ${gate}: ${active.id}\n\nStatus: complete\n\nEvidence:\n\n- full validation fixture\n`);
+    zlAlias(projectRoot, "zl-workflow-continue", `--target ${shell(projectRoot)} --gate ${gate} --evidence ${shell(path.relative(projectRoot, artifact))}`);
+  }
   zl(projectRoot, [
     "evidence record",
     `--target ${shell(projectRoot)}`,
@@ -294,18 +297,19 @@ function validateWorkflowGuard() {
     "--command",
     shell("npm test && npm run test:task"),
     "--result",
-    shell("recorded"),
+    shell("passed"),
     "--source",
     shell("docs/qa/QA-042_代理承認上限.md,.planning/graphs/GRAPH_REPORT.md"),
     "--writeback",
     shell(".planning/issues/CR-017_proxy_approval_limit.md"),
   ].join(" "));
+  zl(projectRoot, `workflow accept --target ${shell(projectRoot)} --source user-message --request ${shell("full validation fixture accepted")}`);
 
   const gateCheck = zlAlias(projectRoot, "zl-gate-check", `--target ${shell(projectRoot)}`);
   assertIncludes("Zhulong gate-check alias passes complete workflow", gateCheck.output, "workflow guard PASS", "zl-gate-check");
   const completed = zlAlias(projectRoot, "zl-completion-check", `--target ${shell(projectRoot)}`);
-  assertIncludes("Zhulong completion-check alias allows complete workflow", completed.output, "completion allowed", "zl-completion-check");
-  for (const gate of ["context", "codebase", "docs", "graph", "plan", "implementation", "verification", "evidence", "writeback"]) {
+  assertIncludes("Zhulong completion-check alias allows complete workflow", completed.output, "completion eligible", "zl-completion-check");
+  for (const gate of ["context", "codebase", "docs", "graph", "privacy", "interaction-policy", "authorization", "acceptance", "decisions", "plan", "implementation", "verification", "evidence", "writeback"]) {
     assertIncludes(`Zhulong workflow guard passes ${gate} gate`, completed.output, `PASS ${gate}`, "zl-completion-check");
   }
 

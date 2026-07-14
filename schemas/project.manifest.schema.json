@@ -135,11 +135,13 @@
     "workflow": {
       "type": "object",
       "properties": {
-        "mode": { "type": "string" },
+        "mode": { "enum": ["maintenance", "interactive", "bounded_autonomous", "autonomous"] },
         "require_graph_before_edit": { "type": "boolean" },
         "require_rag_before_business_claim": { "type": "boolean" },
         "require_source_verification": { "type": "boolean" },
-        "auto_advance": { "type": "boolean" }
+        "auto_advance": { "type": "boolean" },
+        "require_explicit_user_intent": { "type": "boolean" },
+        "allow_goal_authorization": { "type": "boolean" }
       }
     },
     "privacy": {

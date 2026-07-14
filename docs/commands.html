@@ -66,9 +66,15 @@
       <div>
         <section id="rules" class="page-section">
           <h2>通用规则</h2>
-          <p>安装 bin 后推荐直接使用 <code>zl-*</code>。未安装全局 bin 时，可以在 Zhulong 仓库里使用 <code>node bin/zl.mjs &lt;subcommand&gt;</code>。默认流程必须是 local-only、no hidden heavy refresh；只有显式 <code>--run</code>、<code>--index</code> 或 <code>zl-refresh-run</code> 才允许重任务。</p>
+          <p>安装 bin 后推荐直接使用 <code>zl-*</code>。未安装全局 bin 时，可以在 Zhulong 仓库里使用 <code>node bin/zl.mjs &lt;subcommand&gt;</code>。默认流程必须是 local-only、interactive、no hidden heavy refresh：只执行当前 Skill，后续命令只能推荐；调查和诊断默认不修改。只有显式 <code>--run</code>、<code>--index</code> 或 <code>zl-refresh-run</code> 才允许重任务。</p>
           <pre class="code-block"><code>zl-docs-sync --target /path/to/repo
 node bin/zl.mjs docs sync --target /path/to/repo</code></pre>
+          <p>当前用户消息只授权它明确要求的工作，不提前接受结果；workflow alias 不会自动伪装成用户来源，只有直接响应当前用户消息的 runtime 才能附加 <code>--source user-message</code>。多 milestone 自动执行会先生成逐 MVP 的结构化合同，child workflow 必须携带 authorization ID、milestone、contract digest，并使用合同中的精确 objective；越界或撤销后停止。完成检查只读，显式 complete 才改变状态。</p>
+          <pre class="code-block"><code>zl workflow authorize --target "$PWD" --source user-message   --request "自动执行 MVP4.0 到 MVP4.7，完成后停止"   --goal "MVP4 delivery" --contract-file ".planning/goals/MVP4_CONTRACTS.json"
+zl workflow authorization-status --target "$PWD"
+zl workflow permission-check --target "$PWD" --permission push
+zl workflow revoke --target "$PWD" --reason "用户停止自动执行"
+zl workflow complete --target "$PWD"</code></pre>
         </section>
 
         <section id="new-project" class="page-section">
@@ -714,10 +720,10 @@ npm run verify:local-rag</code></pre>
                 </tr>
                 <tr>
                   <td><a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></td>
-                  <td><a data-logical-command="zl-completion-check" href="#cmd-zl-completion-check">完成前检查</a></td>
+                  <td><a data-logical-command="zl-completion-check" href="#cmd-zl-completion-check">只读完成资格检查</a></td>
                   <td>Workflow Guard</td>
                   <td>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</td>
-                  <td><code>stdout completion allowed/blocked</code></td>
+                  <td><code>stdout completion eligible/blocked（不修改状态）</code></td>
                 </tr>
               </tbody>
             </table>
@@ -2130,7 +2136,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-new-milestone --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-new-milestone --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2154,7 +2160,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-spec-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-spec-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2178,7 +2184,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-discuss-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-discuss-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2222,11 +2228,11 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-debug</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>缺陷调查工作流</dd></div>
-                  <div><dt>用途</dt><dd>面向日常开发的公开工作流入口，内部会写 context、handoff、workflow facade 和 gate 状态。</dd></div>
+                  <div><dt>用途</dt><dd>默认只调查和验证根因；只有用户明确要求修复，或当前 milestone 有匹配的 debug_fix Goal 授权时才实施。</dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-debug --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>默认 requestIntent=diagnose-only，不要求也不允许 implementation gate；显式 fix 或匹配 Goal 后才进入实施。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-debug --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2250,7 +2256,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-plan-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-plan-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2274,7 +2280,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-execute-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-execute-phase --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2298,7 +2304,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-code-review --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-code-review --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2322,7 +2328,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-verify-work --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-verify-work --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2346,7 +2352,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>什么时候用</dt><dd>日常改修、新规开发、缺陷调查、审查、验证和收口时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-complete-milestone --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。</dd></div>
+                  <div><dt>默认行为</dt><dd>启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/context/*, .planning/context/handoffs/*, .planning/workflows/&lt;id&gt;/WORKFLOW_FACADE.md/json</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-complete-milestone --target &quot;$PWD&quot; &quot;当前任务说明&quot;</code></pre></dd></div>
@@ -2366,15 +2372,17 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-workflow-run</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>通用 workflow 启动</dd></div>
-                  <div><dt>用途</dt><dd>检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。</dd></div>
+                  <div><dt>用途</dt><dd>检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。</dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
-                  <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-run --target &quot;$PWD&quot; debug &quot;生产审批金额异常&quot;</code></pre></dd></div>
-                  <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
+                  <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-run --target &quot;$PWD&quot; debug &quot;生产审批金额异常&quot; --source user-message
+zl-workflow-run --target &quot;$PWD&quot; execute-phase &quot;&lt;contract objective&gt;&quot; --authorization &lt;id&gt; --milestone MVP4.1 --contract-digest &lt;digest&gt;</code></pre></dd></div>
+                  <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--source user-message: 仅由 runtime 在 Skill 直接响应当前用户消息时附加；alias 不会自动推断来源。</li><li>--accept-completion: 只有原始消息明确要求完成/关闭时使用；否则等待后续用户验收。</li><li>--authorization &lt;id&gt; --milestone &lt;name&gt; --contract-digest &lt;digest&gt;: Goal child 必须携带的结构化授权上下文，并使用合同中的精确 objective。</li><li>--intent fix: debug 仅在用户明确要求修复时使用；默认 diagnose-only。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/workflows/&lt;id&gt;/WORKFLOW_STATE.md/json, WORKFLOW_FACADE.md/json</code></dd></div>
-                  <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-run --target &quot;$PWD&quot; debug &quot;生产审批金额异常&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。</dd></div>
+                  <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-run --target &quot;$PWD&quot; debug &quot;生产审批金额异常&quot; --source user-message
+zl-workflow-run --target &quot;$PWD&quot; execute-phase &quot;&lt;contract objective&gt;&quot; --authorization &lt;id&gt; --milestone MVP4.1 --contract-digest &lt;digest&gt;</code></pre></dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>AI 声称完成前、接手中断任务、或 gate 失败排查。</dd></div>
                 </dl>
@@ -2390,7 +2398,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-workflow-status</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>workflow 状态查看</dd></div>
-                  <div><dt>用途</dt><dd>检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。</dd></div>
+                  <div><dt>用途</dt><dd>检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。</dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-status --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
@@ -2398,7 +2406,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout gate 状态</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-status --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>AI 声称完成前、接手中断任务、或 gate 失败排查。</dd></div>
                 </dl>
@@ -2414,15 +2422,15 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-workflow-continue</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>人工 gate 标记</dd></div>
-                  <div><dt>用途</dt><dd>检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。</dd></div>
+                  <div><dt>用途</dt><dd>检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。</dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
-                  <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-continue --target &quot;$PWD&quot; --gate plan --evidence &quot;PLAN.md reviewed&quot;</code></pre></dd></div>
-                  <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--gate plan|implementation|verification: 标记人工 gate。</li><li>--evidence &lt;text&gt;: gate 证据。</li></ul></dd></div>
+                  <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-continue --target &quot;$PWD&quot; --gate plan --evidence .planning/workflows/&lt;id&gt;/PLAN.md</code></pre></dd></div>
+                  <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li><li>--gate plan|implementation|verification: 标记当前 workflow 所需 gate。</li><li>--evidence &lt;path&gt;: 当前 workflow 的类型化证据文件；不接受任意字符串。</li></ul></dd></div>
                   <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/workflows/&lt;id&gt;/WORKFLOW_STATE.md/json</code></dd></div>
-                  <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-continue --target &quot;$PWD&quot; --gate plan --evidence &quot;PLAN.md reviewed&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。</dd></div>
+                  <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-continue --target &quot;$PWD&quot; --gate plan --evidence .planning/workflows/&lt;id&gt;/PLAN.md</code></pre></dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>AI 声称完成前、接手中断任务、或 gate 失败排查。</dd></div>
                 </dl>
@@ -2438,7 +2446,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-workflow-audit</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>workflow 审计</dd></div>
-                  <div><dt>用途</dt><dd>检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。</dd></div>
+                  <div><dt>用途</dt><dd>检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。</dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-workflow-audit --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
@@ -2446,7 +2454,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>.planning/workflows/&lt;id&gt;/WORKFLOW_AUDIT.md</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-workflow-audit --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>AI 声称完成前、接手中断任务、或 gate 失败排查。</dd></div>
                 </dl>
@@ -2462,7 +2470,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-gate-check</code></dd></div>
                   <div><dt>命令逻辑名</dt><dd>gate 检查</dd></div>
-                  <div><dt>用途</dt><dd>检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。</dd></div>
+                  <div><dt>用途</dt><dd>检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。</dd></div>
                   <div><dt>什么时候用</dt><dd>需要调试、恢复或审计当前 workflow gate 时。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-gate-check --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
@@ -2470,7 +2478,7 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
                   <div><dt>输出文件 / 报告路径</dt><dd><code>stdout gate result</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-gate-check --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>AI 声称完成前、接手中断任务、或 gate 失败排查。</dd></div>
                 </dl>
@@ -2480,21 +2488,21 @@ zl-policy-lock --target &quot;$PWD&quot;</code></pre></dd></div>
             <section id="cmd-zl-completion-check" class="command-card command-detail" data-command="zl-completion-check">
               <header>
                 <h3><a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></h3>
-                <span class="tag">完成前检查</span>
+                <span class="tag">只读完成资格检查</span>
               </header>
               <div class="command-body">
                 <dl class="detail-list">
                   <div><dt>命令物理名</dt><dd><code>zl-completion-check</code></dd></div>
-                  <div><dt>命令逻辑名</dt><dd>完成前检查</dd></div>
-                  <div><dt>用途</dt><dd>检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。</dd></div>
-                  <div><dt>什么时候用</dt><dd>AI 或开发者准备声明任务完成前。</dd></div>
+                  <div><dt>命令逻辑名</dt><dd>只读完成资格检查</dd></div>
+                  <div><dt>用途</dt><dd>检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。</dd></div>
+                  <div><dt>什么时候用</dt><dd>AI 或开发者准备声明任务完成前；本命令只检查资格，不会写入 complete。</dd></div>
                   <div><dt>基本语法</dt><dd><pre class="code-block"><code>zl-completion-check --target &quot;$PWD&quot;</code></pre></dd></div>
                   <div><dt>参数说明</dt><dd><ul><li>--target &lt;repo&gt;: 指定目标项目目录。</li></ul></dd></div>
-                  <div><dt>默认行为</dt><dd>读取本地项目状态并写入对应 <code>.planning/</code> 报告，不默认执行重刷新。</dd></div>
+                  <div><dt>默认行为</dt><dd>只刷新 gate/structure 审计并输出 completion eligible 或 blocked；不会写 complete。</dd></div>
                   <div><dt>是否触发 heavy refresh</dt><dd>否；只做轻量检查、状态读取、报告写入或 workflow 编排。</dd></div>
-                  <div><dt>输出文件 / 报告路径</dt><dd><code>stdout completion allowed/blocked</code></dd></div>
+                  <div><dt>输出文件 / 报告路径</dt><dd><code>stdout completion eligible/blocked（不修改状态）</code></dd></div>
                   <div><dt>成功示例</dt><dd><pre class="code-block"><code>zl-completion-check --target &quot;$PWD&quot;</code></pre></dd></div>
-                  <div><dt>常见失败示例</dt><dd>常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。</dd></div>
+                  <div><dt>常见失败示例</dt><dd>常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。</dd></div>
                   <div><dt>关联命令</dt><dd><a href="#cmd-zl-workflow-status"><code>zl-workflow-status</code></a> <a href="#cmd-zl-workflow-audit"><code>zl-workflow-audit</code></a> <a href="#cmd-zl-evidence-record"><code>zl-evidence-record</code></a> <a href="#cmd-zl-completion-check"><code>zl-completion-check</code></a></dd></div>
                   <div><dt>适用场景</dt><dd>AI 声称完成前、接手中断任务、或 gate 失败排查。</dd></div>
                 </dl>

@@ -40,7 +40,7 @@
       <section class="proof-strip" aria-label="Zhulong 已验证能力">
         <div class="metric-strip">
           <div class="metric"><strong>4</strong><span>上下文层：workflow、docs、graph、evidence</span></div>
-          <div class="metric"><strong>9</strong><span>completion gates 检查完成条件</span></div>
+          <div class="metric"><strong>14</strong><span>completion gates 检查证据、授权与验收</span></div>
           <div class="metric"><strong>3</strong><span>Codex、Claude Code、Copilot runtime</span></div>
           <div class="metric"><strong>74</strong><span><code>zl-*</code> 逻辑命令已执行验证</span></div>
           <div class="metric"><strong>13</strong><span>质量收口检查已通过</span></div>
@@ -71,7 +71,7 @@
           <article class="control-card">
             <div class="pane-label">昼夜有序</div>
             <h3>自动化没有惊吓</h3>
-            <p>零成本审计可以自动折叠；索引重建、代码图重建和刷新始终要求显式命令。</p>
+            <p>默认只执行当前 Skill；多个 MVP 可用一次有界 Goal 授权自动推进。索引、代码图和越界动作始终要求显式许可。</p>
           </article>
           <article class="control-card">
             <div class="pane-label">本地边界</div>
@@ -111,7 +111,7 @@
           <article class="control-card">
             <div class="pane-label">proof</div>
             <h3>Evidence writeback</h3>
-            <p>测试、验证、风险和结论写回项目记录，completion check 才能通过。</p>
+            <p>测试、验证、风险和结论写回当前 workflow；completion check 只判断资格，显式 complete 才改变状态。</p>
           </article>
           <article class="control-card">
             <div class="pane-label">policy</div>
@@ -158,7 +158,7 @@
           <div class="comparison-row">
             <div>完成定义</div>
             <div>“改完了”往往停留在对话里。</div>
-            <div>completion gate 检查 context、codebase、docs、graph、plan、implementation、verification、evidence、writeback。</div>
+            <div>completion gate 还检查 privacy、interaction policy、当前工作授权、结果验收或 Goal、结构化决策，以及绑定当前 workflow 的 plan、implementation、verification、evidence 和 writeback。</div>
           </div>
         </div>
       </section>
@@ -171,7 +171,7 @@
         <div class="grid four">
           <article class="panel panel-pad">
             <h3>Workflow guard</h3>
-            <p>用 Zhulong native workflow 复刻 GSD 的严格流程思路。前端任务先由 <code>zl-ui-phase</code> 在 preserve、evolve、create、system 间路由，再把条件化 Taste 设计合同交给计划、实施和验证。</p>
+            <p>Zhulong native workflow 默认只执行当前阶段；自然语言多 MVP 请求会生成本地、可撤销的有界 Goal。前端任务再由 <code>zl-ui-phase</code> 在 preserve、evolve、create、system 间路由。</p>
           </article>
           <article class="panel panel-pad">
             <h3>Document intelligence</h3>
@@ -183,7 +183,7 @@
           </article>
           <article class="panel panel-pad">
             <h3>Evidence loop</h3>
-            <p>测试命令、验证结果、风险判断和可选来源引用都写回 evidence。最后由 <code>zl-completion-check</code> 判断能不能收口。</p>
+            <p>测试命令、验证结果、风险判断和可选来源引用都绑定当前 workflow。<code>zl-completion-check</code> 只判断能不能收口，<code>zl workflow complete</code> 才显式关闭。</p>
           </article>
         </div>
       </section>
@@ -209,7 +209,7 @@
             </div>
             <div class="story-row">
               <strong>前端设计</strong>
-              <p><code>zl-ui-phase</code> 先查品牌、token、组件和既有页面。新营销页面可由 Taste 增强；成熟设计系统保持原样；Dashboard 使用产品设计系统。</p>
+              <p><code>zl-ui-phase</code> 先从 manifest、请求、依赖和有界项目路径实际计算设计模式，再由 runtime 用品牌、token、组件和页面证据复核。新营销页面可由 Taste 增强；成熟设计系统保持原样；Dashboard 使用产品设计系统。</p>
             </div>
             <div class="story-row">
               <strong>文档更新</strong>
@@ -249,7 +249,7 @@ zl-completion-check --target "$PWD"</code></pre>
             <div class="node"><strong>2. .planning/context</strong><br>生成 context packet 和 handoff。</div>
             <div class="node"><strong>3. docs + graph</strong><br>查询文档依据和代码影响面。</div>
             <div class="node"><strong>4. evidence</strong><br>把验证记录写入 <code>.planning/evidence/</code> 并回写 issue。</div>
-            <div class="node"><strong>5. completion-check</strong><br>所有 gate PASS 才允许完成。</div>
+            <div class="node"><strong>5. completion-check + complete</strong><br>先只读检查资格，再显式改变状态。</div>
           </div>
           <div class="panel panel-pad">
             <h3>本地 intelligence layer</h3>
@@ -279,7 +279,8 @@ zl-completion-check --target "$PWD"</code></pre>
           <div class="signal"><strong>.planning/codebase/</strong><span>代码清单、结构、技术栈、测试策略、既有项目 baseline。</span></div>
           <div class="signal"><strong>.planning/knowledge/</strong><span>文档来源、归一化结果、RAG handoff、RAG query result。</span></div>
           <div class="signal"><strong>.planning/graphs/</strong><span>Graphify graph、报告、diff、staleness 检查。</span></div>
-          <div class="signal"><strong>.planning/workflows/</strong><span>workflow state、gate PASS/FAIL、人工继续记录。</span></div>
+          <div class="signal"><strong>.planning/workflows/</strong><span>workflow state、类型化 gate artifact、当前确认与决策状态。</span></div>
+          <div class="signal"><strong>.planning/goals/</strong><span>多 milestone 的 exact objective、contract digest、权限、停止条件与撤销状态；旧式 milestone-only grant 不允许修改型 action。</span></div>
           <div class="signal"><strong>.planning/evidence/</strong><span>验证证据、命令输出摘要、source 引用、evidence index。</span></div>
           <div class="signal"><strong>.planning/quality/</strong><span>RAG golden、citation audit、RAG eval，用来证明文档问答结果可信。</span></div>
           <div class="signal"><strong>.planning/trace/</strong><span>文档、代码、测试、evidence 的追踪矩阵。</span></div>
@@ -394,7 +395,7 @@ zl-docs-index --target "$PWD" --run</code></pre>
           </article>
           <article class="panel panel-pad">
             <h3>完成验证</h3>
-            <p><code>zl-completion-check</code> 会在 evidence 或 writeback 缺失时阻断，避免“看起来完成了”的假收口。</p>
+            <p><code>zl-completion-check</code> 会在授权、重大决策、类型化 artifact、evidence 或 writeback 缺失时阻断，而且不会自行把 workflow 标记为完成。</p>
           </article>
         </div>
       </section>

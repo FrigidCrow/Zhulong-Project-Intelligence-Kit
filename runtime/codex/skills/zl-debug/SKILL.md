@@ -24,6 +24,10 @@ This is the Codex runtime entrypoint for `$zl-debug`.
 {{ZL_CLI}} workflow run debug --target "$PWD" "<ZL_ARGS>"
 ```
 
+If the current user message explicitly requests a fix, implementation, patch,
+or repair, append `--intent fix`. Otherwise omit it and keep the workflow
+diagnose-only.
+
 3. Read the generated `.planning/context/*debug*.md` packet and matching
    `.planning/context/handoffs/*debug*-HANDOFF.md`.
 4. Establish expected behavior from the request, active records, source, and
@@ -32,7 +36,9 @@ This is the Codex runtime entrypoint for `$zl-debug`.
 5. Check code-map context before risky edits:
    `zl-graph-status`, `zl-graph-query`, `.planning/graphs/`, and source reads.
 6. Follow `core/workflows/debug.md` as the Zhulong native workflow contract.
-7. Implement only after the root cause and impact surface are clear.
+7. Default to diagnose-only. Stop after the verified diagnosis unless the user
+   explicitly requests a fix or a matching Goal authorization permits
+   `debug_fix`; only then implement after root cause and impact are clear.
 8. Verify with focused tests, source checks, logs, or manual reproduction.
 9. If structural relationships changed and direct graph refresh is approved,
    run `zl-graph-build --run` and inspect `zl-graph-diff`.
@@ -43,5 +49,6 @@ This is the Codex runtime entrypoint for `$zl-debug`.
 ## Fallback
 
 GSD is reference design only. Continue inline using the same Zhulong packet:
-diagnose, plan, implement, verify, and write evidence. Keep `$gsd-*` out of
-user-facing invocation instructions.
+diagnose, plan, and verify the diagnosis. Implement only with explicit fix
+intent or a matching Goal grant, then verify and write evidence. Keep `$gsd-*`
+out of user-facing invocation instructions.

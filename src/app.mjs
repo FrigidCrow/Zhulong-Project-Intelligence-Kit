@@ -31,7 +31,26 @@ import {
 } from "./project/policy-config.mjs";
 import { sha256Text, stableJson, stableValue } from "./shared/stable-json.mjs";
 import { markdownCell, xmlDecode } from "./shared/text.mjs";
+import {
+  buildFrontendDesignDecision,
+  deriveFrontendDesignSignals,
+  parseFrontendDesignManifest,
+  resolveFrontendDesignPolicy,
+} from "./design/taste-policy.mjs";
 import { WORKFLOW_COMMANDS } from "./workflow/catalog.mjs";
+import {
+  authorizationPermissionForState,
+  authorizationForState,
+  boundEvidenceRecords,
+  extractMilestone,
+  hasBoundWriteback,
+  loadAuthorization,
+  readDecisionPayload,
+  readEffectiveInteractionPolicy,
+  revokeAuthorization,
+  validateWorkflowEvidence,
+  writeAuthorization,
+} from "./workflow/governance.mjs";
 import { runtime as runRuntimeCommand } from "./runtime/pack.mjs";
 import {
   codebaseFileKind,
@@ -220,12 +239,19 @@ Usage:
   zl-code-review --target <repo> "<review request>"
   zl-verify-work --target <repo> "<verification request>"
   zl-complete-milestone --target <repo> "<milestone name>"
-  zl-workflow-run --target <repo> <workflow> "<request>"
+  zl-workflow-run --target <repo> <workflow> "<request>" [--source user-message] [--accept-completion] [--authorization <id> --milestone MVP4.0]
+  zl workflow authorize --target <repo> --goal "<goal>" --contract-file <milestones.json> --source user-message --request "<user authorization>" [--dependencies --commit --push]
+  zl workflow authorization-status --target <repo> [--authorization <id>]
+  zl workflow permission-check --target <repo> --permission <dependencies|commit|push|merge|release>
+  zl workflow revoke --target <repo> [--authorization <id>] --reason "<reason>"
+  zl workflow accept --target <repo> --source user-message --request "<user approval>"
+  zl workflow decisions --target <repo> --file <decision.json>
   zl-gate-check --target <repo>
   zl-workflow-status --target <repo>
-  zl-workflow-continue --target <repo> --gate plan --evidence "<evidence>"
+  zl-workflow-continue --target <repo> --gate plan --evidence <PLAN.md>
   zl-workflow-audit --target <repo>
   zl-completion-check --target <repo>
+  zl workflow complete --target <repo>
   zl-cockpit-build --target <repo>
   zl-verify --target <repo>
   zl-map --target <repo>
@@ -6434,38 +6460,104 @@ function referenceInvocation(route, request) {
   return `${route.referenceCommand}${request ? ` ${request}` : ""}`;
 }
 
-function frontendDesignDecisionTemplate(kind) {
+function frontendEvidencePaths(target, limit = 400) {
+  const roots = ["src", "app", "pages", "components", "styles", "design", path.join("docs", "design")]
+    .map((item) => path.join(target, item))
+    .filter((item) => fs.existsSync(item) && fs.statSync(item).isDirectory());
+  const results = [];
+  const ignored = new Set([...DOC_IGNORE_NAMES, "coverage", "dist", "build"]);
+  const stack = [...roots];
+  while (stack.length && results.length < limit) {
+    const current = stack.pop();
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      if (ignored.has(entry.name)) continue;
+      const entryPath = path.join(current, entry.name);
+      if (entry.isDirectory()) stack.push(entryPath);
+      else if (entry.isFile()) results.push(path.relative(target, entryPath));
+      if (results.length >= limit) break;
+    }
+  }
+  return results;
+}
+
+function yamlDecisionList(items) {
+  return items.length ? items.map((item) => `  - ${JSON.stringify(item)}`).join("\n") : "  []";
+}
+
+function activePhaseName(target) {
+  const state = readOptional(target, ".planning/STATE.md");
+  const raw = state.text.match(/^current_phase:\s*(.*?)\s*$/m)?.[1]?.trim().replace(/^['"]|['"]$/g, "");
+  return raw && !/^(?:null|none|~)$/i.test(raw) ? raw : null;
+}
+
+function writeFrontendDesignPhaseRecord(target, decision, yamlBlock) {
+  const phase = activePhaseName(target);
+  if (!phase) return null;
+  const outPath = path.join(target, ".planning", "phases", slugify(phase, "phase"), "FRONTEND_DESIGN_DECISION.md");
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.writeFileSync(outPath, `# Frontend Design Decision: ${phase}\n\nGenerated: ${new Date().toISOString()}\n\nMode: ${decision.mode}\n\n${yamlBlock}\n`);
+  return path.relative(target, outPath);
+}
+
+function frontendDesignDecisionTemplate(kind, target, request, user = {}) {
   if (kind !== "ui") return "";
+  const manifest = readOptional(target, "project.manifest.yml");
+  const packageJson = readJsonIfExists(path.join(target, "package.json")) || {};
+  const dependencies = [
+    ...Object.keys(packageJson.dependencies || {}),
+    ...Object.keys(packageJson.devDependencies || {}),
+  ];
+  const evidence = deriveFrontendDesignSignals({
+    request,
+    initMode: readInitMode(target),
+    dependencies,
+    paths: frontendEvidencePaths(target),
+  });
+  const policy = resolveFrontendDesignPolicy({
+    config: parseFrontendDesignManifest(manifest.text),
+    user,
+    signals: evidence.signals,
+  });
+  const decision = buildFrontendDesignDecision({ policy, evidence: evidence.evidence, pageKind: evidence.pageKind });
+  const yamlBlock = `\`\`\`yaml
+mode: ${decision.mode}
+confidence: ${decision.confidence}
+taste_applied: ${decision.tasteApplied}
+source: ${decision.source}
+reason: ${JSON.stringify(decision.reason)}
+evidence:
+${yamlDecisionList(decision.evidence)}
+preserve:
+${yamlDecisionList(decision.preserve)}
+allowed_changes:
+${yamlDecisionList(decision.allowedChanges)}
+design_read:
+  page_kind: ${JSON.stringify(decision.designRead.pageKind)}
+  audience: ${JSON.stringify(decision.designRead.audience)}
+  visual_language: ${JSON.stringify(decision.designRead.visualLanguage)}
+dials:
+  design_variance: ${decision.dials.designVariance}
+  motion_intensity: ${decision.dials.motionIntensity}
+  visual_density: ${decision.dials.visualDensity}
+verification:
+${yamlDecisionList(decision.verification)}
+needs_clarification: ${decision.needsClarification ? "true" : "false"}
+\`\`\``;
+  const phaseRecord = writeFrontendDesignPhaseRecord(target, decision, yamlBlock);
   return `## Frontend Design Decision
 
-Complete this decision before frontend implementation. Follow
-\`core/design/taste-adapter.md\` and write the completed block to the active
-phase when one exists.
+This routing decision was computed from the request, manifest, dependency
+manifest, and bounded project-path evidence. Follow \`core/design/taste-adapter.md\`.
 
-\`\`\`yaml
-mode: preserve | evolve | create | system
-confidence: high | medium | low
-taste_applied: full | constrained | audit-only | disabled
-evidence: []
-preserve: []
-allowed_changes: []
-design_read:
-  page_kind: ""
-  audience: ""
-  visual_language: ""
-dials:
-  design_variance: 1
-  motion_intensity: 1
-  visual_density: 1
-verification: []
-\`\`\`
+${yamlBlock}
 
-If automatic evidence is low-confidence and different modes would materially
-change the result, ask exactly one design-direction question.
+Active phase writeback: ${phaseRecord ? `\`${phaseRecord}\`` : "none (no active phase)"}.
+
+${decision.needsClarification ? `Ask exactly one design-direction question before implementation:\n\n> ${decision.clarificationQuestion}` : "No design-direction clarification is required by the routing policy."}
 `;
 }
 
-function writeContextPacket(target, kind, request, route = routeForPacketKind(kind)) {
+function writeContextPacket(target, kind, request, route = routeForPacketKind(kind), options = {}) {
   const generatedAt = new Date().toISOString();
   const contextDir = path.join(target, ".planning", "context");
   fs.mkdirSync(contextDir, { recursive: true });
@@ -6476,6 +6568,8 @@ function writeContextPacket(target, kind, request, route = routeForPacketKind(ki
 
   const state = readOptional(target, ".planning/STATE.md");
   const manifest = readOptional(target, "project.manifest.yml");
+  const planningConfig = readOptional(target, ".planning/config.json");
+  const interactionPolicy = readEffectiveInteractionPolicy(target);
   const sources = readOptional(target, ".planning/knowledge/RAG_SOURCES.md");
   const docStatus = readOptional(target, ".planning/knowledge/DOC_RAG_STATUS.md");
   const glossary = readOptional(target, ".planning/knowledge/GLOSSARY.md");
@@ -6508,7 +6602,15 @@ ${packetSourceBlock("State", state, 60)}
 
 ## Project Configuration
 
-${packetSourceBlock("Project Manifest", manifest, 100)}
+${packetSourceBlock("Project Manifest", manifest, 260)}
+
+${packetSourceBlock("Planning Config", planningConfig, 180)}
+
+### Effective Interaction Policy
+
+\`\`\`json
+${JSON.stringify(interactionPolicy, null, 2)}
+\`\`\`
 
 ## Specification Context
 
@@ -6540,7 +6642,7 @@ ${packetSourceBlock("Architecture", architecture, 60)}
 
 ${packetSourceBlock("Testing", testing, 60)}
 
-${frontendDesignDecisionTemplate(kind)}
+${frontendDesignDecisionTemplate(kind, target, request, options.frontendDesign)}
 
 ## Verification Plan
 
@@ -6622,6 +6724,13 @@ ${referenceRun}
    when the work is non-trivial.
 6. When suggesting next commands to the user, suggest \`${route.publicCommand}\`
    or other \`zl-*\` commands, never \`${referenceCommand}\`.
+7. A suggested next command is not authorization. Without an explicit user
+   request or a matching bounded-autonomy authorization, finish only the
+   current workflow and return control to the user.
+8. If the user explicitly requests multi-MVP automatic execution, compile the
+   named objectives into a structured milestone contract, register one bounded
+   Goal authorization, and attach its ID, milestone, and contract digest to
+   every child workflow. Stop at its boundary or any material unresolved decision.
 
 ## Notes
 
@@ -6693,6 +6802,13 @@ Generated: ${new Date().toISOString()}
 - Workflow: \`${state.workflow}\`
 - Status: \`${state.status}\`
 - Request: ${state.request || "(none)"}
+- Milestone: ${state.milestone || "(none)"}
+- Interaction mode: \`${state.interactionPolicy?.mode || "unknown"}\`
+- Auto advance: \`${state.interactionPolicy?.autoAdvance === true ? "true" : "false"}\`
+- Authorization: \`${state.authorizationRef || "none"}\`
+- Milestone contract: \`${state.contractDigest || "none"}\`
+- Request authorization: \`${state.requestAuthorization?.decision || "none"}\`
+- User acceptance: \`${state.userAcceptance?.decision || "none"}\`
 - Context packet: \`${state.contextPacket ? path.relative(target, state.contextPacket) : "missing"}\`
 - Handoff: \`${state.handoff ? path.relative(target, state.handoff) : "missing"}\`
 
@@ -6700,11 +6816,17 @@ Generated: ${new Date().toISOString()}
 
 | Gate | Status | Evidence |
 | --- | --- | --- |
-${gateRows.map((gate) => `| ${gate.name} | ${gate.status || (gate.ok ? "PASS" : "FAIL")} | ${markdownCell(gate.evidence || gate.reason || "")} |`).join("\n")}
+${gateRows.map((gate) => `| ${gate.name} | ${gate.status || (gate.ok ? "PASS" : "FAIL")} | ${markdownCell(gate.blocking ? gate.reason || gate.evidence || "" : gate.evidence || gate.reason || "")} |`).join("\n")}
 
 ## Manual Marks
 
-${Object.entries(state.manualGates || {}).map(([gate, value]) => `- ${gate}: ${value.evidence || "(no evidence)"} (${value.markedAt})`).join("\n") || "- None"}
+${Object.entries(state.manualGates || {}).map(([gate, value]) => `- ${gate}: ${value.path || value.evidence || "(no evidence)"} (${value.markedAt})`).join("\n") || "- None"}
+
+## Decisions
+
+\`\`\`json
+${JSON.stringify(state.decisions || {}, null, 2)}
+\`\`\`
 `;
   fs.writeFileSync(workflowStateMarkdownPath(target, state.id), content);
 }
@@ -6761,30 +6883,30 @@ function hasDocumentEvidence(target) {
   return false;
 }
 
-function hasEvidenceRecord(target) {
-  const evidenceDir = path.join(target, ".planning", "evidence");
-  if (!fs.existsSync(evidenceDir)) return false;
-  return walkFiles(evidenceDir, new Set([".DS_Store"]))
-    .some((filePath) => filePath.endsWith(".md") && !["INDEX.md", "README.md", "RECORD_TEMPLATE.md"].includes(path.basename(filePath)));
+function hasEvidenceRecord(target, state) {
+  return boundEvidenceRecords(target, state).length > 0;
 }
 
-function hasWriteback(target) {
-  const roots = [
-    path.join(target, ".planning", "issues"),
-    path.join(target, ".planning", "debug"),
-    path.join(target, ".planning", "phases"),
-  ];
-  for (const root of roots) {
-    if (!fs.existsSync(root)) continue;
-    for (const filePath of walkFiles(root, new Set([".DS_Store"]))) {
-      if (filePath.endsWith(".md") && fs.readFileSync(filePath, "utf8").includes("Zhulong Evidence Writeback")) return true;
-    }
-  }
-  return false;
+function hasWriteback(target, state) {
+  return hasBoundWriteback(target, state);
 }
 
 function manualGate(state, name) {
   return state.manualGates?.[name] || null;
+}
+
+function validatedManualGate(target, state, name) {
+  const marked = manualGate(state, name);
+  if (!marked?.path) return { ok: false, evidence: marked?.evidence || "", reason: `${name} gate not marked with typed evidence.` };
+  try {
+    const current = validateWorkflowEvidence(target, state, name, marked.path);
+    if (marked.sha256 && current.sha256 !== marked.sha256) {
+      return { ok: false, evidence: marked.path, reason: `${name} evidence changed after it was marked.` };
+    }
+    return { ok: true, evidence: marked.path, reason: "" };
+  } catch (error) {
+    return { ok: false, evidence: marked.path, reason: error.message };
+  }
 }
 
 function workflowGate(name, status, blocking, evidence, reason = "") {
@@ -6812,6 +6934,9 @@ function evaluateWorkflowGates(target, state) {
   const initMode = readInitMode(target);
   const sourceCount = codebaseSourceCount(target);
   const profile = activeRefreshProfile(target);
+  const route = WORKFLOW_COMMANDS[state.workflow];
+  const interactionPolicy = readEffectiveInteractionPolicy(target);
+  const authorization = authorizationForState(target, state, route);
   const privacyResult = runPrivacyAudit(target, { strictLocal: true, requireOfflineLock: profile.strict, writeReport: true });
   const gates = [];
   const addBoolean = (name, ok, evidence, reason = "") => gates.push(ok ? workflowPassGate(name, evidence) : workflowFailGate(name, evidence, reason));
@@ -6840,11 +6965,66 @@ function evaluateWorkflowGates(target, state) {
     ? workflowPassGate("privacy", privacyResult.outPath)
     : workflowFailGate("privacy", privacyResult.outPath, privacyResult.issues.map((issue) => `${issue.file}: ${issue.detail}`).join("; ")));
 
-  addBoolean("plan", Boolean(manualGate(state, "plan")), manualGate(state, "plan")?.evidence, "Plan gate not marked.");
-  addBoolean("implementation", Boolean(manualGate(state, "implementation")), manualGate(state, "implementation")?.evidence, "Implementation gate not marked.");
-  addBoolean("verification", Boolean(manualGate(state, "verification")), manualGate(state, "verification")?.evidence, "Verification gate not marked.");
-  addBoolean("evidence", hasEvidenceRecord(target), ".planning/evidence", "No durable evidence record found.");
-  addBoolean("writeback", hasWriteback(target), ".planning/issues|debug|phases", "No Zhulong Evidence Writeback marker found.");
+  addBoolean("interaction-policy", interactionPolicy.valid !== false, interactionPolicy.sources?.join(", "), interactionPolicy.contradictions?.join("; ") || "Interaction policy is invalid.");
+  const requestAuthorization = state.requestAuthorization;
+  const authorizedByCurrentUser = requestAuthorization?.workflowId === state.id
+    && requestAuthorization?.decision === "authorized"
+    && requestAuthorization?.source === "user_message";
+  const userAcceptance = state.userAcceptance;
+  const acceptedByUser = userAcceptance?.workflowId === state.id
+    && userAcceptance?.decision === "accepted"
+    && userAcceptance?.source === "user_message";
+  const projectAuto = interactionPolicy.valid !== false
+    && interactionPolicy.autoAdvance === true
+    && interactionPolicy.mode === "autonomous";
+  const projectImplicitWork = interactionPolicy.valid !== false
+    && interactionPolicy.requireExplicitUserIntent === false;
+  addBoolean(
+    "authorization",
+    authorizedByCurrentUser || acceptedByUser || authorization.ok || projectAuto || projectImplicitWork,
+    authorizedByCurrentUser ? "current user request" : acceptedByUser ? "current workflow user acceptance" : authorization.ok ? state.authorizationRef : projectAuto ? "project autonomous policy" : projectImplicitWork ? "project permits implicit current-work authorization" : "missing",
+    authorization.reason || "The current workflow requires explicit user intent or a matching bounded Goal authorization.",
+  );
+  addBoolean(
+    "acceptance",
+    acceptedByUser || authorization.ok || projectAuto,
+    acceptedByUser ? "current workflow user acceptance" : authorization.ok ? state.authorizationRef : projectAuto ? "project autonomous policy" : "missing",
+    "Completion requires current-workflow user acceptance or a matching bounded Goal authorization.",
+  );
+
+  if (route?.requiresDecisionRecord) {
+    const decisions = state.decisions;
+    const decisionOk = Boolean(decisions?.recordedAt)
+      && (decisions.contradictions || []).length === 0
+      && (decisions.openQuestions || []).length === 0
+      && decisions.materialDecisionRequired !== true;
+    const reason = !decisions?.recordedAt
+      ? "A structured decision record is required."
+      : decisions.materialDecisionRequired
+        ? "A material decision still requires user input."
+        : (decisions.contradictions || []).length
+          ? "Decision contradictions remain unresolved."
+          : "Open questions remain unresolved.";
+    addBoolean("decisions", decisionOk, "workflow decision state", reason);
+  } else {
+    gates.push(workflowPassGate("decisions", "not required for this workflow"));
+  }
+
+  const requiredManualGates = [...(route?.requiredManualGates || ["plan", "implementation", "verification"])];
+  if (state.workflow === "debug" && state.requestIntent === "diagnose-only") {
+    const implementationIndex = requiredManualGates.indexOf("implementation");
+    if (implementationIndex >= 0) requiredManualGates.splice(implementationIndex, 1);
+  }
+  for (const gateName of ["plan", "implementation", "verification"]) {
+    if (!requiredManualGates.includes(gateName)) {
+      gates.push(workflowPassGate(gateName, "not required for this workflow intent"));
+      continue;
+    }
+    const marked = validatedManualGate(target, state, gateName);
+    addBoolean(gateName, marked.ok, marked.evidence, marked.reason);
+  }
+  addBoolean("evidence", hasEvidenceRecord(target, state), `.planning/evidence bound to ${state.id}`, "No current-workflow durable evidence record found.");
+  addBoolean("writeback", hasWriteback(target, state), `.planning/issues|debug|phases bound to ${state.id}`, "No current-workflow Zhulong Evidence Writeback marker found.");
 
   const ok = gates.every((gate) => !gate.blocking);
   return { ok, gates };
@@ -6857,10 +7037,14 @@ function nextCommandForGate(gateName) {
     docs: "zl-docs-extract --target <repo> && zl-docs-citations --target <repo> \"<query>\"",
     graph: "zl-refresh-plan --target <repo> && zl-refresh-run --target <repo> --graph",
     privacy: "zl-offline-lock --target <repo> && zl-privacy-audit --target <repo> --strict",
-    plan: "zl-workflow-continue --target <repo> --gate plan --evidence \"<plan evidence>\"",
-    implementation: "zl-workflow-continue --target <repo> --gate implementation --evidence \"<implementation evidence>\"",
-    verification: "zl-workflow-continue --target <repo> --gate verification --evidence \"<verification evidence>\"",
-    evidence: "zl-evidence-record --target <repo> --title \"<evidence title>\"",
+    "interaction-policy": "resolve workflow policy conflict before continuing",
+    authorization: "after explicit user approval, run zl workflow accept --target <repo> --source user-message --request \"<approval excerpt>\"",
+    acceptance: "after reviewing the current artifact, run zl workflow accept --target <repo> --source user-message --request \"<acceptance excerpt>\"",
+    decisions: "zl workflow decisions --target <repo> --file <decision.json>",
+    plan: "zl-workflow-continue --target <repo> --gate plan --evidence <PLAN.md>",
+    implementation: "zl-workflow-continue --target <repo> --gate implementation --evidence <IMPLEMENTATION.md>",
+    verification: "zl-workflow-continue --target <repo> --gate verification --evidence <VERIFICATION.md>",
+    evidence: "zl-evidence-record --target <repo> --title \"<evidence title>\" --workflow <workflow-id> --type verification",
     writeback: "zl-evidence-record --target <repo> --writeback <record-path>",
   };
   return commands[gateName] || "zl-workflow-status --target <repo>";
@@ -6887,11 +7071,14 @@ Generated: ${new Date().toISOString()}
 
 | Gate | Status | Blocking | Evidence / Reason | Next command |
 | --- | --- | --- | --- | --- |
-${result.gates.map((gate) => `| ${gate.name} | ${gate.status || (gate.ok ? "PASS" : "FAIL")} | ${gate.blocking ? "yes" : "no"} | ${markdownCell(gate.evidence || gate.reason || "")} | \`${markdownCell(gate.blocking ? nextCommandForGate(gate.name) : "-")}\` |`).join("\n")}
+${result.gates.map((gate) => `| ${gate.name} | ${gate.status || (gate.ok ? "PASS" : "FAIL")} | ${gate.blocking ? "yes" : "no"} | ${markdownCell(gate.blocking ? gate.reason || gate.evidence || "" : gate.evidence || gate.reason || "")} | \`${markdownCell(gate.blocking ? nextCommandForGate(gate.name) : "-")}\` |`).join("\n")}
 
 ## Completion Rule
 
-\`zl-completion-check\` remains non-zero while any blocking gate is present. \`WAIVED_WITH_RISK\` is allowed only when the active profile permits it and the report records the risk.
+\`zl-completion-check\` is read-only and remains non-zero while any blocking
+gate is present. It never changes workflow status. Only \`zl workflow complete\`
+may set \`status: complete\`, after the same gates pass. \`WAIVED_WITH_RISK\` is
+allowed only when the active profile permits it and the report records the risk.
 `;
   fs.writeFileSync(auditPath, content);
   return auditPath;
@@ -6899,7 +7086,8 @@ ${result.gates.map((gate) => `| ${gate.name} | ${gate.status || (gate.ok ? "PASS
 
 function printGateResult(result) {
   for (const gate of result.gates) {
-    console.log(`${gate.status || (gate.ok ? "PASS" : "FAIL")} ${gate.name} ${gate.evidence || gate.reason || ""}`.trim());
+    const detail = gate.blocking ? gate.reason || gate.evidence || "" : gate.evidence || gate.reason || "";
+    console.log(`${gate.status || (gate.ok ? "PASS" : "FAIL")} ${gate.name} ${detail}`.trim());
   }
   console.log(`workflow guard ${result.ok ? "PASS" : "FAIL"}`);
 }
@@ -6949,6 +7137,10 @@ function writeWorkflowFacade(target, state, route, gateResult) {
     status,
     workflow: state.workflow,
     publicCommand: route.publicCommand,
+    interactionPolicy: state.interactionPolicy,
+    authorizationRef: state.authorizationRef,
+    contractDigest: state.contractDigest,
+    milestone: state.milestone,
     profile: profile.name,
     heavyRefreshExecuted: false,
     preflight: {
@@ -6988,6 +7180,11 @@ Generated: ${data.generatedAt}
 - Workflow: \`${state.workflow}\`
 - Public command: \`${route.publicCommand}\`
 - Profile: \`${profile.name}\`
+- Interaction mode: \`${state.interactionPolicy?.mode || "unknown"}\`
+- Auto advance: \`${state.interactionPolicy?.autoAdvance === true ? "true" : "false"}\`
+- Authorization: \`${state.authorizationRef || "none"}\`
+- Milestone contract: \`${state.contractDigest || "none"}\`
+- Milestone: \`${state.milestone || "none"}\`
 - Heavy refresh executed: no
 
 ## Facade Rule
@@ -7034,8 +7231,40 @@ function startGuardedWorkflow(args) {
     return;
   }
   const request = args._.slice(2).join(" ").trim();
+  const sourceKind = String(args.source || "").toLowerCase().replace(/_/g, "-");
+  const directUserAuthorization = sourceKind === "user-message" && request
+    ? {
+        workflowId: null,
+        decision: "authorized",
+        source: "user_message",
+        originAssurance: args["source-message-id"] ? "runtime_message_id_asserted" : "runtime_asserted",
+        sourceMessageId: args["source-message-id"] || null,
+        sourceExcerpt: request.slice(0, 2000),
+        digest: null,
+        authorizedAt: new Date().toISOString(),
+      }
+    : null;
   const id = args.id || workflowId(route, request);
-  const packetPath = writeContextPacket(target, route.packetKind, request, route);
+  if (directUserAuthorization) {
+    directUserAuthorization.workflowId = id;
+    directUserAuthorization.digest = crypto.createHash("sha256").update(`${id}\n${request}`).digest("hex");
+  }
+  const directCompletionAcceptance = directUserAuthorization
+    && (args["accept-completion"] === true || workflowName === "complete-milestone")
+    ? {
+        workflowId: id,
+        decision: "accepted",
+        source: "user_message",
+        originAssurance: args["source-message-id"] ? "runtime_message_id_asserted" : "runtime_asserted",
+        sourceMessageId: args["source-message-id"] || null,
+        sourceExcerpt: request.slice(0, 2000),
+        digest: crypto.createHash("sha256").update(`${id}\ncomplete\n${request}`).digest("hex"),
+        acceptedAt: new Date().toISOString(),
+      }
+    : null;
+  const packetPath = writeContextPacket(target, route.packetKind, request, route, {
+    frontendDesign: { strategy: args["design-strategy"], taste: args.taste },
+  });
   const handoff = writeWorkflowHandoff(target, route, request, packetPath);
   const dir = path.join(workflowsDir(target), id);
   fs.mkdirSync(dir, { recursive: true });
@@ -7054,6 +7283,21 @@ function startGuardedWorkflow(args) {
     updatedAt: new Date().toISOString(),
     contextPacket: packetPath,
     handoff: handoff.outPath,
+    milestone: String(args.milestone || extractMilestone(request) || "").trim().toUpperCase() || null,
+    interactionPolicy: readEffectiveInteractionPolicy(target),
+    authorizationRef: args.authorization || null,
+    contractDigest: args["contract-digest"] || null,
+    requestIntent: args.intent || (workflowName === "debug" ? "diagnose-only" : "current-workflow-only"),
+    requestAuthorization: directUserAuthorization,
+    userAcceptance: directCompletionAcceptance,
+    decisions: {
+      confirmed: [],
+      assumptions: [],
+      contradictions: [],
+      openQuestions: [],
+      materialDecisionRequired: false,
+      recordedAt: null,
+    },
     manualGates: {},
   };
   saveWorkflowState(target, state);
@@ -7082,16 +7326,180 @@ function gateCheck(args, completion = false) {
   }
   const result = evaluateWorkflowGates(target, state);
   const completionOk = result.ok && !structureResult?.blocking;
-  state.status = completionOk ? "complete" : "blocked";
-  saveWorkflowState(target, state);
   writeWorkflowStateMarkdown(target, state, result);
   printGateResult(result);
   if (completion) {
     console.log(`${structureResult.status} structure ${structureResult.structure_compliance_rate}`);
     console.log(`write ${structureResult.mdPath}`);
-    console.log(`completion ${completionOk ? "allowed" : "blocked"}`);
+    console.log(`completion ${completionOk ? "eligible" : "blocked"}`);
   }
   process.exitCode = completionOk ? 0 : 1;
+}
+
+function completeWorkflow(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const state = resolveWorkflowState(target, args);
+  if (!state) {
+    console.log("missing active workflow");
+    process.exitCode = 1;
+    return;
+  }
+  const structureResult = runStructureAudit(target, { strict: Boolean(args.strict) });
+  const result = evaluateWorkflowGates(target, state);
+  const completionOk = result.ok && !structureResult.blocking;
+  printGateResult(result);
+  console.log(`${structureResult.status} structure ${structureResult.structure_compliance_rate}`);
+  if (!completionOk) {
+    console.log("workflow completion blocked; state unchanged");
+    process.exitCode = 1;
+    return;
+  }
+  state.status = "complete";
+  state.completedAt = new Date().toISOString();
+  saveWorkflowState(target, state);
+  writeWorkflowStateMarkdown(target, state, result);
+  console.log(`workflow complete ${state.id}`);
+}
+
+function workflowAccept(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const state = resolveWorkflowState(target, args);
+  if (!state) {
+    console.log("missing active workflow");
+    process.exitCode = 1;
+    return;
+  }
+  const source = String(args.source || "").toLowerCase().replace(/_/g, "-");
+  const request = String(args.request || args._.slice(1).join(" ")).trim();
+  if (source !== "user-message" || !request) {
+    console.log("error: explicit --source user-message and --request are required");
+    process.exitCode = 1;
+    return;
+  }
+  state.userAcceptance = {
+    workflowId: state.id,
+    decision: "accepted",
+    source: "user_message",
+    originAssurance: args["source-message-id"] ? "runtime_message_id_asserted" : "runtime_asserted",
+    sourceMessageId: args["source-message-id"] || null,
+    sourceExcerpt: request.slice(0, 2000),
+    digest: crypto.createHash("sha256").update(`${state.id}\n${request}`).digest("hex"),
+    acceptedAt: new Date().toISOString(),
+  };
+  state.status = "running";
+  saveWorkflowState(target, state);
+  console.log(`accepted ${state.id}`);
+}
+
+function workflowDecisions(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const state = resolveWorkflowState(target, args);
+  if (!state) {
+    console.log("missing active workflow");
+    process.exitCode = 1;
+    return;
+  }
+  try {
+    state.decisions = readDecisionPayload(target, args);
+  } catch (error) {
+    console.log(`error: ${error.message}`);
+    process.exitCode = 1;
+    return;
+  }
+  saveWorkflowState(target, state);
+  console.log(`decisions recorded ${state.id}`);
+  console.log(`open questions ${state.decisions.openQuestions.length}`);
+  console.log(`contradictions ${state.decisions.contradictions.length}`);
+}
+
+function workflowAuthorize(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  try {
+    const result = writeAuthorization(target, {
+      id: args.id,
+      goal: args.goal || args._.slice(1).join(" "),
+      scope: args.scope,
+      milestones: args.milestones,
+      actions: args.actions,
+      source: args.source,
+      sourceExcerpt: args.request,
+      sourceMessageId: args["source-message-id"],
+      contractFile: args["contract-file"],
+      stopAfter: args["stop-after"],
+      dependencies: args.dependencies === true || args.dependencies === "true",
+      commit: args.commit === true || args.commit === "true",
+      push: args.push === true || args.push === "true",
+      merge: args.merge === true || args.merge === "true",
+      release: args.release === true || args.release === "true",
+    });
+    console.log(`authorization ${result.grant.id}`);
+    console.log(`goal ${result.grant.goal}`);
+    console.log(`scope ${result.grant.scope}`);
+    console.log(`milestones ${result.grant.milestones.join(", ")}`);
+    console.log(`scope enforcement ${result.grant.scopeEnforcement}`);
+    for (const contract of result.grant.milestoneContracts || []) {
+      console.log(`contract ${contract.id} ${contract.digest} ${contract.objective}`);
+    }
+    console.log(`permissions ${Object.entries(result.grant.permissions).filter(([, allowed]) => allowed).map(([name]) => name).join(", ") || "none"}`);
+    console.log(`write ${result.outPath}`);
+  } catch (error) {
+    console.log(`error: ${error.message}`);
+    process.exitCode = 1;
+  }
+}
+
+function workflowAuthorizationStatus(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const grant = loadAuthorization(target, args.authorization || args.id || args._[1]);
+  if (!grant) {
+    console.log("missing active authorization");
+    process.exitCode = 1;
+    return;
+  }
+  console.log(`authorization ${grant.id}`);
+  console.log(`status ${grant.status}`);
+  console.log(`mode ${grant.mode}`);
+  console.log(`scope ${grant.scope}`);
+  console.log(`milestones ${grant.milestones.join(", ")}`);
+  console.log(`scope enforcement ${grant.scopeEnforcement || "legacy_milestone_only"}`);
+  for (const contract of grant.milestoneContracts || []) {
+    console.log(`contract ${contract.id} ${contract.digest} ${contract.objective}`);
+  }
+  console.log(`permissions ${Object.entries(grant.permissions).filter(([, allowed]) => allowed).map(([name]) => name).join(", ") || "none"}`);
+  console.log(`stop after ${grant.stopAfter}`);
+}
+
+function workflowPermissionCheck(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  const state = resolveWorkflowState(target, args);
+  if (!state) {
+    console.log("missing active workflow");
+    process.exitCode = 1;
+    return;
+  }
+  const permission = args.permission || args._[1];
+  const result = authorizationPermissionForState(target, state, WORKFLOW_COMMANDS[state.workflow], permission);
+  console.log(`${result.ok ? "PASS" : "FAIL"} permission ${permission || "missing"} ${result.reason}`);
+  if (!result.ok) process.exitCode = 1;
+}
+
+function workflowRevoke(args) {
+  const target = path.resolve(args.target || process.cwd());
+  requireDir(target, "Target");
+  try {
+    const result = revokeAuthorization(target, args.authorization || args.id || args._[1], args.reason);
+    console.log(`revoked ${result.grant.id}`);
+    console.log(`write ${result.outPath}`);
+  } catch (error) {
+    console.log(`error: ${error.message}`);
+    process.exitCode = 1;
+  }
 }
 
 function workflowStatus(args) {
@@ -7147,14 +7555,28 @@ function workflowContinue(args) {
     process.exitCode = 1;
     return;
   }
+  const route = WORKFLOW_COMMANDS[state.workflow];
+  const required = [...(route?.requiredManualGates || allowed)];
+  if (state.workflow === "debug" && state.requestIntent === "diagnose-only") {
+    const index = required.indexOf("implementation");
+    if (index >= 0) required.splice(index, 1);
+  }
+  if (!required.includes(gate)) {
+    console.log(`error: ${gate} gate is not required for ${state.workflow} (${state.requestIntent})`);
+    process.exitCode = 1;
+    return;
+  }
   const evidence = args.evidence || args._.slice(2).join(" ").trim();
-  if (!evidence) {
-    console.log("error: --evidence is required");
+  let reference;
+  try {
+    reference = validateWorkflowEvidence(target, state, gate, evidence);
+  } catch (error) {
+    console.log(`error: ${error.message}`);
     process.exitCode = 1;
     return;
   }
   state.manualGates = state.manualGates || {};
-  state.manualGates[gate] = { evidence, markedAt: new Date().toISOString() };
+  state.manualGates[gate] = reference;
   state.status = "running";
   saveWorkflowState(target, state);
   const result = evaluateWorkflowGates(target, state);
@@ -7661,7 +8083,9 @@ function contextPacket(args, kind) {
   const target = path.resolve(args.target || process.cwd());
   requireDir(target, "Target");
   const request = args._.slice(1).join(" ").trim();
-  const outPath = writeContextPacket(target, kind, request);
+  const outPath = writeContextPacket(target, kind, request, routeForPacketKind(kind), {
+    frontendDesign: { strategy: args["design-strategy"], taste: args.taste },
+  });
   console.log(`write ${outPath}`);
 }
 
@@ -7687,7 +8111,9 @@ function workflowHandoff(args, route) {
   const target = path.resolve(args.target || process.cwd());
   requireDir(target, "Target");
   const request = args._.slice(1).join(" ").trim();
-  const packetPath = writeContextPacket(target, route.packetKind, request, route);
+  const packetPath = writeContextPacket(target, route.packetKind, request, route, {
+    frontendDesign: { strategy: args["design-strategy"], taste: args.taste },
+  });
   const handoff = writeWorkflowHandoff(target, route, request, packetPath);
   console.log(`write ${packetPath}`);
   console.log(`write ${handoff.outPath}`);
@@ -7760,6 +8186,13 @@ const runWorkflowCommand = createWorkflowCommand({
   audit: workflowAudit,
   gateCheck: (commandArgs) => gateCheck(commandArgs),
   completionCheck: (commandArgs) => gateCheck(commandArgs, true),
+  complete: completeWorkflow,
+  accept: workflowAccept,
+  decisions: workflowDecisions,
+  authorize: workflowAuthorize,
+  authorizationStatus: workflowAuthorizationStatus,
+  permissionCheck: workflowPermissionCheck,
+  revoke: workflowRevoke,
   handoff: workflowHandoff,
 }, usage);
 

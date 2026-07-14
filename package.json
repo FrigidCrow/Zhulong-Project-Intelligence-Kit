@@ -140,6 +140,7 @@
     "verify:mvp3": "node scripts/verify-mvp3-evidence-policy.mjs",
     "verify:mvp35": "node scripts/verify-mvp35-refresh-control.mjs",
     "verify:workflow-facade": "node scripts/verify-workflow-facade.mjs",
+    "verify:workflow-governance": "node scripts/verify-workflow-governance.mjs",
     "verify:policy-hardening": "node scripts/verify-policy-hardening.mjs",
     "verify:init-policy": "node scripts/verify-init-policy.mjs",
     "verify:project-profiles": "node scripts/verify-project-profiles.mjs",

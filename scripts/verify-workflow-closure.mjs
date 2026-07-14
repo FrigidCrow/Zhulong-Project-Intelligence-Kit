@@ -165,12 +165,38 @@ function initProject(root, mode = "new") {
 }
 
 function completeCurrentWorkflow(root) {
-  zl(root, ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", "plan accepted"]);
-  zl(root, ["workflow", "continue", "--target", root, "--gate", "implementation", "--evidence", "implementation done"]);
-  zl(root, ["workflow", "continue", "--target", root, "--gate", "verification", "--evidence", "focused test passed"]);
+  const active = JSON.parse(read(path.join(root, ".planning", "workflows", "ACTIVE.json")));
+  const statePath = path.join(root, ".planning", "workflows", active.id, "WORKFLOW_STATE.json");
+  const state = JSON.parse(read(statePath));
+  const required = state.workflow === "new-milestone"
+    ? ["plan"]
+    : state.workflow === "debug" && state.requestIntent === "diagnose-only"
+      ? ["plan", "verification"]
+      : ["plan", "implementation", "verification"];
+  const names = { plan: "PLAN.md", implementation: "IMPLEMENTATION.md", verification: "VERIFICATION.md" };
+  const arbitrary = zl(root, ["workflow", "continue", "--target", root, "--gate", required[0], "--evidence", "anything"], { expectedStatus: 1 });
+  assertIncludes("arbitrary evidence rejected", arbitrary.output, "evidence file does not exist");
+  for (const gate of required) {
+    const artifact = path.join(root, ".planning", "workflows", active.id, names[gate]);
+    write(artifact, `# ${gate}: ${active.id}\n\nStatus: complete\n\nEvidence:\n\n- fixture passed\n`);
+    zl(root, ["workflow", "continue", "--target", root, "--gate", gate, "--evidence", path.relative(root, artifact)]);
+  }
   zl(root, ["evidence", "record", "--target", root, "workflow closure evidence", "--command", "fixture", "--result", "passed", "--writeback", ".planning/issues/workflow-closure.md"]);
+  const beforeAcceptance = zl(root, ["workflow", "completion-check", "--target", root], { expectedStatus: 1 });
+  assertIncludes("interactive completion requires acceptance", beforeAcceptance.output, "FAIL authorization");
+  const beforeState = JSON.parse(read(statePath));
+  if (beforeState.status === "complete") addIssue("completion check read-only", "completion-check changed status before user acceptance");
+  else evidence.push("completion-check remained read-only before acceptance");
+  zl(root, ["workflow", "accept", "--target", root, "--source", "user-message", "--request", "fixture user accepts current workflow"]);
   const completion = zl(root, ["workflow", "completion-check", "--target", root]);
-  assertIncludes("completion allowed", completion.output, "completion allowed");
+  assertIncludes("completion eligible", completion.output, "completion eligible");
+  const eligibleState = JSON.parse(read(statePath));
+  if (eligibleState.status === "complete") addIssue("completion eligibility read-only", "completion-check set status complete");
+  else evidence.push("eligible completion-check did not mutate status");
+  zl(root, ["workflow", "complete", "--target", root]);
+  const completedState = JSON.parse(read(statePath));
+  if (completedState.status !== "complete") addIssue("workflow complete", "explicit workflow complete did not set complete status");
+  else evidence.push("explicit workflow complete set complete status");
 }
 
 function scenarioNewProject() {

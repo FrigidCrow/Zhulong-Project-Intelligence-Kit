@@ -17,6 +17,17 @@ test("normalizes a direct command without mutating input", () => {
   assert.deepEqual(input, ["--target", "/tmp/project"]);
 });
 
+test("workflow aliases never infer user-message origin", () => {
+  assert.deepEqual(
+    normalizeArgv(["--target", ".", "investigate"], "/usr/local/bin/zl-debug"),
+    ["workflow", "run", "debug", "--target", ".", "investigate"],
+  );
+  assert.deepEqual(
+    normalizeArgv(["--target", ".", "MVP4.1", "--authorization", "goal-1"], "/usr/local/bin/zl-execute-phase"),
+    ["workflow", "run", "execute-phase", "--target", ".", "MVP4.1", "--authorization", "goal-1"],
+  );
+});
+
 test("parses RAG backend values and boolean flags", () => {
   assert.deepEqual(parseArgs(["init", "--rag", "none", "--force"]), {
     command: "init",

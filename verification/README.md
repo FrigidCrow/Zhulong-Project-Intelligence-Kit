@@ -4,8 +4,9 @@
 
 验证重点包括：
 
-- incomplete workflow 必须被 `zl-completion-check` 阻断。
-- complete workflow 必须通过 codebase、docs、graph、plan、implementation、verification、evidence、writeback gate。
+- incomplete workflow 必须被 `zl-completion-check` 阻断；该检查前后 workflow status 不变。
+- eligible workflow 必须通过 codebase、docs、graph、privacy、interaction policy、当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback gate；只有显式 `workflow complete` 才改变状态。
+- 默认只执行当前 Skill；多 milestone 自动执行必须复用用户原始消息生成的有界授权，并证明越界与撤销会阻塞。
 - 默认 `reference + rag none` 不需要 GraphRAG、本地模型或外部 API key；`strict + rag local` 才启用本地 GraphRAG。
 - MVP3 的 golden、citation、trace、policy、help skills 必须能在 fixture 中复跑。
 - MVP4.0 的 docs sync、docs query、answer audit 主路径必须能在 fixture 中复跑。
@@ -37,6 +38,7 @@ npm run verify:project-profiles
 npm run verify:business-chain
 npm run verify:full-command-surface
 npm run verify:skills-usability
+npm run verify:workflow-governance
 npm run verify:workflow-closure
 npm run verify:cockpit-build
 npm run verify:docs-completeness
@@ -81,6 +83,8 @@ GitHub Actions 使用 `verify:quality` 运行不依赖本地服务的可重现 g
 `verify:skills-usability` 会把 Codex、Claude Code、GitHub Copilot 的 runtime pack 安装到临时目录，检查 33 个 skill/prompt 是否都能指向本地 CLI，并保留 local-only、no hidden heavy refresh、evidence writeback 约束。
 
 `verify:workflow-closure` 覆盖新项目第一次闭环、既有项目文档更新、`reference` 无文档风险放行、`strict` stale/privacy 阻断。
+
+`verify:workflow-governance` 覆盖 interactive 默认阻塞、当前用户消息只授权工作而不预先验收结果、任意 gate 字符串拒绝、当前 workflow artifact/evidence/writeback 绑定、completion-check 只读、显式 complete、多 MVP Goal 继承、范围外拒绝和撤销。
 
 `verify:cockpit-build` 检查 `zl-cockpit-build` 是否生成 `.planning/cockpit/index.html`、`cockpit-data.json` 和 `COCKPIT_REPORT.md`，并验证 cockpit 独立模板样例、`cockpit-viewmodel.v1`、Quality & Token Metrics、Graphify HTML 外部 URL 阻断、fallback 图、大图 `aggregated-community` 预览、RAG 缺失 `WAIVED_WITH_RISK` 和 `heavy refresh executed: no`。
 

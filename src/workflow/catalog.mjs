@@ -6,6 +6,8 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "milestone",
     handoffPrefix: "new-milestone",
     description: "Start a Zhulong milestone loop",
+    authorizationAction: "milestone",
+    requiredManualGates: ["plan"],
   },
   "spec-phase": {
     publicCommand: "$zl-spec-phase",
@@ -14,6 +16,9 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "spec",
     handoffPrefix: "spec-phase",
     description: "Clarify requirements and specification evidence",
+    authorizationAction: "spec",
+    requiresDecisionRecord: true,
+    requiredManualGates: ["plan", "verification"],
   },
   "discuss-phase": {
     publicCommand: "$zl-discuss-phase",
@@ -22,6 +27,9 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "discuss",
     handoffPrefix: "discuss-phase",
     description: "Discuss decisions, unknowns, and implementation options",
+    authorizationAction: "discuss",
+    requiresDecisionRecord: true,
+    requiredManualGates: ["verification"],
   },
   "ui-phase": {
     publicCommand: "$zl-ui-phase",
@@ -30,6 +38,9 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "ui",
     handoffPrefix: "ui-phase",
     description: "Design and validate UI implementation context",
+    authorizationAction: "ui",
+    requiresDecisionRecord: true,
+    requiredManualGates: ["plan", "verification"],
   },
   debug: {
     publicCommand: "$zl-debug",
@@ -38,6 +49,8 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "debug",
     handoffPrefix: "debug",
     description: "Systematic debugging",
+    authorizationAction: "debug_fix",
+    requiredManualGates: ["plan", "implementation", "verification"],
   },
   "plan-phase": {
     publicCommand: "$zl-plan-phase",
@@ -46,6 +59,8 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "plan",
     handoffPrefix: "plan-phase",
     description: "Phase planning",
+    authorizationAction: "plan",
+    requiredManualGates: ["plan", "verification"],
   },
   "execute-phase": {
     publicCommand: "$zl-execute-phase",
@@ -54,6 +69,8 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "execute",
     handoffPrefix: "execute-phase",
     description: "Phase execution",
+    authorizationAction: "execute",
+    requiredManualGates: ["plan", "implementation", "verification"],
   },
   "code-review": {
     publicCommand: "$zl-code-review",
@@ -62,6 +79,8 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "review",
     handoffPrefix: "code-review",
     description: "Code review",
+    authorizationAction: "review",
+    requiredManualGates: ["verification"],
   },
   "verify-work": {
     publicCommand: "$zl-verify-work",
@@ -70,6 +89,8 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "verify",
     handoffPrefix: "verify-work",
     description: "Work verification",
+    authorizationAction: "verify",
+    requiredManualGates: ["verification"],
   },
   "complete-milestone": {
     publicCommand: "$zl-complete-milestone",
@@ -78,5 +99,7 @@ export const WORKFLOW_COMMANDS = {
     packetKind: "complete",
     handoffPrefix: "complete-milestone",
     description: "Complete and archive a milestone loop",
+    authorizationAction: "complete_milestone",
+    requiredManualGates: ["verification"],
   },
 };

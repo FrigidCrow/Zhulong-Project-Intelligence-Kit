@@ -162,7 +162,7 @@ verification/reports/developer-audit-summary.md
 | `zl-spec-phase` | 生成 native workflow state / handoff |
 | `zl-discuss-phase` | 生成 native workflow state / handoff |
 | `zl-ui-phase` | 生成 native workflow state / handoff；greenfield landing 为 `create/full`，自然演进为 `evolve/constrained`，成熟设计为 `preserve/audit-only`，Dashboard 为 `system/disabled`；用户请求覆盖 manifest，manifest 覆盖自动判断 |
-| `zl-debug` | 生成 native workflow state / handoff |
+| `zl-debug` | 调查/分析默认 diagnose-only；显式 fix 或匹配 Goal 才允许实现 |
 | `zl-plan-phase` | 生成 native workflow state / handoff |
 | `zl-execute-phase` | 生成 native workflow state / handoff |
 | `zl-code-review` | 生成 native workflow state / handoff |
@@ -170,10 +170,15 @@ verification/reports/developer-audit-summary.md
 | `zl-complete-milestone` | 生成 native workflow state / handoff |
 | `zl-workflow-run` | 通用 workflow 入口 |
 | `zl-workflow-status` | 输出 gate 状态 |
-| `zl-workflow-continue` | 标记人工 gate |
+| `zl-workflow-continue` | 只接受当前 workflow 的类型化 plan / implementation / verification artifact，不接受任意字符串 |
 | `zl-workflow-audit` | 输出失败原因和下一条命令 |
 | `zl-gate-check` | gate 完整时通过 |
-| `zl-completion-check` | 完成前硬检查 |
+| `zl-completion-check` | 只读判断完成资格，不改变 workflow 状态 |
+| `zl workflow complete` | 所有 gate 通过且有当前工作授权、结果验收或匹配 Goal 时，显式写入 complete |
+| `zl workflow authorize` | 将用户自然语言的多 milestone 描述写成带 objective 与 digest 的结构化有界授权 |
+| `zl workflow authorization-status` | 检查活动授权、范围和停止条件 |
+| `zl workflow permission-check` | 在 Goal child 中消费 dependencies/commit/push/merge/release 权限，未授权时非零退出 |
+| `zl workflow revoke` | 撤销授权，后续 child workflow 必须停止 |
 
 ## 4. 质量脚本覆盖
 
@@ -186,6 +191,7 @@ npm run verify:integration
 npm run verify:full-command-surface
 npm run verify:skills-usability
 npm run verify:taste-adapter
+npm run verify:workflow-governance
 npm run verify:workflow-closure
 npm run verify:cockpit-build
 npm run verify:docs-completeness
@@ -241,7 +247,14 @@ verify:docs-completeness
 - `zl-policy-check` 输出 PASS
 - `zl-rag-golden-run` 至少 1 条 golden PASS
 - `zl-trace-audit` 输出 PASS
-- `zl-completion-check` 对完整 fixture 输出 `completion allowed`
+- `zl-completion-check` 对完整 fixture 输出 `completion eligible`，并且检查前后 workflow status 不变
+- `zl workflow complete` 只有在当前工作的用户授权、结果验收或 Goal、类型化 artifact、绑定 evidence/writeback 和结构化决策通过时才写入 `complete`
+- workflow alias 不自动注入用户来源；结构化 Goal child 的 objective 或 digest 不匹配时 authorization gate 失败，legacy milestone-only grant 不允许修改型 action
+- Taste 路由端到端覆盖 create/full、evolve/constrained、preserve/audit-only、system/disabled 和用户 override，不以空模板字段存在代替行为验证
+- 普通“分析/修复/规划”请求只通过 authorization gate，不能提前通过 acceptance gate；明确要求“完成/关闭”或后续用户验收才可通过
+- interactive fixture 在没有当前用户确认时必须阻塞；历史 evidence、任意 gate 字符串和代理自报完成不能通过
+- 多 MVP fixture 必须复用同一个 authorization ID，允许范围内 milestone 自动推进，范围外和撤销后的 milestone 阻塞
+- `spec`、`discuss`、`ui` 的重大 open question 或 contradiction 必须阻塞完成
 - `verify:skills-usability` 证明 33 个 runtime skill/prompt 可用
 - `verify:cockpit-build` 证明 project cockpit 独立模板、假数据样例和 `cockpit-viewmodel.v1` 可用，不触发 GraphRAG/Graphify 重刷新，并能处理 Graphify HTML、fallback 图、大图聚合和 RAG 缺失风险
 - `verify:docs-completeness` 证明命令手册 74 个独立锚点和 README 跳转完整

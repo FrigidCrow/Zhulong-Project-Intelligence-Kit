@@ -94,6 +94,7 @@ const BOOLEAN_FLAGS = new Set([
   "explain",
   "strict",
   "allow-external-rag",
+  "accept-completion",
   "interactive",
   "no-interactive",
 ]);
