@@ -9,13 +9,16 @@ Treat all user text after `$zl-ui-phase` as `ZL_ARGS`.
 
 ## Required Flow
 
-1. Run `{{ZL_CLI}} workflow run ui-phase --target "$PWD" "<ZL_ARGS>"`.
+1. Run `{{ZL_CLI}} workflow run ui-phase --target "$PWD" "<ZL_ARGS>"`. For an
+   explicit user override, pass `--design-strategy <mode>` and/or
+   `--taste <enabled|disabled>`.
 2. Read the generated context packet and handoff under `.planning/context/`.
 3. Follow `core/workflows/ui-phase.md`.
 4. Read `{{ZL_KIT_ROOT}}/core/design/taste-adapter.md`, the project manifest,
    dependency manifest, design evidence, tokens, components, and existing
-   screens. Classify the surface as `preserve`, `evolve`, `create`, or `system`.
-5. Record a `Frontend Design Decision` before implementation. In `preserve`,
+   screens. Verify the generated `preserve`, `evolve`, `create`, or `system`
+   decision against that evidence; do not replace it silently.
+5. Complete the generated `Frontend Design Decision` before implementation. In `preserve`,
    do not add fonts, palettes, radius systems, component/icon libraries, or
    motion dependencies without explicit approval. Taste is bundled; do not ask
    the user to install `design-taste-frontend` separately.

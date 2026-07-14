@@ -5,6 +5,7 @@ Zhulong Project Intelligence Kit，文档缩写 **Zhulong**，把 AI coding runt
 ```mermaid
 flowchart LR
   R["Codex / Claude Code / GitHub Copilot"] --> C["zl-* CLI"]
+  A["User intent / bounded Goal grant"] --> C
   C --> W["Workflow guard"]
   C --> K["Document Policy / RAG Backend"]
   C --> G["Graphify code map"]
@@ -36,13 +37,27 @@ Workflow guard 会检查：
 - codebase
 - docs
 - graph
+- interaction policy
+- current-workflow execution authorization
+- later result acceptance or bounded Goal authorization
+- structured decisions and open questions
 - plan
 - implementation
 - verification
 - evidence
 - writeback
 
-任一 gate 不通过，`zl-completion-check` 就不能通过。
+任一 gate 不通过，`zl-completion-check` 就不能通过。该命令只刷新审计并报告 `completion eligible` 或 `completion blocked`，不把 workflow 写成完成；状态变更由显式的 `zl workflow complete` 负责。
+
+### Authorization and Goal state
+
+默认策略是 `interactive + auto_advance: false`。一个 workflow 推荐后续 `zl-*` 命令不构成执行授权，debug 的“调查/分析/诊断”也不构成修复授权。当前用户消息授权的是它明确要求的当前工作，不会预先接受尚未生成的产物；普通交互必须在产物完成后再绑定一次用户验收，原始消息明确要求完成/关闭时除外。多阶段自动推进则使用来自用户原始消息的有界 Goal 授权。
+
+自然语言多 MVP 授权先被编译为项目内的结构化 milestone contract，再保存为 `.planning/goals/<authorization-id>/AUTHORIZATION.json`，活动指针位于 `.planning/goals/ACTIVE.json`。每个合同保存 exact objective、actions、allowed paths、acceptance、权限与 digest；child workflow 必须使用 exact objective，并携带授权 ID、milestone 与 digest。只有 milestone 名称的旧 grant 限制为非修改型 workflow。依赖、commit、push、merge、release 还要通过 `zl workflow permission-check` 消费权限，超出范围时 fail closed。
+
+本地 CLI 无法密码学验证聊天消息作者，因此 workflow alias 不自动注入 `--source user-message`。该标记只能由直接响应当前用户消息的 runtime 按共同合同附加，并在状态中作为 runtime assertion 审计；agent-selected downstream workflow 不得附加。确定性 kernel 负责合同、evidence、acceptance 与 completion 的 artifact 约束，消息来源边界仍由 Codex、Claude Code、Copilot 的 runtime instruction 层负责。
+
+workflow 的 plan、implementation、verification 不再接受任意字符串，而是要求 `.planning/workflows/<workflow-id>/` 下与当前 workflow ID、证据类型、完成状态和内容摘要绑定的类型化 artifact。durable evidence 与 writeback 同样必须绑定当前 workflow，避免历史文件替当前任务通过 gate。
 
 ## 2. Document Policy / RAG Backend Layer
 
@@ -201,6 +216,8 @@ zl-runtime-install --runtime github-copilot --dest .github/prompts
 ```
 
 可信边界仍然是本地 `zl-*` 命令和 `.planning/` artifact。
+
+安装器会为三种 runtime 注入同一份授权合同：默认只执行当前 Skill；“建议下一步”不得自动串行调用；debug 默认 diagnose-only；用户明确要求多个 milestone 自动执行时，创建并继承一个有界授权；代理自写 evidence 不能冒充用户确认。
 
 ## 7. Developer Audit Layer
 

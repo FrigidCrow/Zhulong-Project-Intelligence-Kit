@@ -86,7 +86,7 @@ const LOGICAL_NAMES = {
   "zl-workflow-continue": "人工 gate 标记",
   "zl-workflow-audit": "workflow 审计",
   "zl-gate-check": "gate 检查",
-  "zl-completion-check": "完成前检查",
+  "zl-completion-check": "只读完成资格检查",
   "zl-cockpit-build": "项目驾驶舱生成",
 };
 
@@ -153,7 +153,7 @@ const OUTPUTS = {
   "zl-workflow-continue": ".planning/workflows/<id>/WORKFLOW_STATE.md/json",
   "zl-workflow-audit": ".planning/workflows/<id>/WORKFLOW_AUDIT.md",
   "zl-gate-check": "stdout gate result",
-  "zl-completion-check": "stdout completion allowed/blocked",
+  "zl-completion-check": "stdout completion eligible/blocked（不修改状态）",
   "zl-cockpit-build": ".planning/cockpit/index.html, cockpit-data.json, COCKPIT_REPORT.md, assets/",
 };
 
@@ -262,9 +262,9 @@ zl-mode-set ${target} graph-lite`,
     "zl-runtime-status": `zl-runtime-status --runtime codex --dest ~/.codex/skills`,
     "zl-context-debug": `zl-context-debug ${target} "退款上限与业务规则不一致"`,
     "zl-context-execute": `zl-context-execute ${target} "实现退款上限检查"`,
-    "zl-workflow-run": `zl-workflow-run ${target} debug "生产审批金额异常"`,
+    "zl-workflow-run": `zl-workflow-run ${target} debug "生产审批金额异常" --source user-message\nzl-workflow-run ${target} execute-phase "<contract objective>" --authorization <id> --milestone MVP4.1 --contract-digest <digest>`,
     "zl-workflow-status": `zl-workflow-status ${target}`,
-    "zl-workflow-continue": `zl-workflow-continue ${target} --gate plan --evidence "PLAN.md reviewed"`,
+    "zl-workflow-continue": `zl-workflow-continue ${target} --gate plan --evidence .planning/workflows/<id>/PLAN.md`,
     "zl-workflow-audit": `zl-workflow-audit ${target}`,
     "zl-gate-check": `zl-gate-check ${target}`,
     "zl-completion-check": `zl-completion-check ${target}`,
@@ -299,13 +299,15 @@ function paramsFor(command) {
   if (command === "zl-graph-impact") params.push("--files <paths>: 逗号分隔的变更文件。");
   if (command === "zl-evidence-record") params.push("--command <cmd>: 记录验证命令。", "--result <text>: 记录验证结果。", "--source <paths>: 记录依据来源。", "--writeback <file>: 回写到工作记录。");
   if (command === "zl-runtime-install" || command === "zl-runtime-status") return ["--runtime codex|claude-code|github-copilot: 目标 runtime。", "--dest <dir>: 安装或检查目录。", "--force: 安装时覆盖已有文件。"];
-  if (command === "zl-workflow-continue") params.push("--gate plan|implementation|verification: 标记人工 gate。", "--evidence <text>: gate 证据。");
+  if (command === "zl-workflow-continue") params.push("--gate plan|implementation|verification: 标记当前 workflow 所需 gate。", "--evidence <path>: 当前 workflow 的类型化证据文件；不接受任意字符串。");
+  if (command === "zl-workflow-run") params.push("--source user-message: 仅由 runtime 在 Skill 直接响应当前用户消息时附加；alias 不会自动推断来源。", "--accept-completion: 只有原始消息明确要求完成/关闭时使用；否则等待后续用户验收。", "--authorization <id> --milestone <name> --contract-digest <digest>: Goal child 必须携带的结构化授权上下文，并使用合同中的精确 objective。", "--intent fix: debug 仅在用户明确要求修复时使用；默认 diagnose-only。");
   if (command.startsWith("zl-policy") || command.startsWith("zl-privacy") || command === "zl-preflight" || command === "zl-graph-freshness") params.push("--strict: 以严格 profile 语义处理失败。");
   return params;
 }
 
 function purposeFor(command) {
   if (command === "zl-ui-phase") return "读取项目设计证据，定义 UI 状态与数据合同，并在 preserve、evolve、create、system 间选择条件化 Taste 权限。";
+  if (command === "zl-debug") return "默认只调查和验证根因；只有用户明确要求修复，或当前 milestone 有匹配的 debug_fix Goal 授权时才实施。";
   const category = categoryFor(command);
   if (category === "接入 / 初始化") return "把 Zhulong 本地 intelligence layer 接入项目，或检查接入状态是否完整。";
   if (category === "Codebase") return "建立或读取代码基线，让后续 AI 修改先知道项目结构、技术栈、测试入口和源码数量。";
@@ -316,7 +318,7 @@ function purposeFor(command) {
   if (category === "Policy / Privacy") return "锁定并验证 local-only、offline、policy 和 license 风险边界。";
   if (category === "Runtime / Skills") return "让 Codex、Claude Code、GitHub Copilot 能通过同一套 Zhulong 命令工作。";
   if (category === "Workflow 主循环") return "面向日常开发的公开工作流入口，内部会写 context、handoff、workflow facade 和 gate 状态。";
-  if (category === "Workflow Guard") return "检查 workflow 是否具备 plan、implementation、verification、evidence、writeback 等完成条件。";
+  if (category === "Workflow Guard") return "检查当前工作授权、结果验收或 Goal、结构化决策、类型化 plan/implementation/verification、绑定 evidence/writeback 等完成条件。";
   if (category === "可视化 / Cockpit") return "把 Graphify、GraphRAG/RAG、workflow、quality、privacy 和 evidence 状态聚合成本地静态驾驶舱。";
   return "根据场景给出下一步 Zhulong 命令建议或状态入口。";
 }
@@ -330,7 +332,7 @@ function whenFor(command) {
   if (command === "zl-next") return "不知道当前该运行哪条命令，或接手一个已有项目时。";
   if (command === "zl-preflight") return "进入 debug、plan、execute 前，确认 RAG/Graphify 是否 stale。";
   if (command === "zl-refresh-run") return "只有 refresh plan 或 strict policy 明确要求刷新时。";
-  if (command === "zl-completion-check") return "AI 或开发者准备声明任务完成前。";
+  if (command === "zl-completion-check") return "AI 或开发者准备声明任务完成前；本命令只检查资格，不会写入 complete。";
   if (command === "zl-cockpit-build") return "需要给自己或 leader 看项目健康度、Graphify 影响面、RAG 证据链和质量闭环状态时。";
   if (command.startsWith("zl-policy")) return "保密项目、交付前、或 `.planning/config.json` 有变更后。";
   if (command.startsWith("zl-runtime")) return "需要在 Codex、Claude Code、GitHub Copilot 中调用 Zhulong skills/prompts 时。";
@@ -352,7 +354,9 @@ function defaultBehaviorFor(command) {
   if (command === "zl-refresh-run") return "显式刷新命令，会根据参数执行 RAG、Graphify 或两者，并更新 REFRESH_STATE。";
   if (command.startsWith("zl-policy")) return "只做轻量 policy/privacy/preflight/citation/freshness 检查，不触发 GraphRAG index 或 Graphify build。";
   if (command === "zl-cockpit-build") return "读取 `templates/cockpit/index.template.html`，注入目标项目的本地 `cockpit-data.json` 和稳定 `cockpit-viewmodel.v1`，生成带搜索、节点详情、legend 过滤和大图聚合的静态 HTML；默认不联网、不调用外部 LLM、不刷新 Graphify/RAG。稳定展示样例见 `templates/cockpit/sample.html`。";
-  if (categoryFor(command) === "Workflow 主循环") return "启动 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no。";
+  if (command === "zl-debug") return "默认 requestIntent=diagnose-only，不要求也不允许 implementation gate；显式 fix 或匹配 Goal 后才进入实施。";
+  if (command === "zl-completion-check") return "只刷新 gate/structure 审计并输出 completion eligible 或 blocked；不会写 complete。";
+  if (categoryFor(command) === "Workflow 主循环") return "启动当前 guarded workflow，写 context/handoff/facade，并输出 heavy refresh executed: no；不自动调用建议的下一 Skill。";
   return "读取本地项目状态并写入对应 `.planning/` 报告，不默认执行重刷新。";
 }
 
@@ -361,7 +365,7 @@ function failureFor(command) {
   if (command.startsWith("zl-docs") || command === "zl-ambiguity-audit" || command === "zl-structure-audit") return "常见失败：缺文档抽取、关键制品缺失，或 --strict 下发现不合规。按审计报告中的 artifact 路径补齐。";
   if (command.startsWith("zl-graph")) return "常见失败：`.planning/graphs/graph.json` 或 `GRAPH_REPORT.md` 缺失。先运行 `zl-graph-build --target \"$PWD\" --run`。";
   if (command.startsWith("zl-policy")) return "常见失败：offline lock 缺失、配置漂移、外部 provider、API key 形态或 stale 在 strict profile 下被阻断。";
-  if (command.startsWith("zl-workflow") || command === "zl-completion-check" || command === "zl-gate-check") return "常见失败：缺 plan / implementation / verification / evidence / writeback，按 WORKFLOW_AUDIT.md 的 next command 补齐。";
+  if (command.startsWith("zl-workflow") || command === "zl-completion-check" || command === "zl-gate-check") return "常见失败：缺当前工作授权、缺结果验收或 Goal、存在重大开放决策，或缺当前 workflow 的类型化 artifact、evidence/writeback。按 WORKFLOW_AUDIT.md 补齐；不要用任意字符串或历史文件绕过。";
   if (command.startsWith("zl-runtime")) return "常见失败：目标目录缺文件或模板未渲染。重跑 install 并检查 runtime status。";
   if (command === "zl-cockpit-build") return "常见失败：真实项目 Graphify/RAG artifact 缺失会显示 WAIVED_WITH_RISK。先看 `templates/cockpit/sample.html` 确认目标形态；图过大时 cockpit 会自动使用 aggregated-community 预览；需要最新图时显式运行 `zl-graph-build --target \"$PWD\" --run`。";
   return "常见失败：目标项目未初始化或缺少 `.planning/`。先运行 `zl-init --target \"$PWD\"`。";

@@ -1,24 +1,28 @@
 # zl-debug
 
-Purpose: diagnose and fix a defect with project evidence, code-map impact,
-focused verification, and durable writeback.
+Purpose: diagnose a defect and, only when explicitly authorized, fix it with
+project evidence, code-map impact, focused verification, and durable writeback.
 
 Reference design: `$gsd-debug`
 
 Required flow:
 
-1. Reproduce or characterize the bug. If reproduction is impossible, record the
+1. Follow `core/workflows/authorization.md`. The default intent is
+   `diagnose-only`. Implement only when the user explicitly requests a fix or a
+   matching bounded-autonomy Goal permits `debug_fix` for the current scope.
+2. Reproduce or characterize the bug. If reproduction is impossible, record the
    missing condition instead of guessing.
-2. Read relevant issue/debug records and current state.
-3. Establish expected behavior from the request, issue records, source, tests,
+3. Read relevant issue/debug records and current state.
+4. Establish expected behavior from the request, issue records, source, tests,
    and available documents. Do not require document evidence in `rag none` mode.
-4. Use Graphify/code-map data and source search to identify likely entry points,
+5. Use Graphify/code-map data and source search to identify likely entry points,
    call chains, dependencies, and blast radius.
-5. Form a root-cause hypothesis, then verify it with direct source reads or
+6. Form a root-cause hypothesis, then verify it with direct source reads or
    focused commands.
-6. Implement the smallest change that resolves the confirmed root cause.
-7. Run focused verification and any regression checks appropriate to the change.
-8. Write cause, fix, tests, residual risks, and source evidence back to
+7. In diagnose-only mode, stop after the verified diagnosis. Otherwise implement
+   the smallest change that resolves the confirmed root cause.
+8. Run focused verification and any regression checks appropriate to the change.
+9. Write cause, fix if authorized, tests, residual risks, and source evidence back to
    `.planning/debug/`, `.planning/issues/`, or `.planning/evidence/`.
 
 Outputs:

@@ -75,12 +75,24 @@ function resolveEvidenceWritebacks(target, args, slugify) {
 function appendEvidenceWriteback(target, recordPath, evidencePath, details) {
   const section = `\n\n## Zhulong Evidence Writeback - ${details.generatedAt}\n\n`
     + `- Evidence: \`${path.relative(target, evidencePath)}\`\n`
+    + `- Workflow: ${details.workflowId || "Not recorded"}\n`
+    + `- Evidence type: ${details.evidenceType || "Not recorded"}\n`
     + `- Summary: ${details.summary}\n`
     + `- Command: ${details.command || "Not recorded"}\n`
     + `- Result: ${details.result || "Not recorded"}\n`
     + `- Risk: ${details.risk || "Not recorded"}\n`
     + `- Rollback: ${details.rollback || "Not recorded"}\n`;
   fs.appendFileSync(recordPath, section);
+}
+
+function activeWorkflowId(target) {
+  const activePath = path.join(target, ".planning", "workflows", "ACTIVE.json");
+  if (!fs.existsSync(activePath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(activePath, "utf8")).id || null;
+  } catch {
+    return null;
+  }
 }
 
 function readEvidenceTitle(filePath) {
@@ -119,11 +131,13 @@ export function createEvidenceCommand({ formatGraphStatus, markdownCell, slugify
     requireDir(target, "Target");
     const summary = args.summary || args.title || args._.slice(1).join(" ").trim() || "Manual evidence record";
     const generatedAt = new Date().toISOString();
+    const workflowId = args.workflow || args.workflowId || activeWorkflowId(target);
+    const evidenceType = args.type || "verification";
     const dir = evidenceDir(target);
     fs.mkdirSync(dir, { recursive: true });
     const sources = splitOptionList(args.source || args.sources);
     const outPath = uniqueEvidencePath(dir, summary, slugify);
-    const content = `# Evidence Record: ${summary}\n\nGenerated: ${generatedAt}\n\n## Scope\n\n- Phase: ${args.phase || "Not recorded"}\n- Issue/debug record: ${args.issue || args.debug || "Not recorded"}\n- Request: ${args.request || summary}\n\n## Specification Evidence\n\n${sources.length ? sources.map((source) => `- ${source}`).join("\n") : "- Not recorded"}\n\n## Code Map Evidence\n\n${formatGraphStatus(target)}\n\n## Verification\n\n- Command: ${args.recordCommand || "Not recorded"}\n- Result: ${args.result || args.status || "Not recorded"}\n\n## Remaining Risk\n\n${args.risk || "Not recorded"}\n\n## Rollback\n\n${args.rollback || "Not recorded"}\n\n## Follow-ups\n\n${args.followup ? `- [ ] ${args.followup}` : "- [ ] None recorded"}\n`;
+    const content = `# Evidence Record: ${summary}\n\nGenerated: ${generatedAt}\n\n## Scope\n\n- Workflow: ${workflowId || "Not recorded"}\n- Evidence type: ${evidenceType}\n- Phase: ${args.phase || "Not recorded"}\n- Issue/debug record: ${args.issue || args.debug || "Not recorded"}\n- Request: ${args.request || summary}\n\n## Specification Evidence\n\n${sources.length ? sources.map((source) => `- ${source}`).join("\n") : "- Not recorded"}\n\n## Code Map Evidence\n\n${formatGraphStatus(target)}\n\n## Verification\n\n- Status: ${args.result || args.status || "Not recorded"}\n- Command: ${args.recordCommand || "Not recorded"}\n- Result: ${args.result || args.status || "Not recorded"}\n\n## Remaining Risk\n\n${args.risk || "Not recorded"}\n\n## Rollback\n\n${args.rollback || "Not recorded"}\n\n## Follow-ups\n\n${args.followup ? `- [ ] ${args.followup}` : "- [ ] None recorded"}\n`;
     fs.writeFileSync(outPath, content);
     const index = writeEvidenceIndex(target, markdownCell);
     const writebacks = resolveEvidenceWritebacks(target, args, slugify);
@@ -135,6 +149,8 @@ export function createEvidenceCommand({ formatGraphStatus, markdownCell, slugify
         result: args.result || args.status,
         risk: args.risk,
         rollback: args.rollback,
+        workflowId,
+        evidenceType,
       });
     }
     console.log(`write ${outPath}`);

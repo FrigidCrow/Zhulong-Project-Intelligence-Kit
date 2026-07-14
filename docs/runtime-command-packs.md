@@ -8,6 +8,9 @@ Zhulong 的 runtime command pack 用来让 Codex、Claude Code、GitHub Copilot 
 - GSD 只作为参考设计，不作为用户命令面。
 - runtime pack 只生成技能或 prompt 文件。
 - 真正可信的执行和证据落在目标项目 `.planning/`。
+- 默认只执行当前 Skill；文本中的“建议下一步”不是执行授权。
+- `debug` 的调查、分析和诊断默认是 diagnose-only，明确要求修复或匹配 Goal 授权后才修改。
+- 用户可以用自然语言授权多个明确 milestone；runtime 将其编译为一个本地、可审计、可撤销的 bounded-autonomy Goal，而不是要求每个推进点重复审批。
 - 文档严格程度和 RAG 后端由项目第一次 `zl-init` 决定；真实终端可以直接运行 `zl-init --target "$PWD"` 进入向导，runtime skill 默认使用显式参数，避免等待输入。runtime skill 不会偷偷安装 RAG、切换外部 provider 或触发 GraphRAG index。
 
 推荐接入顺序：
@@ -145,10 +148,17 @@ zl-runtime-status --runtime github-copilot --dest .github/prompts
 安装渲染时，每个 Markdown skill / prompt 还会追加同一段 **Zhulong Local Runtime Contract**：
 
 - 指向本地 `bin/zl.mjs`。
+- 要求先读取 `core/workflows/authorization.md`。
+- 默认只运行当前 Skill；只有当前用户消息明确授权，或 workflow 绑定了匹配 milestone/action 的活动 Goal grant，才可以调用下一个 Skill。
+- workflow alias 不会自动附加用户来源；只有直接响应当前用户消息的 runtime 才能附加 `--source user-message`。它是 runtime assertion，不是密码学身份认证，也不等于提前验收结果；只有原消息明确要求完成/关闭时才附加 `--accept-completion`。
+- 调查和诊断默认不修改；自生成 evidence 不能充当 user acceptance。
+- 多 milestone 自动执行先把每个 MVP 描述写成结构化合同；每个 child 使用合同精确 objective，并继承 authorization ID、milestone 与 contract digest。依赖或 Git 发布动作还必须通过 `zl workflow permission-check`；越界、撤销或遇到重大开放决策时停止。
 - 默认 local-only，不把项目文档路由到外部 provider。
 - 默认 `reference + rag none` 可以不安装 GraphRAG；`strict + rag local` 需要用户显式准备本地 GraphRAG/Ollama 模型。
 - workflow 命令不得隐藏触发 heavy refresh；GraphRAG index、Graphify build、refresh-run 必须来自显式 `--run`、`--index` 或 `zl-refresh-run`。
 - meaningful verification 必须用 `zl-evidence-record` 和 `--writeback` 留证。
+
+授权合同保存在目标项目 `.planning/goals/`，不会依赖 Codex、Claude Code 或 Copilot 各自的隐藏会话状态。`zl workflow completion-check` 只读判断资格；`zl workflow complete` 才执行状态变更，因此 runtime 不能通过“先自写几段字符串、再跑 completion-check”把任务自行认证为完成。
 
 ### 内置 Taste Adapter
 

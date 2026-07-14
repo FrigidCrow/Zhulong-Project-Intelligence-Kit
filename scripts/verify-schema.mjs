@@ -113,6 +113,14 @@ function assertManifestShape() {
 }
 
 function assertSchemaDocs() {
+  const milestoneSchema = assertJsonObject(
+    "milestone contract schema",
+    path.join(kitRoot, "schemas", "milestone-contract.schema.json"),
+    ["$schema", "$id", "title", "type", "required", "properties"],
+  );
+  if (!milestoneSchema?.properties?.milestones?.items?.properties?.objective) {
+    addIssue("milestone contract schema missing objective contract");
+  }
   assertMarkdownSections("issue record schema", path.join(kitRoot, "schemas", "issue-record.schema.md"), [
     "Issue Record Schema",
   ]);
@@ -147,6 +155,14 @@ function assertWorkflowShape() {
     "updatedAt",
     "contextPacket",
     "handoff",
+    "interactionPolicy",
+    "authorizationRef",
+    "milestone",
+    "contractDigest",
+    "requestIntent",
+    "requestAuthorization",
+    "userAcceptance",
+    "decisions",
     "manualGates",
   ]);
   if (!state) return;
@@ -154,9 +170,14 @@ function assertWorkflowShape() {
   if (state.id !== active.id) addIssue(`workflow state id does not match ACTIVE.json: ${state.id} !== ${active.id}`);
   if (state.workflow !== "debug") addIssue(`workflow state expected debug workflow, got: ${state.workflow}`);
   if (state.status !== "running") addIssue(`workflow state expected running after manual gates, got: ${state.status}`);
-  for (const gate of ["plan", "implementation", "verification"]) {
-    if (!state.manualGates?.[gate]?.evidence) addIssue(`workflow manual gate missing evidence: ${gate}`);
+  for (const gate of ["plan", "verification"]) {
+    const reference = state.manualGates?.[gate];
+    if (!reference?.path || !reference?.sha256 || reference.workflowId !== state.id) {
+      addIssue(`workflow manual gate missing typed current-workflow evidence: ${gate}`);
+    }
   }
+  if (state.requestIntent !== "diagnose-only") addIssue(`debug workflow expected diagnose-only intent, got: ${state.requestIntent}`);
+  if (state.manualGates?.implementation) addIssue("diagnose-only workflow unexpectedly marked implementation gate");
 
   assertExists("workflow state markdown", path.join(workflowRoot, "WORKFLOW_STATE.md"));
   assertExists("workflow plan record", path.join(workflowRoot, "PLAN.md"));
@@ -237,9 +258,12 @@ zl(["workflow", "run", "debug", "--target", projectRoot, "schema validation smok
 const earlyAudit = zl(["workflow", "audit", "--target", projectRoot], { allowFailure: true });
 assertOutputIncludes("workflow audit before gates", earlyAudit.output, "workflow guard FAIL");
 assertOutputIncludes("workflow audit next command", earlyAudit.output, "next plan:");
-zl(["workflow", "continue", "--target", projectRoot, "--gate", "plan", "--evidence", ".planning/workflows/*/PLAN.md reviewed"]);
-zl(["workflow", "continue", "--target", projectRoot, "--gate", "implementation", "--evidence", "schema fixture files generated"]);
-zl(["workflow", "continue", "--target", projectRoot, "--gate", "verification", "--evidence", "verify:schema structural checks"]);
+const activeWorkflow = JSON.parse(read(path.join(projectRoot, ".planning", "workflows", "ACTIVE.json")));
+for (const [gate, name] of [["plan", "PLAN.md"], ["verification", "VERIFICATION.md"]]) {
+  const artifact = path.join(projectRoot, ".planning", "workflows", activeWorkflow.id, name);
+  write(artifact, `# ${gate}: ${activeWorkflow.id}\n\nStatus: complete\n\nEvidence:\n\n- schema fixture passed\n`);
+  zl(["workflow", "continue", "--target", projectRoot, "--gate", gate, "--evidence", path.relative(projectRoot, artifact)]);
+}
 zl([
   "evidence",
   "record",
@@ -259,6 +283,7 @@ zl([
   "--rollback",
   "remove fixture temp directory",
 ]);
+zl(["workflow", "accept", "--target", projectRoot, "--source", "user-message", "--request", "schema fixture accepted"]);
 const finalAudit = zl(["workflow", "audit", "--target", projectRoot]);
 assertOutputIncludes("workflow audit after evidence", finalAudit.output, "workflow guard PASS");
 

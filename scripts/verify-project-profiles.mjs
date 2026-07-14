@@ -20,6 +20,11 @@ function read(filePath) {
   return fs.readFileSync(filePath, "utf8");
 }
 
+function write(filePath, text) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, text);
+}
+
 function writeJson(filePath, value) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
@@ -101,13 +106,10 @@ function completeCoreWorkflow(root, profileName) {
   const request = `${profileName} project profile`;
   const started = zl(root, `${profileName} workflow start`, ["workflow", "run", "--target", root, "new-milestone", request]);
   assertIncludes(`${profileName} no hidden refresh`, started.output, "heavy refresh executed: no");
-  for (const [gate, gateEvidence] of [
-    ["plan", "profile plan accepted"],
-    ["implementation", "profile implementation completed"],
-    ["verification", "profile tests passed"],
-  ]) {
-    zl(root, `${profileName} gate ${gate}`, ["workflow", "continue", "--target", root, "--gate", gate, "--evidence", gateEvidence]);
-  }
+  const active = JSON.parse(read(path.join(root, ".planning", "workflows", "ACTIVE.json")));
+  const planPath = path.join(root, ".planning", "workflows", active.id, "PLAN.md");
+  write(planPath, `# Plan: ${active.id}\n\nStatus: complete\n\nEvidence:\n\n- profile fixture planned\n`);
+  zl(root, `${profileName} gate plan`, ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", path.relative(root, planPath)]);
   zl(root, `${profileName} evidence`, [
     "evidence", "record", "--target", root,
     `${profileName} project profile verified`,
@@ -115,8 +117,9 @@ function completeCoreWorkflow(root, profileName) {
     "--result", "passed",
     "--writeback", ".planning/issues/project-profile.md",
   ]);
+  zl(root, `${profileName} acceptance`, ["workflow", "accept", "--target", root, "--source", "user-message", "--request", "profile fixture accepted"]);
   const completion = zl(root, `${profileName} completion`, ["workflow", "completion-check", "--target", root]);
-  assertIncludes(`${profileName} completion allowed`, completion.output, "completion allowed");
+  assertIncludes(`${profileName} completion eligible`, completion.output, "completion eligible");
   return completion;
 }
 

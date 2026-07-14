@@ -1476,10 +1476,14 @@ function runZl(root, label, args, bucket, commands) {
 }
 
 function completeWorkflow(root, commands) {
-  runZl(root, "zl-workflow-continue-plan", ["workflow", "continue", "--target", root, "--gate", "plan", "--evidence", "audit plan accepted"], "zl_dev_workflow_ms", commands);
-  runZl(root, "zl-workflow-continue-implementation", ["workflow", "continue", "--target", root, "--gate", "implementation", "--evidence", "code changed to 50000"], "zl_dev_workflow_ms", commands);
-  runZl(root, "zl-workflow-continue-verification", ["workflow", "continue", "--target", root, "--gate", "verification", "--evidence", "npm test passed"], "zl_dev_workflow_ms", commands);
+  const active = JSON.parse(fs.readFileSync(path.join(root, ".planning", "workflows", "ACTIVE.json"), "utf8"));
+  for (const [gate, name] of [["plan", "PLAN.md"], ["verification", "VERIFICATION.md"]]) {
+    const artifact = path.join(root, ".planning", "workflows", active.id, name);
+    writeText(artifact, `# ${gate}: ${active.id}\n\nStatus: complete\n\nEvidence:\n\n- audit fixture passed\n`);
+    runZl(root, `zl-workflow-continue-${gate}`, ["workflow", "continue", "--target", root, "--gate", gate, "--evidence", path.relative(root, artifact)], "zl_dev_workflow_ms", commands);
+  }
   runZl(root, "zl-evidence-record", ["evidence", "record", "--target", root, "代理承認上限を50,000円へ変更", "--command", "npm test", "--result", "passed", "--source", "docs/specs/01_proxy_approval.md", "--writeback", ".planning/issues/CR-017_proxy_limit.md"], "zl_guard_ms", commands);
+  runZl(root, "zl-workflow-accept", ["workflow", "accept", "--target", root, "--source", "user-message", "--request", "development audit fixture accepted"], "zl_guard_ms", commands);
   runZl(root, "zl-completion-check", ["workflow", "completion-check", "--target", root], "zl_guard_ms", commands);
 }
 
@@ -1523,7 +1527,7 @@ function benchmarkZlScenario(root, scenario, withIntelligence) {
   for (const command of commands) buckets[command.bucket] = (buckets[command.bucket] || 0) + command.duration_ms;
   buckets.zl_intelligence_layer_ms = (buckets.zl_graphify_ms || 0) + (buckets.zl_graphrag_ms || 0);
   buckets.zl_total_ms = commands.reduce((sum, item) => sum + item.duration_ms, 0);
-  const completionOk = commands.some((item) => /completion allowed/.test(`${item.stdout_sample}\n${item.stderr_sample}`));
+  const completionOk = commands.some((item) => /completion eligible/.test(`${item.stdout_sample}\n${item.stderr_sample}`));
   const testOk = test.status === 0;
   const evidenceOk = fs.existsSync(path.join(root, ".planning", "evidence", "INDEX.md"));
   let status = testOk && completionOk ? "PASS" : "FAIL";

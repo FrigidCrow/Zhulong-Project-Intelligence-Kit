@@ -129,6 +129,16 @@ zl-preflight --target "$PWD"
 zl-completion-check --target "$PWD"
 ```
 
+## 交互默认与有界自动执行
+
+Zhulong 默认采用 `interactive` 工作流语义：当前 Skill 只处理用户当前请求，输出“建议下一步”不等于获准执行下一步。`调查`、`分析`、`诊断` 默认只产出根因和证据；只有用户明确说“修复”“实现”“继续执行”或当前任务附带匹配的有界 Goal 授权时，才可以修改代码或跨 workflow 推进。
+
+用户可以直接用自然语言授权一组明确的 MVP，例如“自动执行 MVP4.0 到 MVP4.7，完成后停止”。Runtime 会把每个 MVP 的描述编译为保存在 `.planning/goals/` 的结构化合同；child workflow 必须使用合同中的精确 objective，并携带授权 ID、milestone 与 contract digest。执行、修复、完成和推进不接受只有 milestone 名称的旧式 grant；依赖、commit、push、merge、release 还要通过权限检查。
+
+Workflow alias 不会自动把调用者标记为用户。只有直接响应当前用户消息的 runtime 才能附加 `--source user-message`；这是跨 runtime 的可审计语言合同，不是密码学身份认证。代理自行选择的下游 Skill 不得附加该标记。
+
+当前用户消息只授权它明确要求的工作，不会提前接受尚未生成的结果。`zl-completion-check` 现在只判断当前 workflow 是否具备完成资格，不改变状态。只有显式的 `zl workflow complete`，并且当前 workflow 的类型化产物、证据、writeback 和后续用户验收或 Goal 授权全部通过时，才会写入 `complete`。若原始消息明确同时要求“完成/关闭”，runtime 才可记录预先的完成意图。完整语义见[工作流授权合同](core/workflows/authorization.md)。
+
 ## CLI 机器可读契约
 
 所有顶层命令都接受统一输出参数：
@@ -166,7 +176,7 @@ zhulong completion fish
 | 暧昧审计 | 检查多语言需求与验收条件中的不可验证表达 | [`zhulong ambiguity audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-ambiguity-audit) |
 | 结构审计 | 校验关键 `.planning/` 制品的 mini-schema | [`zhulong structure audit`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-structure-audit) |
 | 下一步发现 | 根据项目状态推荐 2-3 条命令 | [`zhulong next`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-next) |
-| 完成门禁 | 在任务完成前检查证据、风险和工作流状态 | [`zhulong workflow completion-check`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-completion-check) |
+| 完成门禁 | 只读检查完成资格；显式 complete 才改变状态 | [`zhulong workflow completion-check`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-completion-check) |
 | 项目驾驶舱 | 生成本地静态项目状态与证据页面 | [`zhulong cockpit build`](https://frigidcrow.github.io/Zhulong-Project-Intelligence-Kit/docs/commands.html#cmd-zl-cockpit-build) |
 
 ## 工作模式
@@ -183,7 +193,7 @@ zhulong completion fish
 
 ## 条件化 Taste 前端设计
 
-Zhulong 内置经过约束的 Taste Adapter，用于减少新前端的模板化 AI 味，但 Taste 不是所有 UI 的默认美术风格。`$zl-ui-phase` 会先读取品牌资料、设计 token、组件库、依赖和现有页面，再记录 Frontend Design Decision：
+Zhulong 内置经过约束的 Taste Adapter，用于减少新前端的模板化 AI 味，但 Taste 不是所有 UI 的默认美术风格。`$zl-ui-phase` 会从 manifest、请求、依赖与有界项目路径证据实际计算 Frontend Design Decision；runtime 再用品牌资料和现有页面补充判断，低置信度时只询问一个方向问题：
 
 | 模式 | 场景 | Taste 权限 |
 | --- | --- | --- |

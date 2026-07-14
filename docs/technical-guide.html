@@ -208,7 +208,8 @@ zl-codebase-status --target "$PWD"</code></pre>
   -> write .planning/context/handoffs/*-HANDOFF.md
   -> write .planning/workflows/&lt;id&gt;/WORKFLOW_STATE.json
   -> evaluate gates
-  -> completion allowed / blocked</code></pre>
+  -> completion eligible / blocked
+  -> explicit workflow complete changes state</code></pre>
           <div class="table-wrap">
             <table>
               <thead><tr><th>Gate</th><th>检查内容</th><th>为什么需要</th></tr></thead>
@@ -217,11 +218,15 @@ zl-codebase-status --target "$PWD"</code></pre>
                 <tr><td><code>codebase</code></td><td><code>CODEBASE_STATUS.md</code>；既存项目源码数量大于 0。</td><td>避免对未知代码库直接下结论。</td></tr>
                 <tr><td><code>docs</code></td><td>真实文档扫描结果，或带有本地源文件 citation 的成功 RAG/docs query；<code>rag none</code> 项目按 reference 策略处理。</td><td>存在正式业务资料时必须给出来源；非文档密集型项目不虚构文档要求。</td></tr>
                 <tr><td><code>graph</code></td><td>Graphify graph/report 存在且不 stale。</td><td>改修前要知道代码影响面。</td></tr>
-                <tr><td><code>plan</code></td><td>手动标记计划 gate。</td><td>确认方案已形成。</td></tr>
-                <tr><td><code>implementation</code></td><td>手动标记实现 gate。</td><td>确认改动已实施。</td></tr>
-                <tr><td><code>verification</code></td><td>手动标记验证 gate。</td><td>确认测试或检查已执行。</td></tr>
-                <tr><td><code>evidence</code></td><td>存在正式 evidence record。</td><td>结论必须可审计。</td></tr>
-                <tr><td><code>writeback</code></td><td>issue/debug/phase 中有 <code>Zhulong Evidence Writeback</code>。</td><td>证据要回到工作记录里。</td></tr>
+                <tr><td><code>interaction-policy</code></td><td><code>interactive</code>、<code>auto_advance</code> 和配置矛盾。</td><td>默认 fail closed，避免配置只写在模板里却从未执行。</td></tr>
+                <tr><td><code>authorization</code></td><td>当前用户消息对当前工作的明确授权，或匹配 action/milestone 的活动 Goal grant。</td><td>代理不能把建议或前一阶段完成当成执行授权。</td></tr>
+                <tr><td><code>acceptance</code></td><td>用户查看产物后的当前 workflow 验收，或匹配的 Goal grant。</td><td>“请分析/修复/规划”不等于提前接受尚未生成的结果；原消息明确要求完成/关闭时除外。</td></tr>
+                <tr><td><code>decisions</code></td><td>spec/discuss/ui 的 accepted/proposed/open/contradiction 状态。</td><td>重大开放问题和矛盾必须交给用户判断。</td></tr>
+                <tr><td><code>plan</code></td><td>当前 workflow 目录中的类型化 <code>PLAN.md</code>。</td><td>确认方案属于当前 workflow，而不是任意历史字符串。</td></tr>
+                <tr><td><code>implementation</code></td><td>当前 workflow 的 <code>IMPLEMENTATION.md</code>；diagnose-only debug 不要求。</td><td>确认授权范围内的改动已实施。</td></tr>
+                <tr><td><code>verification</code></td><td>当前 workflow 的 <code>VERIFICATION.md</code>。</td><td>确认测试或检查已执行并可复查。</td></tr>
+                <tr><td><code>evidence</code></td><td>存在绑定当前 workflow ID 的正式 evidence record。</td><td>历史证据不能替当前任务通过。</td></tr>
+                <tr><td><code>writeback</code></td><td>issue/debug/phase 中有绑定当前 workflow ID 的 <code>Zhulong Evidence Writeback</code>。</td><td>证据要回到当前工作记录里。</td></tr>
               </tbody>
             </table>
           </div>
@@ -291,8 +296,23 @@ ollama pull bge-m3</code></pre>
         <section id="runtime" class="page-section">
           <h2>7. Runtime command pack</h2>
           <p>Runtime pack 只是让不同 AI 工具知道如何调用 Zhulong。核心命令仍然是本地 <code>zl</code> CLI。</p>
+          <h3>交互默认与有界自动执行</h3>
+          <p>三种 runtime 都读取同一份 <code>core/workflows/authorization.md</code>：默认只执行当前 Skill，“建议下一步”不能触发下一个 workflow；调查、分析、诊断默认 diagnose-only。Workflow alias 不会自动注入用户来源；只有直接响应当前用户消息的 runtime 才能附加 <code>--source user-message</code>，且这只是可审计的 runtime assertion，不是密码学身份认证。用户明确说“自动执行 MVP4.0 到 MVP4.7，完成后停止”时，runtime 把每个 MVP 的原始描述编译成结构化 milestone contract，child workflow 继承 authorization ID、milestone 与 contract digest，并使用合同中的精确 objective。</p>
+          <pre class="code-block"><code>workflow:
+  mode: interactive
+  auto_advance: false
+  require_explicit_user_intent: true
+  allow_goal_authorization: true
+
+zl workflow authorize --target "$PWD" \
+  --source user-message \
+  --request "自动执行 MVP4.0 到 MVP4.7，完成后停止" \
+  --contract-file ".planning/goals/MVP4_CONTRACTS.json" \
+  --actions "spec,ui,plan,execute,review,verify,complete_milestone,advance" \
+  --stop-after MVP4.7</code></pre>
+          <p>授权合同保存在 <code>.planning/goals/</code>，可用 <code>zl workflow authorization-status</code> 检查、用 <code>zl workflow revoke</code> 撤销。执行、修复、完成与推进必须使用结构化合同；旧式只有 milestone 名称的 grant 仅能用于非修改型 workflow。依赖、commit、push、merge、release 前还要通过 <code>zl workflow permission-check</code>。范围外 objective、digest、milestone/action、重大 open question 与 contradiction 都会阻塞。</p>
           <h3>条件化 Taste 前端设计</h3>
-          <p><code>zl-ui-phase</code> 会读取项目 manifest、依赖、品牌资料、design token、组件和既有页面，生成 Frontend Design Decision。Taste Adapter 已内置，不需要另外运行 <code>npx skills add</code>。</p>
+          <p><code>zl-ui-phase</code> 会读取项目 manifest、依赖和有界的前端路径证据，实际计算并写入 Frontend Design Decision，而不是只输出待填写模板。Runtime 随后补充品牌资料、既有页面和人工设计证据；低置信度只提出一个方向问题。Taste Adapter 已内置，不需要另外运行 <code>npx skills add</code>。</p>
           <pre class="code-block"><code>frontend_design:
   strategy: auto       # auto | preserve | evolve | create | system
   taste: auto          # auto | enabled | disabled</code></pre>
@@ -491,17 +511,23 @@ zl-graph-impact --target "$PWD" --files "src/a.js"
 zl-graph-risk --target "$PWD"</code></pre>
             </div>
             <div class="tutorial-step">
-              <h3>任务闭环：workflow、人工 gate、evidence、completion</h3>
-              <p>Zhulong 严格流程不是靠一句 prompt，而是靠状态文件和 gate 检查。public workflow 会自动写 <code>WORKFLOW_FACADE.md</code>，把 preflight、policy、docs、graph、evidence 和下一步命令汇总给 AI，但不会自动重建 RAG 或 Graphify。实现后必须写 evidence 并回写工作记录。</p>
-              <pre class="code-block"><code>zl-debug --target "$PWD" "退款上限与业务规则不一致"
+              <h3>任务闭环：workflow、类型化 gate、evidence、completion</h3>
+              <p>Zhulong 严格流程不是靠一句 prompt，而是靠状态文件和 gate 检查。public workflow 会自动写 <code>WORKFLOW_FACADE.md</code>，把 preflight、policy、docs、graph、authorization、evidence 和下一步命令汇总给 AI，但不会自动执行下一个 Skill，也不会自动重建 RAG 或 Graphify。当前 workflow 的 plan、implementation 和 verification 必须是绑定 workflow ID 的类型化文件；实现后还要写 evidence 并回写工作记录。</p>
+              <pre class="code-block"><code>zl workflow run debug --target "$PWD" \
+  "请调查并修复退款上限与业务规则不一致" \
+  --source user-message --intent fix
 zl-workflow-audit --target "$PWD"
-zl-workflow-continue --target "$PWD" --gate plan --evidence "PLAN.md reviewed"
-zl-workflow-continue --target "$PWD" --gate implementation --evidence "approval policy updated"
-zl-workflow-continue --target "$PWD" --gate verification --evidence "npm test passed"
+zl-workflow-continue --target "$PWD" --gate plan \
+  --evidence .planning/workflows/&lt;workflow-id&gt;/PLAN.md
+zl-workflow-continue --target "$PWD" --gate implementation \
+  --evidence .planning/workflows/&lt;workflow-id&gt;/IMPLEMENTATION.md
+zl-workflow-continue --target "$PWD" --gate verification \
+  --evidence .planning/workflows/&lt;workflow-id&gt;/VERIFICATION.md
 zl-evidence-record --target "$PWD" "退款规则已验证" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md
 zl-evidence-status --target "$PWD"
 zl-gate-check --target "$PWD"
-zl-completion-check --target "$PWD"</code></pre>
+zl-completion-check --target "$PWD"  # read-only eligibility
+zl workflow complete --target "$PWD" # explicit state transition</code></pre>
             </div>
           </div>
         </section>
@@ -551,7 +577,7 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
                 <tr><td>Privacy / License</td><td><code>zl-privacy-audit</code>, <code>zl-offline-lock</code>, <code>zl-outbound-audit</code>, <code>zl-license-audit</code></td><td>local-only、外发风险和 license 风险可审计。</td></tr>
                 <tr><td>Evidence / Trace / Policy</td><td><code>zl-evidence-record</code>, <code>zl-evidence-status</code>, <code>zl-trace-build</code>, <code>zl-trace-query</code>, <code>zl-trace-audit</code>, <code>zl-policy-list</code>, <code>zl-policy-check</code>, <code>zl-policy-explain</code>, <code>zl-policy-lock</code>, <code>zl-policy-verify</code>, <code>zl-policy-diff</code>, <code>zl-help-skills</code></td><td>证据、追踪矩阵、策略检查、策略合同和命令推荐可落盘。</td></tr>
                 <tr><td>Runtime</td><td><code>zl-runtime-install</code>, <code>zl-runtime-status</code></td><td>Codex / Claude Code / GitHub Copilot 入口统一落到 CLI。</td></tr>
-                <tr><td>Workflow guard</td><td><code>zl-workflow-run</code>, <code>zl-workflow-status</code>, <code>zl-workflow-continue</code>, <code>zl-workflow-audit</code>, <code>zl-gate-check</code>, <code>zl-completion-check</code></td><td>gate 状态可读、可阻断、可继续。</td></tr>
+                <tr><td>Workflow guard</td><td><code>zl-workflow-run</code>, <code>zl-workflow-status</code>, <code>zl-workflow-continue</code>, <code>zl-workflow-audit</code>, <code>zl-gate-check</code>, <code>zl-completion-check</code>, <code>zl workflow authorize</code>, <code>zl workflow revoke</code>, <code>zl workflow complete</code></td><td>当前意图、Goal 范围、gate 和显式完成状态可审计。</td></tr>
                 <tr><td>Public workflow</td><td><code>zl-new-milestone</code>, <code>zl-spec-phase</code>, <code>zl-discuss-phase</code>, <code>zl-ui-phase</code>, <code>zl-debug</code>, <code>zl-plan-phase</code>, <code>zl-execute-phase</code>, <code>zl-code-review</code>, <code>zl-verify-work</code>, <code>zl-complete-milestone</code></td><td>日常工作流只暴露 <code>zl-*</code>，GSD 只作参考设计。</td></tr>
                 <tr><td>Cockpit</td><td><code>zl-cockpit-build</code></td><td>生成本地静态项目驾驶舱，展示 Graphify、RAG、workflow、quality、privacy 和 evidence 状态。</td></tr>
                 <tr><td>Context</td><td><code>zl-context-debug</code>, <code>zl-context-execute</code></td><td>只生成 context packet，不启动完整 guard。</td></tr>
@@ -581,6 +607,8 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
             <div class="artifact"><code>.planning/policies/POLICY_LOCK.md</code><p>policy snapshot 和 hash。用于确认 local-only/profile/RAG/Graphify 配置没有漂移。</p></div>
             <div class="artifact"><code>.planning/workflows/*/WORKFLOW_STATE.json</code><p>workflow 状态机源数据。<code>WORKFLOW_STATE.md</code> 是给人看的版本。</p></div>
             <div class="artifact"><code>.planning/workflows/*/WORKFLOW_FACADE.md</code><p>public workflow 的无感编排摘要。列出轻量 checks、四态 gate 和下一步建议命令。</p></div>
+            <div class="artifact"><code>.planning/goals/*/AUTHORIZATION.json</code><p>自然语言多 milestone 自动执行的有界授权。记录 scope、actions、permissions、停止条件、原始用户消息摘要和撤销状态。</p></div>
+            <div class="artifact"><code>.planning/workflows/*/{PLAN,IMPLEMENTATION,VERIFICATION}.md</code><p>当前 workflow 的类型化 gate artifact；必须包含 workflow ID、完成状态且不得保留 TBD。</p></div>
             <div class="artifact"><code>.planning/evidence/INDEX.md</code><p>验证证据索引。完成 milestone 前应该能找到当前任务证据。</p></div>
             <div class="artifact"><code>templates/cockpit/sample.html</code><p>稳定展示样例。使用假数据展示理想状态，适合先看页面目标形态。</p></div>
             <div class="artifact"><code>templates/cockpit/index.template.html</code><p>cockpit 独立模板。真实项目和样例页都复用它，避免 HTML 写死在 CLI 中。</p></div>
@@ -605,8 +633,12 @@ Copilot: .github/prompts/*.prompt.md</code></pre>
                 <tr><td>preflight 显示 RAG stale</td><td>是否有文档源路径变更；是否需要更新 GraphRAG index。</td><td><code>zl-refresh-run --target "$PWD" --rag</code></td></tr>
                 <tr><td>preflight 显示 Graph stale</td><td>是否有源码或测试路径变更；是否需要更新 Graphify 图谱。</td><td><code>zl-refresh-run --target "$PWD" --graph</code></td></tr>
                 <tr><td><code>docs-strict</code> 或 <code>full-strict</code> 阻断 completion</td><td><code>ANSWER_AUDIT.md</code>、<code>GRAPH_FRESHNESS.md</code>、<code>POLICY_CHECK.md</code> 是否有 <code>FAIL</code> 或 <code>STALE_NEEDS_REFRESH</code>。</td><td>按报告补 citation、显式刷新 RAG/Graphify，或回到 <code>docs-reference</code> 并记录风险。</td></tr>
-                <tr><td>plan/implementation/verification 失败</td><td>是否用 <code>zl-workflow-continue</code> 标记了人工 gate。</td><td><code>zl-workflow-continue --target "$PWD" --gate verification --evidence "npm test passed"</code></td></tr>
-                <tr><td>evidence 或 writeback 失败</td><td><code>.planning/evidence/</code> 和目标 issue/debug/phase 是否有 <code>Zhulong Evidence Writeback</code>。</td><td><code>zl-evidence-record --target "$PWD" "検証済み" --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md</code></td></tr>
+                <tr><td>authorization gate 失败</td><td>当前 Skill 是否真由用户请求；或 workflow 是否携带活动 authorization ID、milestone 和匹配的 contract digest/objective。</td><td>只有直接响应用户消息的 runtime 才附加 <code>--source user-message</code>；多 MVP 使用 <code>zl workflow authorization-status</code> 读取合同，并把精确 objective 与 digest 传给 child。</td></tr>
+                <tr><td>acceptance gate 失败</td><td>用户是否已经查看并接受当前产物；原始消息是否明确要求完成；或 Goal 是否覆盖当前阶段。</td><td>获得用户验收后运行 <code>zl workflow accept --source user-message --request "&lt;验收原文&gt;"</code>。不要把测试通过当成用户验收。</td></tr>
+                <tr><td>decisions gate 失败</td><td>spec/discuss/ui 是否仍有重大 open question、contradiction 或 proposed decision。</td><td>让用户决定后更新结构化 decision 文件，再运行 <code>zl workflow decisions --file &lt;decision.json&gt;</code>。</td></tr>
+                <tr><td>plan/implementation/verification 失败</td><td>当前 workflow 目录的类型化 artifact 是否包含 workflow ID、完成状态且无 TBD。</td><td><code>zl-workflow-continue --target "$PWD" --gate verification --evidence .planning/workflows/&lt;id&gt;/VERIFICATION.md</code></td></tr>
+                <tr><td>evidence 或 writeback 失败</td><td><code>.planning/evidence/</code> 和目标 issue/debug/phase 的记录是否绑定当前 workflow ID。</td><td><code>zl-evidence-record --target "$PWD" "検証済み" --type verification --command "npm test" --result "passed" --writeback .planning/issues/CR-017.md</code></td></tr>
+                <tr><td><code>completion-check</code> 通过但状态仍是 running</td><td>这是预期的只读语义。</td><td>确认确实要关闭后显式运行 <code>zl workflow complete --target "$PWD"</code>。</td></tr>
                 <tr><td>policy check 失败</td><td><code>POLICY_CHECK.md</code> 中失败项；常见是没有 offline lock、没有 citation、没有 golden 或 trace matrix。</td><td><code>zl-offline-lock --target "$PWD" && zl-citation-audit --target "$PWD" && zl-trace-build --target "$PWD"</code></td></tr>
                 <tr><td>cockpit 显示 <code>WAIVED_WITH_RISK</code></td><td><code>COCKPIT_REPORT.md</code> 中缺少的 Graphify/RAG/evidence artifact。</td><td><code>zl-docs-sync --target "$PWD"</code> 或显式 <code>zl-graph-build --target "$PWD" --run</code></td></tr>
                 <tr><td>Codex/Claude/Copilot 找不到命令</td><td>runtime pack 是否安装到对应目录。</td><td><code>zl-runtime-status --runtime codex --dest ~/.codex/skills</code></td></tr>

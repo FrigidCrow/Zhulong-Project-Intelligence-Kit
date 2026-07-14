@@ -143,11 +143,13 @@ knowledge:
     local_query_command: "graphrag query --root graphrag-workspace --method basic --response-type \"List of 8 concise points with data references\" {query}"
 
 workflow:
-  mode: "maintenance"
+  mode: "interactive"
   require_graph_before_edit: true
   require_rag_before_business_claim: true
   require_source_verification: true
   auto_advance: false
+  require_explicit_user_intent: true
+  allow_goal_authorization: true
 
 privacy:
   network_policy: "local_only"
