@@ -61,7 +61,7 @@ jobs:
 
       - name: Attest tarball
         if: ${{ github.event.repository.private == false }}
-        uses: actions/attest@a1948c3f048ba23858d222213b7c278aabede763 # v4
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
           subject-path: dist/*.tgz
 
