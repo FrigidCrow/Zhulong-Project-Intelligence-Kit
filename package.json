@@ -201,7 +201,7 @@
   },
   "packageManager": "npm@11.18.0",
   "devDependencies": {
-    "@axe-core/playwright": "4.12.1",
+    "@axe-core/playwright": "4.13.0",
     "playwright": "1.61.1"
   }
 }
